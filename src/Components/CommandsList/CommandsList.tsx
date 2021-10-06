@@ -1,27 +1,24 @@
 import * as React from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../Firebase/firebase";
-
-interface ICommand {
-  id: string;
-  howTo: string;
-  command: string;
-  reference: string;
-}
+import { db } from "../../firebase/firebase";
+import { auth } from "../../firebase/firebase";
+import { useSelector } from "react-redux";
+import { ICommand } from "../../types/types";
+import { RootState } from "../../Redux/store";
 
 function CommandsList() {
   const [commands, setCommands] = React.useState<ICommand[]>([]);
+  const [user, setUser] = React.useState<String>(
+    "7ID0mqlWIsX7GC9qhSFBLGpDLWv1"
+  );
+
+  const firebaseAuth = useSelector((state: RootState) => state.userAuth);
 
   const addData = async () => {
     const docSnap: any = await getDocs(
-      collection(db, "users/7ID0mqlWIsX7GC9qhSFBLGpDLWv1/commands")
+      collection(db, `users/${user}/commands`)
     );
 
-    // if (docSnap.exists()) {
-    //   setCmdData(docSnap.data());
-    // } else {
-    //   console.log("No such document!");
-    // }
     const commands = docSnap.docs.map((doc: { data: () => any }) => doc.data());
     console.log(commands);
     setCommands(commands);
@@ -34,12 +31,15 @@ function CommandsList() {
   return (
     <>
       {commands &&
-        commands.map(({ id, howTo, command, reference }) => (
-          <div key={id}>
+        commands.map(({ id, howTo, command, reference }, index) => (
+          <div key={index}>
             <div>How to: {howTo || "none"}</div>
             <div>Command: {command || "none"}</div>
             <div>
-              Reference: <a href={reference}>{reference || "none"}</a>
+              Reference:{" "}
+              <a target="_blank" rel="noreferrer" href={reference}>
+                {reference || "none"}
+              </a>
             </div>
             <hr />
           </div>
