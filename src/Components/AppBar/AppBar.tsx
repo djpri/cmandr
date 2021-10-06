@@ -15,13 +15,16 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { ColorModeSwitcher } from "../ColorModeSwitcher/ColorModeSwitcher";
-import { auth } from "../../Firebase/firebase";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  submitLoginDetails,
+  submitNewAccountDetails,
+  signOutUser,
+} from "../../Redux/auth/authSlice";
+import { useAppDispatch } from "../../Redux/store";
 
 function AppBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [loading, setIsLoading] = React.useState(false);
-  const [error, setIsError] = React.useState(false);
+  const [formType, setFormType] = React.useState("login");
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const btnRef: React.Ref<any> = React.useRef();
@@ -29,25 +32,7 @@ function AppBar() {
     email: "djpri@baba.com",
     password: "coconuts",
   });
-
-  const formSubmit = (e: { preventDefault: () => void }) => {
-    setIsLoading(true);
-    console.log("submission");
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, formDetails.email, formDetails.password)
-      .then(() => {
-        setIsLoading(false);
-        setIsLoggedIn(true);
-        setIsError(false);
-        setErrorMessage("");
-        // dispatch(setUserLogIn(userCredential.user));
-      })
-      .catch((error: any) => {
-        setIsLoading(false);
-        setIsError(true);
-        setErrorMessage(`Login Error: ${error.code}`);
-      });
-  };
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: { target: { id: string; value: string } }) => {
     const { id, value } = e.target;
@@ -95,7 +80,11 @@ function AppBar() {
               />
               <Button
                 colorScheme="red"
-                onClick={formSubmit}
+                onClick={() =>
+                  dispatch(
+                    submitLoginDetails(formDetails.email, formDetails.password)
+                  )
+                }
                 isDisabled={isLoggedIn}
               >
                 Log In
@@ -108,14 +97,26 @@ function AppBar() {
               )}
               <Button
                 colorScheme="blue"
-                isDisabled={!isLoggedIn}
+                // isDisabled={!isLoggedIn}
                 onClick={() => {
-                  signOut(auth);
+                  dispatch(signOutUser());
                   setIsLoggedIn(false);
-                  console.log("signed out!");
                 }}
               >
                 Sign Out
+              </Button>
+              <Text>Dont have an account?</Text>
+              <Button
+                onClick={() =>
+                  dispatch(
+                    submitNewAccountDetails(
+                      formDetails.email,
+                      formDetails.password
+                    )
+                  )
+                }
+              >
+                Create new Account
               </Button>
             </Stack>
           </DrawerBody>
