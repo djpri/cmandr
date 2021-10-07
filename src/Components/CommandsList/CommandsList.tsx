@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { ICommand } from "../../types/types";
 import { RootState } from "../../Redux/store";
 
-function CommandsList() {
+function CommandManager() {
   const [commands, setCommands] = React.useState<ICommand[]>([]);
   const [user, setUser] = React.useState<String>(
     "7ID0mqlWIsX7GC9qhSFBLGpDLWv1"
@@ -48,4 +48,4 @@ function CommandsList() {
   );
 }
 
-export default CommandsList;
+export default CommandManager;
