@@ -44,10 +44,14 @@ export const authSlice = createSlice({
   },
 });
 
+// SELECTORS
+export const selectUserUid = state => state.userAuth.userData.uid || null;
+
 // Action creators are generated for each case reducer function
 export const { setInitialized, logInUser, createUser, setSignOut, setErrorMessage, setUserData } =
   authSlice.actions;
-
+  
+// ASYNC ACTIONS
 export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   auth.onAuthStateChanged((user) => {
     if (user && getState().userAuth.initialized) {
@@ -68,7 +72,7 @@ export const submitLoginDetails = (email: string, password: string): AppThunk =>
   }
 };
 
-export const submitNewAccountDetails = (email: string, password: string): AppThunk => async (dispatch, getState) => {
+export const submitNewAccountDetails = (displayName: string, email: string, password: string): AppThunk => async (dispatch, getState) => {
   console.log(email);
   console.log(password);
   try { 
@@ -76,7 +80,7 @@ export const submitNewAccountDetails = (email: string, password: string): AppThu
     dispatch(logInUser(user.uid));
     // add document for each new user identified by their uid
     await setDoc(doc(db, "users", user.uid), {
-      name: "Baba3",
+      displayName: displayName,
       email: user.email,
     });
   } catch (error: any) {
