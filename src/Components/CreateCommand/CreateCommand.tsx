@@ -45,7 +45,7 @@ function CreateCommand() {
                   <option value="option3">Git</option>
                 </Select>
                 <Input name="password" id="password" placeholder="Reference" />
-                <Button colorScheme="whatsapp">
+                <Button>
                   <Text>baba</Text>
                 </Button>
               </Stack>
