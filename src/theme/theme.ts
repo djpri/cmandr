@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import { Button } from "./components/Button";
 import { mode } from "@chakra-ui/theme-tools";
 import "@fontsource/nunito-sans/700.css";
 import "@fontsource/nunito-sans/600.css";
@@ -42,6 +43,28 @@ const theme = extendTheme({
       fontSize: "sm",
       letterSpacing: "widest",
       fontWeight: "bold",
+    },
+  },
+  components: {
+    Button,
+    AccordionButton: {
+      baseStyle: {
+          _focus: {
+            boxShadow: 'none'
+          },
+      },
+      defaultProps: {
+        isDisabled: true,
+      },
+    },
+    TabPanel: {
+      baseStyle: {
+        _track: {
+          _focus: {
+            boxShadow: 'none'
+          },
+        }
+      },
     },
   },
 });
