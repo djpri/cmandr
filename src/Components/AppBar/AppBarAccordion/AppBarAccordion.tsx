@@ -50,7 +50,9 @@ function AppBarAccordion() {
         </AccordionButton>
         <AccordionPanel pb={4}>
           <Stack>
-            <Text>All commands</Text>
+            <Link as={RouterLink} to="commands">
+              <Text>All commands</Text>
+            </Link>
             <Text>General</Text>
             <Text>Git</Text>
             <Text>npm</Text>

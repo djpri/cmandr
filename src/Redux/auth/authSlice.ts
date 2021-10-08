@@ -26,10 +26,9 @@ export const authSlice = createSlice({
     setErrorMessage: (state, { payload }) => {
       state.errorMessage = payload;
     },
-    logInUser: (state, { payload }) => {
+    logInUser: (state) => {
       state.isLoggedIn = true;
       state.errorMessage = null;
-      state.userData = payload;
     },
     createUser: (state, { payload }) => {
       state.userData = payload;
@@ -45,7 +44,9 @@ export const authSlice = createSlice({
 });
 
 // SELECTORS
-export const selectUserUid = state => state.userAuth.userData.uid || null;
+export const selectIsLoggedIn = state => state.userAuth?.userData.isLoggedIn;
+export const selectUserUid = state => state.userAuth?.userData?.uid || null;
+export const selectUserEmail = state => state.userAuth?.userData?.email || null;
 
 // Action creators are generated for each case reducer function
 export const { setInitialized, logInUser, createUser, setSignOut, setErrorMessage, setUserData } =
@@ -54,6 +55,8 @@ export const { setInitialized, logInUser, createUser, setSignOut, setErrorMessag
 // ASYNC ACTIONS
 export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   auth.onAuthStateChanged((user) => {
+    console.log(user);
+    console.log("auth state changed");
     if (user && getState().userAuth.initialized) {
       dispatch(setUserData(user.toJSON()));
     }
@@ -65,8 +68,8 @@ export const submitLoginDetails = (email: string, password: string): AppThunk =>
   console.log(email);
   console.log(password);
   try {
-    const { user } = await signInWithEmailAndPassword(auth, email, password)
-    dispatch(logInUser(user.uid));
+    await signInWithEmailAndPassword(auth, email, password)
+    dispatch(logInUser());
   } catch (error: any) {
     dispatch(setErrorMessage(`Login Error: ${error.code}`));
   }
@@ -77,7 +80,7 @@ export const submitNewAccountDetails = (displayName: string, email: string, pass
   console.log(password);
   try { 
     const { user } = await createUserWithEmailAndPassword(auth, email, password);
-    dispatch(logInUser(user.uid));
+    dispatch(logInUser());
     // add document for each new user identified by their uid
     await setDoc(doc(db, "users", user.uid), {
       displayName: displayName,

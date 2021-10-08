@@ -19,21 +19,8 @@ export const Button = {
       py: 4, // <-- these values are tokens from the design system
     },
   },
-  // Two variants: outline and solid
-  // variants: {
-  //   outline: {
-  //     border: "2px solid",
-  //     borderColor: "blue.500",
-  //     color: "blue.500",
-  //   },
-  //   solid: {
-  //     bg: "blue.500",
-  //     color: "white",
-  //   },
-  // },
-  // The default size and variant values
   defaultProps: {
-    size: "md",
+    size: "sm",
     variant: "solid",
   },
 }

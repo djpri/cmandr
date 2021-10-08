@@ -112,7 +112,6 @@ function LoginDrawer() {
       <Button ref={btnRef} colorScheme="whatsapp" onClick={onOpen}>
         Log in
       </Button>
-      <ColorModeSwitcher justifySelf="flex-end" />
     </>
   );
 }
