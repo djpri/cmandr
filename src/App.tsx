@@ -1,8 +1,16 @@
 import * as React from "react";
-import { ChakraProvider, Box, Text, VStack, Grid } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  Box,
+  Container,
+  Text,
+  VStack,
+  Grid,
+  Heading,
+} from "@chakra-ui/react";
 import theme from "./theme/theme";
 import AppBar from "./Components/AppBar/AppBar";
-import CommandManager from "./Components/CommandsList/CommandsList";
+import CommandsList from "./Components/CommandsList/CommandsList";
 import { useAppDispatch } from "./Redux/store";
 import { setAuthListener } from "./Redux/auth/authSlice";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -17,29 +25,36 @@ export const App = () => {
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <AppBar />
-        <Route path="/bob">
-          <CommandManager />
-          <Box textAlign="center" fontSize="xl">
-            <Grid minH="100vh" p={3}>
-              <VStack spacing={8}>
-                <Text>Commander</Text>
-              </VStack>
-            </Grid>
-          </Box>
-        </Route>
-        <Route path="/dashboard">
-          <CommandManager />
-          <Box textAlign="center" fontSize="xl">
-            <Grid minH="100vh" p={3}>
-              <VStack spacing={8}>
-                <Text>Dashboard</Text>
-              </VStack>
-            </Grid>
-          </Box>
-        </Route>
-        <Route path="/manage-commands">
-          <CreateCommand />
-        </Route>
+        <Container maxW="container.xl" ml="300px" mt="50px" position="relative">
+          <Route exact path="/">
+            <Box textAlign="center" fontSize="xl">
+              <Grid minH="100vh" p={3}>
+                <VStack spacing={8}>
+                  <Text>Commander</Text>
+                </VStack>
+              </Grid>
+            </Box>
+            <CommandsList />
+          </Route>
+          <Route path="/dashboard">
+            <Box exact textAlign="center" fontSize="xl">
+              <Grid p={3}>
+                <VStack spacing={8}>
+                  <Text>Dashboard</Text>
+                </VStack>
+              </Grid>
+            </Box>
+          </Route>
+          <Route exact path="/manage-commands">
+            <CreateCommand />
+          </Route>
+          <Route path="/commands">
+            <Heading as="h2" mb="50px">
+              All Commands
+            </Heading>
+            <CommandsList />
+          </Route>
+        </Container>
       </BrowserRouter>
     </ChakraProvider>
   );

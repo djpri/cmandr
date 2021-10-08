@@ -3,6 +3,7 @@ export interface ICommand {
   howTo: string;
   command: string;
   reference: string;
+  category: string;
 }
 
 export type UserAuthState = {

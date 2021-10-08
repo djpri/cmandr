@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Box,
   Container,
   Text,
   Stack,
@@ -14,12 +13,31 @@ import {
   TabPanel,
   Button,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { selectUserUid } from "../../Redux/auth/authSlice";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 function CreateCommand() {
+  const uid: string = useSelector(selectUserUid);
+  const [errorMessage, setErrorMessage] = React.useState<string>("");
+
+  const handleAddCommand = async () => {
+    try {
+      await addDoc(collection(db, `users/${uid}/commands`), {
+        howTo: "add react icons package",
+        command: "yarn add react-icons",
+        reference: "https://react-icons.github.io/react-icons/",
+        category: "npm package",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <Box>boo</Box>
-      <Container maxW="container.xl">
+      <Container maxW="container.xl" mt="50px">
         <Heading as="h2" mb="10">
           Command Manager
         </Heading>
@@ -45,7 +63,7 @@ function CreateCommand() {
                   <option value="option3">Git</option>
                 </Select>
                 <Input name="password" id="password" placeholder="Reference" />
-                <Button>
+                <Button onClick={handleAddCommand}>
                   <Text>baba</Text>
                 </Button>
               </Stack>

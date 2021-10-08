@@ -4,10 +4,15 @@ import { mode } from "@chakra-ui/theme-tools";
 import "@fontsource/nunito-sans/700.css";
 import "@fontsource/nunito-sans/600.css";
 import "@fontsource/nunito-sans/400.css";
+import { Dict } from "@chakra-ui/utils";
 
 const theme = extendTheme({
+  // remove outline w
+  shadows: {
+    outline: "#A0AEC0 0px 0px 1px 2px;",
+  },
   styles: {
-    global: (props) => ({
+    global: (props: Dict<any>) => ({
       body: {
         fontFamily: "body",
         fontSize: { base: "0.875rem", md: "1rem" },
@@ -47,15 +52,11 @@ const theme = extendTheme({
   },
   components: {
     Button,
-    AccordionButton: {
-      baseStyle: {
-          _focus: {
-            boxShadow: 'none'
-          },
-      },
+    Input: {
       defaultProps: {
-        isDisabled: true,
-      },
+        focusBorderColor: "gray.400"
+      }
+
     },
     TabPanel: {
       baseStyle: {
