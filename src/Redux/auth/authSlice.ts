@@ -47,6 +47,7 @@ export const authSlice = createSlice({
 export const selectIsLoggedIn = state => state.userAuth?.userData.isLoggedIn;
 export const selectUserUid = state => state.userAuth?.userData?.uid || null;
 export const selectUserEmail = state => state.userAuth?.userData?.email || null;
+export const selectErrorMessage = state => state.userAuth.errorMessage;
 
 // Action creators are generated for each case reducer function
 export const { setInitialized, logInUser, createUser, setSignOut, setErrorMessage, setUserData } =
@@ -64,7 +65,7 @@ export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   !getState().userAuth.initialized && dispatch(setInitialized(true));
 };
 
-export const submitLoginDetails = (email: string, password: string): AppThunk => async (dispatch, getState) => {
+export const submitLoginDetails = (email: string, password: string): AppThunk => async (dispatch) => {
   console.log(email);
   console.log(password);
   try {
@@ -75,9 +76,7 @@ export const submitLoginDetails = (email: string, password: string): AppThunk =>
   }
 };
 
-export const submitNewAccountDetails = (displayName: string, email: string, password: string): AppThunk => async (dispatch, getState) => {
-  console.log(email);
-  console.log(password);
+export const submitNewAccountDetails = (displayName: string = "", email: string = "", password: string = ""): AppThunk => async (dispatch) => {
   try { 
     const { user } = await createUserWithEmailAndPassword(auth, email, password);
     dispatch(logInUser());
@@ -87,12 +86,12 @@ export const submitNewAccountDetails = (displayName: string, email: string, pass
       email: user.email,
     });
   } catch (error: any) {
-    setErrorMessage(`Sign up Error: ${error.code}`);
+    dispatch(setErrorMessage(`Sign up Error: ${error.code}`));
   }
 
 };
 
-export const signOutUser = (): AppThunk => (dispatch, getState) => {
+export const signOutUser = (): AppThunk => (dispatch) => {
   signOut(auth);
   dispatch(setSignOut());
 };

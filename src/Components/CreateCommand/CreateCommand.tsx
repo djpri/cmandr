@@ -14,7 +14,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import { selectUserUid } from "../../Redux/auth/authSlice";
+import { selectUserUid } from "../../redux/auth/authSlice";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
