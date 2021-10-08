@@ -39,7 +39,7 @@ export const App = () => {
             <CommandsList />
           </Route>
           <Route path="/dashboard">
-            <Box exact textAlign="center" fontSize="xl">
+            <Box textAlign="center" fontSize="xl">
               <Grid p={3}>
                 <VStack spacing={8}>
                   <Text>Dashboard</Text>

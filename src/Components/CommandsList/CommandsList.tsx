@@ -14,6 +14,13 @@ import {
   Tr,
   Th,
   Td,
+  Popover,
+  PopoverTrigger,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
 } from "@chakra-ui/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSelector } from "react-redux";
@@ -30,9 +37,12 @@ function CommandManager() {
       const docSnap: any = await getDocs(
         collection(db, `users/${user}/commands`)
       );
-      const commands = docSnap.docs.map((doc: { data: () => any }) =>
-        doc.data()
-      );
+      const commands = docSnap.docs.map((doc) => {
+        let docInfo = doc.data();
+        docInfo.id = doc.id;
+        return docInfo;
+      });
+      console.log(commands);
       setCommands(commands);
     };
     if (user) {
@@ -58,7 +68,7 @@ function CommandManager() {
 
   return (
     <>
-      <Box maxW="container.lg" boxShadow="base" rounded="md" p="5">
+      <Box maxW="container.xl" boxShadow="base" rounded="md" p="5">
         <Table variant="simple">
           <Thead>
             <Tr>
@@ -87,7 +97,7 @@ function CommandManager() {
                   </Td>
                   <Td>{category}</Td>
                   <Td>
-                    <HStack>
+                    <HStack spacing="4">
                       <CopyToClipboard
                         text={command}
                         onCopy={() => handleCopy(index)}
@@ -108,6 +118,34 @@ function CommandManager() {
                           Link
                         </Link>
                       </Button>
+                      <Popover isLazy placement="right">
+                        <PopoverTrigger>
+                          <Button size="xs" bgColor="teal.500" color="white">
+                            :
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverHeader fontWeight="semibold">
+                            Options
+                          </PopoverHeader>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverBody>
+                            <HStack>
+                              <Button
+                                size="xs"
+                                bgColor="green.500"
+                                color="white"
+                              >
+                                Edit
+                              </Button>
+                              <Button size="xs" bgColor="red.500" color="white">
+                                Delete
+                              </Button>
+                            </HStack>
+                          </PopoverBody>
+                        </PopoverContent>
+                      </Popover>
                     </HStack>
                   </Td>
                 </Tr>

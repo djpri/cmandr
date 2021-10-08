@@ -3,11 +3,17 @@ import * as React from "react";
 import { submitLoginDetails, signOutUser } from "../../../redux/auth/authSlice";
 import { useAppDispatch } from "../../../redux/store";
 import { useSelector } from "react-redux";
-import { selectErrorMessage } from "../../../redux/auth/authSlice";
+import {
+  selectErrorMessage,
+  selectIsLoading,
+  selectIsLoggedIn,
+} from "../../../redux/auth/authSlice";
 
 function LogInForm() {
   const errorMessage = useSelector(selectErrorMessage);
-  const [isLoggedIn] = React.useState(false);
+  const isLoading = useSelector(selectIsLoading);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const dispatch = useAppDispatch();
   const [formDetails, setFormDetails] = React.useState({
     email: "djpri@baba.com",
@@ -42,6 +48,7 @@ function LogInForm() {
         onChange={handleChange}
       />
       <Button
+        isLoading={isLoading}
         colorScheme="red"
         onClick={() =>
           dispatch(submitLoginDetails(formDetails.email, formDetails.password))
