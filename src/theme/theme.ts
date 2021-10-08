@@ -4,10 +4,11 @@ import { mode } from "@chakra-ui/theme-tools";
 import "@fontsource/nunito-sans/700.css";
 import "@fontsource/nunito-sans/600.css";
 import "@fontsource/nunito-sans/400.css";
+import "@fontsource/lato/900.css";
 import { Dict } from "@chakra-ui/utils";
 
 const theme = extendTheme({
-  // remove outline w
+  // remove outline on focus
   shadows: {
     outline: "#A0AEC0 0px 0px 1px 2px;",
   },
@@ -23,14 +24,14 @@ const theme = extendTheme({
     }),
   },
   fonts: {
-    heading: "Nunito Sans",
+    heading: "Lato",
     body: "Nunito Sans",
   },
   textStyles: {
     heading: {
       fontFamily: "heading",
       textAlign: "center",
-      fontWeight: "bold",
+      fontWeight: "900",
       letterSpacing: "-0.015em",
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "3.5rem" },
@@ -38,7 +39,7 @@ const theme = extendTheme({
     "heading-2": {
       fontFamily: "heading",
       textAlign: "center",
-      fontWeight: "bold",
+      fontWeight: "900",
       letterSpacing: "-0.015em",
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "2.75rem" },
@@ -54,17 +55,16 @@ const theme = extendTheme({
     Button,
     Input: {
       defaultProps: {
-        focusBorderColor: "gray.400"
-      }
-
+        focusBorderColor: "gray.400",
+      },
     },
     TabPanel: {
       baseStyle: {
         _track: {
           _focus: {
-            boxShadow: 'none'
+            boxShadow: "none",
           },
-        }
+        },
       },
     },
   },

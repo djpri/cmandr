@@ -71,7 +71,7 @@ function AddCommandForm() {
 
         <FormLabel htmlFor="category">Category</FormLabel>
         <Select name="category" onChange={formik.handleChange}>
-          <option value="npm package">Npm package</option>
+          <option value="npm package">npm package</option>
           <option value="general">General</option>
           <option value="git">Git</option>
         </Select>
