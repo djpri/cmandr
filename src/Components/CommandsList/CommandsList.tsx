@@ -14,14 +14,15 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
 } from "@chakra-ui/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useSelector } from "react-redux";
+import { selectUserUid } from "../../redux/auth/authSlice";
 
 function CommandManager() {
+  const user = useSelector(selectUserUid);
   const [commands, setCommands] = React.useState<ICommand[]>([]);
   const [isCopied, setIsCopied] = React.useState({});
-  const [user] = React.useState<String>("7ID0mqlWIsX7GC9qhSFBLGpDLWv1");
 
   // Fill command data if there is a user logged in
   React.useEffect(() => {
@@ -34,7 +35,11 @@ function CommandManager() {
       );
       setCommands(commands);
     };
-    addData();
+    if (user) {
+      addData();
+    } else {
+      setCommands([]);
+    }
   }, [user]);
 
   const handleCopy = (index: number) => {
@@ -43,6 +48,13 @@ function CommandManager() {
       setIsCopied((prevState) => ({}));
     }, 1500);
   };
+
+  if (commands.length === 0)
+    return (
+      <Box maxW="container.lg" boxShadow="base" rounded="md" p="5">
+        not logged in
+      </Box>
+    );
 
   return (
     <>
@@ -57,54 +69,50 @@ function CommandManager() {
             </Tr>
           </Thead>
           <Tbody>
-            {commands &&
-              commands.map(
-                ({ id, howTo, command, reference, category }, index) => (
-                  <Tr key={index}>
-                    <Td>{howTo}</Td>
-                    <Td>
-                      <Code
-                        _hover={{
-                          cursor: "pointer",
-                          backgroundColor: "gray.200",
-                          color: "black",
-                        }}
-                        onClick={() => handleCopy(index)}
+            {commands.map(
+              ({ id, howTo, command, reference, category }, index) => (
+                <Tr key={index}>
+                  <Td>{howTo}</Td>
+                  <Td>
+                    <Code
+                      _hover={{
+                        cursor: "pointer",
+                        backgroundColor: "gray.200",
+                        color: "black",
+                      }}
+                      onClick={() => handleCopy(index)}
+                    >
+                      {command}
+                    </Code>
+                  </Td>
+                  <Td>{category}</Td>
+                  <Td>
+                    <HStack>
+                      <CopyToClipboard
+                        text={command}
+                        onCopy={() => handleCopy(index)}
                       >
-                        {command}
-                      </Code>
-                    </Td>
-                    <Td>{category}</Td>
-                    <Td>
-                      <HStack>
-                        <CopyToClipboard
-                          text={command}
-                          onCopy={() => handleCopy(index)}
+                        <Button
+                          size="xs"
+                          bgColor={
+                            isCopied[index] ? "purple.400" : "purple.500"
+                          }
+                          color="white"
+                          w="70px"
                         >
-                          <Button
-                            size="xs"
-                            bgColor={
-                              isCopied[index] ? "purple.400" : "purple.500"
-                            }
-                            color="white"
-                          >
-                            {isCopied[index] ? "Copied" : "Copy"}
-                          </Button>
-                        </CopyToClipboard>
-                        <Button size="xs" bgColor="green.500" color="white">
-                          <Link
-                            target="_blank"
-                            rel="noreferrer"
-                            href={reference}
-                          >
-                            Link
-                          </Link>
+                          {isCopied[index] ? "Copied" : "Copy"}
                         </Button>
-                      </HStack>
-                    </Td>
-                  </Tr>
-                )
-              )}
+                      </CopyToClipboard>
+                      <Button size="xs" bgColor="green.500" color="white">
+                        <Link target="_blank" rel="noreferrer" href={reference}>
+                          Link
+                        </Link>
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              )
+            )}
           </Tbody>
         </Table>
       </Box>

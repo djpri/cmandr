@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Button,
   Drawer,
@@ -7,37 +6,18 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Input,
   Stack,
   useDisclosure,
   Text,
 } from "@chakra-ui/react";
-import { submitLoginDetails, signOutUser } from "../../Redux/auth/authSlice";
 import * as React from "react";
-import { useAppDispatch } from "../../Redux/store";
-import { ColorModeSwitcher } from "../ColorModeSwitcher/ColorModeSwitcher";
+import LogInForm from "../shared/LogInForm/LogInForm";
+import SignUpForm from "../shared/SignUpForm/SignUpForm";
 
 function LoginDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formType, setFormType] = React.useState("login");
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
   const btnRef: React.Ref<any> = React.useRef();
-  const [formDetails, setFormDetails] = React.useState({
-    displayName: "",
-    email: "djpri@baba.com",
-    password: "coconuts",
-  });
-  const dispatch = useAppDispatch();
-
-  const handleChange = (e: { target: { id: string; value: string } }) => {
-    const { id, value } = e.target;
-    setFormDetails((prevState) => ({
-      ...prevState,
-      // [] gives a computed property name
-      [id]: value,
-    }));
-  };
 
   return (
     <>
@@ -50,61 +30,29 @@ function LoginDrawer() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Log in to your account</DrawerHeader>
-
+          <DrawerHeader>
+            {formType === "login"
+              ? "Log in to your account"
+              : "Create a new account"}
+          </DrawerHeader>
           <DrawerBody>
-            <Stack spacing={3}>
-              <Input
-                name="email"
-                id="displayName"
-                placeholder="Display Name"
-                value={formDetails.displayName}
-                onChange={handleChange}
-              />
-              <Input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
-                value={formDetails.email}
-                onChange={handleChange}
-              />
-              <Input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password"
-                value={formDetails.password}
-                onChange={handleChange}
-              />
-              <Button
-                colorScheme="red"
-                onClick={() =>
-                  dispatch(
-                    submitLoginDetails(formDetails.email, formDetails.password)
-                  )
-                }
-                isDisabled={isLoggedIn}
-              >
-                Log In
-              </Button>
-              {isLoggedIn && <Text>logged in!</Text>}
-              {errorMessage && (
-                <Text color="red.400" fontWeight="700">
-                  {errorMessage}
-                </Text>
+            {formType === "login" ? <LogInForm /> : <SignUpForm />}
+            <Stack mt="5">
+              {formType === "login" ? (
+                <>
+                  <Text>Dont have an account?</Text>
+                  <Button onClick={() => setFormType("signup")}>
+                    Create new Account
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Text>Already have an account?</Text>
+                  <Button onClick={() => setFormType("login")}>
+                    Log in to existing account
+                  </Button>
+                </>
               )}
-              <Button
-                colorScheme="blue"
-                // isDisabled={!isLoggedIn}
-                onClick={() => {
-                  dispatch(signOutUser());
-                }}
-              >
-                Sign Out
-              </Button>
-              <Text>Dont have an account?</Text>
-              <Button>Create new Account</Button>
             </Stack>
           </DrawerBody>
         </DrawerContent>

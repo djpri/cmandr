@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  CSSReset,
   ChakraProvider,
   Box,
   Container,
@@ -9,12 +10,12 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import theme from "./theme/theme";
-import AppBar from "./Components/AppBar/AppBar";
-import CommandsList from "./Components/CommandsList/CommandsList";
-import { useAppDispatch } from "./Redux/store";
-import { setAuthListener } from "./Redux/auth/authSlice";
+import AppBar from "./components/AppBar/AppBar";
+import CommandsList from "./components/CommandsList/CommandsList";
+import { useAppDispatch } from "./redux/store";
+import { setAuthListener } from "./redux/auth/authSlice";
 import { BrowserRouter, Route } from "react-router-dom";
-import CreateCommand from "./Components/CreateCommand/CreateCommand";
+import CreateCommand from "./components/CreateCommand/CreateCommand";
 
 export const App = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ export const App = () => {
 
   return (
     <ChakraProvider theme={theme}>
+      <CSSReset />
       <BrowserRouter>
         <AppBar />
         <Container maxW="container.xl" ml="300px" mt="50px" position="relative">

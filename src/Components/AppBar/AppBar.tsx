@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { selectUserEmail } from "../../Redux/auth/authSlice";
+import { selectUserEmail } from "../../redux/auth/authSlice";
 import LoginDrawer from "../LoginDrawer/LoginDrawer";
 import { ColorModeSwitcher } from "../ColorModeSwitcher/ColorModeSwitcher";
 import AppBarAccordion from "./AppBarAccordion/AppBarAccordion";
