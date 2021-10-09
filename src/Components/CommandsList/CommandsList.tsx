@@ -27,6 +27,7 @@ import { useSelector } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
 import { GoLinkExternal } from "react-icons/go";
 import { IoMdOptions } from "react-icons/io";
+import DeleteCommandButton from "../shared/DeleteCommandButton/DeleteCommandButton";
 
 function CommandManager() {
   const user = useSelector(selectUserUid);
@@ -113,16 +114,16 @@ function CommandManager() {
                           {isCopied[index] ? "Copied" : "Copy"}
                         </Button>
                       </CopyToClipboard>
-                      <Button
-                        size="xs"
-                        bgColor="cyan.600"
-                        color="white"
-                        leftIcon={<GoLinkExternal />}
-                      >
-                        <Link target="_blank" rel="noreferrer" href={reference}>
+                      <Link target="_blank" rel="noreferrer" href={reference}>
+                        <Button
+                          size="xs"
+                          bgColor="cyan.600"
+                          color="white"
+                          leftIcon={<GoLinkExternal />}
+                        >
                           Link
-                        </Link>
-                      </Button>
+                        </Button>
+                      </Link>
                       <Popover isLazy placement="right">
                         <PopoverTrigger>
                           <Button size="xs" bgColor="teal.500" color="white">
@@ -144,9 +145,7 @@ function CommandManager() {
                               >
                                 Edit
                               </Button>
-                              <Button size="xs" bgColor="red.500" color="white">
-                                Delete
-                              </Button>
+                              <DeleteCommandButton commandId={id} />
                             </HStack>
                           </PopoverBody>
                         </PopoverContent>
