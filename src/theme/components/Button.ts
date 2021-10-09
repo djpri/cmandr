@@ -2,9 +2,9 @@ export const Button = {
   // The styles all button have in common
   baseStyle: {
     fontWeight: "bold",
-    boxShadow: 'none',
+    boxShadow: "none",
     textTransform: "uppercase",
-    borderRadius: "base", // <-- border radius is same for all variants and sizes
+    borderRadius: "sm", // <-- border radius is same for all variants and sizes
   },
   // Two sizes: sm and md
   sizes: {
@@ -23,4 +23,4 @@ export const Button = {
     size: "sm",
     variant: "solid",
   },
-}
+};
