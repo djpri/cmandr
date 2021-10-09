@@ -13,13 +13,20 @@ import { useSelector } from "react-redux";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import { useForm } from "react-hook-form";
 
-function AddCommandForm() {
+function EditCommandForm({ howTo, command, category, reference }) {
   const toast = useToast();
   const uid: string = useSelector(selectUserUid);
 
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register } = useForm({
+    defaultValues: {
+      howTo,
+      command,
+      category,
+      reference,
+    },
+  });
 
-  const addCommandToDB = async ({ howTo, command, category, reference }) => {
+  const editCommandInDB = async ({ howTo, command, category, reference }) => {
     try {
       await addDoc(collection(db, `users/${uid}/commands`), {
         howTo,
@@ -40,9 +47,8 @@ function AddCommandForm() {
   };
 
   const onSubmit = (values) => {
-    addCommandToDB(values);
-    // alert(JSON.stringify(values, null, 2));
-    reset();
+    editCommandInDB(values);
+    alert(JSON.stringify(values, null, 2));
   };
 
   return (
@@ -67,10 +73,10 @@ function AddCommandForm() {
         <FormLabel htmlFor="reference">Reference</FormLabel>
         <Input {...register("reference")} placeholder="Reference" />
 
-        <Button type="submit">Add command</Button>
+        <Button type="submit">Submit</Button>
       </Stack>
     </form>
   );
 }
 
-export default AddCommandForm;
+export default EditCommandForm;

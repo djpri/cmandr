@@ -25,6 +25,8 @@ import {
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSelector } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
+import { GoLinkExternal } from "react-icons/go";
+import { IoMdOptions } from "react-icons/io";
 
 function CommandManager() {
   const user = useSelector(selectUserUid);
@@ -104,16 +106,19 @@ function CommandManager() {
                       >
                         <Button
                           size="xs"
-                          bgColor={
-                            isCopied[index] ? "purple.400" : "purple.500"
-                          }
+                          bgColor={isCopied[index] ? "blue.400" : "blue.500"}
                           color="white"
                           w="70px"
                         >
                           {isCopied[index] ? "Copied" : "Copy"}
                         </Button>
                       </CopyToClipboard>
-                      <Button size="xs" bgColor="green.500" color="white">
+                      <Button
+                        size="xs"
+                        bgColor="cyan.600"
+                        color="white"
+                        leftIcon={<GoLinkExternal />}
+                      >
                         <Link target="_blank" rel="noreferrer" href={reference}>
                           Link
                         </Link>
@@ -121,7 +126,7 @@ function CommandManager() {
                       <Popover isLazy placement="right">
                         <PopoverTrigger>
                           <Button size="xs" bgColor="teal.500" color="white">
-                            :
+                            <IoMdOptions />
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent>

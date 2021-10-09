@@ -14,7 +14,7 @@ import * as React from "react";
 import LogInForm from "../shared/LogInForm/LogInForm";
 import SignUpForm from "../shared/SignUpForm/SignUpForm";
 
-function LoginDrawer() {
+function LoginDrawer({ buttonLabel }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formType, setFormType] = React.useState("login");
   const btnRef: React.Ref<any> = React.useRef();
@@ -57,8 +57,13 @@ function LoginDrawer() {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-      <Button ref={btnRef} colorScheme="whatsapp" onClick={onOpen}>
-        Log in
+      <Button
+        ref={btnRef}
+        colorScheme="whatsapp"
+        onClick={onOpen}
+        fontSize="xs"
+      >
+        {buttonLabel ? buttonLabel : "Log in"}
       </Button>
     </>
   );

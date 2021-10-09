@@ -111,6 +111,30 @@ function AppBarAccordion() {
           </Stack>
         </AccordionPanel>
       </AccordionItem>
+
+      {/* PACKAGES */}
+      <AccordionItem>
+        <AccordionButton>
+          <Box flex="1" textAlign="left">
+            <Text fontWeight="700" letterSpacing="1px">
+              Packages
+            </Text>
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+        <AccordionPanel pb={4}>
+          <Stack>
+            <Link as={RouterLink} to="commands">
+              <Text>All commands</Text>
+            </Link>
+            <Text>General</Text>
+            <Text>Git</Text>
+            <Text>npm</Text>
+            <Text>yarn</Text>
+            <Text>baba</Text>
+          </Stack>
+        </AccordionPanel>
+      </AccordionItem>
     </Accordion>
   );
 }
