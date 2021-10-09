@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Stack,
+  HStack,
   StackItem,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -11,7 +12,7 @@ import { selectUserEmail } from "../../redux/auth/authSlice";
 import LoginDrawer from "../LoginDrawer/LoginDrawer";
 import { ColorModeSwitcher } from "../ColorModeSwitcher/ColorModeSwitcher";
 import AppBarAccordion from "./AppBarAccordion/AppBarAccordion";
-import { GoChevronLeft } from "react-icons/go";
+import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
 // const scrollbarStyles = {
 //   "::-webkit-scrollbar": {
@@ -43,7 +44,26 @@ function AppBar() {
     "linear(to-r, gray.800 0%, gray.700 10%, gray.800 40%, gray.800 100%)"
   );
 
-  if (!isOpen) return null;
+  const buttonGradientHover = useColorModeValue(
+    "linear(to-r, gray.50 0%, gray.100 10%, white 70%, white 100%)",
+    "linear(to-r, gray.700 0%, gray.600 10%, gray.700 40%, gray.700 100%)"
+  );
+
+  if (!isOpen)
+    return (
+      <Button
+        border="0px"
+        bgGradient={buttonGradient}
+        w="%"
+        h="100%"
+        _hover={{ bgGradient: buttonGradientHover }}
+        onClick={() => {
+          setIsOpen((prevState) => !prevState);
+        }}
+      >
+        <GoChevronRight size="1.2rem" />
+      </Button>
+    );
 
   return (
     <Box
@@ -58,11 +78,12 @@ function AppBar() {
       overflowY="scroll"
       // sx={scrollbarStyles}
       boxSizing="content-box"
+      zIndex="100"
     >
-      <Box p="5" display="flex" flexDirection="column">
+      <HStack p="5" display="flex" flexDirection="row">
         <LoginDrawer buttonLabel={userEmail} />
         <ColorModeSwitcher />
-      </Box>
+      </HStack>
       <Stack mt="10">
         <StackItem>
           <AppBarAccordion />
@@ -75,6 +96,7 @@ function AppBar() {
           bgGradient={buttonGradient}
           w="100%"
           h="100%"
+          _hover={{ bgGradient: buttonGradientHover }}
           onClick={() => {
             setIsOpen((prevState) => !prevState);
           }}

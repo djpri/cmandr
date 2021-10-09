@@ -13,6 +13,7 @@ import {
 import * as React from "react";
 import LogInForm from "../shared/LogInForm/LogInForm";
 import SignUpForm from "../shared/SignUpForm/SignUpForm";
+import { FaUser } from "react-icons/fa";
 
 function LoginDrawer({ buttonLabel }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -63,7 +64,7 @@ function LoginDrawer({ buttonLabel }) {
         onClick={onOpen}
         fontSize="xs"
       >
-        {buttonLabel ? buttonLabel : "Log in"}
+        <FaUser />
       </Button>
     </>
   );

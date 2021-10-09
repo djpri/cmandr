@@ -11,6 +11,7 @@ import { doc, setDoc } from "@firebase/firestore";
 
 const initialState: UserAuthState = {
   userData: null,
+  displayName: null,
   initialized: false,
   isLoggedIn: false,
   isLoading: false,
@@ -36,6 +37,9 @@ export const authSlice = createSlice({
     },
     createUser: (state, { payload }) => {
       state.userData = payload;
+    },
+    setDisplayName: (state, { payload }) => {
+      state.displayName = payload;
     },
     setSignOut: (state) => {
       state.isLoggedIn = false;
@@ -63,6 +67,7 @@ export const {
   logInUser,
   createUser,
   setSignOut,
+  setDisplayName,
   setIsLoading,
   setErrorMessage,
   setUserData,
@@ -80,6 +85,8 @@ export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   });
   !getState().userAuth.initialized && dispatch(setInitialized(true));
 };
+
+export const getDisplayName = (): AppThunk => (dispatch, getState) => {};
 
 export const submitLoginDetails =
   (email: string, password: string): AppThunk =>
