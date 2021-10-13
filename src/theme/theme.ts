@@ -4,6 +4,8 @@ import { mode } from "@chakra-ui/theme-tools";
 import "@fontsource/nunito-sans/700.css";
 import "@fontsource/nunito-sans/600.css";
 import "@fontsource/nunito-sans/400.css";
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";
 import { Dict } from "@chakra-ui/utils";
 
@@ -46,9 +48,9 @@ const theme = extendTheme({
     },
     caps: {
       textTransform: "uppercase",
+      fontWeight: "900",
       fontSize: "sm",
       letterSpacing: "widest",
-      fontWeight: "bold",
     },
   },
   components: {

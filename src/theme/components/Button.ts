@@ -1,6 +1,7 @@
 export const Button = {
   // The styles all button have in common
   baseStyle: {
+    fontFamily: "Lato",
     fontWeight: "bold",
     boxShadow: "none",
     textTransform: "uppercase",
