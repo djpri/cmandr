@@ -3,16 +3,15 @@ import {
   Box,
   Button,
   Stack,
-  HStack,
   StackItem,
+  Collapse,
+  Slide,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { selectUserEmail } from "../../redux/auth/authSlice";
-import LoginDrawer from "../LoginDrawer/LoginDrawer";
-import { ColorModeSwitcher } from "../ColorModeSwitcher/ColorModeSwitcher";
 import AppBarAccordion from "./AppBarAccordion/AppBarAccordion";
-import { GoChevronLeft, GoChevronRight } from "react-icons/go";
+import { selectIsSidebarOpen } from "../../redux/layout/layoutSlice";
 
 // const scrollbarStyles = {
 //   "::-webkit-scrollbar": {
@@ -31,80 +30,36 @@ import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 // };
 
 function AppBar() {
-  const userEmail = useSelector(selectUserEmail);
-  const [isOpen, setIsOpen] = React.useState(true);
+  const isOpen = useSelector(selectIsSidebarOpen);
 
   const gradient = useColorModeValue(
     "linear(to-b, gray.100 0%, gray.200 10%, gray.50 70%, gray.50 100%)",
     "linear(to-b, gray.800 0%, gray.700 10%, gray.800 40%, gray.800 100%)"
   );
 
-  const buttonGradient = useColorModeValue(
-    "linear(to-r, gray.100 0%, gray.200 10%, gray.50 70%, gray.50 100%)",
-    "linear(to-r, gray.800 0%, gray.700 10%, gray.800 40%, gray.800 100%)"
-  );
-
-  const buttonGradientHover = useColorModeValue(
-    "linear(to-r, gray.50 0%, gray.100 10%, white 70%, white 100%)",
-    "linear(to-r, gray.700 0%, gray.600 10%, gray.700 40%, gray.700 100%)"
-  );
-
-  if (!isOpen)
-    return (
-      <Button
-        border="0px"
-        bgGradient={buttonGradient}
-        w="%"
-        h="100%"
-        _hover={{ bgGradient: buttonGradientHover }}
-        onClick={() => {
-          setIsOpen((prevState) => !prevState);
-        }}
-      >
-        <GoChevronRight size="1.2rem" />
-      </Button>
-    );
-
   return (
-    <Box
-      pr="2"
-      h="100vh"
-      position="fixed"
-      bgGradient={gradient}
-      w="250px"
-      top="0"
-      // borderRight="2px"
-      borderColor="gray.500"
-      overflowY="scroll"
-      // sx={scrollbarStyles}
-      boxSizing="content-box"
-      zIndex="100"
-    >
-      <HStack p="5" display="flex" flexDirection="row">
-        <LoginDrawer buttonLabel={userEmail} />
-        <ColorModeSwitcher />
-      </HStack>
-      <Stack mt="10">
-        <StackItem>
-          <AppBarAccordion />
-        </StackItem>
-      </Stack>
-
-      <Box position="fixed" bottom="0" w="240px">
-        <Button
-          border="0px"
-          bgGradient={buttonGradient}
-          w="100%"
-          h="100%"
-          _hover={{ bgGradient: buttonGradientHover }}
-          onClick={() => {
-            setIsOpen((prevState) => !prevState);
-          }}
-        >
-          <GoChevronLeft size="1.2rem" />
-        </Button>
+    <Slide direction="left" in={isOpen}>
+      <Box
+        pr="2"
+        h="100vh"
+        position="fixed"
+        bgGradient={gradient}
+        w="250px"
+        // borderRight="2px"
+        borderColor="gray.500"
+        overflowY="scroll"
+        // sx={scrollbarStyles}
+        boxSizing="content-box"
+        zIndex="100"
+      >
+        {/* SIDE LINKS */}
+        <Stack mt="5">
+          <StackItem>
+            <AppBarAccordion />
+          </StackItem>
+        </Stack>
       </Box>
-    </Box>
+    </Slide>
   );
 }
 

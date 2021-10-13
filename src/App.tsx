@@ -16,6 +16,7 @@ import { useAppDispatch } from "./redux/store";
 import { setAuthListener } from "./redux/auth/authSlice";
 import { BrowserRouter, Route } from "react-router-dom";
 import CreateCommand from "./components/CreateCommand/CreateCommand";
+import NavBar from "./components/NavBar/NavBar";
 
 export const App = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ export const App = () => {
     <ChakraProvider theme={theme}>
       <CSSReset />
       <BrowserRouter>
+        <NavBar />
         <AppBar />
         <Container maxW="container.xl" ml="300px" mt="50px" position="relative">
           <Route exact path="/">
