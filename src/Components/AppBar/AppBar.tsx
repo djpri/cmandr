@@ -13,21 +13,25 @@ import { selectUserEmail } from "../../redux/auth/authSlice";
 import AppBarAccordion from "./AppBarAccordion/AppBarAccordion";
 import { selectIsSidebarOpen } from "../../redux/layout/layoutSlice";
 
-// const scrollbarStyles = {
-//   "::-webkit-scrollbar": {
-//     width: "5px",
-//   },
-//   "::-webkit-scrollbar-track": {
-//     background: "#2A4365",
-//   },
-//   "::-webkit-scrollbar-thumb": {
-//     background: "#888",
-//   },
-//   /* Handle on hover */
-//   "::-webkit-scrollbar-thumb:hover": {
-//     background: "#555",
-//   },
-// };
+const scrollbarStyles = {
+  "::-webkit-scrollbar": {
+    width: "8px",
+  },
+  "::-webkit-scrollbar-track": {
+    background: "#b3b6bb",
+  },
+  "::-webkit-scrollbar-thumb": {
+    background: "#888",
+  },
+  /* Handle on hover */
+  "::-webkit-scrollbar-thumb:hover": {
+    background: "#555",
+  },
+  "@-moz-document url-prefix()": {
+    scrollbarWidth: "thin",
+    scrollbarColor: "#555",
+  },
+};
 
 function AppBar() {
   const isOpen = useSelector(selectIsSidebarOpen);
@@ -37,29 +41,31 @@ function AppBar() {
     "linear(to-b, gray.800 0%, gray.700 10%, gray.800 40%, gray.800 100%)"
   );
 
+  if (!isOpen) return null;
+
   return (
-    <Slide direction="left" in={isOpen}>
-      <Box
-        pr="2"
-        h="100vh"
-        position="fixed"
-        bgGradient={gradient}
-        w="250px"
-        // borderRight="2px"
-        borderColor="gray.500"
-        overflowY="scroll"
-        // sx={scrollbarStyles}
-        boxSizing="content-box"
-        zIndex="100"
-      >
-        {/* SIDE LINKS */}
-        <Stack mt="5">
-          <StackItem>
-            <AppBarAccordion />
-          </StackItem>
-        </Stack>
-      </Box>
-    </Slide>
+    // <Slide direction="left" in={isOpen} unmountOnExit>
+    <Box
+      pr="2"
+      h="100vh"
+      bgGradient={gradient}
+      w="250px"
+      top="50"
+      position="fixed"
+      borderColor="gray.500"
+      overflowY="auto"
+      sx={scrollbarStyles}
+      boxSizing="content-box"
+      zIndex="500"
+    >
+      {/* SIDE LINKS */}
+      <Stack mt="5">
+        <StackItem>
+          <AppBarAccordion />
+        </StackItem>
+      </Stack>
+    </Box>
+    // </Slide>
   );
 }
 

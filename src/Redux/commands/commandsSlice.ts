@@ -4,23 +4,20 @@ import { AppThunk } from "../store";
 import { doc, setDoc } from "@firebase/firestore";
 
 const initialState = {
-  userData: null,
-  initialized: false,
-  isLoggedIn: false,
-  errorMessage: null, 
+  commands: [],
 };
 
 export const commandsSlice = createSlice({
   name: "commands",
   initialState,
   reducers: {
-    setInitialized: (state, { payload }) => {
-      state.initialized = payload;
+    setCommands: (state, { payload }) => {
+      state.commands = payload;
     },
   },
 });
 
 // SELECTORS
-export const selectIsLoggedIn = state => state.userAuth?.userData.isLoggedIn;
+export const selectIsLoggedIn = (state) => state.userAuth?.userData.isLoggedIn;
 
 export default commandsSlice.reducer;

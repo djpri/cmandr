@@ -55,6 +55,11 @@ const theme = extendTheme({
   },
   components: {
     Button,
+    AccordionItem: {
+      baseStyle: {
+        zIndex: 300,
+      },
+    },
     Input: {
       defaultProps: {
         focusBorderColor: "gray.400",
