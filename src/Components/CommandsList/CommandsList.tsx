@@ -25,39 +25,30 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
 import { GoLinkExternal } from "react-icons/go";
 import { IoMdOptions } from "react-icons/io";
 import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
 import DeleteCommandButton from "../shared/DeleteCommandButton/DeleteCommandButton";
 import AddCommandForm from "../shared/AddCommandForm/AddCommandForm";
+import {
+  getCommandsFromDB,
+  selectAllCommands,
+} from "../../redux/commands/commandsSlice";
 
 function CommandManager() {
+  const dispatch = useDispatch();
   const user = useSelector(selectUserUid);
-  const [commands, setCommands] = React.useState<ICommand[]>([]);
+  const reduxCommands = useSelector(selectAllCommands);
+  // const [commands, setCommands] = React.useState<ICommand[]>([]);
   const [isCopied, setIsCopied] = React.useState({});
   const { isOpen, onToggle } = useDisclosure();
 
   // Fill command data if there is a user logged in
   React.useEffect(() => {
-    const addData = async () => {
-      const docSnap: any = await getDocs(
-        collection(db, `users/${user}/commands`)
-      );
-      const commands = docSnap.docs.map((doc) => {
-        let docInfo = doc.data();
-        docInfo.id = doc.id;
-        return docInfo;
-      });
-      setCommands(commands);
-    };
-    if (user) {
-      addData();
-    } else {
-      setCommands([]);
-    }
-  }, [user]);
+    dispatch(getCommandsFromDB());
+  }, [user, dispatch]);
 
   const handleCopy = (index: number) => {
     setIsCopied((prevState) => ({ [index]: true }));
@@ -66,7 +57,7 @@ function CommandManager() {
     }, 1500);
   };
 
-  if (commands.length === 0)
+  if (reduxCommands.length === 0)
     return (
       <Box maxW="container.lg" boxShadow="base" rounded="md" p="5">
         not logged in
@@ -98,7 +89,7 @@ function CommandManager() {
             </Tr>
           </Thead>
           <Tbody>
-            {commands.map(
+            {reduxCommands.map(
               ({ id, howTo, command, reference, category }, index) => (
                 <Tr key={index}>
                   {/* HOWTO COLUMN */}
