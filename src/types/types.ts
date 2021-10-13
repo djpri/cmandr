@@ -7,7 +7,7 @@ export interface ICommand {
 }
 
 export type UserAuthState = {
-  userData: {} | null;
+  userData: { uid: string } | null;
   displayName: string | null;
   initialized: boolean;
   isLoading: boolean;

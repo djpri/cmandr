@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import authReducer from "./auth/authSlice";
 import layoutReducer from "./layout/layoutSlice";
+import commandsReducer from "./commands/commandsSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     layout: layoutReducer,
+    commands: commandsReducer,
     userAuth: authReducer,
   },
 });

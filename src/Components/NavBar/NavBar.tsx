@@ -17,7 +17,7 @@ function NavBar() {
       position="sticky"
       top="0"
       w="100%"
-      bgColor="#242425"
+      bgColor="gray.800"
       zIndex="200"
       h="50"
       shadow="base"
