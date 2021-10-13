@@ -17,9 +17,14 @@ import { setAuthListener } from "./redux/auth/authSlice";
 import { BrowserRouter, Route } from "react-router-dom";
 import CreateCommand from "./components/CreateCommand/CreateCommand";
 import NavBar from "./components/NavBar/NavBar";
+import { selectIsSidebarOpen } from "./redux/layout/layoutSlice";
+import { useSelector } from "react-redux";
 
 export const App = () => {
   const dispatch = useAppDispatch();
+  const isSidebarOpen = useSelector(selectIsSidebarOpen);
+
+  // const containerMargin;
 
   dispatch(setAuthListener());
 
@@ -29,7 +34,7 @@ export const App = () => {
       <BrowserRouter>
         <NavBar />
         <AppBar />
-        <Container maxW="container.xl" ml="300px" mt="50px" position="relative">
+        <Container maxW="container.xl" mt="30px" position="relative">
           <Route exact path="/">
             <Box textAlign="center" fontSize="xl">
               <Grid minH="100vh" p={3}>
@@ -53,8 +58,8 @@ export const App = () => {
             <CreateCommand />
           </Route>
           <Route path="/commands">
-            <Heading as="h2" mb="50px">
-              All Commands
+            <Heading as="h2" mb="30px" fontWeight="900">
+              Commands
             </Heading>
             <CommandsList />
           </Route>

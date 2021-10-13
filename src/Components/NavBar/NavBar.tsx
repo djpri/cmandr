@@ -20,6 +20,7 @@ function NavBar() {
       bgColor="#242425"
       zIndex="200"
       h="50"
+      shadow="base"
     >
       {/* TOP BUTTONS */}
       <HStack

@@ -21,18 +21,23 @@ import {
   PopoverCloseButton,
   PopoverContent,
   PopoverHeader,
+  Collapse,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSelector } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
 import { GoLinkExternal } from "react-icons/go";
 import { IoMdOptions } from "react-icons/io";
+import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
 import DeleteCommandButton from "../shared/DeleteCommandButton/DeleteCommandButton";
+import AddCommandForm from "../shared/AddCommandForm/AddCommandForm";
 
 function CommandManager() {
   const user = useSelector(selectUserUid);
   const [commands, setCommands] = React.useState<ICommand[]>([]);
   const [isCopied, setIsCopied] = React.useState({});
+  const { isOpen, onToggle } = useDisclosure();
 
   // Fill command data if there is a user logged in
   React.useEffect(() => {
@@ -45,7 +50,6 @@ function CommandManager() {
         docInfo.id = doc.id;
         return docInfo;
       });
-      console.log(commands);
       setCommands(commands);
     };
     if (user) {
@@ -72,6 +76,18 @@ function CommandManager() {
   return (
     <>
       <Box maxW="container.xl" boxShadow="base" rounded="md" p="5">
+        {isOpen ? (
+          <Button onClick={onToggle} mb="4">
+            {<AiFillCaretUp />}
+          </Button>
+        ) : (
+          <Button onClick={onToggle} mb="4" rightIcon={<AiFillCaretDown />}>
+            Add
+          </Button>
+        )}
+        <Collapse in={isOpen} animateOpacity>
+          <AddCommandForm />
+        </Collapse>
         <Table variant="simple">
           <Thead>
             <Tr>
@@ -85,7 +101,9 @@ function CommandManager() {
             {commands.map(
               ({ id, howTo, command, reference, category }, index) => (
                 <Tr key={index}>
+                  {/* HOWTO COLUMN */}
                   <Td>{howTo}</Td>
+                  {/* COMMAND COLUMN */}
                   <Td>
                     <Code
                       _hover={{
@@ -98,6 +116,7 @@ function CommandManager() {
                       {command}
                     </Code>
                   </Td>
+                  {/* CATEGORY COLUMN */}
                   <Td>{category}</Td>
                   <Td>
                     <HStack spacing="4">
@@ -114,6 +133,7 @@ function CommandManager() {
                           {isCopied[index] ? "Copied" : "Copy"}
                         </Button>
                       </CopyToClipboard>
+                      {/* BUTTONS */}
                       <Link target="_blank" rel="noreferrer" href={reference}>
                         <Button
                           size="xs"

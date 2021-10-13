@@ -76,9 +76,8 @@ export const {
 // ASYNC ACTIONS
 export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   auth.onAuthStateChanged((user) => {
-    console.log(user);
     console.log("auth state changed");
-    if (user && getState().userAuth.initialized) {
+    if (user !== null && getState().userAuth.initialized) {
       dispatch(setUserData(user.toJSON()));
       dispatch(logInUser());
     }
