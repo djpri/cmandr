@@ -1,9 +1,14 @@
+import { ICommand } from "./../../types/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { db } from "../../firebase/firebase";
 import { AppThunk } from "../store";
 import { collection, getDocs } from "@firebase/firestore";
 
-const initialState = {
+type CommandsState = {
+  commands: ICommand[];
+};
+
+const initialState: CommandsState = {
   commands: [],
 };
 
@@ -14,10 +19,15 @@ export const commandsSlice = createSlice({
     setCommands: (state, { payload }) => {
       state.commands = payload;
     },
+    setAddCommand: (state, { payload }) => {
+      const newState = state.commands;
+      newState.push(payload);
+      state.commands = newState;
+    },
   },
 });
 
-export const { setCommands } = commandsSlice.actions;
+export const { setCommands, setAddCommand } = commandsSlice.actions;
 
 // SELECTORS
 export const selectAllCommands = (state) => state.commands.commands;

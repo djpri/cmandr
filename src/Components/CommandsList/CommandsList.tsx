@@ -1,7 +1,4 @@
 import * as React from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
-import { ICommand } from "../../types/types";
 import {
   Code,
   Link,
@@ -41,19 +38,18 @@ function CommandManager() {
   const dispatch = useDispatch();
   const user = useSelector(selectUserUid);
   const reduxCommands = useSelector(selectAllCommands);
-  // const [commands, setCommands] = React.useState<ICommand[]>([]);
   const [isCopied, setIsCopied] = React.useState({});
   const { isOpen, onToggle } = useDisclosure();
 
-  // Fill command data if there is a user logged in
+  // Fill command data if there is a user logged in, empty when user logs out
   React.useEffect(() => {
     dispatch(getCommandsFromDB());
   }, [user, dispatch]);
 
   const handleCopy = (index: number) => {
-    setIsCopied((prevState) => ({ [index]: true }));
+    setIsCopied({ [index]: true });
     setTimeout(() => {
-      setIsCopied((prevState) => ({}));
+      setIsCopied({});
     }, 1500);
   };
 
@@ -135,7 +131,11 @@ function CommandManager() {
                           Link
                         </Button>
                       </Link>
-                      <Popover isLazy placement="right">
+                      <Popover
+                        isLazy
+                        lazyBehavior="keepMounted"
+                        placement="right"
+                      >
                         <PopoverTrigger>
                           <Button size="xs" bgColor="teal.500" color="white">
                             <IoMdOptions />
