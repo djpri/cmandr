@@ -9,24 +9,38 @@ import {
 } from "@chakra-ui/react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import { useForm } from "react-hook-form";
+import { setAddCommand } from "../../../redux/commands/commandsSlice";
 
 function AddCommandForm() {
   const toast = useToast();
+  const dispatch = useDispatch();
   const uid: string = useSelector(selectUserUid);
 
   const { handleSubmit, register, reset } = useForm();
 
   const addCommandToDB = async ({ howTo, command, category, reference }) => {
     try {
-      await addDoc(collection(db, `users/${uid}/commands`), {
-        howTo,
-        command,
-        reference,
-        category,
-      });
+      const newCommandRef = await addDoc(
+        collection(db, `users/${uid}/commands`),
+        {
+          howTo,
+          command,
+          reference,
+          category,
+        }
+      );
+      dispatch(
+        setAddCommand({
+          id: newCommandRef.id,
+          howTo,
+          command,
+          reference,
+          category,
+        })
+      );
       toast({
         title: "Command Added",
         description: "command added successfully",
