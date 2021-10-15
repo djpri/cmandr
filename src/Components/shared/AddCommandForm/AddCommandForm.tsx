@@ -3,8 +3,9 @@ import {
   FormLabel,
   Input,
   Select,
-  Stack,
+  Grid,
   useToast,
+  Box,
 } from "@chakra-ui/react";
 import { addDoc, collection } from "firebase/firestore";
 import * as React from "react";
@@ -60,31 +61,49 @@ function AddCommandForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack mb="10">
-        <FormLabel htmlFor="howto">How to...</FormLabel>
-        <Input
-          {...register("howTo")}
-          placeholder="How to (description of what command does)"
-        />
+    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+      <Grid
+        mb="10"
+        templateColumns={[
+          "repeat(1, 1fr)",
+          "repeat(1, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(4, 1fr)",
+        ]}
+        gap={6}
+      >
+        <Box>
+          <FormLabel htmlFor="howto">How to...</FormLabel>
+          <Input
+            {...register("howTo")}
+            placeholder="How to (description of what command does)"
+          />
+        </Box>
 
-        <FormLabel htmlFor="command">Command</FormLabel>
-        <Input {...register("command")} placeholder="Command" />
+        <Box>
+          <FormLabel htmlFor="command">Command</FormLabel>
+          <Input {...register("command")} placeholder="Command" />
+        </Box>
 
-        <FormLabel htmlFor="category">Category</FormLabel>
-        <Select {...register("category")}>
-          <option value="npm package">npm package</option>
-          <option value="general">General</option>
-          <option value="git">Git</option>
-        </Select>
+        <Box>
+          <FormLabel htmlFor="category">Category</FormLabel>
+          <Select {...register("category")}>
+            <option value="npm package">npm package</option>
+            <option value="general">General</option>
+            <option value="git">Git</option>
+          </Select>
+        </Box>
 
-        <FormLabel htmlFor="reference">Reference</FormLabel>
-        <Input {...register("reference")} placeholder="Reference" />
+        <Box>
+          <FormLabel htmlFor="reference">Reference</FormLabel>
+          <Input {...register("reference")} placeholder="Reference" />
+        </Box>
 
         <Button type="submit" colorScheme="green" size="sm" isFullWidth={false}>
           Add command
         </Button>
-      </Stack>
+      </Grid>
     </form>
   );
 }
