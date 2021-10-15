@@ -16,7 +16,8 @@ import AppBar from "./components/AppBar/AppBar";
 import CommandsList from "./components/CommandsList/CommandsList";
 import CreateCommand from "./components/CreateCommand/CreateCommand";
 import NavBar from "./components/NavBar/NavBar";
-import { setAuthListener } from "./redux/auth/authSlice";
+import { selectUserUid, setAuthListener } from "./redux/auth/authSlice";
+import { getCommandsFromDB } from "./redux/commands/commandsSlice";
 import {
   selectIsSidebarOpen,
   setSidebarClosed,
@@ -26,6 +27,7 @@ import theme from "./theme/theme";
 
 export const App = () => {
   const dispatch = useAppDispatch();
+  const user = useSelector(selectUserUid);
   const isSidebarOpen = useSelector(selectIsSidebarOpen);
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
 
@@ -35,9 +37,16 @@ export const App = () => {
     dispatch(setAuthListener());
   }, [dispatch]);
 
+  // Fill command data if there is a user logged in, empty when user logs out
+  React.useEffect(() => {
+    dispatch(getCommandsFromDB());
+  }, [user, dispatch]);
+
   // sidebar is initially closed on smaller devices
   React.useEffect(() => {
-    if (isSmallerThan1280) dispatch(setSidebarClosed());
+    if (isSmallerThan1280) {
+      dispatch(setSidebarClosed());
+    }
   }, [isSmallerThan1280, dispatch]);
 
   return (

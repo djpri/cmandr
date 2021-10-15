@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Code,
-  Collapse,
   HStack,
   Link,
   Table,
@@ -15,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { GoLinkExternal } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
@@ -23,7 +21,7 @@ import {
   getCommandsFromDB,
   selectAllCommands,
 } from "../../redux/commands/commandsSlice";
-import AddCommandForm from "../shared/AddCommandForm/AddCommandForm";
+import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandOptions from "./CommandOptions/CommandOptions";
 
 function CommandManager() {
@@ -33,11 +31,6 @@ function CommandManager() {
   const [isCopied, setIsCopied] = React.useState({});
   const { isOpen, onToggle } = useDisclosure();
   const ref = React.useRef<HTMLDivElement>(null);
-
-  // Fill command data if there is a user logged in, empty when user logs out
-  React.useEffect(() => {
-    dispatch(getCommandsFromDB());
-  }, [user, dispatch]);
 
   const handleCopy = (index: number) => {
     setIsCopied({ [index]: true });
@@ -56,18 +49,7 @@ function CommandManager() {
   return (
     <>
       <Box maxW="container.xl" boxShadow="base" rounded="md" p="5">
-        {isOpen ? (
-          <Button onClick={onToggle} mb="4">
-            {<AiFillCaretUp />}
-          </Button>
-        ) : (
-          <Button onClick={onToggle} mb="4" rightIcon={<AiFillCaretDown />}>
-            Add
-          </Button>
-        )}
-        <Collapse in={isOpen} animateOpacity>
-          <AddCommandForm />
-        </Collapse>
+        <AddCommandButton />
         <Box ref={ref} bg="yellow.500">
           <div>Container: Hey,</div>
         </Box>

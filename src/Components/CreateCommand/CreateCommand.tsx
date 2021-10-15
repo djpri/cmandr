@@ -30,9 +30,7 @@ function CreateCommand() {
             <TabPanel>
               <AddCommandForm />
             </TabPanel>
-            <TabPanel>
-              <EditCommandForm />
-            </TabPanel>
+            <TabPanel>{/* <EditCommandForm /> */}</TabPanel>
             <TabPanel>
               <p>three!</p>
             </TabPanel>

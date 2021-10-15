@@ -1,14 +1,14 @@
-import { HStack } from "@chakra-ui/layout";
 import {
-  Popover,
-  PopoverTrigger,
-  Button,
   Box,
+  Button,
+  HStack,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
   PopoverContent,
   PopoverHeader,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverBody,
+  PopoverTrigger,
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -42,8 +42,9 @@ function CommandOptions({ commandId, editRef, command }) {
           <HStack>
             <Button
               size="xs"
-              bgColor="green.500"
-              color="white"
+              colorScheme="orange"
+              // bgColor="green.500"
+              // color="white"
               onClick={() => setIsVisible((prevState) => !prevState)}
             >
               Edit

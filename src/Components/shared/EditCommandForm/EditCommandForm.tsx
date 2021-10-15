@@ -83,7 +83,9 @@ function EditCommandForm(props) {
         <FormLabel htmlFor="reference">Reference</FormLabel>
         <Input {...register("reference")} placeholder="Reference" />
 
-        <Button type="submit">Save</Button>
+        <Button type="submit" colorScheme="orange">
+          Save
+        </Button>
       </Stack>
     </form>
   );
