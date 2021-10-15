@@ -2,16 +2,19 @@ import { Button, useToast } from "@chakra-ui/react";
 import * as React from "react";
 import { db } from "../../../firebase/firebase";
 import { doc, deleteDoc } from "firebase/firestore";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUserUid } from "../../../redux/auth/authSlice";
+import { setDeleteCommand } from "../../../redux/commands/commandsSlice";
 
-function DeleteCommandButton({ commandId }) {
+function DeleteCommandButton({ commandId, onClick }) {
   const user = useSelector(selectUserUid);
+  const dispatch = useDispatch();
   const toast = useToast();
 
   const deleteCommandById = async () => {
     try {
       await deleteDoc(doc(db, `users/${user}/commands`, commandId));
+      dispatch(setDeleteCommand(commandId));
       toast({
         title: "Command Deleted",
         description: "command deleted successfully",
@@ -35,7 +38,10 @@ function DeleteCommandButton({ commandId }) {
       size="xs"
       bgColor="red.500"
       color="white"
-      onClick={deleteCommandById}
+      onClick={() => {
+        deleteCommandById();
+        onClick();
+      }}
     >
       Delete
     </Button>

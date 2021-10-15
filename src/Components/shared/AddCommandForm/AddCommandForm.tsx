@@ -1,17 +1,17 @@
-import * as React from "react";
 import {
   Button,
-  Stack,
-  Input,
   FormLabel,
+  Input,
   Select,
+  Stack,
   useToast,
 } from "@chakra-ui/react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../../firebase/firebase";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUserUid } from "../../../redux/auth/authSlice";
+import { addDoc, collection } from "firebase/firestore";
+import * as React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { db } from "../../../firebase/firebase";
+import { selectUserUid } from "../../../redux/auth/authSlice";
 import { setAddCommand } from "../../../redux/commands/commandsSlice";
 
 function AddCommandForm() {
@@ -81,7 +81,9 @@ function AddCommandForm() {
         <FormLabel htmlFor="reference">Reference</FormLabel>
         <Input {...register("reference")} placeholder="Reference" />
 
-        <Button type="submit">Add command</Button>
+        <Button type="submit" colorScheme="green" size="sm" isFullWidth={false}>
+          Add command
+        </Button>
       </Stack>
     </form>
   );

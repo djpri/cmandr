@@ -1,38 +1,30 @@
-import * as React from "react";
 import {
-  Code,
-  Link,
-  Button,
   Box,
-  HStack,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Popover,
-  PopoverTrigger,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
+  Button,
+  Code,
   Collapse,
+  HStack,
+  Link,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
   useDisclosure,
 } from "@chakra-ui/react";
+import * as React from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUserUid } from "../../redux/auth/authSlice";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { GoLinkExternal } from "react-icons/go";
-import { IoMdOptions } from "react-icons/io";
-import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
-import DeleteCommandButton from "../shared/DeleteCommandButton/DeleteCommandButton";
-import AddCommandForm from "../shared/AddCommandForm/AddCommandForm";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserUid } from "../../redux/auth/authSlice";
 import {
   getCommandsFromDB,
   selectAllCommands,
 } from "../../redux/commands/commandsSlice";
+import AddCommandForm from "../shared/AddCommandForm/AddCommandForm";
+import CommandOptions from "./CommandOptions/CommandOptions";
 
 function CommandManager() {
   const dispatch = useDispatch();
@@ -40,6 +32,7 @@ function CommandManager() {
   const reduxCommands = useSelector(selectAllCommands);
   const [isCopied, setIsCopied] = React.useState({});
   const { isOpen, onToggle } = useDisclosure();
+  const ref = React.useRef<HTMLDivElement>(null);
 
   // Fill command data if there is a user logged in, empty when user logs out
   React.useEffect(() => {
@@ -56,7 +49,7 @@ function CommandManager() {
   if (reduxCommands.length === 0)
     return (
       <Box maxW="container.lg" boxShadow="base" rounded="md" p="5">
-        not logged in
+        no commands available
       </Box>
     );
 
@@ -75,6 +68,9 @@ function CommandManager() {
         <Collapse in={isOpen} animateOpacity>
           <AddCommandForm />
         </Collapse>
+        <Box ref={ref} bg="yellow.500">
+          <div>Container: Hey,</div>
+        </Box>
         <Table variant="simple">
           <Thead>
             <Tr>
@@ -131,36 +127,11 @@ function CommandManager() {
                           Link
                         </Button>
                       </Link>
-                      <Popover
-                        isLazy
-                        lazyBehavior="keepMounted"
-                        placement="right"
-                      >
-                        <PopoverTrigger>
-                          <Button size="xs" bgColor="teal.500" color="white">
-                            <IoMdOptions />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                          <PopoverHeader fontWeight="semibold">
-                            Options
-                          </PopoverHeader>
-                          <PopoverArrow />
-                          <PopoverCloseButton />
-                          <PopoverBody>
-                            <HStack>
-                              <Button
-                                size="xs"
-                                bgColor="green.500"
-                                color="white"
-                              >
-                                Edit
-                              </Button>
-                              <DeleteCommandButton commandId={id} />
-                            </HStack>
-                          </PopoverBody>
-                        </PopoverContent>
-                      </Popover>
+                      <CommandOptions
+                        commandId={id}
+                        editRef={ref}
+                        command={{ id, howTo, command, reference, category }}
+                      />
                     </HStack>
                   </Td>
                 </Tr>

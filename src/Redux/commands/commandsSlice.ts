@@ -24,10 +24,23 @@ export const commandsSlice = createSlice({
       newState.push(payload);
       state.commands = newState;
     },
+    setEditCommand: (state, { payload }) => {
+      const newState = [...state.commands];
+      const index = newState.findIndex((command) => command.id === payload.id);
+      newState[index] = payload;
+      state.commands = newState;
+    },
+    setDeleteCommand: (state, { payload }) => {
+      const newState = [...state.commands];
+      const index = newState.findIndex((command) => command.id === payload);
+      newState.splice(index, 1);
+      state.commands = newState;
+    },
   },
 });
 
-export const { setCommands, setAddCommand } = commandsSlice.actions;
+export const { setCommands, setAddCommand, setEditCommand, setDeleteCommand } =
+  commandsSlice.actions;
 
 // SELECTORS
 export const selectAllCommands = (state) => state.commands.commands;
