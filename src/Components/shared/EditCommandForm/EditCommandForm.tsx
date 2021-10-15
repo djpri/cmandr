@@ -7,18 +7,23 @@ import {
   Select,
   useToast,
 } from "@chakra-ui/react";
-import { collection, addDoc } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../../redux/store";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import { useForm } from "react-hook-form";
+import { setEditCommand } from "../../../redux/commands/commandsSlice";
 
-function EditCommandForm({ howTo, command, category, reference }) {
+function EditCommandForm(props) {
+  const { id, howTo, command, category, reference } = props.commandItem;
   const toast = useToast();
+  const dispatch = useAppDispatch();
   const uid: string = useSelector(selectUserUid);
 
   const { handleSubmit, register } = useForm({
     defaultValues: {
+      id,
       howTo,
       command,
       category,
@@ -26,14 +31,16 @@ function EditCommandForm({ howTo, command, category, reference }) {
     },
   });
 
-  const editCommandInDB = async ({ howTo, command, category, reference }) => {
+  const editCommandInDB = async (values) => {
+    const { id, howTo, command, category, reference } = values;
     try {
-      await addDoc(collection(db, `users/${uid}/commands`), {
+      await updateDoc(doc(db, `users/${uid}/commands`, id), {
         howTo,
         command,
         reference,
         category,
       });
+      dispatch(setEditCommand(values));
       toast({
         title: "Command Added",
         description: "command added successfully",
@@ -48,12 +55,15 @@ function EditCommandForm({ howTo, command, category, reference }) {
 
   const onSubmit = (values) => {
     editCommandInDB(values);
-    alert(JSON.stringify(values, null, 2));
+    // closes popover if using form from popover only
+    if (props.onClose) props.onClose();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack mb="10">
+      <Stack mb="10" mt="3">
+        <Input {...register("id")} placeholder="id" isDisabled type="hidden" />
+
         <FormLabel htmlFor="howto">How to...</FormLabel>
         <Input
           {...register("howTo")}
@@ -73,7 +83,7 @@ function EditCommandForm({ howTo, command, category, reference }) {
         <FormLabel htmlFor="reference">Reference</FormLabel>
         <Input {...register("reference")} placeholder="Reference" />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Save</Button>
       </Stack>
     </form>
   );

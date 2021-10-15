@@ -6,11 +6,11 @@ import { selectUserEmail } from "../../redux/auth/authSlice";
 import { ColorModeSwitcher } from "../ColorModeSwitcher/ColorModeSwitcher";
 import LoginDrawer from "../LoginDrawer/LoginDrawer";
 import { setSidebarToggle } from "../../redux/layout/layoutSlice";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../redux/store";
 
 function NavBar() {
   const userEmail = useSelector(selectUserEmail);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <Box

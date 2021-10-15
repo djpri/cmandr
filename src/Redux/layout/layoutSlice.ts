@@ -11,11 +11,14 @@ export const layoutSlice = createSlice({
     setSidebarToggle: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
+    setSidebarClosed: (state) => {
+      state.isSidebarOpen = false;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setSidebarToggle } = layoutSlice.actions;
+export const { setSidebarToggle, setSidebarClosed } = layoutSlice.actions;
 
 // SELECTORS
 export const selectIsSidebarOpen = (state) => state.layout.isSidebarOpen;
