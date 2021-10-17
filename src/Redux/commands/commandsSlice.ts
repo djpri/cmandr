@@ -28,14 +28,14 @@ export const commandsSlice = createSlice({
     },
     // setDeleteCommand(command)
     setEditCommand: (state, { payload }) => {
-      const newState = [...state.commands];
+      const newState = state.commands;
       const index = newState.findIndex((command) => command.id === payload.id);
       newState[index] = payload;
       state.commands = newState;
     },
     // setDeleteCommand(id) deletes command with matching id
     setDeleteCommand: (state, { payload }) => {
-      const newState = [...state.commands];
+      const newState = state.commands;
       const index = newState.findIndex((command) => command.id === payload);
       newState.splice(index, 1);
       state.commands = newState;
@@ -48,6 +48,8 @@ export const { setCommands, setAddCommand, setEditCommand, setDeleteCommand } =
 
 // SELECTORS
 export const selectAllCommands = (state) => state.commands.commands;
+
+// export const selectCommandsByCategory =
 
 export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
   const user = getState().userAuth?.userData?.uid;

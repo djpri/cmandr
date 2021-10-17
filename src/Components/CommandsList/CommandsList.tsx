@@ -10,27 +10,24 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { GoLinkExternal } from "react-icons/go";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUserUid } from "../../redux/auth/authSlice";
-import {
-  getCommandsFromDB,
-  selectAllCommands,
-} from "../../redux/commands/commandsSlice";
+import { useSelector } from "react-redux";
+import { selectAllCommands } from "../../redux/commands/commandsSlice";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandOptions from "./CommandOptions/CommandOptions";
+import TableHeader from "./TableHeader/TableHeader";
 
 function CommandManager() {
-  const dispatch = useDispatch();
-  const user = useSelector(selectUserUid);
-  const reduxCommands = useSelector(selectAllCommands);
+  const allCommands = useSelector(selectAllCommands);
+  const [commands, setCommands] = React.useState(allCommands);
   const [isCopied, setIsCopied] = React.useState({});
-  const { isOpen, onToggle } = useDisclosure();
-  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    setCommands(allCommands);
+  }, [allCommands]);
 
   const handleCopy = (index: number) => {
     setIsCopied({ [index]: true });
@@ -39,7 +36,22 @@ function CommandManager() {
     }, 1500);
   };
 
-  if (reduxCommands.length === 0)
+  const sortCommandsByField = (field, isAscending = true) => {
+    setCommands((prevState) => {
+      let newState = [...prevState];
+      newState.sort((a, b) => {
+        let valueA = a[field].toUpperCase();
+        let valueB = b[field].toUpperCase();
+        if (valueA < valueB) return -1;
+        if (valueA > valueB) return 1;
+        return 0;
+      });
+      if (isAscending === false) return newState.reverse();
+      return newState;
+    });
+  };
+
+  if (commands.length === 0)
     return (
       <Box maxW="container.lg" boxShadow="base" rounded="md" p="5">
         no commands available
@@ -48,22 +60,37 @@ function CommandManager() {
 
   return (
     <>
-      <Box maxW="container.xl" boxShadow="base" rounded="md" p="5">
+      <Box
+        maxW="container.xl"
+        overflowX="auto"
+        boxShadow="base"
+        rounded="md"
+        p="5"
+      >
         <AddCommandButton />
-        <Box ref={ref} bg="yellow.500">
-          <div>Container: Hey,</div>
-        </Box>
-        <Table variant="simple">
+        <Table>
           <Thead>
             <Tr>
-              <Th>How to...</Th>
-              <Th>Command</Th>
-              <Th>Category</Th>
+              <TableHeader
+                sortCommandsByField={sortCommandsByField}
+                field="howTo"
+                label="How to..."
+              />
+              <TableHeader
+                sortCommandsByField={sortCommandsByField}
+                field="command"
+                label="Command"
+              />
+              <TableHeader
+                sortCommandsByField={sortCommandsByField}
+                field="category"
+                label="Category"
+              />
               <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
-            {reduxCommands.map(
+            {commands.map(
               ({ id, howTo, command, reference, category }, index) => (
                 <Tr key={index}>
                   {/* HOWTO COLUMN */}
@@ -111,7 +138,6 @@ function CommandManager() {
                       </Link>
                       <CommandOptions
                         commandId={id}
-                        editRef={ref}
                         command={{ id, howTo, command, reference, category }}
                       />
                     </HStack>

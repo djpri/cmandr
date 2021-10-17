@@ -19,7 +19,7 @@ const testItem = {
   id: "BqeJ0PXxnNahJryxW8MK",
 };
 
-test("should return the initial state", () => {
+test("returns the initial state", () => {
   expect(reducer(undefined, {})).toEqual({ commands: [] });
 });
 
