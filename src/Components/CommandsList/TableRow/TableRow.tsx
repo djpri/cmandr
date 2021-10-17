@@ -1,7 +1,7 @@
 import { Tr, Td, Code, HStack, Button, Link } from "@chakra-ui/react";
 import React from "react";
 import { GoLinkExternal } from "react-icons/go";
-import CommandOptions from "../CommandOptions/CommandOptions";
+import CommandOptions from "./CommandOptions/CommandOptions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function TableRow({ commandItem, key }) {
