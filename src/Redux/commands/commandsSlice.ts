@@ -71,4 +71,19 @@ export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
   }
 };
 
+export const sortCommandsByField =
+  (field, isAscending = true): AppThunk =>
+  async (dispatch, getState) => {
+    let newState = getState().commands.commands;
+    newState.sort((a, b) => {
+      let valueA = a[field].toUpperCase();
+      let valueB = b[field].toUpperCase();
+      if (valueA < valueB) return -1;
+      if (valueA > valueB) return 1;
+      return 0;
+    });
+    if (isAscending === false) dispatch(setCommands(newState.reverse()));
+    dispatch(setCommands(newState));
+  };
+
 export default commandsSlice.reducer;
