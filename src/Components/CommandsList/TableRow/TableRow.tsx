@@ -17,7 +17,7 @@ function TableRow({ commandItem, key }) {
 
   return (
     <Tr key={key}>
-      <Td>{howTo}</Td>
+      <Td>{howTo.charAt(0).toUpperCase() + howTo.slice(1)}</Td>
 
       <Td>
         <Code
@@ -47,16 +47,30 @@ function TableRow({ commandItem, key }) {
             </Button>
           </CopyToClipboard>
           {/* BUTTONS */}
-          <Link target="_blank" rel="noreferrer" href={reference}>
+          {!reference ? (
             <Button
               size="xs"
               bgColor="cyan.600"
               color="white"
               leftIcon={<GoLinkExternal />}
+              isDisabled={!reference}
             >
               Link
             </Button>
-          </Link>
+          ) : (
+            <Link target="_blank" rel="noreferrer" href={reference}>
+              <Button
+                size="xs"
+                bgColor="cyan.600"
+                color="white"
+                leftIcon={<GoLinkExternal />}
+                isDisabled={!reference}
+              >
+                Link
+              </Button>
+            </Link>
+          )}
+
           <CommandOptions
             commandId={id}
             command={{ id, howTo, command, reference, category }}

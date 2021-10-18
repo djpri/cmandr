@@ -49,8 +49,7 @@ export const { setCommands, setAddCommand, setEditCommand, setDeleteCommand } =
 // SELECTORS
 export const selectAllCommands = (state) => state.commands.commands;
 
-// export const selectCommandsByCategory =
-
+// ASYNC ACTIONS
 export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
   const user = getState().userAuth?.userData?.uid;
   const addData = async () => {
@@ -74,7 +73,8 @@ export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
 export const sortCommandsByField =
   (field, isAscending = true): AppThunk =>
   async (dispatch, getState) => {
-    let newState = getState().commands.commands;
+    let newState = [...getState().commands.commands];
+
     newState.sort((a, b) => {
       let valueA = a[field].toUpperCase();
       let valueB = b[field].toUpperCase();
@@ -82,6 +82,7 @@ export const sortCommandsByField =
       if (valueA > valueB) return 1;
       return 0;
     });
+
     if (isAscending === false) dispatch(setCommands(newState.reverse()));
     dispatch(setCommands(newState));
   };
