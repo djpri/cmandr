@@ -1,8 +1,9 @@
 import {
   Box,
+  IconButton,
   Input,
   InputGroup,
-  InputLeftElement,
+  InputRightElement,
   Table,
   Tbody,
   Th,
@@ -23,7 +24,7 @@ function CommandManager() {
 
   const [commands, setCommands] = React.useState(reduxCommands);
   const [search, setSearch] = React.useState("");
-  // const [isSearching, setIsSearching] = React.useState(false);
+  const [isSearching, setIsSearching] = React.useState(false);
 
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
@@ -33,13 +34,21 @@ function CommandManager() {
   }, [reduxCommands]);
 
   // filter commands on search
+  // wait 500ms after user stops typing before filtering
   React.useEffect(() => {
-    setCommands(() => {
-      const newArray = reduxCommands.filter((item) =>
-        item.howTo.match(new RegExp(search, "i"))
-      );
-      return newArray;
-    });
+    const timeout = setTimeout(() => {
+      setCommands(() => {
+        const newArray = reduxCommands.filter((item) =>
+          item.howTo.match(new RegExp(search, "i"))
+        );
+        return newArray;
+      });
+      setIsSearching(false);
+    }, 500);
+    return () => {
+      setIsSearching(true);
+      clearTimeout(timeout);
+    };
   }, [search, reduxCommands]);
 
   if (!commands || commands.length === 0)
@@ -55,16 +64,18 @@ function CommandManager() {
         >
           <AddCommandButton />
           <InputGroup>
-            <InputLeftElement
-              pointerEvents="none"
-              children={<AiOutlineSearch color="gray.300" />}
-            />
             <Input
               type="text"
               placeholder="Search by 'How Tos'"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
+            <InputRightElement>
+              <IconButton
+                aria-label="search button"
+                icon={<AiOutlineSearch color="gray.300" />}
+              />
+            </InputRightElement>
           </InputGroup>
         </Box>
       </>
@@ -85,15 +96,21 @@ function CommandManager() {
       >
         <AddCommandButton />
         <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            children={<AiOutlineSearch color="gray.300" />}
-          />
           <Input
             type="text"
             placeholder="Search by 'How Tos'"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+          />
+          <InputRightElement
+            children={
+              <IconButton
+                size="md"
+                isLoading={isSearching}
+                aria-label="search-button"
+                icon={<AiOutlineSearch color="gray.300" />}
+              />
+            }
           />
         </InputGroup>
         <Table>
@@ -107,7 +124,7 @@ function CommandManager() {
           </Thead>
           <Tbody>
             {commands.map((command, index) => (
-              <TableRow commandItem={command} key={index} />
+              <TableRow commandItem={command} index={index} key={index} />
             ))}
           </Tbody>
         </Table>

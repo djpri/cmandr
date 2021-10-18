@@ -24,7 +24,7 @@ function CommandOptions({ commandId, command }) {
     <Box m="0">
       <Popover
         isLazy
-        lazyBehavior="keepMounted"
+        lazyBehavior="unmount"
         placement="right"
         isOpen={isOpen}
         onOpen={onOpen}
