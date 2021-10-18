@@ -8,6 +8,7 @@ import {
   Th,
   Thead,
   Tr,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
@@ -19,17 +20,23 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 function CommandManager() {
   const reduxCommands = useSelector(selectAllCommands);
+
   const [commands, setCommands] = React.useState(reduxCommands);
   const [search, setSearch] = React.useState("");
+  // const [isSearching, setIsSearching] = React.useState(false);
+
+  const bgColor = useColorModeValue("gray.50", "gray.800");
+  const border = useColorModeValue("0", "1px");
 
   React.useEffect(() => {
     setCommands(reduxCommands);
   }, [reduxCommands]);
 
+  // filter commands on search
   React.useEffect(() => {
     setCommands(() => {
       const newArray = reduxCommands.filter((item) =>
-        item.howTo.includes(search)
+        item.howTo.match(new RegExp(search, "i"))
       );
       return newArray;
     });
@@ -72,6 +79,9 @@ function CommandManager() {
         boxShadow="base"
         rounded="md"
         p="5"
+        border={border}
+        borderColor="gray.700"
+        bgColor={bgColor}
       >
         <AddCommandButton />
         <InputGroup>

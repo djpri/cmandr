@@ -58,7 +58,12 @@ function TableRow({ commandItem, key }) {
               Link
             </Button>
           ) : (
-            <Link target="_blank" rel="noreferrer" href={reference}>
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              href={reference}
+              style={{ textDecoration: "none" }}
+            >
               <Button
                 size="xs"
                 bgColor="cyan.600"

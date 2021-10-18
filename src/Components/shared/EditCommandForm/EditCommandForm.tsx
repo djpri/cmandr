@@ -42,8 +42,8 @@ function EditCommandForm(props) {
       });
       dispatch(setEditCommand(values));
       toast({
-        title: "Command Added",
-        description: "command added successfully",
+        title: "Command Changed",
+        description: "command changed successfully",
         status: "success",
         duration: 3000,
         isClosable: true,
