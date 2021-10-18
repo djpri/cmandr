@@ -20,7 +20,7 @@ const theme = extendTheme({
         fontFamily: "body",
         fontSize: { base: "0.875rem", md: "1rem" },
         color: mode("gray.800", "whiteAlpha.900")(props),
-        bg: mode("gray.50", "gray.800")(props),
+        bg: mode("gray.100", "gray.900")(props),
         lineHeight: "base",
       },
     }),
