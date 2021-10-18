@@ -1,10 +1,10 @@
 import { Tr, Td, Code, HStack, Button, Link } from "@chakra-ui/react";
-import React from "react";
+import * as React from "react";
 import { GoLinkExternal } from "react-icons/go";
 import CommandOptions from "./CommandOptions/CommandOptions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-function TableRow({ commandItem, key }) {
+function TableRow({ commandItem, index }) {
   const { id, howTo, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = React.useState(false);
 
@@ -16,7 +16,7 @@ function TableRow({ commandItem, key }) {
   };
 
   return (
-    <Tr key={key}>
+    <Tr key={index}>
       <Td>{howTo.charAt(0).toUpperCase() + howTo.slice(1)}</Td>
 
       <Td>
