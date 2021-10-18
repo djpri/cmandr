@@ -85,7 +85,7 @@ export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   !getState().userAuth.initialized && dispatch(setInitialized(true));
 };
 
-export const getDisplayName = (): AppThunk => (dispatch, getState) => {};
+// export const getDisplayName = (): AppThunk => (dispatch, getState) => {};
 
 export const submitLoginDetails =
   (email: string, password: string): AppThunk =>

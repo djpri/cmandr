@@ -37,16 +37,14 @@ export const App = () => {
     dispatch(setAuthListener());
   }, [dispatch]);
 
-  // Fill command data if there is a user logged in, empty when user logs out
+  // fill command data if there is a user logged in, empty when user logs out
   React.useEffect(() => {
     dispatch(getCommandsFromDB());
   }, [user, dispatch]);
 
   // sidebar is initially closed on smaller devices
   React.useEffect(() => {
-    if (isSmallerThan1280) {
-      dispatch(setSidebarClosed());
-    }
+    if (isSmallerThan1280) dispatch(setSidebarClosed());
   }, [isSmallerThan1280, dispatch]);
 
   return (
@@ -86,7 +84,7 @@ export const App = () => {
           </Route>
           <Route path="/commands">
             <Heading as="h2" mb="30px" fontWeight="900">
-              Commands
+              All Commands
             </Heading>
             <CommandsList />
           </Route>
