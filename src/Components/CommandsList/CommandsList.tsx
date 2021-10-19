@@ -4,6 +4,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Spinner,
   Table,
   Tbody,
   Th,
@@ -18,8 +19,9 @@ import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import TableHeader from "./TableHeader/TableHeader";
 import TableRow from "./TableRow/TableRow";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useParams } from "react-router-dom";
 
-function CommandManager() {
+function CommandsList() {
   const reduxCommands = useSelector(selectAllCommands);
 
   const [commands, setCommands] = React.useState(reduxCommands);
@@ -28,6 +30,8 @@ function CommandManager() {
 
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
+
+  let params: { id: string } = useParams();
 
   React.useEffect(() => {
     setCommands(reduxCommands);
@@ -61,6 +65,9 @@ function CommandManager() {
           boxShadow="base"
           rounded="md"
           p="5"
+          border={border}
+          borderColor="gray.700"
+          bgColor={bgColor}
         >
           <AddCommandButton />
           <InputGroup>
@@ -94,7 +101,9 @@ function CommandManager() {
         borderColor="gray.700"
         bgColor={bgColor}
       >
+        {params.id}
         <AddCommandButton />
+        {isSearching && <Spinner ml="3" color="blue.500" />}
         <InputGroup>
           <Input
             type="text"
@@ -106,7 +115,6 @@ function CommandManager() {
             children={
               <IconButton
                 size="md"
-                isLoading={isSearching}
                 aria-label="search-button"
                 icon={<AiOutlineSearch color="gray.300" />}
               />
@@ -133,4 +141,4 @@ function CommandManager() {
   );
 }
 
-export default CommandManager;
+export default CommandsList;

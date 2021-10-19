@@ -20,18 +20,23 @@ const testItem = {
 };
 
 test("returns the initial state", () => {
-  expect(reducer(undefined, {})).toEqual({ commands: [] });
+  expect(reducer(undefined, {})).toEqual({
+    commands: [],
+    categories: [],
+  });
 });
 
 test("setCommands", () => {
   expect(reducer(undefined, setCommands(testState))).toEqual({
     commands: testState,
+    categories: [],
   });
 });
 
 test("setAddCommand", () => {
   expect(reducer(undefined, setAddCommand(testItem))).toEqual({
     commands: [testItem],
+    categories: [],
   });
 });
 
@@ -40,6 +45,7 @@ test("setEditCommand", () => {
     reducer({ commands: testState }, setEditCommand(editedTestItem))
   ).toEqual({
     commands: testStateAfterEdit,
+    categories: [],
   });
 });
 
@@ -48,5 +54,6 @@ test("setDeleteCommand", () => {
     reducer({ commands: testState }, setDeleteCommand(testItem.id))
   ).toEqual({
     commands: testStateAfterDeletion,
+    categories: [],
   });
 });

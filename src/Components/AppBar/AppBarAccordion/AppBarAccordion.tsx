@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { slugify } from "../../../utils/slugify";
 
 function AppBarAccordion() {
   return (
@@ -50,88 +51,19 @@ function AppBarAccordion() {
           </Box>
           <AccordionIcon />
         </AccordionButton>
-        <AccordionPanel pb={4}>
-          <Stack>
-            <Link as={RouterLink} to="commands">
-              <Text>All commands</Text>
-            </Link>
-            <Text>General</Text>
-            <Text>Git</Text>
-            <Text>npm</Text>
-            <Text>yarn</Text>
-            <Text>baba</Text>
-          </Stack>
-        </AccordionPanel>
-      </AccordionItem>
 
-      {/* CODE SNIPPETS */}
-      <AccordionItem>
-        <AccordionButton>
-          <Box flex="1" textAlign="left">
-            <Text fontWeight="700" letterSpacing="1px">
-              Code snippets
-            </Text>
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
         <AccordionPanel pb={4}>
           <Stack>
-            <Link as={RouterLink} to="commands">
+            <Link as={RouterLink} to="/commands">
               <Text>All commands</Text>
             </Link>
-            <Text>General</Text>
-            <Text>Git</Text>
-            <Text>npm</Text>
-            <Text>yarn</Text>
-            <Text>baba</Text>
-          </Stack>
-        </AccordionPanel>
-      </AccordionItem>
-
-      {/* LINKS */}
-      <AccordionItem>
-        <AccordionButton>
-          <Box flex="1" textAlign="left">
-            <Text fontWeight="700" letterSpacing="1px">
-              Links
-            </Text>
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-        <AccordionPanel pb={4}>
-          <Stack>
-            <Link as={RouterLink} to="commands">
-              <Text>All commands</Text>
-            </Link>
-            <Text>General</Text>
-            <Text>Git</Text>
-            <Text>npm</Text>
-            <Text>yarn</Text>
-            <Text>baba</Text>
-          </Stack>
-        </AccordionPanel>
-      </AccordionItem>
-
-      {/* PACKAGES */}
-      <AccordionItem>
-        <AccordionButton>
-          <Box flex="1" textAlign="left">
-            <Text fontWeight="700" letterSpacing="1px">
-              Packages
-            </Text>
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-        <AccordionPanel pb={4}>
-          <Stack>
-            <Link as={RouterLink} to="commands">
-              <Text>All commands</Text>
-            </Link>
-            <Text>General</Text>
-            <Text>Git</Text>
-            <Text>npm</Text>
-            <Text>yarn</Text>
-            <Text>baba</Text>
+            {["general", "git", "npm package"].map((item, index) => (
+              <React.Fragment key="index">
+                <Link as={RouterLink} to={`/commands/${slugify(item)}`}>
+                  {item}
+                </Link>
+              </React.Fragment>
+            ))}
           </Stack>
         </AccordionPanel>
       </AccordionItem>
