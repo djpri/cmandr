@@ -13,13 +13,17 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../../redux/store";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import { useForm } from "react-hook-form";
-import { setEditCommand } from "../../../redux/commands/commandsSlice";
+import {
+  selectAllCategories,
+  setEditCommand,
+} from "../../../redux/commands/commandsSlice";
 
 function EditCommandForm(props) {
   const { id, howTo, command, category, reference } = props.commandItem;
   const toast = useToast();
   const dispatch = useAppDispatch();
   const uid: string = useSelector(selectUserUid);
+  const categories: string[] = useSelector(selectAllCategories);
 
   const { handleSubmit, register } = useForm({
     defaultValues: {
@@ -75,9 +79,11 @@ function EditCommandForm(props) {
 
         <FormLabel htmlFor="category">Category</FormLabel>
         <Select {...register("category")}>
-          <option value="npm package">npm package</option>
-          <option value="general">General</option>
-          <option value="git">Git</option>
+          <option value="">---Select Category---</option>
+          {categories &&
+            categories.map((category) => (
+              <option value={category}>{category}</option>
+            ))}
         </Select>
 
         <FormLabel htmlFor="reference">Reference</FormLabel>

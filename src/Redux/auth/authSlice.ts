@@ -93,7 +93,6 @@ export const submitLoginDetails =
     dispatch(setIsLoading(true));
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      dispatch(logInUser());
     } catch (error: any) {
       dispatch(setErrorMessage(`Login Error: ${error.code}`));
     }

@@ -82,9 +82,15 @@ export const App = () => {
           <Route exact path="/manage-commands">
             <CreateCommand />
           </Route>
-          <Route path="/commands">
+          <Route exact path="/commands">
             <Heading as="h2" mb="30px" fontWeight="900">
               All Commands
+            </Heading>
+            {/* <CommandsList /> */}
+          </Route>
+          <Route exact path="/commands/:id">
+            <Heading as="h2" mb="30px" fontWeight="900">
+              id
             </Heading>
             <CommandsList />
           </Route>

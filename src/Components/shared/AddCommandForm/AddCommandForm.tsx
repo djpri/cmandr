@@ -13,12 +13,16 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
 import { selectUserUid } from "../../../redux/auth/authSlice";
-import { setAddCommand } from "../../../redux/commands/commandsSlice";
+import {
+  selectAllCategories,
+  setAddCommand,
+} from "../../../redux/commands/commandsSlice";
 
 function AddCommandForm() {
   const toast = useToast();
   const dispatch = useDispatch();
   const uid: string = useSelector(selectUserUid);
+  const categories: string[] = useSelector(selectAllCategories);
 
   const { handleSubmit, register, reset } = useForm();
 
@@ -66,9 +70,9 @@ function AddCommandForm() {
         mb="10"
         templateColumns={[
           "repeat(1, 1fr)",
-          "repeat(1, 1fr)",
+          null,
           "repeat(2, 1fr)",
-          "repeat(2, 1fr)",
+          null,
           "repeat(4, 1fr)",
         ]}
         gap={6}
@@ -89,9 +93,11 @@ function AddCommandForm() {
         <Box>
           <FormLabel htmlFor="category">Category</FormLabel>
           <Select {...register("category")}>
-            <option value="npm package">npm package</option>
-            <option value="general">General</option>
-            <option value="git">Git</option>
+            <option value="">---Select Category---</option>
+            {categories &&
+              categories.map((category) => (
+                <option value={category}>{category}</option>
+              ))}
           </Select>
         </Box>
 
