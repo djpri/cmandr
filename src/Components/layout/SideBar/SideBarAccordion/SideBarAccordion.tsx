@@ -10,10 +10,14 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { slugify } from "../../../utils/slugify";
+import { selectAllCategories } from "../../../../redux/commands/commandsSlice";
+import { slugify } from "../../../../utils/slugify";
+import AddCommandCategory from "../../../shared/AddCommandCategory/AddCommandCategory";
 
-function AppBarAccordion() {
+function SideBarAccordion() {
+  const commandCategories = useSelector(selectAllCategories);
   return (
     <Accordion defaultIndex={[0]} allowMultiple w="100%">
       {/* MENU */}
@@ -57,13 +61,15 @@ function AppBarAccordion() {
             <Link as={RouterLink} to="/commands">
               <Text>All commands</Text>
             </Link>
-            {["general", "git", "npm package"].map((item, index) => (
-              <React.Fragment key="index">
-                <Link as={RouterLink} to={`/commands/${slugify(item)}`}>
-                  {item}
-                </Link>
-              </React.Fragment>
-            ))}
+            {commandCategories &&
+              commandCategories.map((item: string, index: number) => (
+                <React.Fragment key={index}>
+                  <Link as={RouterLink} to={`/commands/${slugify(item)}`}>
+                    {item}
+                  </Link>
+                </React.Fragment>
+              ))}
+            <AddCommandCategory />
           </Stack>
         </AccordionPanel>
       </AccordionItem>
@@ -71,4 +77,4 @@ function AppBarAccordion() {
   );
 }
 
-export default AppBarAccordion;
+export default SideBarAccordion;

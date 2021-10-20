@@ -93,7 +93,7 @@ function AddCommandForm() {
         <Box>
           <FormLabel htmlFor="category">Category</FormLabel>
           <Select {...register("category")}>
-            <option value="">---Select Category---</option>
+            <option value="">Select Category</option>
             {categories &&
               categories.map((category) => (
                 <option value={category}>{category}</option>

@@ -21,7 +21,7 @@ function CommandOptions({ commandId, command }) {
   const [isVisible, setIsVisible] = React.useState(false);
 
   return (
-    <Box m="0">
+    <Box m="0" position="relative">
       <Popover
         isLazy
         lazyBehavior="unmount"
