@@ -1,5 +1,5 @@
 import { Button, Collapse, useDisclosure } from "@chakra-ui/react";
-import React from "react";
+import * as React from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import AddCommandForm from "../../shared/AddCommandForm/AddCommandForm";
 

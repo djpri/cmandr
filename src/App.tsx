@@ -12,10 +12,10 @@ import {
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
-import AppBar from "./components/AppBar/AppBar";
+import SideBar from "./components/layout/SideBar/SideBar";
 import CommandsList from "./components/CommandsList/CommandsList";
 import CreateCommand from "./components/CreateCommand/CreateCommand";
-import NavBar from "./components/NavBar/NavBar";
+import NavBar from "./components/layout/NavBar/NavBar";
 import { selectUserUid, setAuthListener } from "./redux/auth/authSlice";
 import { getCommandsFromDB } from "./redux/commands/commandsSlice";
 import {
@@ -52,7 +52,7 @@ export const App = () => {
       <CSSReset />
       <BrowserRouter>
         <NavBar />
-        <AppBar />
+        <SideBar />
         <Container
           maxW="container.xl"
           mt="30px"
@@ -86,7 +86,7 @@ export const App = () => {
             <Heading as="h2" mb="30px" fontWeight="900">
               All Commands
             </Heading>
-            {/* <CommandsList /> */}
+            <CommandsList />
           </Route>
           <Route exact path="/commands/:id">
             <Heading as="h2" mb="30px" fontWeight="900">

@@ -100,10 +100,13 @@ function CommandsList() {
         border={border}
         borderColor="gray.700"
         bgColor={bgColor}
+        position="relative"
       >
         {params.id}
         <AddCommandButton />
-        {isSearching && <Spinner ml="3" color="blue.500" />}
+        {isSearching && (
+          <Spinner position="absolute" top="3" right="3" color="blue.500" />
+        )}
         <InputGroup>
           <Input
             type="text"

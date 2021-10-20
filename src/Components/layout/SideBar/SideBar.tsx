@@ -1,8 +1,8 @@
 import { useColorModeValue, Box, Stack, StackItem } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import AppBarAccordion from "./AppBarAccordion/AppBarAccordion";
-import { selectIsSidebarOpen } from "../../redux/layout/layoutSlice";
+import SideBarAccordion from "./SideBarAccordion/SideBarAccordion";
+import { selectIsSidebarOpen } from "../../../redux/layout/layoutSlice";
 
 const scrollbarStyles = {
   "::-webkit-scrollbar": {
@@ -24,7 +24,7 @@ const scrollbarStyles = {
   },
 };
 
-function AppBar() {
+function SideBar() {
   const isOpen = useSelector(selectIsSidebarOpen);
   const bgColor = useColorModeValue("gray.100", "gray.800");
 
@@ -48,7 +48,7 @@ function AppBar() {
       {/* SIDE LINKS */}
       <Stack mt="5">
         <StackItem>
-          <AppBarAccordion />
+          <SideBarAccordion />
         </StackItem>
       </Stack>
     </Box>
@@ -56,4 +56,4 @@ function AppBar() {
   );
 }
 
-export default AppBar;
+export default SideBar;
