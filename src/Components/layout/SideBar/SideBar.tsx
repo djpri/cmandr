@@ -1,8 +1,17 @@
-import { useColorModeValue, Box, Stack, StackItem } from "@chakra-ui/react";
+import {
+  useColorModeValue,
+  Box,
+  Stack,
+  StackItem,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SideBarAccordion from "./SideBarAccordion/SideBarAccordion";
-import { selectIsSidebarOpen } from "../../../redux/layout/layoutSlice";
+import {
+  selectIsSidebarOpen,
+  setSidebarClosed,
+} from "../../../redux/layout/layoutSlice";
 
 const scrollbarStyles = {
   "::-webkit-scrollbar": {
@@ -25,8 +34,15 @@ const scrollbarStyles = {
 };
 
 function SideBar() {
+  const dispatch = useDispatch();
   const isOpen = useSelector(selectIsSidebarOpen);
+  const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
   const bgColor = useColorModeValue("gray.100", "gray.800");
+
+  // sidebar is initially closed on smaller devices
+  React.useEffect(() => {
+    if (isSmallerThan1280) dispatch(setSidebarClosed());
+  }, [isSmallerThan1280, dispatch]);
 
   if (!isOpen) return null;
 
