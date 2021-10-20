@@ -1,7 +1,7 @@
 import { Command, CommandsState } from "./../../types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { db } from "../../firebase/firebase";
-import { AppThunk } from "../store";
+import { AppThunk, RootState } from "../store";
 import { collection, getDoc, getDocs, doc } from "@firebase/firestore";
 
 const initialState: CommandsState = {
@@ -58,8 +58,16 @@ export const {
 } = commandsSlice.actions;
 
 // SELECTORS
-export const selectAllCommands = (state) => state.commands.commands;
-export const selectAllCategories = (state) => state.commands.categories;
+export const selectAllCommands = (state: RootState) => state.commands.commands;
+
+export const selectAllCategories = (state: RootState) =>
+  state.commands.categories;
+
+export const selectCommandsByCategory = (state, category: string) => {
+  return state.commands.commands.filter(
+    (item: Command) => item.category === category
+  );
+};
 
 // ASYNC ACTIONS
 export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
@@ -91,7 +99,7 @@ export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
 };
 
 export const sortCommandsByField =
-  (field, isAscending = true): AppThunk =>
+  (field: string, isAscending = true): AppThunk =>
   async (dispatch, getState) => {
     let newState = [...getState().commands.commands];
 

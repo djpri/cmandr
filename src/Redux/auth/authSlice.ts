@@ -1,7 +1,7 @@
 import { UserAuthState } from "./../../types/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { auth, db } from "../../firebase/firebase";
-import { AppThunk } from "../store";
+import { AppThunk, RootState } from "../store";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -52,14 +52,17 @@ export const authSlice = createSlice({
 });
 
 // SELECTORS
-export const selectIsLoggedIn = (state) => state.userAuth?.isLoggedIn;
-export const selectIsLoading = (state) => state.userAuth?.isLoading;
-export const selectUserUid = (state) => state.userAuth?.userData?.uid || null;
-export const selectDisplayName = (state) =>
+export const selectIsLoggedIn = (state: RootState) =>
+  state.userAuth?.isLoggedIn;
+export const selectIsLoading = (state: RootState) => state.userAuth?.isLoading;
+export const selectUserUid = (state: RootState) =>
+  state.userAuth?.userData?.uid || null;
+export const selectDisplayName = (state: RootState) =>
   state.userAuth?.userData?.displayName;
-export const selectUserEmail = (state) =>
+export const selectUserEmail = (state: RootState) =>
   state.userAuth?.userData?.email || null;
-export const selectErrorMessage = (state) => state.userAuth.errorMessage;
+export const selectErrorMessage = (state: RootState) =>
+  state.userAuth.errorMessage;
 
 // Action creators are generated for each case reducer function
 export const {

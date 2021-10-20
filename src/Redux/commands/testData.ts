@@ -55,6 +55,14 @@ export const testState: Command[] = [
   },
 ];
 
+export const testItem: Command = {
+  command: "yarn add framer-motion",
+  howTo: "install framer motion",
+  category: "npm package",
+  reference: "https://www.framer.com/docs/",
+  id: "BqeJ0PXxnNahJryxW8MK",
+};
+
 export const editedTestItem: Command = {
   command: "yarn remove framer-motion",
   howTo: "remove framer motion",

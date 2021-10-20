@@ -13,8 +13,8 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { IoMdOptions } from "react-icons/io";
-import DeleteCommandButton from "../../../shared/DeleteCommandButton/DeleteCommandButton";
-import EditCommandForm from "../../../shared/EditCommandForm/EditCommandForm";
+import DeleteCommandButton from "../../../DeleteCommandButton/DeleteCommandButton";
+import EditCommandForm from "../../../EditCommandForm/EditCommandForm";
 
 function CommandOptions({ commandId, command }) {
   const { isOpen, onClose, onOpen } = useDisclosure();

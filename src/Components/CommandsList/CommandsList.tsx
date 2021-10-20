@@ -5,21 +5,15 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
-  Table,
-  Tbody,
-  Th,
-  Thead,
-  Tr,
   useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { selectAllCommands } from "../../redux/commands/commandsSlice";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
-import TableHeader from "./TableHeader/TableHeader";
-import TableRow from "./TableRow/TableRow";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useParams } from "react-router-dom";
+import CommandsTable from "../shared/CommandsTable/CommandsTable";
 
 function CommandsList() {
   const reduxCommands = useSelector(selectAllCommands);
@@ -55,38 +49,8 @@ function CommandsList() {
     };
   }, [search, reduxCommands]);
 
-  if (!commands || commands.length === 0)
-    return (
-      <>
-        <Box
-          maxW="container.xl"
-          w="container.xl"
-          overflowX="auto"
-          boxShadow="base"
-          rounded="md"
-          p="5"
-          border={border}
-          borderColor="gray.700"
-          bgColor={bgColor}
-        >
-          <AddCommandButton />
-          <InputGroup>
-            <Input
-              type="text"
-              placeholder="Search by 'How Tos'"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <InputRightElement>
-              <IconButton
-                aria-label="search button"
-                icon={<AiOutlineSearch color="gray.300" />}
-              />
-            </InputRightElement>
-          </InputGroup>
-        </Box>
-      </>
-    );
+  // TODO push router to login page
+  if (!commands || commands.length === 0) return null;
 
   return (
     <>
@@ -107,6 +71,8 @@ function CommandsList() {
         {isSearching && (
           <Spinner position="absolute" top="3" right="3" color="blue.500" />
         )}
+
+        {/* SEARCH BAR */}
         <InputGroup>
           <Input
             type="text"
@@ -124,21 +90,8 @@ function CommandsList() {
             }
           />
         </InputGroup>
-        <Table>
-          <Thead>
-            <Tr>
-              <TableHeader field="howTo" label="How to..." />
-              <TableHeader field="command" label="Command" />
-              <TableHeader field="category" label="Category" />
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {commands.map((command, index) => (
-              <TableRow commandItem={command} index={index} key={index} />
-            ))}
-          </Tbody>
-        </Table>
+
+        <CommandsTable commands={commands} />
       </Box>
     </>
   );

@@ -7,7 +7,7 @@ export type Command = {
 };
 
 export type UserAuthState = {
-  userData: { uid: string } | null;
+  userData: { uid: string; displayName: string; email: String } | null;
   displayName: string | null;
   initialized: boolean;
   isLoading: boolean;

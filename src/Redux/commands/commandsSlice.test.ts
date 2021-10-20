@@ -7,19 +7,12 @@ import reducer, {
 } from "./commandsSlice";
 import {
   testState,
+  testItem,
   testStateAfterEdit,
   editedTestItem,
   testStateAfterDeletion,
 } from "./testData";
-import { Command, CommandsState } from "./../../types/types";
-
-const testItem: Command = {
-  command: "yarn add framer-motion",
-  howTo: "install framer motion",
-  category: "npm package",
-  reference: "https://www.framer.com/docs/",
-  id: "BqeJ0PXxnNahJryxW8MK",
-};
+import { CommandsState } from "./../../types/types";
 
 test("setCommands", () => {
   expect(reducer(undefined, setCommands(testState))).toEqual({
