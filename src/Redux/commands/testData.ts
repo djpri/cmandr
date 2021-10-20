@@ -1,4 +1,6 @@
-export const testState = [
+import { Command } from "./../../types/types";
+
+export const testState: Command[] = [
   {
     command: "php artisan serve",
     howTo: "serve laravel app",
@@ -53,7 +55,7 @@ export const testState = [
   },
 ];
 
-export const editedTestItem = {
+export const editedTestItem: Command = {
   command: "yarn remove framer-motion",
   howTo: "remove framer motion",
   category: "npm package",
@@ -61,7 +63,7 @@ export const editedTestItem = {
   id: "BqeJ0PXxnNahJryxW8MK",
 };
 
-export const testStateAfterEdit = [
+export const testStateAfterEdit: Command[] = [
   {
     command: "php artisan serve",
     howTo: "serve laravel app",
@@ -117,7 +119,7 @@ export const testStateAfterEdit = [
   },
 ];
 
-export const testStateAfterDeletion = [
+export const testStateAfterDeletion: Command[] = [
   {
     command: "php artisan serve",
     howTo: "serve laravel app",

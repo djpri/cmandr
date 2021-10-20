@@ -1,4 +1,4 @@
-export type ICommand = {
+export type Command = {
   id: string;
   howTo: string;
   command: string;
@@ -13,4 +13,9 @@ export type UserAuthState = {
   isLoading: boolean;
   isLoggedIn: boolean;
   errorMessage: string | null;
+};
+
+export type CommandsState = {
+  commands: Command[];
+  categories: string[];
 };

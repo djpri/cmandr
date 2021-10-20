@@ -3,6 +3,7 @@ import reducer, {
   setAddCommand,
   setEditCommand,
   setDeleteCommand,
+  setCommandCategories,
 } from "./commandsSlice";
 import {
   testState,
@@ -10,21 +11,15 @@ import {
   editedTestItem,
   testStateAfterDeletion,
 } from "./testData";
+import { Command, CommandsState } from "./../../types/types";
 
-const testItem = {
+const testItem: Command = {
   command: "yarn add framer-motion",
   howTo: "install framer motion",
   category: "npm package",
   reference: "https://www.framer.com/docs/",
   id: "BqeJ0PXxnNahJryxW8MK",
 };
-
-test("returns the initial state", () => {
-  expect(reducer(undefined, {})).toEqual({
-    commands: [],
-    categories: [],
-  });
-});
 
 test("setCommands", () => {
   expect(reducer(undefined, setCommands(testState))).toEqual({
@@ -41,19 +36,26 @@ test("setAddCommand", () => {
 });
 
 test("setEditCommand", () => {
-  expect(
-    reducer({ commands: testState }, setEditCommand(editedTestItem))
-  ).toEqual({
+  const initialState: CommandsState = { commands: testState, categories: [] };
+  expect(reducer(initialState, setEditCommand(editedTestItem))).toEqual({
     commands: testStateAfterEdit,
     categories: [],
   });
 });
 
 test("setDeleteCommand", () => {
-  expect(
-    reducer({ commands: testState }, setDeleteCommand(testItem.id))
-  ).toEqual({
+  const initialState: CommandsState = { commands: testState, categories: [] };
+  expect(reducer(initialState, setDeleteCommand(testItem.id))).toEqual({
     commands: testStateAfterDeletion,
     categories: [],
+  });
+});
+
+test("setCommandCategories", () => {
+  const initialState: CommandsState = { commands: [], categories: [] };
+  const categories = ["general", "npm package", "git"];
+  expect(reducer(initialState, setCommandCategories(categories))).toEqual({
+    commands: [],
+    categories: categories,
   });
 });
