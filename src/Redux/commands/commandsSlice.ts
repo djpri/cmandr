@@ -1,13 +1,8 @@
-import { ICommand } from "./../../types/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { Command, CommandsState } from "./../../types/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { db } from "../../firebase/firebase";
 import { AppThunk } from "../store";
 import { collection, getDoc, getDocs, doc } from "@firebase/firestore";
-
-type CommandsState = {
-  commands: ICommand[];
-  categories: string[];
-};
 
 const initialState: CommandsState = {
   commands: [],
@@ -18,32 +13,37 @@ export const commandsSlice = createSlice({
   name: "commands",
   initialState,
   reducers: {
-    // setCommands(commands: [])
-    setCommands: (state, { payload }) => {
-      state.commands = payload;
+    setCommands: (state, action: PayloadAction<Command[]>) => {
+      state.commands = action.payload;
     },
-    setCommandCategories: (state, { payload }) => {
-      state.categories = payload;
-    },
-    // setAddCommand(command)
-    setAddCommand: (state, { payload }) => {
+    setAddCommand: (state, action: PayloadAction<Command>) => {
       const newState = state.commands;
-      newState.push(payload);
+      newState.push(action.payload);
       state.commands = newState;
     },
-    // setDeleteCommand(command)
-    setEditCommand: (state, { payload }) => {
+    setEditCommand: (state, action: PayloadAction<Command>) => {
       const newState = state.commands;
-      const index = newState.findIndex((command) => command.id === payload.id);
-      newState[index] = payload;
+      const index = newState.findIndex(
+        (command) => command.id === action.payload.id
+      );
+      newState[index] = action.payload;
       state.commands = newState;
     },
-    // setDeleteCommand(id) deletes command with matching id
-    setDeleteCommand: (state, { payload }) => {
+    setDeleteCommand: (state, action: PayloadAction<string>) => {
       const newState = state.commands;
-      const index = newState.findIndex((command) => command.id === payload);
+      const index = newState.findIndex(
+        (command) => command.id === action.payload
+      );
       newState.splice(index, 1);
       state.commands = newState;
+    },
+    setCommandCategories: (state, action: PayloadAction<string[]>) => {
+      state.categories = action.payload;
+    },
+    setAddCommandCategory: (state, action: PayloadAction<string>) => {
+      const newState = state.categories;
+      newState.push(action.payload);
+      state.categories = newState;
     },
   },
 });
@@ -51,6 +51,7 @@ export const commandsSlice = createSlice({
 export const {
   setCommands,
   setCommandCategories,
+  setAddCommandCategory,
   setAddCommand,
   setEditCommand,
   setDeleteCommand,
@@ -104,6 +105,12 @@ export const sortCommandsByField =
 
     if (isAscending === false) dispatch(setCommands(newState.reverse()));
     dispatch(setCommands(newState));
+  };
+
+export const addCommandCategory =
+  (category: string): AppThunk =>
+  async (dispatch, getState) => {
+    dispatch(setAddCommandCategory(category));
   };
 
 export default commandsSlice.reducer;
