@@ -95,8 +95,10 @@ function AddCommandForm() {
           <Select {...register("category")}>
             <option value="">Select Category</option>
             {categories &&
-              categories.map((category) => (
-                <option value={category}>{category}</option>
+              categories.map((category, index) => (
+                <option value={category} key={index}>
+                  {category}
+                </option>
               ))}
           </Select>
         </Box>

@@ -1,3 +1,5 @@
+import { User } from "@firebase/auth";
+
 export type Command = {
   id: string;
   howTo: string;
@@ -6,16 +8,16 @@ export type Command = {
   category: string;
 };
 
-export type UserAuthState = {
-  userData: { uid: string; displayName: string; email: String } | null;
+export interface UserAuthState {
+  userData: any;
   displayName: string | null;
   initialized: boolean;
   isLoading: boolean;
   isLoggedIn: boolean;
   errorMessage: string | null;
-};
+}
 
-export type CommandsState = {
+export interface CommandsState {
   commands: Command[];
   categories: string[];
-};
+}
