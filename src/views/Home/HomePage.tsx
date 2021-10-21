@@ -1,6 +1,5 @@
 import { Box, Grid, VStack, Text } from "@chakra-ui/react";
 import * as React from "react";
-import CommandsList from "../../components/CommandsList/CommandsList";
 import UserLayout from "../../layouts/UserLayout";
 
 function HomePage() {
@@ -13,7 +12,6 @@ function HomePage() {
           </VStack>
         </Grid>
       </Box>
-      <CommandsList />
     </UserLayout>
   );
 }

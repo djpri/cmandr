@@ -1,5 +1,5 @@
 import { UserAuthState } from "./../../types/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { auth, db } from "../../firebase/firebase";
 import { AppThunk, RootState } from "../store";
 import {
@@ -22,31 +22,31 @@ export const authSlice = createSlice({
   name: "userAuth",
   initialState,
   reducers: {
-    setInitialized: (state, { payload }) => {
-      state.initialized = payload;
+    setInitialized: (state, action: PayloadAction<boolean>) => {
+      state.initialized = action.payload;
     },
-    setIsLoading: (state, { payload }) => {
-      state.isLoading = payload;
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
     },
-    setErrorMessage: (state, { payload }) => {
-      state.errorMessage = payload;
+    setErrorMessage: (state, action: PayloadAction<string>) => {
+      state.errorMessage = action.payload;
     },
     logInUser: (state) => {
       state.isLoggedIn = true;
       state.errorMessage = null;
     },
-    createUser: (state, { payload }) => {
-      state.userData = payload;
+    createUser: (state, action: PayloadAction<any>) => {
+      state.userData = action.payload;
     },
-    setDisplayName: (state, { payload }) => {
-      state.displayName = payload;
+    setDisplayName: (state, action: PayloadAction<string>) => {
+      state.displayName = action.payload;
     },
     setSignOut: (state) => {
       state.isLoggedIn = false;
       state.userData = null;
     },
-    setUserData: (state, { payload }) => {
-      state.userData = payload;
+    setUserData: (state, action: PayloadAction<any>) => {
+      state.userData = action.payload;
     },
   },
 });
@@ -54,7 +54,7 @@ export const authSlice = createSlice({
 // SELECTORS
 export const selectIsLoggedIn = (state: RootState) =>
   state.userAuth?.isLoggedIn;
-export const selectIsLoading = (state: RootState) => state.userAuth?.isLoading;
+export const selectIsLoading = (state: RootState) => state.userAuth.isLoading;
 export const selectUserUid = (state: RootState) =>
   state.userAuth?.userData?.uid || null;
 export const selectDisplayName = (state: RootState) =>
@@ -79,7 +79,6 @@ export const {
 // ASYNC ACTIONS
 export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   auth.onAuthStateChanged((user) => {
-    console.log("auth state changed");
     if (user !== null && getState().userAuth.initialized) {
       dispatch(setUserData(user.toJSON()));
       dispatch(logInUser());
@@ -87,8 +86,6 @@ export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   });
   !getState().userAuth.initialized && dispatch(setInitialized(true));
 };
-
-// export const getDisplayName = (): AppThunk => (dispatch, getState) => {};
 
 export const submitLoginDetails =
   (email: string, password: string): AppThunk =>

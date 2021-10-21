@@ -4,20 +4,25 @@ import { Command } from "../../../types/types";
 import TableHeader from "./TableHeader/TableHeader";
 import TableRow from "./TableRow/TableRow";
 
-function CommandsTable({ commands }) {
+function CommandsTable({ commands, showCategories }) {
   return (
     <Table>
       <Thead>
         <Tr>
           <TableHeader field="howTo" label="How to..." />
           <TableHeader field="command" label="Command" />
-          <TableHeader field="category" label="Category" />
+          {showCategories && <TableHeader field="category" label="Category" />}
           <Th></Th>
         </Tr>
       </Thead>
       <Tbody>
         {commands.map((command: Command, index: number) => (
-          <TableRow commandItem={command} index={index} key={index} />
+          <TableRow
+            commandItem={command}
+            index={index}
+            key={index}
+            showCategories={showCategories}
+          />
         ))}
       </Tbody>
     </Table>

@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SideBarAccordion from "./SideBarAccordion/SideBarAccordion";
+import SideBarLinks from "./SideBarLinks/SideBarLinks";
 import {
   selectIsSidebarOpen,
   setSidebarClosed,
@@ -37,7 +37,7 @@ function SideBar() {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectIsSidebarOpen);
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
-  const bgColor = useColorModeValue("gray.100", "gray.800");
+  const bgColor = useColorModeValue("gray.50", "gray.800");
 
   // sidebar is initially closed on smaller devices
   React.useEffect(() => {
@@ -64,7 +64,7 @@ function SideBar() {
       {/* SIDE LINKS */}
       <Stack mt="5">
         <StackItem>
-          <SideBarAccordion />
+          <SideBarLinks />
         </StackItem>
       </Stack>
     </Box>

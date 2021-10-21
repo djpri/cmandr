@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { db } from "../../firebase/firebase";
 import { AppThunk, RootState } from "../store";
 import { collection, getDoc, getDocs, doc } from "@firebase/firestore";
+import { slugify } from "../../utils/slugify";
 
 const initialState: CommandsState = {
   commands: [],
@@ -64,9 +65,10 @@ export const selectAllCategories = (state: RootState) =>
   state.commands.categories;
 
 export const selectCommandsByCategory = (state, category: string) => {
-  return state.commands.commands.filter(
-    (item: Command) => item.category === category
-  );
+  return state.commands.commands.filter((item: Command) => {
+    const cat = slugify(item.category);
+    return cat === category;
+  });
 };
 
 // ASYNC ACTIONS

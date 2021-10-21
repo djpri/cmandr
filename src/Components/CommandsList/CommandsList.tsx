@@ -8,35 +8,24 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { useSelector } from "react-redux";
-import { selectAllCommands } from "../../redux/commands/commandsSlice";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useParams } from "react-router-dom";
 import CommandsTable from "../shared/CommandsTable/CommandsTable";
 
-function CommandsList() {
-  const reduxCommands = useSelector(selectAllCommands);
-
-  const [commands, setCommands] = React.useState(reduxCommands);
+function CommandsList(props: { commands: any; showCategories: boolean }) {
+  const [commands, setCommands] = React.useState(props.commands);
   const [search, setSearch] = React.useState("");
   const [isSearching, setIsSearching] = React.useState(false);
 
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
 
-  let params: { id: string } = useParams();
-
-  React.useEffect(() => {
-    setCommands(reduxCommands);
-  }, [reduxCommands]);
-
   // filter commands on search
   // wait 500ms after user stops typing before filtering
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       setCommands(() => {
-        const newArray = reduxCommands.filter((item) =>
+        const newArray = props.commands.filter((item: { howTo: string }) =>
           item.howTo.match(new RegExp(search, "i"))
         );
         return newArray;
@@ -47,10 +36,13 @@ function CommandsList() {
       setIsSearching(true);
       clearTimeout(timeout);
     };
-  }, [search, reduxCommands]);
+  }, [search]);
 
-  // TODO push router to login page
-  if (!commands || commands.length === 0) return null;
+  React.useEffect(() => {
+    setCommands(props.commands);
+  }, [props.commands]);
+
+  // TODO push router to login page when no user
 
   return (
     <>
@@ -66,7 +58,6 @@ function CommandsList() {
         bgColor={bgColor}
         position="relative"
       >
-        {params.id}
         <AddCommandButton />
         {isSearching && (
           <Spinner position="absolute" top="3" right="3" color="blue.500" />
@@ -91,7 +82,10 @@ function CommandsList() {
           />
         </InputGroup>
 
-        <CommandsTable commands={commands} />
+        <CommandsTable
+          commands={commands}
+          showCategories={props.showCategories}
+        />
       </Box>
     </>
   );
