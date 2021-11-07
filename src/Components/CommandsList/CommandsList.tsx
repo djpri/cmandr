@@ -47,9 +47,12 @@ function CommandsList(props: { commands: any; showCategories: boolean }) {
   return (
     <>
       <Box
+        minW="container.xl"
         maxW="container.xl"
         w="container.xl"
+        h="80vh"
         overflowX="auto"
+        overflowY="scroll"
         boxShadow="base"
         rounded="md"
         p="5"

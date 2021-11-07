@@ -13,6 +13,7 @@ function UserLayout({ children }) {
       <SideBar />
       <Container
         maxW="container.xl"
+        maxH="80vh"
         mt="30px"
         mb="50px"
         ml={isSidebarOpen ? "auto" : "2vw"}

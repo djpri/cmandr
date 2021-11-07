@@ -4,7 +4,7 @@ import { GoLinkExternal } from "react-icons/go";
 import CommandOptions from "./CommandOptions/CommandOptions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-function TableRow({ commandItem, showCategories, index }) {
+function TableRow({ commandItem, showCategories }) {
   const { id, howTo, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = React.useState(false);
 
@@ -16,7 +16,7 @@ function TableRow({ commandItem, showCategories, index }) {
   };
 
   return (
-    <Tr key={index}>
+    <Tr>
       <Td>{howTo.charAt(0).toUpperCase() + howTo.slice(1)}</Td>
 
       <Td>

@@ -68,7 +68,7 @@ function EditCommandForm(props) {
       <Stack mb="10" mt="3">
         <Input {...register("id")} placeholder="id" isDisabled type="hidden" />
 
-        <FormLabel htmlFor="howto">How to...</FormLabel>
+        <FormLabel htmlFor="howto">Description</FormLabel>
         <Input
           {...register("howTo")}
           placeholder="How to (description of what command does)"

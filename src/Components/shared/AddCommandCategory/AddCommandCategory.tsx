@@ -1,4 +1,10 @@
-import { IconButton, Input, Button, HStack } from "@chakra-ui/react";
+import {
+  IconButton,
+  Input,
+  Button,
+  HStack,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { updateDoc, doc } from "firebase/firestore";
 import * as React from "react";
 import { GoPlus } from "react-icons/go";
@@ -15,6 +21,7 @@ function AddCommandCategory() {
   const uid = useSelector(selectUserUid);
   const [category, setCategory] = React.useState("");
   const dispatch = useDispatch();
+  const { isOpen, onToggle } = useDisclosure();
 
   const addCategoryToDB = () => {
     try {
@@ -23,6 +30,7 @@ function AddCommandCategory() {
         commandCategories: newCategories,
       });
       dispatch(addCommandCategory(category));
+      onToggle();
     } catch (error) {
       console.log(error);
     }
@@ -30,15 +38,26 @@ function AddCommandCategory() {
 
   return (
     <>
-      <IconButton
+      <Button
         size="xs"
         aria-label="add command category"
-        icon={<GoPlus />}
-      />
-      <HStack>
-        <Input value={category} onChange={(e) => setCategory(e.target.value)} />
-        <Button onClick={addCategoryToDB}>Save</Button>
-      </HStack>
+        leftIcon={<GoPlus />}
+        onClick={onToggle}
+      >
+        Add category
+      </Button>
+      {isOpen && (
+        <HStack>
+          <Input
+            size="sm"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+          <Button size="sm" onClick={addCategoryToDB}>
+            Save
+          </Button>
+        </HStack>
+      )}
     </>
   );
 }

@@ -9,7 +9,7 @@ function CommandsTable({ commands, showCategories }) {
     <Table>
       <Thead>
         <Tr>
-          <TableHeader field="howTo" label="How to..." />
+          <TableHeader field="howTo" label="Description" />
           <TableHeader field="command" label="Command" />
           {showCategories && <TableHeader field="category" label="Category" />}
           <Th></Th>
@@ -19,8 +19,7 @@ function CommandsTable({ commands, showCategories }) {
         {commands.map((command: Command, index: number) => (
           <TableRow
             commandItem={command}
-            index={index}
-            key={index}
+            key={command.id}
             showCategories={showCategories}
           />
         ))}
