@@ -78,7 +78,7 @@ function AddCommandForm() {
         gap={6}
       >
         <Box>
-          <FormLabel htmlFor="howto">How to...</FormLabel>
+          <FormLabel htmlFor="howto">Description</FormLabel>
           <Input
             {...register("howTo")}
             placeholder="How to (description of what command does)"
@@ -105,7 +105,11 @@ function AddCommandForm() {
 
         <Box>
           <FormLabel htmlFor="reference">Reference</FormLabel>
-          <Input {...register("reference")} placeholder="Reference" />
+          <Input
+            {...register("reference")}
+            placeholder="Reference"
+            type="url"
+          />
         </Box>
 
         <Button type="submit" colorScheme="green" size="sm" isFullWidth={false}>
