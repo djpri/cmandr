@@ -25,8 +25,9 @@ function CommandsList(props: { commands: any; showCategories: boolean }) {
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       setCommands(() => {
-        const newArray = props.commands.filter((item: { howTo: string }) =>
-          item.howTo.match(new RegExp(search, "i"))
+        const newArray = props.commands.filter(
+          (item: { description: string }) =>
+            item.description.match(new RegExp(search, "i"))
         );
         return newArray;
       });

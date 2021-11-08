@@ -1,6 +1,6 @@
 import { Button, useToast } from "@chakra-ui/react";
 import * as React from "react";
-import { db } from "../../../firebase/firebase";
+import { db } from "../../../supabase/firebase";
 import { doc, deleteDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserUid } from "../../../redux/auth/authSlice";

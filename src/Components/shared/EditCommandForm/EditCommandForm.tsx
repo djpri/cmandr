@@ -8,27 +8,28 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { updateDoc, doc } from "firebase/firestore";
-import { db } from "../../../firebase/firebase";
+import { db } from "../../../supabase/firebase";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../../redux/store";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import { useForm } from "react-hook-form";
 import {
-  selectAllCategories,
+  selectAllCategoriesWithIds,
   setEditCommand,
 } from "../../../redux/commands/commandsSlice";
+import { CommandCategory } from "../../../types/types";
 
 function EditCommandForm(props) {
-  const { id, howTo, command, category, reference } = props.commandItem;
+  const { id, description, command, category, reference } = props.commandItem;
   const toast = useToast();
   const dispatch = useAppDispatch();
   const uid: string = useSelector(selectUserUid);
-  const categories: string[] = useSelector(selectAllCategories);
+  const categories: CommandCategory[] = useSelector(selectAllCategoriesWithIds);
 
   const { handleSubmit, register } = useForm({
     defaultValues: {
       id,
-      howTo,
+      description,
       command,
       category,
       reference,
@@ -36,10 +37,10 @@ function EditCommandForm(props) {
   });
 
   const editCommandInDB = async (values) => {
-    const { id, howTo, command, category, reference } = values;
+    const { id, description, command, category, reference } = values;
     try {
       await updateDoc(doc(db, `users/${uid}/commands`, id), {
-        howTo,
+        description,
         command,
         reference,
         category,
@@ -68,9 +69,9 @@ function EditCommandForm(props) {
       <Stack mb="10" mt="3">
         <Input {...register("id")} placeholder="id" isDisabled type="hidden" />
 
-        <FormLabel htmlFor="howto">Description</FormLabel>
+        <FormLabel htmlFor="description">Description</FormLabel>
         <Input
-          {...register("howTo")}
+          {...register("description")}
           placeholder="How to (description of what command does)"
         />
 
@@ -82,7 +83,7 @@ function EditCommandForm(props) {
           <option value="">Select Category</option>
           {categories &&
             categories.map((category) => (
-              <option value={category}>{category}</option>
+              <option value={category.id}>{category}</option>
             ))}
         </Select>
 
