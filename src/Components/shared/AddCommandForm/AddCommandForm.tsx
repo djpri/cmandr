@@ -7,16 +7,16 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react";
-import { addDoc, collection } from "firebase/firestore";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { db } from "../../../firebase/firebase";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import {
   selectAllCategories,
   setAddCommand,
 } from "../../../redux/commands/commandsSlice";
+import { supabase } from "../../../supabase/supabase";
+import { CommandCategory } from "../../../types/types";
 
 function AddCommandForm() {
   const toast = useToast();
@@ -26,21 +26,27 @@ function AddCommandForm() {
 
   const { handleSubmit, register, reset } = useForm();
 
-  const addCommandToDB = async ({ howTo, command, category, reference }) => {
-    try {
-      const newCommandRef = await addDoc(
-        collection(db, `users/${uid}/commands`),
-        {
-          howTo,
-          command,
-          reference,
-          category,
-        }
-      );
+  const addCommandToDB = async ({
+    description,
+    command,
+    category,
+    reference,
+  }) => {
+    const { data, error } = await supabase.from("commands").insert([
+      {
+        user_id: uid,
+        description,
+        command,
+        reference,
+      },
+    ]);
+
+    if (data !== null) {
+      console.log(data);
       dispatch(
         setAddCommand({
-          id: newCommandRef.id,
-          howTo,
+          id: data[0].id,
+          description,
           command,
           reference,
           category,
@@ -53,8 +59,16 @@ function AddCommandForm() {
         duration: 3000,
         isClosable: true,
       });
-    } catch (error) {
+    }
+    if (error) {
       console.log(error);
+      toast({
+        title: "Error",
+        description: "something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
@@ -78,9 +92,9 @@ function AddCommandForm() {
         gap={6}
       >
         <Box>
-          <FormLabel htmlFor="howto">Description</FormLabel>
+          <FormLabel htmlFor="description">Description</FormLabel>
           <Input
-            {...register("howTo")}
+            {...register("description")}
             placeholder="How to (description of what command does)"
           />
         </Box>

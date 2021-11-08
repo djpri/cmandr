@@ -8,7 +8,6 @@ import { getCommandsFromDB } from "./redux/commands/commandsSlice";
 import { useAppDispatch } from "./redux/store";
 import theme from "./theme/theme";
 import AllCommandsPage from "./views/AllCommandsPage/AllCommandsPage";
-import CommandCategoryPage from "./views/CommandCategoryPage/CommandCategoryPage";
 import HomePage from "./views/Home/HomePage";
 
 export const App = () => {
@@ -40,7 +39,7 @@ export const App = () => {
           <AllCommandsPage />
         </Route>
         <Route exact path="/commands/:id">
-          <CommandCategoryPage />
+          {/* <CommandCategoryPage /> */}
         </Route>
       </BrowserRouter>
     </ChakraProvider>

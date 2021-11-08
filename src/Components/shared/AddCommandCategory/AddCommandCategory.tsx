@@ -1,36 +1,29 @@
-import {
-  IconButton,
-  Input,
-  Button,
-  HStack,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { updateDoc, doc } from "firebase/firestore";
+import { Input, Button, HStack, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 import { GoPlus } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
-import { db } from "../../../firebase/firebase";
 import { selectUserUid } from "../../../redux/auth/authSlice";
-import {
-  addCommandCategory,
-  selectAllCategories,
-} from "../../../redux/commands/commandsSlice";
+import { addCommandCategory } from "../../../redux/commands/commandsSlice";
+import { supabase } from "../../../supabase/supabase";
 
 function AddCommandCategory() {
-  const categories = useSelector(selectAllCategories);
   const uid = useSelector(selectUserUid);
   const [category, setCategory] = React.useState("");
   const dispatch = useDispatch();
   const { isOpen, onToggle } = useDisclosure();
 
-  const addCategoryToDB = () => {
+  const addCategoryToDB = async () => {
     try {
-      const newCategories = [...categories, category];
-      updateDoc(doc(db, "users", uid), {
-        commandCategories: newCategories,
-      });
-      dispatch(addCommandCategory(category));
-      onToggle();
+      const { data } = await supabase.from("command_categories").insert([
+        {
+          user_id: uid,
+          name: category,
+        },
+      ]);
+      if (data) {
+        dispatch(addCommandCategory({ id: data[0].id, name: category }));
+        onToggle();
+      }
     } catch (error) {
       console.log(error);
     }

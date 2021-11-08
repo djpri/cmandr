@@ -1,9 +1,9 @@
 import { Command, CommandsState } from "./../../types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { db } from "../../firebase/firebase";
 import { AppThunk, RootState } from "../store";
-import { collection, getDoc, getDocs, doc } from "@firebase/firestore";
 import { slugify } from "../../utils/slugify";
+import { supabase } from "../../supabase/supabase";
+import { CommandCategory } from "./../../types/types";
 
 const initialState: CommandsState = {
   commands: [],
@@ -38,10 +38,10 @@ export const commandsSlice = createSlice({
       newState.splice(index, 1);
       state.commands = newState;
     },
-    setCommandCategories: (state, action: PayloadAction<string[]>) => {
+    setCommandCategories: (state, action: PayloadAction<CommandCategory[]>) => {
       state.categories = action.payload;
     },
-    setAddCommandCategory: (state, action: PayloadAction<string>) => {
+    setAddCommandCategory: (state, action: PayloadAction<CommandCategory>) => {
       const newState = state.categories;
       newState.push(action.payload);
       state.categories = newState;
@@ -62,7 +62,10 @@ export const {
 export const selectAllCommands = (state: RootState) => state.commands.commands;
 
 export const selectAllCategories = (state: RootState) =>
-  state.commands.categories;
+  Array.from(state.commands.categories, (category) => category.name);
+
+export const selectAllCategoriesWithIds = (state: RootState) =>
+  Array.from(state.commands.categories);
 
 export const selectCommandsByCategory = (state, category: string) => {
   return state.commands.commands.filter((item: Command) => {
@@ -73,52 +76,76 @@ export const selectCommandsByCategory = (state, category: string) => {
 
 // ASYNC ACTIONS
 export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
-  const user = getState().userAuth?.userData?.uid;
-
   const addData = async () => {
-    const userDataSnap = await getDoc(doc(db, "users", user!));
+    const { data: commands } = await supabase.from("commands").select(`
+        id,
+        description,
+        command,
+        reference,
+        category:command_categories(
+          id,
+          name
+        )
+      `);
 
-    if (userDataSnap.exists()) {
-      const data = userDataSnap.data();
-      dispatch(setCommandCategories(data.commandCategories));
+    const { data: categories } = await supabase
+      .from("command_categories")
+      .select(`id, name`);
+
+    if (categories !== null) dispatch(setCommandCategories(categories));
+
+    console.log(commands);
+
+    if (commands !== null) {
+      // commands.map((command) => ({
+      //   id: command.id,
+      //   description: command.description,
+      //   command: command.command,
+      //   reference: command.reference,
+      //   category: command.category.name,
+      // }));
+      dispatch(setCommands(commands));
+    } else {
+      dispatch(setCommands([]));
     }
-
-    const commandsSnap: any = await getDocs(
-      collection(db, `users/${user}/commands`)
-    );
-    const commands = commandsSnap.docs.map((doc) => {
-      let docInfo = doc.data();
-      docInfo.id = doc.id;
-      return docInfo;
-    });
-    dispatch(setCommands(commands));
   };
-  if (user) {
-    addData();
-  } else {
-    dispatch(setCommands([]));
-  }
+
+  addData();
 };
 
 export const sortCommandsByField =
-  (field: string, isAscending = true): AppThunk =>
+  (field, isAscending = true): AppThunk =>
   async (dispatch, getState) => {
     let newState = [...getState().commands.commands];
 
-    newState.sort((a, b) => {
-      let valueA = a[field].toUpperCase();
-      let valueB = b[field].toUpperCase();
-      if (valueA < valueB) return -1;
-      if (valueA > valueB) return 1;
-      return 0;
-    });
+    if (field === "description" || field === "command") {
+      newState.sort((a, b) => {
+        console.log(a[field]);
+        let valueA = a[field].toUpperCase();
+        let valueB = b[field].toUpperCase();
+        if (valueA < valueB) return -1;
+        if (valueA > valueB) return 1;
+        return 0;
+      });
+    }
+
+    if (field === "category") {
+      newState.sort((a, b) => {
+        console.log(a[field].name);
+        let valueA = a[field].name.toUpperCase();
+        let valueB = b[field].name.toUpperCase();
+        if (valueA < valueB) return -1;
+        if (valueA > valueB) return 1;
+        return 0;
+      });
+    }
 
     if (isAscending === false) dispatch(setCommands(newState.reverse()));
     dispatch(setCommands(newState));
   };
 
 export const addCommandCategory =
-  (category: string): AppThunk =>
+  (category: CommandCategory): AppThunk =>
   async (dispatch, getState) => {
     dispatch(setAddCommandCategory(category));
   };

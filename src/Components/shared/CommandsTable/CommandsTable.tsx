@@ -9,7 +9,7 @@ function CommandsTable({ commands, showCategories }) {
     <Table>
       <Thead>
         <Tr>
-          <TableHeader field="howTo" label="Description" />
+          <TableHeader field="description" label="Description" />
           <TableHeader field="command" label="Command" />
           {showCategories && <TableHeader field="category" label="Category" />}
           <Th></Th>

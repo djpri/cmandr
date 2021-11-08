@@ -5,7 +5,7 @@ import CommandOptions from "./CommandOptions/CommandOptions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function TableRow({ commandItem, showCategories }) {
-  const { id, howTo, command, reference, category } = commandItem;
+  const { id, description, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = React.useState(false);
 
   const handleCopy = () => {
@@ -17,7 +17,7 @@ function TableRow({ commandItem, showCategories }) {
 
   return (
     <Tr>
-      <Td>{howTo.charAt(0).toUpperCase() + howTo.slice(1)}</Td>
+      <Td>{description.charAt(0).toUpperCase() + description.slice(1)}</Td>
 
       <Td>
         <CopyToClipboard text={command} onCopy={() => handleCopy()}>
@@ -33,7 +33,7 @@ function TableRow({ commandItem, showCategories }) {
         </CopyToClipboard>
       </Td>
 
-      {showCategories && <Td>{category}</Td>}
+      {showCategories && <Td>{category?.name}</Td>}
 
       <Td>
         <HStack spacing="4">
@@ -79,7 +79,7 @@ function TableRow({ commandItem, showCategories }) {
 
           <CommandOptions
             commandId={id}
-            command={{ id, howTo, command, reference, category }}
+            command={{ id, description, command, reference, category }}
           />
         </HStack>
       </Td>
