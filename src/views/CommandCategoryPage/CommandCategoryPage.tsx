@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import CommandsList from "../../components/CommandsList/CommandsList";
-import UserLayout from "../../layouts/UserLayout";
+import UserLayout from "../../layout/UserLayout";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCommandsByCategory } from "../../redux/commands/commandsSlice";
 import { FaEdit } from "react-icons/fa";
-import DeleteCategoryModal from "../../components/shared/DeleteCategoryModal/DeleteCategoryModal";
+import DeleteCategoryModal from "../../components/DeleteCategoryModal/DeleteCategoryModal";
 
 function CommandCategoryPage({ category }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
