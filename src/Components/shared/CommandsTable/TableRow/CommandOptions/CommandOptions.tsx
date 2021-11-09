@@ -13,10 +13,16 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { IoMdOptions } from "react-icons/io";
+import { Command } from "../../../../../types/types";
 import DeleteCommandButton from "../../../DeleteCommandButton/DeleteCommandButton";
 import EditCommandForm from "../../../EditCommandForm/EditCommandForm";
 
-function CommandOptions({ commandId, command }) {
+type IProps = {
+  commandId: string;
+  command: Command;
+};
+
+function CommandOptions({ commandId, command }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isVisible, setIsVisible] = React.useState(false);
 

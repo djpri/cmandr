@@ -3,13 +3,30 @@ export type Command = {
   description: string;
   command: string;
   reference: string;
-  category: string;
+  category: CommandCategory;
+};
+
+export type CommandRowInDb = {
+  id: string;
+  description: string;
+  command: string;
+  reference: string | null;
+  // foreign keys
+  user_id: string;
+  category_id: number | null;
 };
 
 export type CommandCategory = {
-  id: string;
+  id: string | number;
   name: string;
 };
+
+export interface CommandCategoryRowInDb {
+  id: string;
+  name: string;
+  // foreign key
+  user_id: string;
+}
 
 export interface UserAuthState {
   userData: any;

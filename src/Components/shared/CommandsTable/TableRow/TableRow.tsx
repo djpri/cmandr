@@ -79,7 +79,13 @@ function TableRow({ commandItem, showCategories }) {
 
           <CommandOptions
             commandId={id}
-            command={{ id, description, command, reference, category }}
+            command={{
+              id,
+              description,
+              command,
+              reference,
+              category,
+            }}
           />
         </HStack>
       </Td>
