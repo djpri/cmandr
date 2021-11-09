@@ -1,7 +1,18 @@
-import React from "react";
+import { setDeleteCommandCategory } from "../../redux/commands/commandsSlice";
+import { AppThunk } from "../../redux/store";
+import { supabase } from "../../supabase/supabase";
 
-function deleteCommandCategoryInDB() {
-  return <div></div>;
-}
-
-export default deleteCommandCategoryInDB;
+export const deleteCommandCategoryInDB =
+  (id: string): AppThunk =>
+  async (dispatch) => {
+    const { error } = await supabase
+      .from("command_categories")
+      .delete()
+      .match({ id: id });
+    if (error === null) {
+      dispatch(setDeleteCommandCategory(id));
+    } else {
+      console.log(error);
+    }
+    return { error };
+  };

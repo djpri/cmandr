@@ -17,7 +17,7 @@ export type CommandRowInDb = {
 };
 
 export type CommandCategory = {
-  id: string | number;
+  id: string;
   name: string;
 };
 

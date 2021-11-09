@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import CreateCommand from "./components/CreateCommand/CreateCommand";
 import { selectUserUid, setAuthListener } from "./redux/auth/authSlice";
-import { getCommandsFromDB } from "./redux/commands/commandsSlice";
 import { useAppDispatch } from "./redux/store";
+import { getCommandsAndCategoriesFromDB } from "./services/commands/getCommandsAndCategoriesFromDB";
 import theme from "./theme/theme";
 import AllCommandsPage from "./views/AllCommandsPage/AllCommandsPage";
 import HomePage from "./views/Home/HomePage";
@@ -22,7 +22,7 @@ export const App = () => {
 
   // fill command data if there is a user logged in, empty when user logs out
   React.useEffect(() => {
-    dispatch(getCommandsFromDB());
+    dispatch(getCommandsAndCategoriesFromDB());
   }, [user, dispatch]);
 
   return (

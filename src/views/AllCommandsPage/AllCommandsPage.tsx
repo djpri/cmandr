@@ -3,10 +3,10 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import CommandsList from "../../components/CommandsList/CommandsList";
 import UserLayout from "../../layouts/UserLayout";
-import { selectAllCommands } from "../../redux/commands/commandsSlice";
+import { selectCommands } from "../../redux/commands/commandsSlice";
 
 function AllCommandsPage() {
-  const reduxCommands = useSelector(selectAllCommands);
+  const reduxCommands = useSelector(selectCommands);
 
   return (
     <UserLayout>

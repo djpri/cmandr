@@ -18,11 +18,11 @@ export const useAddCommand = () => {
   }: Command) => {
     const { data, error } = await supabase.from("commands").insert([
       {
+        description,
+        command,
+        reference,
         user_id: uid,
         category_id: category,
-        command,
-        description,
-        reference,
       },
     ]);
 

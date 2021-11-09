@@ -2,7 +2,6 @@ import { Command, CommandsState } from "./../../types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
 import { slugify } from "../../utils/slugify";
-import { supabase } from "../../supabase/supabase";
 import { CommandCategory } from "./../../types/types";
 
 const initialState: CommandsState = {
@@ -46,6 +45,14 @@ export const commandsSlice = createSlice({
       newState.push(action.payload);
       state.categories = newState;
     },
+    setDeleteCommandCategory: (state, action: PayloadAction<string>) => {
+      const newState = state.categories;
+      const indexToDelete = newState.findIndex(
+        (item) => item.id === action.payload
+      );
+      newState.splice(indexToDelete, 1);
+      state.categories = newState;
+    },
   },
 });
 
@@ -56,16 +63,25 @@ export const {
   setAddCommand,
   setEditCommand,
   setDeleteCommand,
+  setDeleteCommandCategory,
 } = commandsSlice.actions;
 
 // SELECTORS
-export const selectAllCommands = (state: RootState) => state.commands.commands;
+export const selectCommands = (state: RootState) => state.commands.commands;
 
-export const selectAllCategories = (state: RootState) =>
+export const selectCategories = (state: RootState) =>
   Array.from(state.commands.categories, (category) => category.name);
 
-export const selectAllCategoriesWithIds = (state: RootState) =>
-  Array.from(state.commands.categories);
+export const selectCategoriesWithIds = (state: RootState) =>
+  state.commands.categories;
+
+export const selectCategoriesAsKeyValuePairs = (state: RootState) => {
+  const categories = {};
+  state.commands.categories.forEach((item) => {
+    categories[item.id] = item.name;
+  });
+  return categories;
+};
 
 export const selectCommandsByCategory = (state, category: string) => {
   return state.commands.commands.filter((item: Command) => {
@@ -75,42 +91,6 @@ export const selectCommandsByCategory = (state, category: string) => {
 };
 
 // ASYNC ACTIONS
-export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
-  const addData = async () => {
-    const { data: commands } = await supabase.from("commands").select(`
-        id,
-        description,
-        command,
-        reference,
-        category:command_categories(
-          id,
-          name
-        )
-      `);
-
-    const { data: categories } = await supabase
-      .from("command_categories")
-      .select(`id, name`);
-
-    if (categories !== null) dispatch(setCommandCategories(categories));
-
-    if (commands !== null) {
-      // commands.map((command) => ({
-      //   id: command.id,
-      //   description: command.description,
-      //   command: command.command,
-      //   reference: command.reference,
-      //   category: command.category.name,
-      // }));
-      dispatch(setCommands(commands));
-    } else {
-      dispatch(setCommands([]));
-    }
-  };
-
-  addData();
-};
-
 export const sortCommandsByField =
   (field, isAscending = true): AppThunk =>
   async (dispatch, getState) => {
