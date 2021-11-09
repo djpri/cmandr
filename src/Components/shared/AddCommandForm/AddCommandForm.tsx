@@ -1,80 +1,18 @@
-import {
-  Button,
-  FormLabel,
-  Input,
-  Select,
-  Grid,
-  useToast,
-  Box,
-} from "@chakra-ui/react";
+import { Button, FormLabel, Input, Select, Grid, Box } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUserUid } from "../../../redux/auth/authSlice";
-import {
-  selectAllCategories,
-  setAddCommand,
-} from "../../../redux/commands/commandsSlice";
-import { supabase } from "../../../supabase/supabase";
-import { CommandCategory } from "../../../types/types";
+import { useSelector } from "react-redux";
+import { selectAllCategoriesWithIds } from "../../../redux/commands/commandsSlice";
+import { useAddCommand } from "../../../services/commands/addCommandToDB";
+import { Command, CommandCategory } from "../../../types/types";
 
 function AddCommandForm() {
-  const toast = useToast();
-  const dispatch = useDispatch();
-  const uid: string = useSelector(selectUserUid);
-  const categories: string[] = useSelector(selectAllCategories);
-
+  const categories: CommandCategory[] = useSelector(selectAllCategoriesWithIds);
   const { handleSubmit, register, reset } = useForm();
+  const { addCommandToDB } = useAddCommand();
 
-  const addCommandToDB = async ({
-    description,
-    command,
-    category,
-    reference,
-  }) => {
-    const { data, error } = await supabase.from("commands").insert([
-      {
-        user_id: uid,
-        description,
-        command,
-        reference,
-      },
-    ]);
-
-    if (data !== null) {
-      console.log(data);
-      dispatch(
-        setAddCommand({
-          id: data[0].id,
-          description,
-          command,
-          reference,
-          category,
-        })
-      );
-      toast({
-        title: "Command Added",
-        description: "command added successfully",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-    if (error) {
-      console.log(error);
-      toast({
-        title: "Error",
-        description: "something went wrong",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  };
-
-  const onSubmit = (values) => {
+  const onSubmit = (values: Command) => {
     addCommandToDB(values);
-    // alert(JSON.stringify(values, null, 2));
     reset();
   };
 
@@ -110,8 +48,8 @@ function AddCommandForm() {
             <option value="">Select Category</option>
             {categories &&
               categories.map((category, index) => (
-                <option value={category} key={index}>
-                  {category}
+                <option value={category.id} key={index}>
+                  {category.name}
                 </option>
               ))}
           </Select>

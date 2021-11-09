@@ -3,70 +3,70 @@ import { Command } from "./../../types/types";
 export const testState: Command[] = [
   {
     command: "php artisan serve",
-    howTo: "serve laravel app",
+    description: "serve laravel app",
     reference: "https://laravel.com/docs/8.x#getting-started-on-windows",
-    category: "general",
+    category: { id: "1", name: "general" },
     id: "9Am1cAF2KNSkFfEOkH5r",
   },
   {
     command: "yarn add framer-motion",
-    howTo: "install framer motion",
-    category: "npm package",
+    description: "install framer motion",
+    category: { id: "3", name: "npm package" },
     reference: "https://www.framer.com/docs/",
     id: "BqeJ0PXxnNahJryxW8MK",
   },
   {
+    command: "addDoc(collection(db, path)",
+    description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    howTo: "Add document to firebase",
-    category: "npm package",
-    command: "addDoc(collection(db, path)",
+    category: { id: "", name: "npm package" },
     id: "GOxPxUpu5JQ3VkMO4f3u",
   },
   {
     command: "addDoc(collection(db, path)",
-    howTo: "Add document to firebase",
+    description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    category: "npm package",
+    category: { id: "", name: "npm package" },
     id: "HOYmcDKGU0JYPqmOn4yU",
   },
   {
-    howTo: "add react icons package",
+    description: "add react icons package",
     command: "yarn add react-icons",
     reference: "https://react-icons.github.io/react-icons/",
-    category: "npm package",
+    category: { id: "", name: "npm package" },
     id: "Ms4jyIpqrSDTsRtO3j37",
   },
   {
-    category: "npm package",
+    description: "chakra ui autocomplete",
     command: "yarn add chakra-ui-autocomplete",
-    howTo: "chakra ui autocomplete",
     reference: "https://github.com/koolamusic/chakra-ui-autocomplete",
+    category: { id: "", name: "npm package" },
     id: "wr4aAi1VaAjsi1pB75Uh",
   },
   {
+    description: "Add document to firebase",
     command: "addDoc(collection(db, path)",
-    howTo: "Add document to firebase",
-    category: "general",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
+    category: { id: "1", name: "general" },
     id: "yrDbDEKsRPROlB0jpJp4",
   },
 ];
 
 export const testItem: Command = {
   command: "yarn add framer-motion",
-  howTo: "install framer motion",
-  category: "npm package",
+  description: "install framer motion",
+  category: { id: "3", name: "npm package" },
   reference: "https://www.framer.com/docs/",
   id: "BqeJ0PXxnNahJryxW8MK",
 };
 
 export const editedTestItem: Command = {
   command: "yarn remove framer-motion",
-  howTo: "remove framer motion",
-  category: "npm package",
+  description: "remove framer motion",
+  category: { id: "3", name: "npm package" },
   reference: "https://www.framer.com/docs/",
   id: "BqeJ0PXxnNahJryxW8MK",
 };
@@ -74,53 +74,53 @@ export const editedTestItem: Command = {
 export const testStateAfterEdit: Command[] = [
   {
     command: "php artisan serve",
-    howTo: "serve laravel app",
+    description: "serve laravel app",
     reference: "https://laravel.com/docs/8.x#getting-started-on-windows",
-    category: "general",
+    category: { id: "", name: "" },
     id: "9Am1cAF2KNSkFfEOkH5r",
   },
   // edited item
   {
     command: "yarn remove framer-motion",
-    howTo: "remove framer motion",
-    category: "npm package",
+    description: "remove framer motion",
+    category: { id: "3", name: "npm package" },
     reference: "https://www.framer.com/docs/",
     id: "BqeJ0PXxnNahJryxW8MK",
   },
   {
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    howTo: "Add document to firebase",
-    category: "npm package",
+    description: "Add document to firebase",
+    category: { id: "1", name: "general" },
     command: "addDoc(collection(db, path)",
     id: "GOxPxUpu5JQ3VkMO4f3u",
   },
   {
     command: "addDoc(collection(db, path)",
-    howTo: "Add document to firebase",
+    description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    category: "npm package",
+    category: { id: "1", name: "general" },
     id: "HOYmcDKGU0JYPqmOn4yU",
   },
   {
-    howTo: "add react icons package",
+    description: "add react icons package",
     command: "yarn add react-icons",
     reference: "https://react-icons.github.io/react-icons/",
-    category: "npm package",
+    category: { id: "1", name: "general" },
     id: "Ms4jyIpqrSDTsRtO3j37",
   },
   {
-    category: "npm package",
+    category: { id: "1", name: "general" },
     command: "yarn add chakra-ui-autocomplete",
-    howTo: "chakra ui autocomplete",
+    description: "chakra ui autocomplete",
     reference: "https://github.com/koolamusic/chakra-ui-autocomplete",
     id: "wr4aAi1VaAjsi1pB75Uh",
   },
   {
     command: "addDoc(collection(db, path)",
-    howTo: "Add document to firebase",
-    category: "general",
+    description: "Add document to firebase",
+    category: { id: "1", name: "general" },
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
     id: "yrDbDEKsRPROlB0jpJp4",
@@ -130,46 +130,46 @@ export const testStateAfterEdit: Command[] = [
 export const testStateAfterDeletion: Command[] = [
   {
     command: "php artisan serve",
-    howTo: "serve laravel app",
+    description: "serve laravel app",
     reference: "https://laravel.com/docs/8.x#getting-started-on-windows",
-    category: "general",
+    category: { id: "1", name: "general" },
     id: "9Am1cAF2KNSkFfEOkH5r",
   },
   // deleted item was here
   {
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    howTo: "Add document to firebase",
-    category: "npm package",
+    description: "Add document to firebase",
+    category: { id: "1", name: "general" },
     command: "addDoc(collection(db, path)",
     id: "GOxPxUpu5JQ3VkMO4f3u",
   },
   {
     command: "addDoc(collection(db, path)",
-    howTo: "Add document to firebase",
+    description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    category: "npm package",
+    category: { id: "1", name: "general" },
     id: "HOYmcDKGU0JYPqmOn4yU",
   },
   {
-    howTo: "add react icons package",
+    description: "add react icons package",
     command: "yarn add react-icons",
     reference: "https://react-icons.github.io/react-icons/",
-    category: "npm package",
+    category: { id: "1", name: "general" },
     id: "Ms4jyIpqrSDTsRtO3j37",
   },
   {
-    category: "npm package",
+    category: { id: "1", name: "general" },
     command: "yarn add chakra-ui-autocomplete",
-    howTo: "chakra ui autocomplete",
+    description: "chakra ui autocomplete",
     reference: "https://github.com/koolamusic/chakra-ui-autocomplete",
     id: "wr4aAi1VaAjsi1pB75Uh",
   },
   {
     command: "addDoc(collection(db, path)",
-    howTo: "Add document to firebase",
-    category: "general",
+    description: "Add document to firebase",
+    category: { id: "1", name: "general" },
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
     id: "yrDbDEKsRPROlB0jpJp4",

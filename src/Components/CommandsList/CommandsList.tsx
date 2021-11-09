@@ -37,6 +37,7 @@ function CommandsList(props: { commands: any; showCategories: boolean }) {
       setIsSearching(true);
       clearTimeout(timeout);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   React.useEffect(() => {

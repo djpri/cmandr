@@ -1,30 +1,20 @@
 import * as React from "react";
-import {
-  Button,
-  Stack,
-  Input,
-  FormLabel,
-  Select,
-  useToast,
-} from "@chakra-ui/react";
-import { updateDoc, doc } from "firebase/firestore";
-import { db } from "../../../supabase/firebase";
+import { Button, Stack, Input, FormLabel, Select } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../../redux/store";
-import { selectUserUid } from "../../../redux/auth/authSlice";
 import { useForm } from "react-hook-form";
-import {
-  selectAllCategoriesWithIds,
-  setEditCommand,
-} from "../../../redux/commands/commandsSlice";
-import { CommandCategory } from "../../../types/types";
+import { selectAllCategoriesWithIds } from "../../../redux/commands/commandsSlice";
+import { Command, CommandCategory } from "../../../types/types";
+import { useEditCommand } from "../../../services/commands/editCommandInDB";
 
-function EditCommandForm(props) {
-  const { id, description, command, category, reference } = props.commandItem;
-  const toast = useToast();
-  const dispatch = useAppDispatch();
-  const uid: string = useSelector(selectUserUid);
+type IProps = {
+  commandItem: Command;
+  onClose: () => void;
+};
+
+function EditCommandForm({ commandItem, onClose }: IProps) {
+  const { id, description, command, category, reference } = commandItem;
   const categories: CommandCategory[] = useSelector(selectAllCategoriesWithIds);
+  const { editCommandInDB } = useEditCommand();
 
   const { handleSubmit, register } = useForm({
     defaultValues: {
@@ -36,32 +26,10 @@ function EditCommandForm(props) {
     },
   });
 
-  const editCommandInDB = async (values) => {
-    const { id, description, command, category, reference } = values;
-    try {
-      await updateDoc(doc(db, `users/${uid}/commands`, id), {
-        description,
-        command,
-        reference,
-        category,
-      });
-      dispatch(setEditCommand(values));
-      toast({
-        title: "Command Changed",
-        description: "command changed successfully",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const onSubmit = (values) => {
     editCommandInDB(values);
     // closes popover if using form from popover only
-    if (props.onClose) props.onClose();
+    if (onClose) onClose();
   };
 
   return (
@@ -83,7 +51,7 @@ function EditCommandForm(props) {
           <option value="">Select Category</option>
           {categories &&
             categories.map((category) => (
-              <option value={category.id}>{category}</option>
+              <option value={category.id}>{category.name}</option>
             ))}
         </Select>
 

@@ -69,7 +69,7 @@ export const selectAllCategoriesWithIds = (state: RootState) =>
 
 export const selectCommandsByCategory = (state, category: string) => {
   return state.commands.commands.filter((item: Command) => {
-    const cat = slugify(item.category);
+    const cat = slugify(item.category.name);
     return cat === category;
   });
 };
@@ -93,8 +93,6 @@ export const getCommandsFromDB = (): AppThunk => async (dispatch, getState) => {
       .select(`id, name`);
 
     if (categories !== null) dispatch(setCommandCategories(categories));
-
-    console.log(commands);
 
     if (commands !== null) {
       // commands.map((command) => ({
@@ -120,7 +118,6 @@ export const sortCommandsByField =
 
     if (field === "description" || field === "command") {
       newState.sort((a, b) => {
-        console.log(a[field]);
         let valueA = a[field].toUpperCase();
         let valueB = b[field].toUpperCase();
         if (valueA < valueB) return -1;
@@ -131,7 +128,6 @@ export const sortCommandsByField =
 
     if (field === "category") {
       newState.sort((a, b) => {
-        console.log(a[field].name);
         let valueA = a[field].name.toUpperCase();
         let valueB = b[field].name.toUpperCase();
         if (valueA < valueB) return -1;
