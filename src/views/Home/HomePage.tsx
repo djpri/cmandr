@@ -1,6 +1,6 @@
 import { Box, Grid, VStack, Text } from "@chakra-ui/react";
 import * as React from "react";
-import UserLayout from "../../layouts/UserLayout";
+import UserLayout from "../../layout/UserLayout";
 
 function HomePage() {
   return (

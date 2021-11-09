@@ -2,11 +2,11 @@ import { Box, Button, Heading, HStack } from "@chakra-ui/react";
 import * as React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSelector } from "react-redux";
-import { selectUserEmail } from "../../../redux/auth/authSlice";
-import { ColorModeSwitcher } from "../../ColorModeSwitcher/ColorModeSwitcher";
-import LoginDrawer from "../../LoginDrawer/LoginDrawer";
-import { setSidebarToggle } from "../../../redux/layout/layoutSlice";
-import { useAppDispatch } from "../../../redux/store";
+import { selectUserEmail } from "../../redux/auth/authSlice";
+import { ColorModeSwitcher } from "../../components/ColorModeSwitcher/ColorModeSwitcher";
+import LoginDrawer from "../../components/LoginDrawer/LoginDrawer";
+import { setSidebarToggle } from "../../redux/layout/layoutSlice";
+import { useAppDispatch } from "../../redux/store";
 
 function NavBar() {
   const userEmail = useSelector(selectUserEmail);

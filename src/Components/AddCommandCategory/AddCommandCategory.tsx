@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
 import { addCommandCategory } from "../../redux/commands/commandsSlice";
 import { addCommandCategoryToDB } from "../../services/commandCategories/addCommandCategoryToDB";
-import { deleteCommandCategoryInDB } from "../../services/commandCategories/deleteCommandCategoryInDB";
 
 function AddCommandCategory() {
   const uid = useSelector(selectUserUid);

@@ -1,6 +1,6 @@
 import * as React from "react";
-import NavBar from "../components/layout/NavBar/NavBar";
-import SideBar from "../components/layout/SideBar/SideBar";
+import NavBar from "./NavBar/NavBar";
+import SideBar from "../layout/SideBar/SideBar";
 import { Container } from "@chakra-ui/layout";
 import { selectIsSidebarOpen } from "../redux/layout/layoutSlice";
 import { useSelector } from "react-redux";
