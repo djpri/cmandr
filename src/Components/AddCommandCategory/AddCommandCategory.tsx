@@ -2,9 +2,10 @@ import { Input, Button, HStack, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 import { GoPlus } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserUid } from "../../../redux/auth/authSlice";
-import { addCommandCategory } from "../../../redux/commands/commandsSlice";
-import { supabase } from "../../../supabase/supabase";
+import { selectUserUid } from "../../redux/auth/authSlice";
+import { addCommandCategory } from "../../redux/commands/commandsSlice";
+import { addCommandCategoryToDB } from "../../services/commandCategories/addCommandCategoryToDB";
+import { deleteCommandCategoryInDB } from "../../services/commandCategories/deleteCommandCategoryInDB";
 
 function AddCommandCategory() {
   const uid = useSelector(selectUserUid);
@@ -12,19 +13,13 @@ function AddCommandCategory() {
   const dispatch = useDispatch();
   const { isOpen, onToggle } = useDisclosure();
 
-  const addCategoryToDB = async () => {
-    try {
-      const { data } = await supabase.from("command_categories").insert([
-        {
-          user_id: uid,
-          name: category,
-        },
-      ]);
-      if (data) {
-        dispatch(addCommandCategory({ id: data[0].id, name: category }));
-        onToggle();
-      }
-    } catch (error) {
+  const handleAddCategory = async () => {
+    const { data, error } = await addCommandCategoryToDB(uid, category);
+    if (data) {
+      dispatch(addCommandCategory({ id: data.id, name: category }));
+      onToggle();
+    }
+    if (error) {
       console.log(error);
     }
   };
@@ -46,7 +41,7 @@ function AddCommandCategory() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
-          <Button size="sm" onClick={addCategoryToDB}>
+          <Button size="sm" onClick={handleAddCategory}>
             Save
           </Button>
         </HStack>

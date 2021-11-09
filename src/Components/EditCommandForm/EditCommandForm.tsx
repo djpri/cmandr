@@ -2,7 +2,10 @@ import * as React from "react";
 import { Button, Stack, Input, FormLabel, Select } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { selectAllCategoriesWithIds } from "../../../redux/commands/commandsSlice";
+import {
+  selectCategoriesAsKeyValuePairs,
+  selectCategoriesWithIds,
+} from "../../../redux/commands/commandsSlice";
 import { Command, CommandCategory } from "../../../types/types";
 import { useEditCommand } from "../../../services/commands/editCommandInDB";
 
@@ -13,7 +16,8 @@ type IProps = {
 
 function EditCommandForm({ commandItem, onClose }: IProps) {
   const { id, description, command, category, reference } = commandItem;
-  const categories: CommandCategory[] = useSelector(selectAllCategoriesWithIds);
+  const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
+  const catObject = useSelector(selectCategoriesAsKeyValuePairs);
   const { editCommandInDB } = useEditCommand();
 
   const { handleSubmit, register } = useForm({
@@ -21,13 +25,13 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
       id,
       description,
       command,
-      category,
+      category: category.id,
       reference,
     },
   });
 
   const onSubmit = (values) => {
-    editCommandInDB(values);
+    editCommandInDB({ ...values, categoryName: catObject[values.category] });
     // closes popover if using form from popover only
     if (onClose) onClose();
   };

@@ -1,13 +1,24 @@
-import { Box, Link, Text, StackDivider, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Link,
+  Text,
+  StackDivider,
+  Stack,
+  Button,
+  HStack,
+} from "@chakra-ui/react";
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { selectAllCategories } from "../../../../redux/commands/commandsSlice";
+import { selectCategoriesWithIds } from "../../../../redux/commands/commandsSlice";
+import { deleteCommandCategoryInDB } from "../../../../services/commandCategories/deleteCommandCategoryInDB";
+import { CommandCategory } from "../../../../types/types";
 import { slugify } from "../../../../utils/slugify";
-import AddCommandCategory from "../../../shared/AddCommandCategory/AddCommandCategory";
+import AddCommandCategory from "../../../AddCommandCategory/AddCommandCategory";
 
 function SideBarLinks() {
-  const commandCategories = useSelector(selectAllCategories);
+  const commandCategories = useSelector(selectCategoriesWithIds);
+  const dispatch = useDispatch();
   return (
     <Stack divider={<StackDivider borderColor="gray.500" />} pl="6" pr="5">
       <Stack>
@@ -43,12 +54,18 @@ function SideBarLinks() {
           <Text>All commands</Text>
         </Link>
         {commandCategories &&
-          commandCategories.map((item: string, index: number) => (
-            <React.Fragment key={index}>
-              <Link as={RouterLink} to={`/commands/${slugify(item)}`}>
-                {item}
+          commandCategories.map((item: CommandCategory) => (
+            <HStack key={item.id}>
+              <Link as={RouterLink} to={`/commands/${slugify(item.name)}`}>
+                {item.id}: {item.name}
               </Link>
-            </React.Fragment>
+              <Button
+                size="xs"
+                onClick={() => dispatch(deleteCommandCategoryInDB(item.id))}
+              >
+                del
+              </Button>
+            </HStack>
           ))}
         <AddCommandCategory />
       </Stack>
