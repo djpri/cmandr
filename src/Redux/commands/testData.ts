@@ -20,7 +20,7 @@ export const testState: Command[] = [
     description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    category: { id: "", name: "npm package" },
+    category: { id: "3", name: "npm package" },
     id: "GOxPxUpu5JQ3VkMO4f3u",
   },
   {
@@ -28,21 +28,21 @@ export const testState: Command[] = [
     description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    category: { id: "", name: "npm package" },
+    category: { id: "3", name: "npm package" },
     id: "HOYmcDKGU0JYPqmOn4yU",
   },
   {
     description: "add react icons package",
     command: "yarn add react-icons",
     reference: "https://react-icons.github.io/react-icons/",
-    category: { id: "", name: "npm package" },
+    category: { id: "3", name: "npm package" },
     id: "Ms4jyIpqrSDTsRtO3j37",
   },
   {
     description: "chakra ui autocomplete",
     command: "yarn add chakra-ui-autocomplete",
     reference: "https://github.com/koolamusic/chakra-ui-autocomplete",
-    category: { id: "", name: "npm package" },
+    category: { id: "3", name: "npm package" },
     id: "wr4aAi1VaAjsi1pB75Uh",
   },
   {
@@ -76,10 +76,10 @@ export const testStateAfterEdit: Command[] = [
     command: "php artisan serve",
     description: "serve laravel app",
     reference: "https://laravel.com/docs/8.x#getting-started-on-windows",
-    category: { id: "", name: "" },
+    category: { id: "1", name: "general" },
     id: "9Am1cAF2KNSkFfEOkH5r",
   },
-  // edited item
+  // edited test item
   {
     command: "yarn remove framer-motion",
     description: "remove framer motion",
@@ -88,11 +88,11 @@ export const testStateAfterEdit: Command[] = [
     id: "BqeJ0PXxnNahJryxW8MK",
   },
   {
+    command: "addDoc(collection(db, path)",
+    description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    description: "Add document to firebase",
-    category: { id: "1", name: "general" },
-    command: "addDoc(collection(db, path)",
+    category: { id: "3", name: "npm package" },
     id: "GOxPxUpu5JQ3VkMO4f3u",
   },
   {
@@ -100,29 +100,29 @@ export const testStateAfterEdit: Command[] = [
     description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    category: { id: "1", name: "general" },
+    category: { id: "3", name: "npm package" },
     id: "HOYmcDKGU0JYPqmOn4yU",
   },
   {
     description: "add react icons package",
     command: "yarn add react-icons",
     reference: "https://react-icons.github.io/react-icons/",
-    category: { id: "1", name: "general" },
+    category: { id: "3", name: "npm package" },
     id: "Ms4jyIpqrSDTsRtO3j37",
   },
   {
-    category: { id: "1", name: "general" },
-    command: "yarn add chakra-ui-autocomplete",
     description: "chakra ui autocomplete",
+    command: "yarn add chakra-ui-autocomplete",
     reference: "https://github.com/koolamusic/chakra-ui-autocomplete",
+    category: { id: "3", name: "npm package" },
     id: "wr4aAi1VaAjsi1pB75Uh",
   },
   {
-    command: "addDoc(collection(db, path)",
     description: "Add document to firebase",
-    category: { id: "1", name: "general" },
+    command: "addDoc(collection(db, path)",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
+    category: { id: "1", name: "general" },
     id: "yrDbDEKsRPROlB0jpJp4",
   },
 ];
@@ -135,13 +135,13 @@ export const testStateAfterDeletion: Command[] = [
     category: { id: "1", name: "general" },
     id: "9Am1cAF2KNSkFfEOkH5r",
   },
-  // deleted item was here
+  // removed item was here
   {
+    command: "addDoc(collection(db, path)",
+    description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    description: "Add document to firebase",
-    category: { id: "1", name: "general" },
-    command: "addDoc(collection(db, path)",
+    category: { id: "3", name: "npm package" },
     id: "GOxPxUpu5JQ3VkMO4f3u",
   },
   {
@@ -149,29 +149,29 @@ export const testStateAfterDeletion: Command[] = [
     description: "Add document to firebase",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
-    category: { id: "1", name: "general" },
+    category: { id: "3", name: "npm package" },
     id: "HOYmcDKGU0JYPqmOn4yU",
   },
   {
     description: "add react icons package",
     command: "yarn add react-icons",
     reference: "https://react-icons.github.io/react-icons/",
-    category: { id: "1", name: "general" },
+    category: { id: "3", name: "npm package" },
     id: "Ms4jyIpqrSDTsRtO3j37",
   },
   {
-    category: { id: "1", name: "general" },
-    command: "yarn add chakra-ui-autocomplete",
     description: "chakra ui autocomplete",
+    command: "yarn add chakra-ui-autocomplete",
     reference: "https://github.com/koolamusic/chakra-ui-autocomplete",
+    category: { id: "3", name: "npm package" },
     id: "wr4aAi1VaAjsi1pB75Uh",
   },
   {
-    command: "addDoc(collection(db, path)",
     description: "Add document to firebase",
-    category: { id: "1", name: "general" },
+    command: "addDoc(collection(db, path)",
     reference:
       "https://firebase.google.com/docs/firestore/manage-data/add-data",
+    category: { id: "1", name: "general" },
     id: "yrDbDEKsRPROlB0jpJp4",
   },
 ];

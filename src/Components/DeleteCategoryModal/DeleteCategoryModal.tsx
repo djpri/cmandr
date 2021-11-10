@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-function DeleteCategoryModal({ isOpen, onClose, categoryName }) {
+function DeleteCategoryModal({ isOpen, onClose, categoryName, categoryId }) {
   const history = useHistory();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

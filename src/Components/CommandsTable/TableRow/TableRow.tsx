@@ -3,8 +3,11 @@ import * as React from "react";
 import { GoLinkExternal } from "react-icons/go";
 import CommandOptions from "./CommandOptions/CommandOptions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { selectCategoriesAsKeyValuePairs } from "../../../redux/commands/commandsSlice";
+import { useSelector } from "react-redux";
 
 function TableRow({ commandItem, showCategories }) {
+  const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
   const { id, description, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = React.useState(false);
 
@@ -33,7 +36,7 @@ function TableRow({ commandItem, showCategories }) {
         </CopyToClipboard>
       </Td>
 
-      {showCategories && <Td>{category?.name}</Td>}
+      {showCategories && <Td>{categoriesList[category?.id]}</Td>}
 
       <Td>
         <HStack spacing="4">
