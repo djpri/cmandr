@@ -45,6 +45,14 @@ export const commandsSlice = createSlice({
       newState.push(action.payload);
       state.categories = newState;
     },
+    setEditCommandCategory: (state, action: PayloadAction<CommandCategory>) => {
+      const newState = state.categories;
+      const indexToEdit = newState.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      newState[indexToEdit] = action.payload;
+      state.categories = newState;
+    },
     setDeleteCommandCategory: (state, action: PayloadAction<string>) => {
       const newState = state.categories;
       const indexToDelete = newState.findIndex(
@@ -63,6 +71,7 @@ export const {
   setAddCommand,
   setEditCommand,
   setDeleteCommand,
+  setEditCommandCategory,
   setDeleteCommandCategory,
 } = commandsSlice.actions;
 

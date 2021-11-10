@@ -22,7 +22,7 @@ export const useAddCommand = () => {
         command,
         reference,
         user_id: uid,
-        category_id: category,
+        category_id: category.id,
       },
     ]);
 
