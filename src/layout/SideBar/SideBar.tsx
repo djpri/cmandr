@@ -7,11 +7,11 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SideBarLinks from "./SideBarLinks/SideBarLinks";
 import {
   selectIsSidebarOpen,
   setSidebarClosed,
-} from "../../../redux/layout/layoutSlice";
+} from "../../redux/layout/layoutSlice";
+import SideBarLinks from "./SideBarLinks/SideBarLinks";
 
 const scrollbarStyles = {
   "::-webkit-scrollbar": {

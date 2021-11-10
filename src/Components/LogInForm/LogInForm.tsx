@@ -1,13 +1,14 @@
 import { Stack, Input, Button, Text } from "@chakra-ui/react";
 import * as React from "react";
-import { submitLoginDetails, signOutUser } from "../../../redux/auth/authSlice";
-import { useAppDispatch } from "../../../redux/store";
 import { useSelector } from "react-redux";
 import {
   selectErrorMessage,
   selectIsLoading,
   selectIsLoggedIn,
-} from "../../../redux/auth/authSlice";
+  submitLoginDetails,
+  signOutUser,
+} from "../../redux/auth/authSlice";
+import { useAppDispatch } from "../../redux/store";
 
 function LogInForm() {
   const errorMessage = useSelector(selectErrorMessage);

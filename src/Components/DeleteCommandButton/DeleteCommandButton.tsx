@@ -1,10 +1,10 @@
 import { Button, useToast } from "@chakra-ui/react";
 import * as React from "react";
-import { db } from "../../../supabase/firebase";
-import { doc, deleteDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserUid } from "../../../redux/auth/authSlice";
-import { setDeleteCommand } from "../../../redux/commands/commandsSlice";
+import { doc, deleteDoc } from "firebase/firestore";
+import { selectUserUid } from "../../redux/auth/authSlice";
+import { setDeleteCommand } from "../../redux/commands/commandsSlice";
+import { db } from "../../supabase/firebase";
 
 function DeleteCommandButton({ commandId, onClick }) {
   const user = useSelector(selectUserUid);

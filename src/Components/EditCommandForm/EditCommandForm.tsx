@@ -3,11 +3,11 @@ import { Button, Stack, Input, FormLabel, Select } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
-  selectCategoriesAsKeyValuePairs,
   selectCategoriesWithIds,
-} from "../../../redux/commands/commandsSlice";
-import { Command, CommandCategory } from "../../../types/types";
-import { useEditCommand } from "../../../services/commands/editCommandInDB";
+  selectCategoriesAsKeyValuePairs,
+} from "../../redux/commands/commandsSlice";
+import { useEditCommand } from "../../services/commands/editCommandInDB";
+import { Command, CommandCategory } from "../../types/types";
 
 type IProps = {
   commandItem: Command;

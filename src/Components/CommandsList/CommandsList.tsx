@@ -10,7 +10,7 @@ import {
 import * as React from "react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import { AiOutlineSearch } from "react-icons/ai";
-import CommandsTable from "../shared/CommandsTable/CommandsTable";
+import CommandsTable from "../CommandsTable/CommandsTable";
 
 function CommandsList(props: { commands: any; showCategories: boolean }) {
   const [commands, setCommands] = React.useState(props.commands);
