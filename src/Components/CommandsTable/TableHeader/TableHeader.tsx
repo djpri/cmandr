@@ -2,7 +2,7 @@ import { Th, HStack, Tooltip, IconButton, Text } from "@chakra-ui/react";
 import React from "react";
 import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { sortCommandsByField } from "../../../../redux/commands/commandsSlice";
+import { sortCommandsByField } from "../../../redux/commands/commandsSlice";
 
 function TableHeader({ field, label }) {
   const dispatch = useDispatch();

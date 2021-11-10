@@ -2,9 +2,9 @@ import { Button, FormLabel, Input, Select, Grid, Box } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { selectCategoriesWithIds } from "../../../redux/commands/commandsSlice";
-import { useAddCommand } from "../../../services/commands/addCommandToDB";
-import { Command, CommandCategory } from "../../../types/types";
+import { selectCategoriesWithIds } from "../../redux/commands/commandsSlice";
+import { useAddCommand } from "../../services/commands/addCommandToDB";
+import { CommandCategory, Command } from "../../types/types";
 
 function AddCommandForm() {
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);

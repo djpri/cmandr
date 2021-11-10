@@ -18,7 +18,7 @@ import { selectCommandsByCategory } from "../../redux/commands/commandsSlice";
 import { FaEdit } from "react-icons/fa";
 import DeleteCategoryModal from "../../components/DeleteCategoryModal/DeleteCategoryModal";
 
-function CommandCategoryPage({ category }) {
+function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const params: { id: string } = useParams();
   const categoryName = params.id.replace("-", " ");

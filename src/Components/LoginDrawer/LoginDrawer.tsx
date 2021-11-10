@@ -11,9 +11,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
-import LogInForm from "../shared/LogInForm/LogInForm";
-import SignUpForm from "../shared/SignUpForm/SignUpForm";
+
 import { FaUser } from "react-icons/fa";
+import LogInForm from "../LogInForm/LogInForm";
+import SignUpForm from "../SignUpForm/SignUpForm";
 
 function LoginDrawer({ buttonLabel }) {
   const { isOpen, onOpen, onClose } = useDisclosure();

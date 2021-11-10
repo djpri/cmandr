@@ -1,9 +1,11 @@
 import { Stack, Input, Button, Text } from "@chakra-ui/react";
 import * as React from "react";
-import { submitNewAccountDetails } from "../../../redux/auth/authSlice";
-import { useAppDispatch } from "../../../redux/store";
 import { useSelector } from "react-redux";
-import { selectErrorMessage } from "../../../redux/auth/authSlice";
+import {
+  selectErrorMessage,
+  submitNewAccountDetails,
+} from "../../redux/auth/authSlice";
+import { useAppDispatch } from "../../redux/store";
 
 function SignUpForm() {
   const errorMessage = useSelector(selectErrorMessage);
