@@ -10,7 +10,7 @@ import {
 import * as React from "react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import { AiOutlineSearch } from "react-icons/ai";
-import CommandsTable from "../shared/CommandsTable/CommandsTable";
+import CommandsTable from "../CommandsTable/CommandsTable";
 
 function CommandsList(props: { commands: any; showCategories: boolean }) {
   const [commands, setCommands] = React.useState(props.commands);
@@ -25,8 +25,9 @@ function CommandsList(props: { commands: any; showCategories: boolean }) {
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       setCommands(() => {
-        const newArray = props.commands.filter((item: { howTo: string }) =>
-          item.howTo.match(new RegExp(search, "i"))
+        const newArray = props.commands.filter(
+          (item: { description: string }) =>
+            item.description.match(new RegExp(search, "i"))
         );
         return newArray;
       });
@@ -36,6 +37,7 @@ function CommandsList(props: { commands: any; showCategories: boolean }) {
       setIsSearching(true);
       clearTimeout(timeout);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   React.useEffect(() => {

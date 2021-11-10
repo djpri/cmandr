@@ -1,13 +1,7 @@
 import { UserAuthState } from "./../../types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { auth, db } from "../../firebase/firebase";
+import { supabase } from "../../supabase/supabase";
 import { AppThunk, RootState } from "../store";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-import { doc, setDoc } from "@firebase/firestore";
 
 const initialState: UserAuthState = {
   userData: null,
@@ -28,7 +22,7 @@ export const authSlice = createSlice({
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setErrorMessage: (state, action: PayloadAction<string>) => {
+    setErrorMessage: (state, action: PayloadAction<string | null>) => {
       state.errorMessage = action.payload;
     },
     logInUser: (state) => {
@@ -56,7 +50,7 @@ export const selectIsLoggedIn = (state: RootState) =>
   state.userAuth?.isLoggedIn;
 export const selectIsLoading = (state: RootState) => state.userAuth.isLoading;
 export const selectUserUid = (state: RootState) =>
-  state.userAuth?.userData?.uid || null;
+  state.userAuth?.userData?.id || null;
 export const selectDisplayName = (state: RootState) =>
   state.userAuth?.userData?.displayName;
 export const selectUserEmail = (state: RootState) =>
@@ -78,12 +72,13 @@ export const {
 
 // ASYNC ACTIONS
 export const setAuthListener = (): AppThunk => (dispatch, getState) => {
-  auth.onAuthStateChanged((user) => {
-    if (user !== null && getState().userAuth.initialized) {
-      dispatch(setUserData(user.toJSON()));
-      dispatch(logInUser());
-    }
-  });
+  const user = supabase.auth.user();
+  console.log(user);
+  if (user && !getState().userAuth.initialized) {
+    dispatch(setUserData(user));
+    dispatch(logInUser());
+  }
+
   !getState().userAuth.initialized && dispatch(setInitialized(true));
 };
 
@@ -91,42 +86,46 @@ export const submitLoginDetails =
   (email: string, password: string): AppThunk =>
   async (dispatch) => {
     dispatch(setIsLoading(true));
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error: any) {
-      dispatch(setErrorMessage(`Login Error: ${error.code}`));
+    const { user, error } = await supabase.auth.signIn({ email, password });
+    if (error !== null) {
+      dispatch(setErrorMessage(`Login Error: ${error.message}`));
+    } else {
+      dispatch(setUserData(user));
     }
     dispatch(setIsLoading(false));
   };
 
 export const submitNewAccountDetails =
   (
-    displayName: string = "",
+    userName: string = "",
     email: string = "",
     password: string = ""
   ): AppThunk =>
   async (dispatch) => {
     dispatch(setIsLoading(true));
-    try {
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      dispatch(logInUser());
-      // add document for each new user identified by their uid
-      await setDoc(doc(db, "users", user.uid), {
-        displayName: displayName,
-        email: user.email,
-      });
-    } catch (error: any) {
-      dispatch(setErrorMessage(`Sign up Error: ${error.code}`));
-    }
+
+    const { error } = await supabase.auth.signUp(
+      { email, password },
+      {
+        data: {
+          userName,
+        },
+      }
+    );
+    dispatch(logInUser());
+
+    if (error !== null)
+      dispatch(setErrorMessage(`Sign up Error: ${error.message}`));
     dispatch(setIsLoading(false));
   };
 
-export const signOutUser = (): AppThunk => (dispatch) => {
-  signOut(auth);
+export const signOutUser = (): AppThunk => async (dispatch) => {
+  const { error } = await supabase.auth.signOut();
+  if (error !== null) {
+    dispatch(setErrorMessage(`Sign out Error: ${error.message}`));
+  } else {
+    dispatch(setErrorMessage(null));
+  }
   dispatch(setSignOut());
 };
 
