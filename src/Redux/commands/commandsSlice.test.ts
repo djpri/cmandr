@@ -46,7 +46,11 @@ test("setDeleteCommand", () => {
 
 test("setCommandCategories", () => {
   const initialState: CommandsState = { commands: [], categories: [] };
-  const categories = ["general", "npm package", "git"];
+  const categories = [
+    { id: "1", name: "general" },
+    { id: "2", name: "npm package" },
+    { id: "3", name: "git" },
+  ];
   expect(reducer(initialState, setCommandCategories(categories))).toEqual({
     commands: [],
     categories: categories,

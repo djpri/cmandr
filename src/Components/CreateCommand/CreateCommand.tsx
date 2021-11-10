@@ -8,8 +8,7 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
-
-import AddCommandForm from "../shared/AddCommandForm/AddCommandForm";
+import AddCommandForm from "../AddCommandForm/AddCommandForm";
 // import EditCommandForm from "../shared/EditCommandForm/EditCommandForm";
 
 function CreateCommand() {

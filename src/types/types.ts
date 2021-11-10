@@ -1,12 +1,32 @@
-import { User } from "@firebase/auth";
-
 export type Command = {
   id: string;
-  howTo: string;
+  description: string;
   command: string;
   reference: string;
-  category: string;
+  category: CommandCategory;
 };
+
+export type CommandRowInDb = {
+  id: string;
+  description: string;
+  command: string;
+  reference: string | null;
+  // foreign keys
+  user_id: string;
+  category_id: number | null;
+};
+
+export type CommandCategory = {
+  id: string;
+  name: string;
+};
+
+export interface CommandCategoryRowInDb {
+  id: string;
+  name: string;
+  // foreign key
+  user_id: string;
+}
 
 export interface UserAuthState {
   userData: any;
@@ -19,5 +39,5 @@ export interface UserAuthState {
 
 export interface CommandsState {
   commands: Command[];
-  categories: string[];
+  categories: CommandCategory[];
 }
