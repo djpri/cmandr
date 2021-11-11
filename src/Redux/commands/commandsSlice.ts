@@ -1,7 +1,6 @@
 import { Command, CommandsState } from "./../../types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
-import { slugify } from "../../utils/slugify";
 import { CommandCategory } from "./../../types/types";
 
 const initialState: CommandsState = {
@@ -29,7 +28,7 @@ export const commandsSlice = createSlice({
       newState[index] = action.payload;
       state.commands = newState;
     },
-    setDeleteCommand: (state, action: PayloadAction<string>) => {
+    setDeleteCommand: (state, action: PayloadAction<number>) => {
       const newState = state.commands;
       const index = newState.findIndex(
         (command) => command.id === action.payload
@@ -53,7 +52,7 @@ export const commandsSlice = createSlice({
       newState[indexToEdit] = action.payload;
       state.categories = newState;
     },
-    setDeleteCommandCategory: (state, action: PayloadAction<string>) => {
+    setDeleteCommandCategory: (state, action: PayloadAction<number>) => {
       const newState = state.categories;
       const indexToDelete = newState.findIndex(
         (item) => item.id === action.payload
