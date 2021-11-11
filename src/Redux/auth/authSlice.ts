@@ -73,7 +73,6 @@ export const {
 // ASYNC ACTIONS
 export const setAuthListener = (): AppThunk => (dispatch, getState) => {
   const user = supabase.auth.user();
-  console.log(user);
   if (user && !getState().userAuth.initialized) {
     dispatch(setUserData(user));
     dispatch(logInUser());

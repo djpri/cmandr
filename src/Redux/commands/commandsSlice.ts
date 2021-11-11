@@ -92,10 +92,13 @@ export const selectCategoriesAsKeyValuePairs = (state: RootState) => {
   return categories;
 };
 
-export const selectCommandsByCategory = (state, category: string) => {
+export const selectCommandsByCategoryId = (
+  state: RootState,
+  categoryId: string
+) => {
   return state.commands.commands.filter((item: Command) => {
-    const cat = slugify(item.category.name);
-    return cat === category;
+    const currentCatId: string = item.category.id.toString();
+    return currentCatId === categoryId;
   });
 };
 

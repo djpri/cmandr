@@ -18,6 +18,8 @@ function AddCommandForm() {
   const { addCommandToDB } = useAddCommand();
 
   const onSubmit = (values) => {
+    setValue("category.name", categoryList[getValues("category.id")]);
+    alert(JSON.stringify(values));
     addCommandToDB(values);
     reset();
   };
@@ -51,17 +53,12 @@ function AddCommandForm() {
         <Box>
           <FormLabel htmlFor="category">Category</FormLabel>
 
-          <Select
-            {...register("category.id")}
-            onChange={() =>
-              setValue("category.name", categoryList[getValues("category.id")])
-            }
-          >
+          <Select {...register("category.id")}>
             <option value="">Select Category</option>
             {categories &&
               categories.map((category, index) => (
                 <option value={category.id} key={index}>
-                  {category.name}
+                  {category.id} {category.name}
                 </option>
               ))}
           </Select>

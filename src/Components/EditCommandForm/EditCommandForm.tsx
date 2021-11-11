@@ -31,6 +31,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
   });
 
   const onSubmit = (values: Command) => {
+    setValue("category.name", categoryList[getValues("category.id")]);
     editCommandInDB(values);
     // closes popover if using form from popover only
     if (onClose) onClose();
@@ -51,12 +52,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         <Input {...register("command")} placeholder="Command" />
 
         <FormLabel htmlFor="category">Category</FormLabel>
-        <Select
-          {...register("category.id")}
-          onChange={() =>
-            setValue("category.name", categoryList[getValues("category.id")])
-          }
-        >
+        <Select {...register("category.id")}>
           <option value="">Select Category</option>
           {categories &&
             categories.map((category) => (
