@@ -7,23 +7,18 @@ import {
   selectCategoriesWithIds,
 } from "../../redux/commands/commandsSlice";
 import { useAddCommand } from "../../services/commands/addCommandToDB";
-import { CommandCategory } from "../../types/types";
+import { Command, CommandCategory } from "../../types/types";
 
 function AddCommandForm() {
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
   const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
 
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register, reset, setValue, getValues } =
+    useForm<Command>();
   const { addCommandToDB } = useAddCommand();
 
   const onSubmit = (values) => {
-    const { id, description, command, reference } = values;
-    const category: CommandCategory = {
-      id: values.category,
-      name: categoryList[values.category],
-    };
-
-    addCommandToDB({ id, description, command, reference, category });
+    addCommandToDB(values);
     reset();
   };
 
@@ -55,7 +50,13 @@ function AddCommandForm() {
 
         <Box>
           <FormLabel htmlFor="category">Category</FormLabel>
-          <Select {...register("category")}>
+
+          <Select
+            {...register("category.id")}
+            onChange={() =>
+              setValue("category.name", categoryList[getValues("category.id")])
+            }
+          >
             <option value="">Select Category</option>
             {categories &&
               categories.map((category, index) => (
