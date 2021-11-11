@@ -1,10 +1,10 @@
-export type Command = {
-  id: string;
+export interface Command {
+  id: number;
   description: string;
   command: string;
   reference: string;
   category: CommandCategory;
-};
+}
 
 export type CommandRowInDb = {
   id: string;
@@ -13,11 +13,11 @@ export type CommandRowInDb = {
   reference: string | null;
   // foreign keys
   user_id: string;
-  category_id: number | null;
+  category_id: string | null;
 };
 
 export interface CommandCategory {
-  id: string;
+  id: number;
   name: string;
 }
 

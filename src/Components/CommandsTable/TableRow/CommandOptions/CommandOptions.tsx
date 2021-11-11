@@ -18,11 +18,10 @@ import DeleteCommandButton from "../../../DeleteCommandButton/DeleteCommandButto
 import EditCommandForm from "../../../EditCommandForm/EditCommandForm";
 
 type IProps = {
-  commandId: string;
   command: Command;
 };
 
-function CommandOptions({ commandId, command }: IProps) {
+function CommandOptions({ command }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -56,7 +55,7 @@ function CommandOptions({ commandId, command }: IProps) {
               >
                 Edit
               </Button>
-              <DeleteCommandButton commandId={commandId} onClick={onClose} />
+              <DeleteCommandButton commandId={command.id} onClick={onClose} />
             </HStack>
             <Box display={isVisible ? "block" : "none"}>
               <EditCommandForm commandItem={command} onClose={onClose} />

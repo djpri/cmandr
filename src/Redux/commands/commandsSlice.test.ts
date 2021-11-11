@@ -50,9 +50,9 @@ test("setDeleteCommand", () => {
 test("setCommandCategories", () => {
   const initialState: CommandsState = { commands: [], categories: [] };
   const categories = [
-    { id: "1", name: "general" },
-    { id: "2", name: "npm package" },
-    { id: "3", name: "git" },
+    { id: 1, name: "general" },
+    { id: 2, name: "npm package" },
+    { id: 3, name: "git" },
   ];
   expect(reducer(initialState, setCommandCategories(categories))).toEqual({
     commands: [],
@@ -62,20 +62,20 @@ test("setCommandCategories", () => {
 
 test("setAddCommandCategory", () => {
   const oldCategoriesList = [
-    { id: "1", name: "general" },
-    { id: "2", name: "npm package" },
-    { id: "3", name: "git" },
+    { id: 1, name: "general" },
+    { id: 2, name: "npm package" },
+    { id: 3, name: "git" },
   ];
   const initialState: CommandsState = {
     commands: [],
     categories: oldCategoriesList,
   };
-  const newCategory = { id: "4", name: "c#" };
+  const newCategory = { id: 4, name: "c#" };
   const newCategoriesList = [
-    { id: "1", name: "general" },
-    { id: "2", name: "npm package" },
-    { id: "3", name: "git" },
-    { id: "4", name: "c#" },
+    { id: 1, name: "general" },
+    { id: 2, name: "npm package" },
+    { id: 3, name: "git" },
+    { id: 4, name: "c#" },
   ];
   expect(reducer(initialState, setAddCommandCategory(newCategory))).toEqual({
     commands: [],
@@ -85,19 +85,19 @@ test("setAddCommandCategory", () => {
 
 test("setEditCommandCategory", () => {
   const oldCategoriesList = [
-    { id: "1", name: "general" },
-    { id: "2", name: "npm package" },
-    { id: "3", name: "git" },
+    { id: 1, name: "general" },
+    { id: 2, name: "npm package" },
+    { id: 3, name: "git" },
   ];
   const initialState: CommandsState = {
     commands: [],
     categories: oldCategoriesList,
   };
-  const editedCategory = { id: "2", name: "javascript" };
+  const editedCategory = { id: 2, name: "javascript" };
   const newCategoriesList = [
-    { id: "1", name: "general" },
-    { id: "2", name: "javascript" },
-    { id: "3", name: "git" },
+    { id: 1, name: "general" },
+    { id: 2, name: "javascript" },
+    { id: 3, name: "git" },
   ];
   expect(reducer(initialState, setEditCommandCategory(editedCategory))).toEqual(
     {
@@ -109,18 +109,18 @@ test("setEditCommandCategory", () => {
 
 test("setDeleteCommandCategory", () => {
   const oldCategoriesList = [
-    { id: "1", name: "general" },
-    { id: "2", name: "npm package" },
-    { id: "3", name: "git" },
+    { id: 1, name: "general" },
+    { id: 2, name: "npm package" },
+    { id: 3, name: "git" },
   ];
   const initialState: CommandsState = {
     commands: [],
     categories: oldCategoriesList,
   };
-  const categorytoDelete = { id: "2", name: "npm package" };
+  const categorytoDelete = { id: 2, name: "npm package" };
   const newCategoriesList = [
-    { id: "1", name: "general" },
-    { id: "3", name: "git" },
+    { id: 1, name: "general" },
+    { id: 3, name: "git" },
   ];
   expect(
     reducer(initialState, setDeleteCommandCategory(categorytoDelete.id))
