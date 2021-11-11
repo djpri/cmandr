@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { IoMdOptions } from "react-icons/io";
-import { Command } from "../../../../../types/types";
+import { Command } from "../../../../types/types";
 import DeleteCommandButton from "../../../DeleteCommandButton/DeleteCommandButton";
 import EditCommandForm from "../../../EditCommandForm/EditCommandForm";
 
