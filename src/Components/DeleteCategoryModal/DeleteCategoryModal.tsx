@@ -9,10 +9,13 @@ import {
   Button,
 } from "@chakra-ui/react";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { deleteCommandCategoryInDB } from "../../services/commandCategories/deleteCommandCategoryInDB";
 
 function DeleteCategoryModal({ isOpen, onClose, categoryName, categoryId }) {
   const history = useHistory();
+  const dispatch = useDispatch();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -25,11 +28,13 @@ function DeleteCategoryModal({ isOpen, onClose, categoryName, categoryId }) {
           <Button bgColor="blue.500" mr={3} onClick={onClose}>
             Cancel
           </Button>
+
           <Button
             bgColor="red.500"
             onClick={() => {
               onClose();
               history.push("/commands");
+              dispatch(deleteCommandCategoryInDB(categoryId));
             }}
           >
             Delete

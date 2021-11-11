@@ -1,25 +1,15 @@
-import {
-  Box,
-  Link,
-  Text,
-  StackDivider,
-  Stack,
-  Button,
-  HStack,
-} from "@chakra-ui/react";
+import { Box, Link, Text, StackDivider, Stack, HStack } from "@chakra-ui/react";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import AddCommandCategory from "../../../components/AddCommandCategory/AddCommandCategory";
 import { selectCategoriesWithIds } from "../../../redux/commands/commandsSlice";
-import { deleteCommandCategoryInDB } from "../../../services/commandCategories/deleteCommandCategoryInDB";
 import { CommandCategory } from "../../../types/types";
 import { slugify } from "../../../utils/slugify";
 
 function SideBarLinks() {
   const commandCategories = useSelector(selectCategoriesWithIds);
   const dispatch = useDispatch();
-  const history = useHistory();
   return (
     <Stack divider={<StackDivider borderColor="gray.500" />} pl="6" pr="5">
       <Stack>
@@ -57,18 +47,9 @@ function SideBarLinks() {
         {commandCategories &&
           commandCategories.map((item: CommandCategory) => (
             <HStack key={item.id}>
-              <Link as={RouterLink} to={`/commands/${slugify(item.name)}`}>
+              <Link as={RouterLink} to={`/commands/${item.id}`}>
                 {item.id}: {item.name}
               </Link>
-              <Button
-                size="xs"
-                onClick={() => {
-                  history.push("/commands");
-                  dispatch(deleteCommandCategoryInDB(item.id));
-                }}
-              >
-                del
-              </Button>
             </HStack>
           ))}
         <AddCommandCategory />

@@ -16,10 +16,10 @@ export type CommandRowInDb = {
   category_id: number | null;
 };
 
-export type CommandCategory = {
+export interface CommandCategory {
   id: string;
   name: string;
-};
+}
 
 export interface CommandCategoryRowInDb {
   id: string;

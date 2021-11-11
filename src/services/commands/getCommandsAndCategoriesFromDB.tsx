@@ -26,13 +26,6 @@ export const getCommandsAndCategoriesFromDB =
       if (categories !== null) dispatch(setCommandCategories(categories));
 
       if (commands !== null) {
-        // commands.map((command) => ({
-        //   id: command.id,
-        //   description: command.description,
-        //   command: command.command,
-        //   reference: command.reference,
-        //   category: command.category.name,
-        // }));
         dispatch(setCommands(commands));
       } else {
         dispatch(setCommands([]));

@@ -1,10 +1,9 @@
 import React from "react";
-// import { screen } from "@testing-library/react";
-// import { render } from "./test-utils";
-// import { App } from "./App";
+import { App } from "./App";
+import { render, screen } from "./test-utils";
 
-test("renders Commander title", () => {
-  // render(<App />);
-  // const linkElement = screen.getByText(/commander/i)
-  // expect(linkElement).toBeInTheDocument()
+test("renders without crashing", () => {
+  render(<App />);
+  const linkElement = screen.getByText(/cmandr/i);
+  expect(linkElement).toBeInTheDocument();
 });

@@ -14,16 +14,21 @@ import CommandsList from "../../components/CommandsList/CommandsList";
 import UserLayout from "../../layout/UserLayout";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCommandsByCategory } from "../../redux/commands/commandsSlice";
+import {
+  selectCategoriesAsKeyValuePairs,
+  selectCommandsByCategoryId,
+} from "../../redux/commands/commandsSlice";
 import { FaEdit } from "react-icons/fa";
 import DeleteCategoryModal from "../../components/DeleteCategoryModal/DeleteCategoryModal";
+import { RootState } from "../../redux/store";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
-  const categoryName = params.id.replace("-", " ");
-  const reduxCommands = useSelector((state) =>
-    selectCommandsByCategory(state, params.id)
+  const categoryName = categoryList[params.id] || "";
+  const reduxCommands = useSelector((state: RootState) =>
+    selectCommandsByCategoryId(state, params.id)
   );
 
   return (
@@ -55,6 +60,7 @@ function CommandCategoryPage() {
         isOpen={isOpen}
         onClose={onClose}
         categoryName={categoryName}
+        categoryId={"2"}
       />
     </UserLayout>
   );
