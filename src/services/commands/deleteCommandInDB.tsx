@@ -1,22 +1,37 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { setEditCommand } from "../../redux/commands/commandsSlice";
-import { Command } from "../../types/types";
+import { setDeleteCommand } from "../../redux/commands/commandsSlice";
+import { supabase } from "../../supabase/supabase";
 
-export const useDeleteCommand = async (values: Command) => {
+export const useDeleteCommand = () => {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  try {
-    dispatch(setEditCommand(values));
-    toast({
-      title: "Command Changed",
-      description: "command changed successfully",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  const deleteCommandInDB = async (id: string) => {
+    const { error } = await supabase
+      .from("commands")
+      .delete()
+      .match({ id: id });
+
+    if (error === null) {
+      dispatch(setDeleteCommand(id));
+      toast({
+        title: "Command Changed",
+        description: "command changed successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "something went wrong...",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  return { deleteCommandInDB };
 };

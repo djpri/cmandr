@@ -16,7 +16,7 @@ export const useEditCommand = () => {
       .update({
         description,
         command,
-        category,
+        category_id: category.id,
         reference,
       })
       .match({ id: id });
@@ -31,7 +31,13 @@ export const useEditCommand = () => {
         isClosable: true,
       });
     } else {
-      console.log(error);
+      toast({
+        title: "Error",
+        description: "something went wrong...",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 

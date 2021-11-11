@@ -17,21 +17,21 @@ type IProps = {
 function EditCommandForm({ commandItem, onClose }: IProps) {
   const { id, description, command, category, reference } = commandItem;
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
-  const catObject = useSelector(selectCategoriesAsKeyValuePairs);
+  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const { editCommandInDB } = useEditCommand();
 
-  const { handleSubmit, register } = useForm({
+  const { handleSubmit, register, setValue, getValues } = useForm<Command>({
     defaultValues: {
       id,
       description,
       command,
-      category: category.id,
+      category,
       reference,
     },
   });
 
-  const onSubmit = (values) => {
-    editCommandInDB({ ...values, categoryName: catObject[values.category] });
+  const onSubmit = (values: Command) => {
+    editCommandInDB(values);
     // closes popover if using form from popover only
     if (onClose) onClose();
   };
@@ -51,7 +51,12 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         <Input {...register("command")} placeholder="Command" />
 
         <FormLabel htmlFor="category">Category</FormLabel>
-        <Select {...register("category")}>
+        <Select
+          {...register("category.id")}
+          onChange={() =>
+            setValue("category.name", categoryList[getValues("category.id")])
+          }
+        >
           <option value="">Select Category</option>
           {categories &&
             categories.map((category) => (
