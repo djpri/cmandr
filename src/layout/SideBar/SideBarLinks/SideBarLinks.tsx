@@ -1,15 +1,13 @@
 import { Box, Link, Text, StackDivider, Stack, HStack } from "@chakra-ui/react";
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import AddCommandCategory from "../../../components/AddCommandCategory/AddCommandCategory";
 import { selectCategoriesWithIds } from "../../../redux/commands/commandsSlice";
 import { CommandCategory } from "../../../types/types";
-import { slugify } from "../../../utils/slugify";
 
 function SideBarLinks() {
   const commandCategories = useSelector(selectCategoriesWithIds);
-  const dispatch = useDispatch();
   return (
     <Stack divider={<StackDivider borderColor="gray.500" />} pl="6" pr="5">
       <Stack>

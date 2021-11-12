@@ -28,7 +28,7 @@ function CommandCategoryPage() {
   const params: { id: string } = useParams();
   const categoryName = categoryList[params.id] || "";
   const reduxCommands = useSelector((state: RootState) =>
-    selectCommandsByCategoryId(state, params.id)
+    selectCommandsByCategoryId(state, parseInt(params.id))
   );
 
   return (

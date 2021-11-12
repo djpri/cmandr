@@ -7,13 +7,13 @@ export interface Command {
 }
 
 export type CommandRowInDb = {
-  id: string;
+  id: number;
   description: string;
   command: string;
   reference: string | null;
   // foreign keys
   user_id: string;
-  category_id: string | null;
+  category_id: number | null;
 };
 
 export interface CommandCategory {
