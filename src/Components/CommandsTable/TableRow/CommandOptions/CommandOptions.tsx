@@ -55,7 +55,7 @@ function CommandOptions({ command }: IProps) {
               >
                 Edit
               </Button>
-              <DeleteCommandButton commandId={command.id} onClick={onClose} />
+              <DeleteCommandButton commandId={command.id} onClose={onClose} />
             </HStack>
             <Box display={isVisible ? "block" : "none"}>
               <EditCommandForm commandItem={command} onClose={onClose} />

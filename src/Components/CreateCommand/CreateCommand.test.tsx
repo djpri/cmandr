@@ -1,7 +1,7 @@
 import React from 'react';
-import {{name}} from "./{{name}}";
+import CreateCommand from "./CreateCommand";
 import { render, screen } from "../../test-utils";
 
 test("renders without crashing", () => {
-  render(<{{name}} />);
+  render(<CreateCommand />);
 });
