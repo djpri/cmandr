@@ -1,7 +1,7 @@
 import React from 'react';
-import {{name}} from "./{{name}}";
+import AddCommandCategory from "./AddCommandCategory";
 import { render, screen } from "../../test-utils";
 
 test("renders without crashing", () => {
-  render(<{{name}} />);
+  render(<AddCommandCategory />);
 });

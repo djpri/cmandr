@@ -13,7 +13,19 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { deleteCommandCategoryInDB } from "../../services/commandCategories/deleteCommandCategoryInDB";
 
-function DeleteCategoryModal({ isOpen, onClose, categoryName, categoryId }) {
+interface IProps {
+  isOpen: boolean;
+  onClose: () => void | null;
+  categoryName: string;
+  categoryId: number;
+}
+
+function DeleteCategoryModal({
+  isOpen,
+  onClose,
+  categoryName,
+  categoryId,
+}: IProps) {
   const history = useHistory();
   const dispatch = useDispatch();
   return (

@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/react";
 import * as React from "react";
 import { useDeleteCommand } from "../../services/commands/deleteCommandInDB";
 
-function DeleteCommandButton({ commandId, onClick }) {
+function DeleteCommandButton({ commandId, onClose }) {
   const { deleteCommandInDB } = useDeleteCommand();
 
   return (
@@ -12,7 +12,7 @@ function DeleteCommandButton({ commandId, onClick }) {
       color="white"
       onClick={() => {
         deleteCommandInDB(commandId);
-        onClick();
+        onClose();
       }}
     >
       Delete

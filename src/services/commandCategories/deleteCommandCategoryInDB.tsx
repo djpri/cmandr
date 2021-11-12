@@ -3,7 +3,7 @@ import { AppThunk } from "../../redux/store";
 import { supabase } from "../../supabase/supabase";
 
 export const deleteCommandCategoryInDB =
-  (id: string): AppThunk =>
+  (id: number): AppThunk =>
   async (dispatch) => {
     const { error } = await supabase
       .from("command_categories")
