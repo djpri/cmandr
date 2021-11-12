@@ -93,10 +93,10 @@ export const selectCategoriesAsKeyValuePairs = (state: RootState) => {
 
 export const selectCommandsByCategoryId = (
   state: RootState,
-  categoryId: string
+  categoryId: number
 ) => {
   return state.commands.commands.filter((item: Command) => {
-    const currentCatId: string = item.category.id.toString();
+    const currentCatId = item.category.id;
     return currentCatId === categoryId;
   });
 };

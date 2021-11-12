@@ -29,14 +29,14 @@ test("Shows edit form with correct default information", () => {
   fireEvent.click(button);
   const editButton = screen.getByText("Edit");
   fireEvent.click(editButton);
-  const saveButton = screen.getByText("Save");
   const defaultDescription = screen.getByDisplayValue(testCommand.description);
   const defaultCommand = screen.getByDisplayValue(testCommand.command);
-  // const defaultCategory = screen.getByDisplayValue(testCommand.category.name);
+  const defaultCategory = screen.getByDisplayValue(testCommand.category.name);
   const defaultReference = screen.getByDisplayValue(testCommand.reference);
+  const saveButton = screen.getByText("Save");
   expect(defaultDescription).toBeInTheDocument();
   expect(defaultCommand).toBeInTheDocument();
-  // expect(defaultCategory).toBeInTheDocument();
+  expect(defaultCategory).toBeInTheDocument();
   expect(defaultReference).toBeInTheDocument();
   expect(saveButton).toBeInTheDocument();
 });
