@@ -1,15 +1,12 @@
 import { Box, Button, Heading, HStack } from "@chakra-ui/react";
 import * as React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useSelector } from "react-redux";
-import { selectUserEmail } from "../../redux/auth/authSlice";
 import { ColorModeSwitcher } from "../../components/ColorModeSwitcher/ColorModeSwitcher";
-import LoginDrawer from "../../components/LoginDrawer/LoginDrawer";
 import { setSidebarToggle } from "../../redux/layout/layoutSlice";
 import { useAppDispatch } from "../../redux/store";
+import LoginDrawer from "../LoginDrawer/LoginDrawer";
 
 function NavBar() {
-  const userEmail = useSelector(selectUserEmail);
   const dispatch = useAppDispatch();
 
   return (
@@ -50,7 +47,7 @@ function NavBar() {
         </HStack>
         <HStack>
           <ColorModeSwitcher />
-          <LoginDrawer buttonLabel={userEmail} />
+          <LoginDrawer />
         </HStack>
       </HStack>
     </Box>
