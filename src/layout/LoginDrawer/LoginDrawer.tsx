@@ -11,15 +11,47 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
-
 import { FaUser } from "react-icons/fa";
-import LogInForm from "../LogInForm/LogInForm";
-import SignUpForm from "../SignUpForm/SignUpForm";
+import { useSelector } from "react-redux";
+import LogInForm from "../../components/LogInForm/LogInForm";
+import SignOutButton from "../../components/SignOutButton/SignOutButton";
+import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import { selectUserEmail } from "../../redux/auth/authSlice";
 
-function LoginDrawer({ buttonLabel }) {
+function LoginDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formType, setFormType] = React.useState("login");
   const btnRef: React.Ref<any> = React.useRef();
+  const user = useSelector(selectUserEmail);
+
+  if (user)
+    return (
+      <>
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>{user}</DrawerHeader>
+            <DrawerBody>
+              <SignOutButton />
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+        <Button
+          ref={btnRef}
+          colorScheme="whatsapp"
+          onClick={onOpen}
+          fontSize="xs"
+        >
+          <FaUser />
+        </Button>
+      </>
+    );
 
   return (
     <>
@@ -33,6 +65,7 @@ function LoginDrawer({ buttonLabel }) {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>
+            {user && user}
             {formType === "login"
               ? "Log in to your account"
               : "Create a new account"}

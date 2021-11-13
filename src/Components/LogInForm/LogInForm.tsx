@@ -9,6 +9,7 @@ import {
   signOutUser,
 } from "../../redux/auth/authSlice";
 import { useAppDispatch } from "../../redux/store";
+import SignOutButton from "../SignOutButton/SignOutButton";
 
 function LogInForm() {
   const errorMessage = useSelector(selectErrorMessage);
@@ -58,21 +59,12 @@ function LogInForm() {
       >
         Log In
       </Button>
-      {isLoggedIn && <Text>logged in!</Text>}
       {errorMessage && (
         <Text color="red.400" fontWeight="700">
           {errorMessage}
         </Text>
       )}
-      <Button
-        colorScheme="blue"
-        // isDisabled={!isLoggedIn}
-        onClick={() => {
-          dispatch(signOutUser());
-        }}
-      >
-        Sign Out
-      </Button>
+      {isLoggedIn && <SignOutButton />}
     </Stack>
   );
 }

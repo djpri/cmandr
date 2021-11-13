@@ -49,8 +49,6 @@ function CommandOptions({ command }: IProps) {
               <Button
                 size="xs"
                 colorScheme="orange"
-                // bgColor="green.500"
-                // color="white"
                 onClick={() => setIsVisible((prevState) => !prevState)}
               >
                 Edit
