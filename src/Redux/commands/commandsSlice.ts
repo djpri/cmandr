@@ -137,4 +137,17 @@ export const addCommandCategory =
     dispatch(setAddCommandCategory(category));
   };
 
+export const deleteCommandCategory =
+  (categoryId: number): AppThunk =>
+  async (dispatch, getState) => {
+    // delete commands that had matching category id
+    const newCommands = getState().commands.commands.filter((item: Command) => {
+      const currentCatId = item.category.id;
+      return currentCatId !== categoryId;
+    });
+    dispatch(setCommands(newCommands));
+    // then delete the category
+    dispatch(setDeleteCommandCategory(categoryId));
+  };
+
 export default commandsSlice.reducer;

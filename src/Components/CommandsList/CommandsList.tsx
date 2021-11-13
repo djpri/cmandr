@@ -11,11 +11,16 @@ import * as React from "react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import { AiOutlineSearch } from "react-icons/ai";
 import CommandsTable from "../CommandsTable/CommandsTable";
+import { selectCommands } from "../../redux/commands/commandsSlice";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
-function CommandsList(props: { commands: any; showCategories: boolean }) {
-  const [commands, setCommands] = React.useState(props.commands);
+function CommandsList(props: { showCategories: boolean }) {
+  const reduxCommands = useSelector(selectCommands);
   const [search, setSearch] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState(reduxCommands);
   const [isSearching, setIsSearching] = React.useState(false);
+  const location = useLocation();
 
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
@@ -24,10 +29,9 @@ function CommandsList(props: { commands: any; showCategories: boolean }) {
   // wait 500ms after user stops typing before filtering
   React.useEffect(() => {
     const timeout = setTimeout(() => {
-      setCommands(() => {
-        const newArray = props.commands.filter(
-          (item: { description: string }) =>
-            item.description.match(new RegExp(search, "i"))
+      setSearchResults(() => {
+        const newArray = reduxCommands.filter((item: { description: string }) =>
+          item.description.match(new RegExp(search, "i"))
         );
         return newArray;
       });
@@ -37,12 +41,15 @@ function CommandsList(props: { commands: any; showCategories: boolean }) {
       setIsSearching(true);
       clearTimeout(timeout);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [search, reduxCommands]);
 
   React.useEffect(() => {
-    setCommands(props.commands);
-  }, [props.commands]);
+    setSearchResults([]);
+  }, [location]);
+
+  React.useEffect(() => {
+    setSearchResults(reduxCommands);
+  }, [reduxCommands]);
 
   // TODO push router to login page when no user
 
@@ -88,7 +95,7 @@ function CommandsList(props: { commands: any; showCategories: boolean }) {
         </InputGroup>
 
         <CommandsTable
-          commands={commands}
+          commands={searchResults ? searchResults : reduxCommands}
           showCategories={props.showCategories}
         />
       </Box>
