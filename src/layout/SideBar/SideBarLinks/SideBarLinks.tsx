@@ -46,7 +46,7 @@ function SideBarLinks() {
           commandCategories.map((item: CommandCategory) => (
             <HStack key={item.id}>
               <Link as={RouterLink} to={`/commands/${item.id}`}>
-                {item.id}: {item.name}
+                {item.name}
               </Link>
             </HStack>
           ))}

@@ -6,7 +6,6 @@ import {
   selectIsLoading,
   selectIsLoggedIn,
   submitLoginDetails,
-  signOutUser,
 } from "../../redux/auth/authSlice";
 import { useAppDispatch } from "../../redux/store";
 import SignOutButton from "../SignOutButton/SignOutButton";
@@ -18,8 +17,8 @@ function LogInForm() {
 
   const dispatch = useAppDispatch();
   const [formDetails, setFormDetails] = React.useState({
-    email: "djpri@baba.com",
-    password: "coconuts",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e: { target: { id: string; value: string } }) => {
