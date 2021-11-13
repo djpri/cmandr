@@ -13,8 +13,8 @@ function SignUpForm() {
   const dispatch = useAppDispatch();
   const [formDetails, setFormDetails] = React.useState({
     displayName: "",
-    email: "djpri@baba.com",
-    password: "coconuts",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e: { target: { id: string; value: string } }) => {
@@ -28,14 +28,6 @@ function SignUpForm() {
 
   return (
     <Stack spacing={3}>
-      <Input
-        isRequired
-        name="email"
-        id="displayName"
-        placeholder="Display Name"
-        value={formDetails.displayName}
-        onChange={handleChange}
-      />
       <Input
         isRequired
         type="email"
@@ -52,6 +44,15 @@ function SignUpForm() {
         id="password"
         placeholder="Password"
         value={formDetails.password}
+        onChange={handleChange}
+      />
+      <Input
+        isRequired
+        name="text"
+        type="text"
+        id="displayName"
+        placeholder="Display Name (optional)"
+        value={formDetails.displayName}
         onChange={handleChange}
       />
       <Button

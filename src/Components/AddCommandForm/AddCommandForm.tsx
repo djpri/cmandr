@@ -1,7 +1,9 @@
 import { Button, FormLabel, Input, Select, Grid, Box } from "@chakra-ui/react";
 import * as React from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   selectCategoriesAsKeyValuePairs,
   selectCategoriesWithIds,
@@ -12,10 +14,18 @@ import { Command, CommandCategory } from "../../types/types";
 function AddCommandForm() {
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
   const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
+  const params: { id: string } = useParams();
 
   const { handleSubmit, register, reset, setValue, getValues } =
     useForm<Command>();
   const { addCommandToDB } = useAddCommand();
+
+  useEffect(() => {
+    if (params && params.id) {
+      setValue("category.id", parseInt(params.id));
+      console.log(params.id);
+    }
+  }, [params, setValue]);
 
   const onSubmit = (values) => {
     setValue("category.name", categoryList[getValues("category.id")]);
@@ -57,7 +67,7 @@ function AddCommandForm() {
             {categories &&
               categories.map((category, index) => (
                 <option value={category.id} key={index}>
-                  {category.id} {category.name}
+                  {category.name}
                 </option>
               ))}
           </Select>
