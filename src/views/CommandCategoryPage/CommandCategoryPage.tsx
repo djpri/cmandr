@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Heading,
   HStack,
@@ -12,24 +13,34 @@ import {
 import * as React from "react";
 import CommandsList from "../../components/CommandsList/CommandsList";
 import UserLayout from "../../layout/UserLayout";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import {
-  selectCategoriesAsKeyValuePairs,
-  selectCommandsByCategoryId,
-} from "../../redux/commands/commandsSlice";
+import { useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCategoriesAsKeyValuePairs } from "../../redux/commands/commandsSlice";
 import { FaEdit } from "react-icons/fa";
 import DeleteCategoryModal from "../../components/DeleteCategoryModal/DeleteCategoryModal";
-import { RootState } from "../../redux/store";
+import { selectUserUid } from "../../redux/auth/authSlice";
+import { getCommandsByCategoryFromDB } from "../../services/commands/getCommandsByCategoryFromDB";
+import EditCommandCategory from "../../components/EditCommandCategory/EditCommandCategory";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isEditModalOpen,
+    onOpen: editModalOpen,
+    onClose: editModalClose,
+  } = useDisclosure();
+
   const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
   const categoryName = categoryList[params.id] || "";
-  const reduxCommands = useSelector((state: RootState) =>
-    selectCommandsByCategoryId(state, parseInt(params.id))
-  );
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUserUid);
+
+  React.useEffect(() => {
+    dispatch(getCommandsByCategoryFromDB(parseInt(params.id)));
+    console.log(location);
+  }, [dispatch, user, location, params.id]);
 
   return (
     <UserLayout>
@@ -37,30 +48,39 @@ function CommandCategoryPage() {
         <Heading as="h2" fontWeight="900">
           {categoryName}
         </Heading>
-        <Popover placement="right">
-          <PopoverTrigger>
-            <Button>
-              <FaEdit />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverBody>
-              <HStack>
-                <Button size="xs">edit</Button>
-                <Button size="xs" onClick={onOpen}>
-                  delete
-                </Button>
-              </HStack>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+        <Box m="0" p="0">
+          <Popover placement="right">
+            <PopoverTrigger>
+              <Button>
+                <FaEdit />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverBody>
+                <HStack>
+                  <Button size="xs" onClick={editModalOpen}>
+                    edit
+                  </Button>
+                  <Button size="xs" onClick={onOpen}>
+                    delete
+                  </Button>
+                </HStack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </Box>
       </Stack>
-      <CommandsList commands={reduxCommands} showCategories={false} />
+      <CommandsList showCategories={false} />
       <DeleteCategoryModal
         isOpen={isOpen}
         onClose={onClose}
         categoryName={categoryName}
-        categoryId={"2"}
+        categoryId={parseInt(params.id)}
+      />
+      <EditCommandCategory
+        isOpen={isEditModalOpen}
+        onClose={editModalClose}
+        categoryId={parseInt(params.id)}
       />
     </UserLayout>
   );

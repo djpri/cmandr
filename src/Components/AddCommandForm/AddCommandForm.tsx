@@ -19,7 +19,6 @@ function AddCommandForm() {
 
   const onSubmit = (values) => {
     setValue("category.name", categoryList[getValues("category.id")]);
-    alert(JSON.stringify(values));
     addCommandToDB(values);
     reset();
   };
