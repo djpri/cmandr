@@ -6,8 +6,19 @@ export interface Command {
   category: CommandCategory;
 }
 
+export interface CommandCategory {
+  id: number;
+  name: string;
+}
+
+export interface CommandsState {
+  commands: Command[];
+  categories: CommandCategory[];
+}
+
 export interface Link {
   id: number;
+  title: string;
   link: string;
   category: LinkCategory;
 }
@@ -16,9 +27,10 @@ export interface LinkCategory {
   id: number;
   name: string;
 }
-export interface CommandCategory {
-  id: number;
-  name: string;
+
+export interface LinksState {
+  links: Link[];
+  categories: LinkCategory[];
 }
 
 export interface UserAuthState {
@@ -28,9 +40,4 @@ export interface UserAuthState {
   isLoading: boolean;
   isLoggedIn: boolean;
   errorMessage: string | null;
-}
-
-export interface CommandsState {
-  commands: Command[];
-  categories: CommandCategory[];
 }

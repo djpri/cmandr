@@ -1,7 +1,13 @@
+import { Box } from "@chakra-ui/layout";
 import React from "react";
+import UserLayout from "../../layout/UserLayout";
 
 function LinkCategory() {
-  return <div></div>;
+  return (
+    <UserLayout>
+      <Box>iii</Box>
+    </UserLayout>
+  );
 }
 
 export default LinkCategory;

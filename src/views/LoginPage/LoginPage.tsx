@@ -1,13 +1,6 @@
-import {
-  Button,
-  Stack,
-  useDisclosure,
-  Text,
-  Heading,
-  Container,
-  Box,
-} from "@chakra-ui/react";
+import { Button, Stack, Text, Heading, Container, Box } from "@chakra-ui/react";
 import * as React from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import LogInForm from "../../components/LogInForm/LogInForm";
@@ -15,13 +8,13 @@ import SignUpForm from "../../components/SignUpForm/SignUpForm";
 import { selectUserEmail } from "../../redux/auth/authSlice";
 
 function LoginPage() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [formType, setFormType] = React.useState("login");
-  const btnRef: React.Ref<any> = React.useRef();
   const user = useSelector(selectUserEmail);
   const history = useHistory();
 
-  if (user) history.push("/commands");
+  useEffect(() => {
+    if (user) history.push("/commands");
+  }, [user, history]);
 
   return (
     <Box
@@ -37,7 +30,6 @@ function LoginPage() {
       </Heading>
       <Container maxW="container.md">
         <Heading mb="5">
-          {user && user}
           {formType === "login"
             ? "Log in to your account"
             : "Create a new account"}
