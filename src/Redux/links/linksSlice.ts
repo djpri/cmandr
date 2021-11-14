@@ -1,26 +1,24 @@
+import { RootState } from "./../store";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isSidebarOpen: true,
+  linkCategories: [
+    { id: 1, name: "Portfolios" },
+    { id: 2, name: "Docs" },
+  ],
 };
 
 export const linksSlice = createSlice({
-  name: "commands",
+  name: "links",
   initialState,
-  reducers: {
-    setSidebarToggle: (state) => {
-      state.isSidebarOpen = !state.isSidebarOpen;
-    },
-    setSidebarClosed: (state) => {
-      state.isSidebarOpen = false;
-    },
-  },
+  reducers: {},
 });
 
 // Action creators are generated for each case reducer function
-export const { setSidebarToggle, setSidebarClosed } = linksSlice.actions;
+// export const {  } = linksSlice.actions;
 
 // SELECTORS
-export const selectIsSidebarOpen = (state) => state.layout.isSidebarOpen;
+export const selectLinkCategories = (state: RootState) =>
+  state.links.linkCategories;
 
 export default linksSlice.reducer;
