@@ -1,7 +1,7 @@
 import React from 'react';
-import Links from "./Links";
+import AddLinkForm from "./AddLinkForm";
 import { render, screen } from "../../test-utils";
 
 test("renders without crashing", () => {
-  render(<Links />);
+  render(<AddLinkForm />);
 });

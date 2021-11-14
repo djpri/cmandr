@@ -10,6 +10,7 @@ import theme from "./theme/theme";
 import AllCommandsPage from "./views/AllCommandsPage/AllCommandsPage";
 import CommandCategoryPage from "./views/CommandCategoryPage/CommandCategoryPage";
 import HomePage from "./views/Home/HomePage";
+import LinkCategory from "./views/LinkCategory/LinkCategory";
 import Links from "./views/Links/Links";
 import LoginPage from "./views/LoginPage/LoginPage";
 
@@ -46,6 +47,9 @@ export const App = () => {
         </Route>
         <Route exact path="/links">
           <Links />
+        </Route>
+        <Route exact path="/links/:id">
+          <LinkCategory />
         </Route>
         <Route exact path="/account/login">
           <LoginPage />

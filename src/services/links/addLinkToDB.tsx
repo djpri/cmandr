@@ -9,10 +9,11 @@ export const useAddLink = () => {
   const toast = useToast();
   const uid: string = useSelector(selectUserUid);
 
-  const addLinkToDB = async ({ link, category }: Link) => {
+  const addLinkToDB = async ({ link, category, title }: Link) => {
     const { data, error } = await supabase.from("links").insert([
       {
         link,
+        title,
         user_id: uid,
         category_id: category.id,
       },

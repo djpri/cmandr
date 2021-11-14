@@ -3,6 +3,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import AddCommandCategory from "../../../components/AddCommandCategory/AddCommandCategory";
+import AddLinkCategory from "../../../components/AddLinkCategory/AddLinkCategory";
 import { selectCategoriesWithIds } from "../../../redux/commands/commandsSlice";
 import { selectLinkCategories } from "../../../redux/links/linksSlice";
 import { CommandCategory } from "../../../types/types";
@@ -16,21 +17,11 @@ function SideBarLinks() {
         {/* MENU */}
         <Box flex="1" textAlign="left">
           <Text fontWeight="700" letterSpacing="1px">
-            Menu
+            <Link as={RouterLink} to="/">
+              Home
+            </Link>
           </Text>
         </Box>
-        <Link as={RouterLink} to="/">
-          Home
-        </Link>
-        <Link as={RouterLink} to="/dashboard">
-          Dashboard
-        </Link>
-        <Link as={RouterLink} to="/manage-commands">
-          Command manager
-        </Link>
-        <Link as={RouterLink} to="/manage-commands">
-          Settings
-        </Link>
       </Stack>
 
       {/* COMMANDS */}
@@ -75,6 +66,7 @@ function SideBarLinks() {
               </Link>
             </HStack>
           ))}
+        <AddLinkCategory />
       </Stack>
     </Stack>
   );

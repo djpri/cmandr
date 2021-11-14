@@ -1,22 +1,31 @@
 import {
   Box,
+  HStack,
   IconButton,
   Input,
+  Link as ChakraLink,
+  Text,
   InputGroup,
   InputRightElement,
   Spinner,
   useColorModeValue,
+  Grid,
+  GridItem,
+  Heading,
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
 import React from "react";
 import { useEffect, useState } from "react";
-import AddCommandButton from "../CommandsList/AddCommandButton/AddCommandButton";
+import AddLinkButton from "./AddLinkButton/AddLinkButton";
+import { selectAllLinks } from "../../redux/links/linksSlice";
+import { useSelector } from "react-redux";
+import { Link } from "../../types/types";
 
-function LinksList({ links }) {
-  // const reduxCommands = useSelector();
+function LinksList() {
+  const reduxLinks = useSelector(selectAllLinks);
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState(links);
+  const [searchResults, setSearchResults] = useState(reduxLinks);
   const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
 
@@ -28,8 +37,8 @@ function LinksList({ links }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSearchResults(() => {
-        const newArray = links.filter((item: { link: string }) =>
-          item.link.match(new RegExp(search, "i"))
+        const newArray = reduxLinks.filter((item: Link) =>
+          item.title.match(new RegExp(search, "i"))
         );
         return newArray;
       });
@@ -39,17 +48,15 @@ function LinksList({ links }) {
       setIsSearching(true);
       clearTimeout(timeout);
     };
-  }, [search, links]);
+  }, [search, reduxLinks]);
 
   useEffect(() => {
     setSearchResults([]);
   }, [location]);
 
   useEffect(() => {
-    setSearchResults(links);
-  }, [links]);
-
-  // TODO push router to login page when no user
+    setSearchResults(reduxLinks);
+  }, [reduxLinks]);
 
   return (
     <>
@@ -88,7 +95,34 @@ function LinksList({ links }) {
               }
             />
           </InputGroup>
-          <AddCommandButton />
+          <AddLinkButton />
+          <Grid templateColumns="repeat(3, 1fr)" gap={5}>
+            <GridItem>
+              <Heading>Link</Heading>
+            </GridItem>
+            <GridItem>
+              <Heading>URL</Heading>
+            </GridItem>
+            <GridItem>
+              <Heading>Category</Heading>
+            </GridItem>
+            {searchResults &&
+              searchResults.map((item) => (
+                <>
+                  <GridItem>
+                    <ChakraLink href={item.link} isExternal>
+                      <Text>{item.title}</Text>
+                    </ChakraLink>
+                  </GridItem>
+                  <GridItem>
+                    <Text>{item.link}</Text>
+                  </GridItem>
+                  <GridItem>
+                    <Text>{item.category.name}</Text>
+                  </GridItem>
+                </>
+              ))}
+          </Grid>
         </Box>
       </Box>
     </>
