@@ -5,12 +5,15 @@ import { Provider } from "react-redux";
 import { rootReducer } from "./redux/store";
 import { configureStore } from "@reduxjs/toolkit";
 import { mockStore } from "./redux/mockStore";
+import { BrowserRouter } from "react-router-dom";
 
 const AllProviders = ({ children }: { children?: React.ReactNode }) => (
   <Provider
     store={configureStore({ reducer: rootReducer, preloadedState: mockStore })}
   >
-    <ChakraProvider theme={theme}>{children}</ChakraProvider>
+    <ChakraProvider theme={theme}>
+      <BrowserRouter>{children}</BrowserRouter>
+    </ChakraProvider>
   </Provider>
 );
 
