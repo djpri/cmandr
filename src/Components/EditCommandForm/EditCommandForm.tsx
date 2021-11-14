@@ -45,7 +45,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         <FormLabel htmlFor="description">Description</FormLabel>
         <Input
           {...register("description")}
-          placeholder="How to (description of what command does)"
+          placeholder="Description of what command does"
         />
 
         <FormLabel htmlFor="command">Command</FormLabel>

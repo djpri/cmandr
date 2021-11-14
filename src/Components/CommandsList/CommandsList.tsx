@@ -79,7 +79,7 @@ function CommandsList(props: { showCategories: boolean }) {
         <InputGroup>
           <Input
             type="text"
-            placeholder="Search by 'How Tos'"
+            placeholder="Search by description"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

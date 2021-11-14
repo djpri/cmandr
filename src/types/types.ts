@@ -6,26 +6,19 @@ export interface Command {
   category: CommandCategory;
 }
 
-export type CommandRowInDb = {
+export interface Link {
   id: number;
-  description: string;
-  command: string;
-  reference: string | null;
-  // foreign keys
-  user_id: string;
-  category_id: number | null;
-};
+  link: string;
+  category: LinkCategory;
+}
 
-export interface CommandCategory {
+export interface LinkCategory {
   id: number;
   name: string;
 }
-
-export interface CommandCategoryRowInDb {
-  id: string;
+export interface CommandCategory {
+  id: number;
   name: string;
-  // foreign key
-  user_id: string;
 }
 
 export interface UserAuthState {
