@@ -7,7 +7,7 @@ export const useDeleteCommand = () => {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const deleteCommandInDB = async (id: string) => {
+  const deleteCommandInDB = async (id: number) => {
     const { error } = await supabase
       .from("commands")
       .delete()

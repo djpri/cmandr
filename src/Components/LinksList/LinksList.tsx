@@ -7,19 +7,16 @@ import {
   Spinner,
   useColorModeValue,
 } from "@chakra-ui/react";
-import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import { AiOutlineSearch } from "react-icons/ai";
-import CommandsTable from "../CommandsTable/CommandsTable";
-import { selectCommands } from "../../redux/commands/commandsSlice";
-import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import React from "react";
 import { useEffect, useState } from "react";
+import AddCommandButton from "../CommandsList/AddCommandButton/AddCommandButton";
 
-function CommandsList(props: { showCategories: boolean }) {
-  const reduxCommands = useSelector(selectCommands);
+function LinksList({ links }) {
+  // const reduxCommands = useSelector();
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState(reduxCommands);
+  const [searchResults, setSearchResults] = useState(links);
   const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
 
@@ -31,8 +28,8 @@ function CommandsList(props: { showCategories: boolean }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSearchResults(() => {
-        const newArray = reduxCommands.filter((item: { description: string }) =>
-          item.description.match(new RegExp(search, "i"))
+        const newArray = links.filter((item: { link: string }) =>
+          item.link.match(new RegExp(search, "i"))
         );
         return newArray;
       });
@@ -42,15 +39,15 @@ function CommandsList(props: { showCategories: boolean }) {
       setIsSearching(true);
       clearTimeout(timeout);
     };
-  }, [search, reduxCommands]);
+  }, [search, links]);
 
   useEffect(() => {
     setSearchResults([]);
   }, [location]);
 
   useEffect(() => {
-    setSearchResults(reduxCommands);
-  }, [reduxCommands]);
+    setSearchResults(links);
+  }, [links]);
 
   // TODO push router to login page when no user
 
@@ -76,7 +73,7 @@ function CommandsList(props: { showCategories: boolean }) {
           <InputGroup>
             <Input
               type="text"
-              placeholder="Search by description"
+              placeholder="Search by title"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               mb="5"
@@ -94,12 +91,8 @@ function CommandsList(props: { showCategories: boolean }) {
           <AddCommandButton />
         </Box>
       </Box>
-      <CommandsTable
-        commands={searchResults ? searchResults : reduxCommands}
-        showCategories={props.showCategories}
-      />
     </>
   );
 }
 
-export default CommandsList;
+export default LinksList;
