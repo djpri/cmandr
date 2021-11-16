@@ -13,7 +13,7 @@ import CommandsTable from "../CommandsTable/CommandsTable";
 import { selectCommands } from "../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 
 function CommandsList(props: { showCategories: boolean }) {
@@ -22,6 +22,7 @@ function CommandsList(props: { showCategories: boolean }) {
   const [searchResults, setSearchResults] = useState(reduxCommands);
   const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
+  const ref = useRef(null);
 
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
@@ -57,9 +58,8 @@ function CommandsList(props: { showCategories: boolean }) {
   return (
     <>
       <Box
-        minW="container.xl"
         maxW="container.xl"
-        w="container.xl"
+        w="100%"
         boxShadow="base"
         rounded="md"
         // p="5"
@@ -68,30 +68,38 @@ function CommandsList(props: { showCategories: boolean }) {
         bgColor={bgColor}
         position="relative"
       >
-        <Box zIndex="100" mb="2" pt="5" pl="5" pr="5">
+        <Box zIndex="100" pt="3" pl="5" pr="5">
           {isSearching && (
             <Spinner position="absolute" top="3" right="3" color="blue.500" />
           )}
-          {/* SEARCH BAR */}
-          <InputGroup>
-            <Input
-              type="text"
-              placeholder="Search by description"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              mb="5"
-            />
-            <InputRightElement
-              children={
-                <IconButton
-                  size="sm"
-                  aria-label="search-button"
-                  icon={<AiOutlineSearch color="gray.300" />}
-                />
-              }
-            />
-          </InputGroup>
-          <AddCommandButton />
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            mb="3"
+          >
+            <AddCommandButton ref={ref} />
+            {/* SEARCH BAR */}
+            <InputGroup maxW="md" w={["xs", "xs", "sm", "md"]}>
+              <Input
+                type="text"
+                placeholder="Search by description"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <InputRightElement
+                children={
+                  <IconButton
+                    size="sm"
+                    aria-label="search-button"
+                    icon={<AiOutlineSearch color="gray.300" />}
+                  />
+                }
+              />
+            </InputGroup>
+          </Box>
+          <Box ref={ref} />
         </Box>
       </Box>
       <CommandsTable

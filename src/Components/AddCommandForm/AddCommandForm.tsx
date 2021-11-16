@@ -39,7 +39,7 @@ function AddCommandForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
       <Grid
-        mb="10"
+        pb="5"
         templateColumns={[
           "repeat(1, 1fr)",
           null,
