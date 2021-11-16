@@ -1,6 +1,5 @@
 import {
   Box,
-  HStack,
   IconButton,
   Input,
   Link as ChakraLink,
