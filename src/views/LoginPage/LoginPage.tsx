@@ -3,8 +3,8 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import LogInForm from "../../components/LogInForm/LogInForm";
-import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import LogInForm from "../../components/auth/LogInForm/LogInForm";
+import SignUpForm from "../../components/auth/SignUpForm/SignUpForm";
 import { selectUserEmail } from "../../redux/auth/authSlice";
 
 function LoginPage() {
