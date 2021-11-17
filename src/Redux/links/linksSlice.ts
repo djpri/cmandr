@@ -4,10 +4,7 @@ import { Link, LinkCategory, LinksState } from "../../types/types";
 
 const initialState: LinksState = {
   links: [],
-  categories: [
-    { id: 1, name: "Portfolios" },
-    { id: 2, name: "Docs" },
-  ],
+  categories: [],
 };
 
 export const linksSlice = createSlice({
@@ -81,5 +78,12 @@ export const {
 export const selectAllLinks = (state: RootState) => state.links.links;
 export const selectLinkCategories = (state: RootState) =>
   state.links.categories;
+export const selectLinksCategoriesAsObject = (state: RootState) => {
+  const links = {};
+  state.links.categories.forEach((item) => {
+    links[item.id] = item.name;
+  });
+  return links;
+};
 
 export default linksSlice.reducer;

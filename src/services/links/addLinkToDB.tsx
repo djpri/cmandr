@@ -1,6 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
+import { setAddLink } from "../../redux/links/linksSlice";
 import { supabase } from "../../supabase/supabase";
 import { Link } from "../../types/types";
 
@@ -20,7 +21,7 @@ export const useAddLink = () => {
     ]);
 
     if (data !== null) {
-      console.log(data);
+      dispatch(setAddLink({ id: data[0].id, link, category, title }));
       toast({
         title: "Link Added",
         description: "Link added successfully",

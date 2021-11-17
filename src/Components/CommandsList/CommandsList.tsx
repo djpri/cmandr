@@ -1,26 +1,23 @@
 import {
   Box,
-  IconButton,
   Input,
   InputGroup,
   InputRightElement,
-  Spinner,
   useColorModeValue,
 } from "@chakra-ui/react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
-import { AiOutlineSearch } from "react-icons/ai";
 import CommandsTable from "../CommandsTable/CommandsTable";
 import { selectCommands } from "../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
+import { GiCrosshair } from "react-icons/gi";
 
 function CommandsList(props: { showCategories: boolean }) {
   const reduxCommands = useSelector(selectCommands);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(reduxCommands);
-  const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
   const ref = useRef(null);
 
@@ -37,10 +34,8 @@ function CommandsList(props: { showCategories: boolean }) {
         );
         return newArray;
       });
-      setIsSearching(false);
     }, 500);
     return () => {
-      setIsSearching(true);
       clearTimeout(timeout);
     };
   }, [search, reduxCommands]);
@@ -52,8 +47,6 @@ function CommandsList(props: { showCategories: boolean }) {
   useEffect(() => {
     setSearchResults(reduxCommands);
   }, [reduxCommands]);
-
-  // TODO push router to login page when no user
 
   return (
     <>
@@ -68,10 +61,7 @@ function CommandsList(props: { showCategories: boolean }) {
         bgColor={bgColor}
         position="relative"
       >
-        <Box zIndex="100" pt="3" pl="5" pr="5">
-          {isSearching && (
-            <Spinner position="absolute" top="3" right="3" color="blue.500" />
-          )}
+        <Box zIndex="100" pt="4" pb="2" pl="5" pr="5">
           <Box
             display="flex"
             flexDirection="row"
@@ -88,15 +78,11 @@ function CommandsList(props: { showCategories: boolean }) {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <InputRightElement
-                children={
-                  <IconButton
-                    size="sm"
-                    aria-label="search-button"
-                    icon={<AiOutlineSearch color="gray.300" />}
-                  />
-                }
-              />
+              {search && (
+                <InputRightElement
+                  children={<GiCrosshair color="gray.300" />}
+                />
+              )}
             </InputGroup>
           </Box>
           <Box ref={ref} />

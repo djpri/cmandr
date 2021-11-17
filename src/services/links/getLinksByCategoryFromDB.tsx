@@ -2,7 +2,7 @@ import { setLinks } from "../../redux/links/linksSlice";
 import { AppThunk } from "../../redux/store";
 import { supabase } from "../../supabase/supabase";
 
-export const getLinksFromDB =
+export const getLinksByCategoryFromDB =
   (categoryId: number): AppThunk =>
   async (dispatch) => {
     const addData = async () => {

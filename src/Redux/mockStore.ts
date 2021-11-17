@@ -215,6 +215,43 @@ export const mockStore = {
       },
     ],
   },
+  links: {
+    links: [],
+    categories: [
+      {
+        id: 1,
+        name: "general",
+      },
+      {
+        id: 2,
+        name: "npm package",
+      },
+      {
+        id: 3,
+        name: "javascript",
+      },
+      {
+        id: 4,
+        name: "c#",
+      },
+      {
+        id: 12,
+        name: "React",
+      },
+      {
+        id: 13,
+        name: "Vue",
+      },
+      {
+        id: 14,
+        name: "git",
+      },
+      {
+        id: 15,
+        name: "Angular",
+      },
+    ],
+  },
   userAuth: {
     userData: null,
     displayName: null,
