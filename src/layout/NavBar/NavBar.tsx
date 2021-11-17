@@ -1,7 +1,7 @@
 import { Box, Button, Heading, HStack } from "@chakra-ui/react";
 import * as React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { ColorModeSwitcher } from "../../components/ColorModeSwitcher/ColorModeSwitcher";
+import { ColorModeSwitcher } from "../../components/other/ColorModeSwitcher";
 import { setSidebarToggle } from "../../redux/layout/layoutSlice";
 import { useAppDispatch } from "../../redux/store";
 import LoginDrawer from "../LoginDrawer/LoginDrawer";

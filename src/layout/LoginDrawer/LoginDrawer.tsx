@@ -13,9 +13,9 @@ import {
 import * as React from "react";
 import { FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import LogInForm from "../../components/LogInForm/LogInForm";
-import SignOutButton from "../../components/SignOutButton/SignOutButton";
-import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import LogInForm from "../../components/auth/LogInForm/LogInForm";
+import SignOutButton from "../../components/auth/SignOutButton/SignOutButton";
+import SignUpForm from "../../components/auth/SignUpForm/SignUpForm";
 import { selectUserEmail } from "../../redux/auth/authSlice";
 
 function LoginDrawer() {

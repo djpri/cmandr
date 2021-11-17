@@ -1,32 +1,30 @@
-import { Heading, Stack } from "@chakra-ui/layout";
+import { Heading } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import LinksList from "../../components/links/LinksList/LinksList";
+import { useLocation } from "react-router";
+import CommandsList from "../../components/commands/CommandsList/CommandsList";
 import UserLayout from "../../layout/UserLayout";
 import { selectUserUid } from "../../redux/auth/authSlice";
-import { getLinksFromDB } from "../../services/links/getLinksFromDB";
+import { getCommandsFromDB } from "../../services/commands/getCommandsFromDB";
 
-function Links() {
+function AllCommandsPage() {
   const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(selectUserUid);
 
   useEffect(() => {
-    dispatch(getLinksFromDB());
+    dispatch(getCommandsFromDB());
     console.log(location);
   }, [dispatch, user, location]);
 
   return (
     <UserLayout>
       <Heading as="h2" mb="30px" fontWeight="900">
-        All Links
+        All Commands
       </Heading>
-      <Stack>
-        <LinksList />
-      </Stack>
+      <CommandsList showCategories />
     </UserLayout>
   );
 }
 
-export default Links;
+export default AllCommandsPage;
