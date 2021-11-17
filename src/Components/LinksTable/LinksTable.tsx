@@ -1,25 +1,30 @@
 import { Table, Thead, Tr, Th, Tbody } from "@chakra-ui/react";
 import * as React from "react";
-import { Command } from "../../types/types";
+import { Link } from "../../types/types";
 import TableHeader from "./TableHeader/TableHeader";
 import TableRow from "./TableRow/TableRow";
 
-function CommandsTable({ commands, showCategories }) {
+interface IProps {
+  links: Link[];
+  showCategories: boolean;
+}
+
+function LinksTable({ links, showCategories }: IProps) {
   return (
     <Table variant="unstyled" size="md">
       <Thead>
         <Tr>
-          <TableHeader field="description" label="Description" />
-          <TableHeader field="command" label="Command" />
+          <TableHeader field="title" label="Title" />
+          <TableHeader field="Link" label="Link" />
           {showCategories && <TableHeader field="category" label="Category" />}
           <Th></Th>
         </Tr>
       </Thead>
       <Tbody>
-        {commands.map((command: Command, index: number) => (
+        {links.map((link: Link, index: number) => (
           <TableRow
-            commandItem={command}
-            key={command.id}
+            linkItem={link}
+            key={link.id}
             showCategories={showCategories}
           />
         ))}
@@ -28,4 +33,4 @@ function CommandsTable({ commands, showCategories }) {
   );
 }
 
-export default CommandsTable;
+export default LinksTable;

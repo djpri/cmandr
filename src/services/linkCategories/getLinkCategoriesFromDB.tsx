@@ -1,11 +1,11 @@
-import { setCommandCategories } from "../../redux/commands/commandsSlice";
+import { setLinkCategories } from "../../redux/links/linksSlice";
 import { AppThunk } from "../../redux/store";
 import { supabase } from "../../supabase/supabase";
 
-export const getCommandCategoriesFromDB = (): AppThunk => async (dispatch) => {
+export const getLinkCategoriesFromDB = (): AppThunk => async (dispatch) => {
   const { data: categories } = await supabase
-    .from("command_categories")
+    .from("link_categories")
     .select(`id, name`);
 
-  if (categories !== null) dispatch(setCommandCategories(categories));
+  if (categories !== null) dispatch(setLinkCategories(categories));
 };

@@ -17,16 +17,21 @@ import { useLocation } from "react-router-dom";
 import React from "react";
 import { useEffect, useState } from "react";
 import AddLinkButton from "./AddLinkButton/AddLinkButton";
-import { selectAllLinks } from "../../redux/links/linksSlice";
+import {
+  selectAllLinks,
+  selectLinksCategoriesAsObject,
+} from "../../redux/links/linksSlice";
 import { useSelector } from "react-redux";
 import { Link } from "../../types/types";
+import LinksTable from "../LinksTable/LinksTable";
 
-function LinksList() {
+function LinksList({ showCategories }) {
   const reduxLinks = useSelector(selectAllLinks);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(reduxLinks);
   const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
+  const categories = useSelector(selectLinksCategoriesAsObject);
 
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
@@ -95,34 +100,8 @@ function LinksList() {
             />
           </InputGroup>
           <AddLinkButton />
-          <Grid templateColumns="repeat(3, 1fr)" gap={5}>
-            <GridItem>
-              <Heading>Link</Heading>
-            </GridItem>
-            <GridItem>
-              <Heading>URL</Heading>
-            </GridItem>
-            <GridItem>
-              <Heading>Category</Heading>
-            </GridItem>
-            {searchResults &&
-              searchResults.map((item) => (
-                <>
-                  <GridItem>
-                    <ChakraLink href={item.link} isExternal>
-                      <Text>{item.title}</Text>
-                    </ChakraLink>
-                  </GridItem>
-                  <GridItem>
-                    <Text>{item.link}</Text>
-                  </GridItem>
-                  <GridItem>
-                    <Text>{item.category.name}</Text>
-                  </GridItem>
-                </>
-              ))}
-          </Grid>
         </Box>
+        <LinksTable links={searchResults} showCategories={showCategories} />
       </Box>
     </>
   );

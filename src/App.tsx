@@ -6,6 +6,7 @@ import CreateCommand from "./components/CreateCommand/CreateCommand";
 import { selectUserUid, setAuthListener } from "./redux/auth/authSlice";
 import { useAppDispatch } from "./redux/store";
 import { getCommandCategoriesFromDB } from "./services/commandCategories/getCommandCategoriesFromDB";
+import { getLinkCategoriesFromDB } from "./services/linkCategories/getLinkCategoriesFromDB";
 import theme from "./theme/theme";
 import AllCommandsPage from "./views/AllCommandsPage/AllCommandsPage";
 import CommandCategoryPage from "./views/CommandCategoryPage/CommandCategoryPage";
@@ -24,9 +25,10 @@ export const App = () => {
     dispatch(setAuthListener());
   }, [dispatch]);
 
-  // fill command data if there is a user logged in, empty when user logs out
+  // fill category data if there is a user logged in, empty when user logs out
   React.useEffect(() => {
     dispatch(getCommandCategoriesFromDB());
+    dispatch(getLinkCategoriesFromDB());
   }, [user, dispatch]);
 
   return (

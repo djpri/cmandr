@@ -13,7 +13,7 @@ function LoginPage() {
   const history = useHistory();
 
   useEffect(() => {
-    if (user) history.push("/commands");
+    if (user) history.push("/");
   }, [user, history]);
 
   return (

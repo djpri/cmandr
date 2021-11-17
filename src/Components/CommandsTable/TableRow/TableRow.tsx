@@ -1,4 +1,12 @@
-import { Tr, Td, Code, HStack, Button, Link } from "@chakra-ui/react";
+import {
+  Tr,
+  Td,
+  Code,
+  HStack,
+  Button,
+  Link,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import * as React from "react";
 import { GoLinkExternal } from "react-icons/go";
 import CommandOptions from "./CommandOptions/CommandOptions";
@@ -11,6 +19,8 @@ function TableRow({ commandItem, showCategories }) {
   const { id, description, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = React.useState(false);
 
+  const rowHoverColor = useColorModeValue("whiteAlpha.600", "blackAlpha.400");
+
   const handleCopy = () => {
     setIsCopied(true);
     setTimeout(() => {
@@ -19,7 +29,10 @@ function TableRow({ commandItem, showCategories }) {
   };
 
   return (
-    <Tr>
+    <Tr
+      _hover={{ backgroundColor: rowHoverColor }}
+      _focus={{ backgroundColor: "blackAlpha.600" }}
+    >
       <Td>{description.charAt(0).toUpperCase() + description.slice(1)}</Td>
 
       <Td>
@@ -81,7 +94,6 @@ function TableRow({ commandItem, showCategories }) {
           )}
 
           <CommandOptions
-            commandId={id}
             command={{
               id,
               description,
