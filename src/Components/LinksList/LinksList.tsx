@@ -23,7 +23,7 @@ import {
 } from "../../redux/links/linksSlice";
 import { useSelector } from "react-redux";
 import { Link } from "../../types/types";
-import LinksTable from "../LinksTable/LinksTable";
+import LinksTable from "./LinksTable/LinksTable";
 
 function LinksList({ showCategories }) {
   const reduxLinks = useSelector(selectAllLinks);

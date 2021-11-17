@@ -1,6 +1,6 @@
 import { Table, Thead, Tr, Th, Tbody } from "@chakra-ui/react";
 import * as React from "react";
-import { Link } from "../../types/types";
+import { Link } from "../../../types/types";
 import TableHeader from "./TableHeader/TableHeader";
 import TableRow from "./TableRow/TableRow";
 

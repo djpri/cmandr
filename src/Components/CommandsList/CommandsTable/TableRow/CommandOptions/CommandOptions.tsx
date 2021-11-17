@@ -13,13 +13,15 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { IoMdOptions } from "react-icons/io";
-import { Link } from "../../../../types/types";
+import { Command } from "../../../../../types/types";
+import DeleteCommandButton from "../../../../DeleteCommandButton/DeleteCommandButton";
+import EditCommandForm from "../../../../EditCommandForm/EditCommandForm";
 
 type IProps = {
-  link: Link;
+  command: Command;
 };
 
-function CommandOptions({ link }: IProps) {
+function CommandOptions({ command }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -51,11 +53,10 @@ function CommandOptions({ link }: IProps) {
               >
                 Edit
               </Button>
-              <Button>Delete</Button>
-              {/* <DeleteCommandButton commandId={link.id} onClose={onClose} /> */}
+              <DeleteCommandButton commandId={command.id} onClose={onClose} />
             </HStack>
             <Box display={isVisible ? "block" : "none"}>
-              {/* <EditLinkForm commandItem={link} onClose={onClose} /> */}
+              <EditCommandForm commandItem={command} onClose={onClose} />
             </Box>
           </PopoverBody>
         </PopoverContent>

@@ -2,7 +2,7 @@ import { Th, HStack, Tooltip, IconButton, Text } from "@chakra-ui/react";
 import React from "react";
 import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { sortCommandsByField } from "../../../redux/commands/commandsSlice";
+import { sortLinksByField } from "../../../../redux/links/linksSlice";
 
 function TableHeader({ field, label }) {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ function TableHeader({ field, label }) {
         <Tooltip label="sort A -> Z" openDelay={500}>
           <IconButton
             size="xs"
-            onClick={() => dispatch(sortCommandsByField(field))}
+            onClick={() => dispatch(sortLinksByField(field))}
             icon={<AiFillCaretUp />}
             aria-label="sort how to field ascending"
           />
@@ -21,7 +21,7 @@ function TableHeader({ field, label }) {
         <Tooltip label="sort Z -> A" openDelay={500}>
           <IconButton
             size="xs"
-            onClick={() => dispatch(sortCommandsByField(field, false))}
+            onClick={() => dispatch(sortLinksByField(field, false))}
             icon={<AiFillCaretDown />}
             aria-label="sort how to field descending"
           />
