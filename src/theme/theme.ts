@@ -23,6 +23,12 @@ const theme = extendTheme({
         bg: mode("gray.100", "gray.900")(props),
         lineHeight: "base",
       },
+      tbody: {
+        tr: {
+          _hover: { backgroundColor: mode("blackAlpha.400", "whiteAlpha.600") },
+          _focus: { backgroundColor: "blackAlpha.600" },
+        },
+      },
     }),
   },
   fonts: {
@@ -55,11 +61,6 @@ const theme = extendTheme({
   },
   components: {
     Button,
-    AccordionItem: {
-      baseStyle: {
-        zIndex: 300,
-      },
-    },
     Input: {
       defaultProps: {
         focusBorderColor: "gray.400",

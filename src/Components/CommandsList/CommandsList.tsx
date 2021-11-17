@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
-import CommandsTable from "../CommandsTable/CommandsTable";
+import CommandsTable from "./CommandsTable/CommandsTable";
 import { selectCommands } from "../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";

@@ -1,10 +1,10 @@
 import { Tr, Td, HStack } from "@chakra-ui/react";
 import * as React from "react";
-import { selectCategoriesAsKeyValuePairs } from "../../../redux/commands/commandsSlice";
+import { selectCategoriesAsKeyValuePairs } from "../../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
-import { Link } from "../../../types/types";
+import { Link } from "../../../../types/types";
 import LinkOptions from "./LinkOptions/LinkOptions";
-import { selectLinksCategoriesAsObject } from "../../../redux/links/linksSlice";
+import { selectLinksCategoriesAsObject } from "../../../../redux/links/linksSlice";
 
 interface IProps {
   linkItem: Link;

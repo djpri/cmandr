@@ -5,7 +5,8 @@ import { supabase } from "../../supabase/supabase";
 export const getLinkCategoriesFromDB = (): AppThunk => async (dispatch) => {
   const { data: categories } = await supabase
     .from("link_categories")
-    .select(`id, name`);
+    .select(`id, name`)
+    .order("name");
 
   if (categories !== null) dispatch(setLinkCategories(categories));
 };

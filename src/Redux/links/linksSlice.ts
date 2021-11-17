@@ -1,4 +1,4 @@
-import { RootState } from "./../store";
+import { AppThunk, RootState } from "./../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Link, LinkCategory, LinksState } from "../../types/types";
 
@@ -85,5 +85,35 @@ export const selectLinksCategoriesAsObject = (state: RootState) => {
   });
   return links;
 };
+
+// ASYNC ACTIONS
+export const sortLinksByField =
+  (field, isAscending = true): AppThunk =>
+  async (dispatch, getState) => {
+    let newState = [...getState().links.links];
+
+    if (field === "title" || field === "link") {
+      newState.sort((a, b) => {
+        let valueA = a[field].toUpperCase();
+        let valueB = b[field].toUpperCase();
+        if (valueA < valueB) return -1;
+        if (valueA > valueB) return 1;
+        return 0;
+      });
+    }
+
+    if (field === "category") {
+      newState.sort((a, b) => {
+        let valueA = a[field].name.toUpperCase();
+        let valueB = b[field].name.toUpperCase();
+        if (valueA < valueB) return -1;
+        if (valueA > valueB) return 1;
+        return 0;
+      });
+    }
+
+    if (isAscending === false) dispatch(setLinks(newState.reverse()));
+    dispatch(setLinks(newState));
+  };
 
 export default linksSlice.reducer;
