@@ -1,5 +1,5 @@
 import React from "react";
-import CommandsTable from "./CommandsTable";
+import CommandsTable from "./CommandsGrid";
 import { render } from "../../../../test-utils";
 import { mockStore } from "../../../../redux/mockStore";
 

@@ -1,4 +1,4 @@
-import { Tr, Td, Code, HStack, Button, Link } from "@chakra-ui/react";
+import { GridItem, Code, HStack, Button, Link, Grid } from "@chakra-ui/react";
 import * as React from "react";
 import { GoLinkExternal } from "react-icons/go";
 import CommandOptions from "./CommandOptions/CommandOptions";
@@ -7,7 +7,7 @@ import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/c
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-function TableRow({ commandItem, showCategories }) {
+function Row({ commandItem, showCategories }) {
   const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
   const { id, description, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
@@ -20,10 +20,18 @@ function TableRow({ commandItem, showCategories }) {
   };
 
   return (
-    <Tr>
-      <Td>{description.charAt(0).toUpperCase() + description.slice(1)}</Td>
+    <Grid
+      templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
+      p="4"
+      gap={4}
+      rounded="md"
+      className="gridRow"
+    >
+      <GridItem>
+        {description.charAt(0).toUpperCase() + description.slice(1)}
+      </GridItem>
 
-      <Td>
+      <GridItem>
         <CopyToClipboard text={command} onCopy={() => handleCopy()}>
           <Code
             _hover={{
@@ -35,11 +43,11 @@ function TableRow({ commandItem, showCategories }) {
             {command}
           </Code>
         </CopyToClipboard>
-      </Td>
+      </GridItem>
 
-      {showCategories && <Td>{categoriesList[category?.id]}</Td>}
+      {showCategories && <GridItem>{categoriesList[category?.id]}</GridItem>}
 
-      <Td>
+      <GridItem>
         <HStack spacing="4">
           <CopyToClipboard text={command} onCopy={() => handleCopy()}>
             <Button
@@ -47,6 +55,7 @@ function TableRow({ commandItem, showCategories }) {
               bgColor={isCopied ? "blue.400" : "blue.500"}
               color="white"
               w="70px"
+              display={["none", null, null, "block"]}
             >
               {isCopied ? "Copied" : "Copy"}
             </Button>
@@ -91,9 +100,9 @@ function TableRow({ commandItem, showCategories }) {
             }}
           />
         </HStack>
-      </Td>
-    </Tr>
+      </GridItem>
+    </Grid>
   );
 }
 
-export default TableRow;
+export default Row;
