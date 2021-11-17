@@ -105,8 +105,8 @@ function LinksList({ showCategories }) {
           </Box>
           <Box ref={ref} />
         </Box>
+        <LinksTable links={searchResults} showCategories={showCategories} />
       </Box>
-      <LinksTable links={searchResults} showCategories={showCategories} />
     </>
   );
 }

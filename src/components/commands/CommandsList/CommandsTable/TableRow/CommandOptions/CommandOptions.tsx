@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { IoMdOptions } from "react-icons/io";
+import { HiDotsVertical } from "react-icons/hi";
 import { Command } from "../../../../../../types/types";
 import DeleteCommandButton from "../../../../DeleteCommandButton/DeleteCommandButton";
 import EditCommandForm from "../../../../EditCommandForm/EditCommandForm";
@@ -37,7 +37,7 @@ function CommandOptions({ command }: IProps) {
       >
         <PopoverTrigger>
           <Button size="xs" bgColor="teal.500" color="white">
-            <IoMdOptions />
+            <HiDotsVertical />
           </Button>
         </PopoverTrigger>
         <PopoverContent>

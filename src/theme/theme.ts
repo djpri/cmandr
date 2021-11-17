@@ -25,8 +25,12 @@ const theme = extendTheme({
       },
       tbody: {
         tr: {
-          _hover: { backgroundColor: mode("blackAlpha.400", "whiteAlpha.600") },
-          _focus: { backgroundColor: "blackAlpha.600" },
+          _hover: {
+            backgroundColor: mode("whiteAlpha.600", "blackAlpha.400")(props),
+          },
+          _focus: {
+            backgroundColor: mode("pink.600", "pink.400")(props),
+          },
         },
       },
     }),

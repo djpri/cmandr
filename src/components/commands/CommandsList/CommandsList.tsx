@@ -86,11 +86,11 @@ function CommandsList(props: { showCategories: boolean }) {
           </Box>
           <Box ref={ref} />
         </Box>
+        <CommandsTable
+          commands={searchResults ? searchResults : reduxCommands}
+          showCategories={props.showCategories}
+        />
       </Box>
-      <CommandsTable
-        commands={searchResults ? searchResults : reduxCommands}
-        showCategories={props.showCategories}
-      />
     </>
   );
 }
