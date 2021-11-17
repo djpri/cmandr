@@ -5,11 +5,12 @@ import CommandOptions from "./CommandOptions/CommandOptions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 function TableRow({ commandItem, showCategories }) {
   const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
   const { id, description, command, reference, category } = commandItem;
-  const [isCopied, setIsCopied] = React.useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = () => {
     setIsCopied(true);

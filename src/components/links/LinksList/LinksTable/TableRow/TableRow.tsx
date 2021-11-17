@@ -1,10 +1,11 @@
-import { Tr, Td, HStack } from "@chakra-ui/react";
+import { Tr, Td, HStack, Link as ChakraLink } from "@chakra-ui/react";
 import * as React from "react";
 import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import { Link } from "../../../../../types/types";
 import LinkOptions from "./LinkOptions/LinkOptions";
 import { selectLinksCategoriesAsObject } from "../../../../../redux/links/linksSlice";
+import { useRef, useState } from "react";
 
 interface IProps {
   linkItem: Link;
@@ -14,11 +15,18 @@ interface IProps {
 function TableRow({ linkItem, showCategories }: IProps) {
   const categoriesList = useSelector(selectLinksCategoriesAsObject);
   const { title, link, category } = linkItem;
+  const rowRef = useRef(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <Tr>
-      <Td>{title.charAt(0).toUpperCase() + title.slice(1)}</Td>
-
+    <Tr
+      ref={rowRef}
+      bgColor={isFocused && "pink.500"}
+      onClick={() => setIsFocused((state) => !state)}
+    >
+      <ChakraLink href={link} isExternal>
+        <Td>{title.charAt(0).toUpperCase() + title.slice(1)}</Td>
+      </ChakraLink>
       <Td>{link}</Td>
 
       {showCategories && <Td>{categoriesList[category.id]}</Td>}
