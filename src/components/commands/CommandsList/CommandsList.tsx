@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
-import CommandsTable from "./CommandsTable/CommandsTable";
+import CommandsTable from "./CommandsGrid/CommandsGrid";
 import { selectCommands } from "../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -52,7 +52,7 @@ function CommandsList(props: { showCategories: boolean }) {
     <>
       <Box
         maxW="container.xl"
-        w="100%"
+        w={["100%", null, null, null, "container.xl"]}
         boxShadow="base"
         rounded="md"
         border={border}

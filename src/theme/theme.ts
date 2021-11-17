@@ -23,14 +23,12 @@ const theme = extendTheme({
         bg: mode("gray.100", "gray.900")(props),
         lineHeight: "base",
       },
-      tbody: {
-        tr: {
-          _hover: {
-            backgroundColor: mode("whiteAlpha.600", "blackAlpha.400")(props),
-          },
-          _focus: {
-            backgroundColor: mode("pink.600", "pink.400")(props),
-          },
+      ".gridRow": {
+        _hover: {
+          backgroundColor: mode("whiteAlpha.600", "blackAlpha.400")(props),
+        },
+        _focus: {
+          backgroundColor: mode("pink.600", "pink.400")(props),
         },
       },
     }),

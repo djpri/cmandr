@@ -1,13 +1,13 @@
-import { Th, HStack, Tooltip, IconButton, Text } from "@chakra-ui/react";
+import { HStack, Tooltip, IconButton, Text, GridItem } from "@chakra-ui/react";
 import React from "react";
 import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { sortCommandsByField } from "../../../../../redux/commands/commandsSlice";
 
-function TableHeader({ field, label }) {
+function Header({ field, label }) {
   const dispatch = useDispatch();
   return (
-    <Th>
+    <GridItem>
       <HStack>
         <Text>{label}</Text>
         <Tooltip label="sort A -> Z" openDelay={500}>
@@ -27,8 +27,8 @@ function TableHeader({ field, label }) {
           />
         </Tooltip>
       </HStack>
-    </Th>
+    </GridItem>
   );
 }
 
-export default TableHeader;
+export default Header;
