@@ -4,19 +4,15 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectCategoriesAsKeyValuePairs } from "../../../redux/commands/commandsSlice";
 import { selectLinkCategories } from "../../../redux/links/linksSlice";
-import { useAddCommand } from "../../../services/commands/addCommandToDB";
 import { useAddLink } from "../../../services/links/addLinkToDB";
 import { Link, LinkCategory } from "../../../types/types";
 
 function AddLinkForm() {
   const categories: LinkCategory[] = useSelector(selectLinkCategories);
-  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
-  const { handleSubmit, register, reset, setValue, getValues } =
-    useForm<Link>();
+  const { handleSubmit, register, reset, setValue } = useForm<Link>();
   const { addLinkToDB } = useAddLink();
 
   useEffect(() => {

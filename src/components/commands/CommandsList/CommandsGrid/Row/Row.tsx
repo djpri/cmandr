@@ -1,4 +1,12 @@
-import { GridItem, Code, HStack, Button, Link, Grid } from "@chakra-ui/react";
+import {
+  GridItem,
+  Code,
+  HStack,
+  Button,
+  Link,
+  Grid,
+  Skeleton,
+} from "@chakra-ui/react";
 import * as React from "react";
 import { GoLinkExternal } from "react-icons/go";
 import CommandOptions from "./CommandOptions/CommandOptions";
@@ -6,8 +14,15 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { Command } from "../../../../../types/types";
 
-function Row({ commandItem, showCategories }) {
+type Props = {
+  commandItem: Command;
+  showCategories: boolean;
+  isGhost: boolean | null;
+};
+
+function Row({ commandItem, showCategories, isGhost }: Props) {
   const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
   const { id, description, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
@@ -27,80 +42,93 @@ function Row({ commandItem, showCategories }) {
       rounded="md"
       className="gridRow"
     >
-      <GridItem>
-        {description.charAt(0).toUpperCase() + description.slice(1)}
-      </GridItem>
+      <Skeleton isLoaded={!isGhost}>
+        <GridItem>
+          {description.charAt(0).toUpperCase() + description.slice(1)}
+        </GridItem>
+      </Skeleton>
 
-      <GridItem>
-        <CopyToClipboard text={command} onCopy={() => handleCopy()}>
-          <Code
-            _hover={{
-              cursor: "pointer",
-              backgroundColor: "gray.200",
-              color: "black",
-            }}
-          >
-            {command}
-          </Code>
-        </CopyToClipboard>
-      </GridItem>
-
-      {showCategories && <GridItem>{categoriesList[category?.id]}</GridItem>}
-
-      <GridItem>
-        <HStack spacing="4">
+      <Skeleton isLoaded={!isGhost}>
+        <GridItem bgColor={isGhost && "blackAlpha.400"}>
           <CopyToClipboard text={command} onCopy={() => handleCopy()}>
-            <Button
-              size="xs"
-              bgColor={isCopied ? "blue.400" : "blue.500"}
-              color="white"
-              w="70px"
-              display={["none", null, null, "block"]}
+            <Code
+              _hover={{
+                cursor: "pointer",
+                backgroundColor: "gray.200",
+                color: "black",
+              }}
             >
-              {isCopied ? "Copied" : "Copy"}
-            </Button>
+              {command}
+            </Code>
           </CopyToClipboard>
-          {/* BUTTONS */}
-          {!reference ? (
-            <Button
-              size="xs"
-              bgColor="cyan.600"
-              color="white"
-              leftIcon={<GoLinkExternal />}
-              isDisabled={!reference}
-            >
-              Link
-            </Button>
-          ) : (
-            <Link
-              target="_blank"
-              rel="noreferrer"
-              href={reference}
-              style={{ textDecoration: "none" }}
-            >
+        </GridItem>
+      </Skeleton>
+
+      {showCategories && (
+        <Skeleton isLoaded={!isGhost}>
+          <GridItem bgColor={isGhost && "blackAlpha.400"}>
+            {categoriesList[category?.id]}
+          </GridItem>
+        </Skeleton>
+      )}
+
+      <Skeleton isLoaded={!isGhost}>
+        <GridItem>
+          <HStack spacing="4">
+            <CopyToClipboard text={command} onCopy={() => handleCopy()}>
+              <Button
+                isDisabled={isGhost}
+                size="xs"
+                bgColor={isCopied ? "blue.400" : "blue.500"}
+                color="white"
+                w="70px"
+                display={["none", null, null, "block"]}
+              >
+                {isCopied ? "Copied" : "Copy"}
+              </Button>
+            </CopyToClipboard>
+            {/* BUTTONS */}
+            {!reference ? (
               <Button
                 size="xs"
                 bgColor="cyan.600"
                 color="white"
                 leftIcon={<GoLinkExternal />}
-                isDisabled={!reference}
+                isDisabled={!reference || isGhost}
               >
                 Link
               </Button>
-            </Link>
-          )}
-
-          <CommandOptions
-            command={{
-              id,
-              description,
-              command,
-              reference,
-              category,
-            }}
-          />
-        </HStack>
-      </GridItem>
+            ) : (
+              <Link
+                target="_blank"
+                rel="noreferrer"
+                href={reference}
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  size="xs"
+                  bgColor="cyan.600"
+                  color="white"
+                  leftIcon={<GoLinkExternal />}
+                  isDisabled={!reference || isGhost}
+                >
+                  Link
+                </Button>
+              </Link>
+            )}
+            <CommandOptions
+              isGhost={isGhost}
+              command={{
+                id,
+                description,
+                command,
+                reference,
+                category,
+              }}
+            />
+          </HStack>
+        </GridItem>
+      </Skeleton>
     </Grid>
   );
 }

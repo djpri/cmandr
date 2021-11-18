@@ -13,14 +13,32 @@ import {
 import * as React from "react";
 import CommandsList from "../../components/commands/CommandsList/CommandsList";
 import UserLayout from "../../layout/UserLayout";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCategoriesAsKeyValuePairs } from "../../redux/commands/commandsSlice";
 import { FaEdit } from "react-icons/fa";
 import DeleteCategoryModal from "../../components/commands/DeleteCommandCategory/DeleteCategoryModal";
-import { selectUserUid } from "../../redux/auth/authSlice";
 import { getCommandsByCategoryFromDB } from "../../services/commands/getCommandsByCategoryFromDB";
 import EditCommandCategory from "../../components/commands/EditCommandCategory/EditCommandCategory";
+import { useEffect } from "react";
+import { Command } from "../../types/types";
+
+const ghostCommands = () => {
+  const ghostData: Command[] = [];
+  for (let i = 0; i < 10; i++) {
+    ghostData.push({
+      id: i,
+      description: "",
+      command: "",
+      reference: "    ",
+      category: {
+        id: null,
+        name: "",
+      },
+    });
+  }
+  return ghostData;
+};
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,12 +51,9 @@ function CommandCategoryPage() {
   const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
   const categoryName = categoryList[params.id] || "";
-  const location = useLocation();
   const dispatch = useDispatch();
-  const user = useSelector(selectUserUid);
 
-  React.useEffect(() => {
-    console.log("getting new commands");
+  useEffect(() => {
     dispatch(getCommandsByCategoryFromDB(parseInt(params.id)));
   }, [dispatch, params.id]);
 
@@ -70,7 +85,7 @@ function CommandCategoryPage() {
           </Popover>
         </Box>
       </Stack>
-      <CommandsList showCategories={false} />
+      <CommandsList showCategories={false} ghostCommands={ghostCommands()} />
       <DeleteCategoryModal
         isOpen={isOpen}
         onClose={onClose}

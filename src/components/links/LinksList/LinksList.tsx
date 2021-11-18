@@ -12,10 +12,7 @@ import { useLocation } from "react-router-dom";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import AddLinkButton from "./AddLinkButton/AddLinkButton";
-import {
-  selectAllLinks,
-  selectLinksCategoriesAsObject,
-} from "../../../redux/links/linksSlice";
+import { selectAllLinks } from "../../../redux/links/linksSlice";
 import { useSelector } from "react-redux";
 import { Link } from "../../../types/types";
 import LinksTable from "./LinksTable/LinksTable";
@@ -26,7 +23,6 @@ function LinksList({ showCategories }) {
   const [searchResults, setSearchResults] = useState(reduxLinks);
   const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
-  const categories = useSelector(selectLinksCategoriesAsObject);
   const ref = useRef(null);
 
   const bgColor = useColorModeValue("gray.50", "gray.800");

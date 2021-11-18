@@ -19,9 +19,10 @@ import EditCommandForm from "../../../../EditCommandForm/EditCommandForm";
 
 type IProps = {
   command: Command;
+  isGhost: boolean;
 };
 
-function CommandOptions({ command }: IProps) {
+function CommandOptions({ command, isGhost }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -36,7 +37,12 @@ function CommandOptions({ command }: IProps) {
         onClose={onClose}
       >
         <PopoverTrigger>
-          <Button size="xs" bgColor="teal.500" color="white">
+          <Button
+            size="xs"
+            bgColor="teal.500"
+            color="white"
+            isDisabled={isGhost}
+          >
             <HiDotsVertical />
           </Button>
         </PopoverTrigger>
