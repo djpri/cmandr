@@ -19,6 +19,7 @@ function EditCommandCategory({ isOpen, onClose, categoryId }) {
 
   const handleEdit = () => {
     dispatch(editCommandCategoryInDB(categoryId, categoryName));
+    setCategoryName("");
     onClose();
   };
 

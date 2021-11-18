@@ -1,21 +1,19 @@
 import { Heading, Stack } from "@chakra-ui/layout";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import LinksList from "../../components/links/LinksList/LinksList";
 import UserLayout from "../../layout/UserLayout";
-import { selectUserUid } from "../../redux/auth/authSlice";
 import { getLinksFromDB } from "../../services/links/getLinksFromDB";
 
 function Links() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const user = useSelector(selectUserUid);
 
   useEffect(() => {
     dispatch(getLinksFromDB());
     console.log(location);
-  }, [dispatch, user, location]);
+  }, [dispatch, location]);
 
   return (
     <UserLayout>
@@ -23,7 +21,7 @@ function Links() {
         All Links
       </Heading>
       <Stack>
-        <LinksList />
+        <LinksList showCategories />
       </Stack>
     </UserLayout>
   );

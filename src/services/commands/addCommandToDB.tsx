@@ -27,7 +27,6 @@ export const useAddCommand = () => {
     ]);
 
     if (data !== null) {
-      console.log(data);
       dispatch(
         setAddCommand({
           id: data[0].id,
@@ -47,7 +46,6 @@ export const useAddCommand = () => {
     }
 
     if (error) {
-      console.log(error);
       toast({
         title: "Error",
         description: "something went wrong",

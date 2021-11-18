@@ -20,32 +20,35 @@ function CommandsList(props: { showCategories: boolean }) {
   const [searchResults, setSearchResults] = useState(reduxCommands);
   const location = useLocation();
   const ref = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
 
   // filter commands on search
-  // wait 500ms after user stops typing before filtering
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setSearchResults(() => {
-        const newArray = reduxCommands.filter((item: { description: string }) =>
-          item.description.match(new RegExp(search, "i"))
-        );
-        return newArray;
-      });
-    }, 500);
-    return () => {
-      clearTimeout(timeout);
-    };
+    setSearchResults(() => {
+      const newArray = reduxCommands.filter((item: { description: string }) =>
+        item.description.match(new RegExp(search, "i"))
+      );
+      return newArray;
+    });
+    setIsLoading(false);
   }, [search, reduxCommands]);
 
   useEffect(() => {
-    setSearchResults([]);
+    setSearch("");
   }, [location]);
 
   useEffect(() => {
-    setSearchResults(reduxCommands);
+    const delay = (ms: number) =>
+      new Promise((resolve) => setTimeout(resolve, ms));
+    const setNewCommands = async () => {
+      setSearchResults([]);
+      await delay(500);
+      setSearchResults(reduxCommands);
+    };
+    setNewCommands();
   }, [reduxCommands]);
 
   return (
@@ -86,10 +89,12 @@ function CommandsList(props: { showCategories: boolean }) {
           </Box>
           <Box ref={ref} />
         </Box>
-        <CommandsTable
-          commands={searchResults ? searchResults : reduxCommands}
-          showCategories={props.showCategories}
-        />
+        {!isLoading && (
+          <CommandsTable
+            commands={searchResults}
+            showCategories={props.showCategories}
+          />
+        )}
       </Box>
     </>
   );
