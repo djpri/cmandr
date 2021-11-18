@@ -1,6 +1,5 @@
 import { Tr, Td, HStack, Link as ChakraLink } from "@chakra-ui/react";
 import * as React from "react";
-import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import { Link } from "../../../../../types/types";
 import LinkOptions from "./LinkOptions/LinkOptions";

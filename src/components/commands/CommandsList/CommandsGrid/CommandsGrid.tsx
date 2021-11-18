@@ -4,7 +4,7 @@ import { Command } from "../../../../types/types";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
 
-function CommandsTable({ commands, showCategories }) {
+function CommandsTable({ commands, showCategories, isGhost }) {
   return (
     <Box p="1" display="flex" flexDirection="column" w="100%">
       <Grid
@@ -28,6 +28,7 @@ function CommandsTable({ commands, showCategories }) {
       >
         {commands.map((command: Command, index: number) => (
           <Row
+            isGhost={isGhost}
             commandItem={command}
             key={command.id}
             showCategories={showCategories}
