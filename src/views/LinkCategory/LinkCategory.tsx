@@ -9,19 +9,20 @@ import { Box, Button, HStack, useDisclosure } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import DeleteLinkCategory from "../../components/links/DeleteLinkCategory/DeleteLinkCategory";
+import EditLinkCategory from "../../components/links/EditLinkCategory/EditLinkCategory";
 import LinksList from "../../components/links/LinksList/LinksList";
 import UserLayout from "../../layout/UserLayout";
-import { selectUserUid } from "../../redux/auth/authSlice";
 import { selectLinksCategoriesAsObject } from "../../redux/links/linksSlice";
 import { getLinksByCategoryFromDB } from "../../services/links/getLinksByCategoryFromDB";
 
 function LinkCategory() {
-  const location = useLocation();
   const dispatch = useDispatch();
-  const user = useSelector(selectUserUid);
   const params: { id: string } = useParams();
   const linkCategories = useSelector(selectLinksCategoriesAsObject);
+  const categoryName = linkCategories[params.id] || "";
+
   const {
     isOpen: isEditModalOpen,
     onOpen: editModalOpen,
@@ -31,8 +32,7 @@ function LinkCategory() {
 
   useEffect(() => {
     dispatch(getLinksByCategoryFromDB(parseInt(params.id)));
-    console.log(location);
-  }, [dispatch, user, location, params.id]);
+  }, [dispatch, params.id]);
 
   return (
     <UserLayout>
@@ -63,6 +63,17 @@ function LinkCategory() {
         </Box>
       </Stack>
       <LinksList showCategories={false} />
+      <DeleteLinkCategory
+        isOpen={isOpen}
+        onClose={onClose}
+        categoryName={categoryName}
+        categoryId={parseInt(params.id)}
+      />
+      <EditLinkCategory
+        isOpen={isEditModalOpen}
+        onClose={editModalClose}
+        categoryId={parseInt(params.id)}
+      />
     </UserLayout>
   );
 }

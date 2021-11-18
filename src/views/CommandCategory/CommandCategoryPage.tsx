@@ -38,9 +38,9 @@ function CommandCategoryPage() {
   const user = useSelector(selectUserUid);
 
   React.useEffect(() => {
+    console.log("getting new commands");
     dispatch(getCommandsByCategoryFromDB(parseInt(params.id)));
-    console.log(location);
-  }, [dispatch, user, location, params.id]);
+  }, [dispatch, params.id]);
 
   return (
     <UserLayout>

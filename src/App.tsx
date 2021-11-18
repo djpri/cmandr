@@ -27,8 +27,10 @@ export const App = () => {
 
   // fill category data if there is a user logged in, empty when user logs out
   React.useEffect(() => {
-    dispatch(getCommandCategoriesFromDB());
-    dispatch(getLinkCategoriesFromDB());
+    if (user) {
+      dispatch(getCommandCategoriesFromDB());
+      dispatch(getLinkCategoriesFromDB());
+    }
   }, [user, dispatch]);
 
   return (

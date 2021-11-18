@@ -23,7 +23,6 @@ function AddLinkForm() {
     if (params && params.id) {
       setShowCategorySelect(false);
       setValue("category.id", parseInt(params.id));
-      console.log(params.id);
     } else {
       setShowCategorySelect(true);
     }
