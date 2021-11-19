@@ -19,10 +19,10 @@ import { Command } from "../../../../../types/types";
 type Props = {
   commandItem: Command;
   showCategories: boolean;
-  isGhost: boolean | null;
+  isLoading: boolean | null;
 };
 
-function Row({ commandItem, showCategories, isGhost }: Props) {
+function Row({ commandItem, showCategories, isLoading }: Props) {
   const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
   const { id, description, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
@@ -42,14 +42,14 @@ function Row({ commandItem, showCategories, isGhost }: Props) {
       rounded="md"
       className="gridRow"
     >
-      <Skeleton isLoaded={!isGhost}>
+      <Skeleton isLoaded={!isLoading}>
         <GridItem>
           {description.charAt(0).toUpperCase() + description.slice(1)}
         </GridItem>
       </Skeleton>
 
-      <Skeleton isLoaded={!isGhost}>
-        <GridItem bgColor={isGhost && "blackAlpha.400"}>
+      <Skeleton isLoaded={!isLoading}>
+        <GridItem bgColor={isLoading && "blackAlpha.400"}>
           <CopyToClipboard text={command} onCopy={() => handleCopy()}>
             <Code
               _hover={{
@@ -65,19 +65,19 @@ function Row({ commandItem, showCategories, isGhost }: Props) {
       </Skeleton>
 
       {showCategories && (
-        <Skeleton isLoaded={!isGhost}>
-          <GridItem bgColor={isGhost && "blackAlpha.400"}>
+        <Skeleton isLoaded={!isLoading}>
+          <GridItem bgColor={isLoading && "blackAlpha.400"}>
             {categoriesList[category?.id]}
           </GridItem>
         </Skeleton>
       )}
 
-      <Skeleton isLoaded={!isGhost}>
+      <Skeleton isLoaded={!isLoading}>
         <GridItem>
           <HStack spacing="4">
             <CopyToClipboard text={command} onCopy={() => handleCopy()}>
               <Button
-                isDisabled={isGhost}
+                isDisabled={isLoading}
                 size="xs"
                 bgColor={isCopied ? "blue.400" : "blue.500"}
                 color="white"
@@ -94,7 +94,7 @@ function Row({ commandItem, showCategories, isGhost }: Props) {
                 bgColor="cyan.600"
                 color="white"
                 leftIcon={<GoLinkExternal />}
-                isDisabled={!reference || isGhost}
+                isDisabled={!reference || isLoading}
               >
                 Link
               </Button>
@@ -110,14 +110,14 @@ function Row({ commandItem, showCategories, isGhost }: Props) {
                   bgColor="cyan.600"
                   color="white"
                   leftIcon={<GoLinkExternal />}
-                  isDisabled={!reference || isGhost}
+                  isDisabled={!reference || isLoading}
                 >
                   Link
                 </Button>
               </Link>
             )}
             <CommandOptions
-              isGhost={isGhost}
+              isLoading={isLoading}
               command={{
                 id,
                 description,
