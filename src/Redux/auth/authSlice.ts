@@ -89,6 +89,7 @@ export const submitLoginDetails =
     if (error !== null) {
       dispatch(setErrorMessage(`Login Error: ${error.message}`));
     } else {
+      dispatch(logInUser());
       dispatch(setUserData(user));
     }
     dispatch(setIsLoading(false));

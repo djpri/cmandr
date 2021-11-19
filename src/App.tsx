@@ -42,10 +42,9 @@ export const App = () => {
           <Route path="/manage-commands" element={<CreateCommand />} />
           <Route path="/commands" element={<AllCommandsPage />} />
           <Route path="/commands/:id" element={<CommandCategoryPage />} />
-          <Route path="/links" element={<Links />}>
-            <Route path="/links/:id" element={<LinkCategory />} />
-            <Route path="/account/login" element={<LoginPage />} />
-          </Route>
+          <Route path="/links" element={<Links />} />
+          <Route path="/links/:id" element={<LinkCategory />} />
+          <Route path="/account/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
