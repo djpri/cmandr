@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteCommandCategoryInDB } from "../../../services/commandCategories/deleteCommandCategoryInDB";
 
 interface IProps {
@@ -26,7 +26,7 @@ function DeleteCategoryModal({
   categoryName,
   categoryId,
 }: IProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -45,7 +45,7 @@ function DeleteCategoryModal({
             bgColor="red.500"
             onClick={() => {
               onClose();
-              history.push("/commands");
+              navigate("/commands");
               dispatch(deleteCommandCategoryInDB(categoryId));
             }}
           >

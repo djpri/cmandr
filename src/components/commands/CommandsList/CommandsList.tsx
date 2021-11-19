@@ -37,7 +37,6 @@ function CommandsList({ showCategories, ghostCommands }) {
       });
     }, 500);
     return () => {
-      setSearchResults(null);
       clearTimeout(timeout);
     };
   }, [search, reduxCommands]);
@@ -83,7 +82,7 @@ function CommandsList({ showCategories, ghostCommands }) {
         <CommandsTable
           commands={searchResults ? searchResults : ghostCommands}
           showCategories={showCategories}
-          isGhost={!searchResults}
+          isGhost={!searchResults && !search}
         />
       </Box>
     </>
