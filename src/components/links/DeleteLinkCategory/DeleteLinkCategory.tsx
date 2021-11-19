@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteLinkCategoryInDB } from "../../../services/linkCategories/deleteLinkCategoryInDB";
 
 interface IProps {
@@ -26,7 +26,7 @@ function DeleteLinkCategory({
   categoryName,
   categoryId,
 }: IProps) {
-  const history = useHistory();
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -45,7 +45,7 @@ function DeleteLinkCategory({
             bgColor="red.500"
             onClick={() => {
               onClose();
-              history.push("/links");
+              navigate("/links");
               dispatch(deleteLinkCategoryInDB(categoryId));
             }}
           >

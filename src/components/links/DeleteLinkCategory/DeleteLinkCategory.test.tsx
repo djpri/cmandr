@@ -3,5 +3,12 @@ import DeleteLinkCategory from "./DeleteLinkCategory";
 import { render, screen } from "../../../test-utils";
 
 test("renders without crashing", () => {
-  render(<DeleteLinkCategory />);
+  render(
+    <DeleteLinkCategory
+      isOpen={false}
+      onClose={() => {}}
+      categoryName="general"
+      categoryId={1}
+    />
+  );
 });
