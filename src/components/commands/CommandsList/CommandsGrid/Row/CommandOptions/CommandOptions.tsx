@@ -19,10 +19,10 @@ import EditCommandForm from "../../../../EditCommandForm/EditCommandForm";
 
 type IProps = {
   command: Command;
-  isGhost: boolean;
+  isLoading: boolean;
 };
 
-function CommandOptions({ command, isGhost }: IProps) {
+function CommandOptions({ command, isLoading }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -41,7 +41,7 @@ function CommandOptions({ command, isGhost }: IProps) {
             size="xs"
             bgColor="teal.500"
             color="white"
-            isDisabled={isGhost}
+            isDisabled={isLoading}
           >
             <HiDotsVertical />
           </Button>

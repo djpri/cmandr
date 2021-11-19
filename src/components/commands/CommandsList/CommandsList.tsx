@@ -82,7 +82,7 @@ function CommandsList({ showCategories, ghostCommands }) {
         <CommandsTable
           commands={searchResults ? searchResults : ghostCommands}
           showCategories={showCategories}
-          isGhost={!searchResults && !search}
+          isLoading={!searchResults && !search}
         />
       </Box>
     </>
