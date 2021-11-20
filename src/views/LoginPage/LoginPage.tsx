@@ -1,20 +1,32 @@
 import { Button, Stack, Text, Heading, Container, Box } from "@chakra-ui/react";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import LogInForm from "../../components/auth/LogInForm/LogInForm";
 import SignUpForm from "../../components/auth/SignUpForm/SignUpForm";
-import { selectIsLoggedIn } from "../../redux/auth/authSlice";
+import {
+  selectIsInitialized,
+  selectIsLoggedIn,
+} from "../../redux/auth/authSlice";
 
 function LoginPage() {
-  const [formType, setFormType] = React.useState("login");
+  const [formType, setFormType] = useState("login");
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isInitialized = useSelector(selectIsInitialized);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // if (isInitialized && isLoggedIn) {
+  //   navigate(state.path || "/");
+  // }
 
   useEffect(() => {
-    if (isLoggedIn) navigate("/");
-  }, [isLoggedIn, navigate]);
+    if (isInitialized && isLoggedIn) {
+      console.log(location.state.from.pathname);
+      navigate(location.state.from.pathname || "/");
+    }
+  }, [isLoggedIn, isInitialized, navigate, location.state.from.pathname]);
 
   return (
     <Box

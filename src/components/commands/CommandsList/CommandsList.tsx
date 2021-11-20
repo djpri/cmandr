@@ -12,8 +12,10 @@ import { useSelector } from "react-redux";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import { GiCrosshair } from "react-icons/gi";
+import { useLocation } from "react-router-dom";
 
 function CommandsList({ showCategories, ghostCommands }) {
+  const location = useLocation();
   const reduxCommands = useSelector(selectCommands);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);
@@ -24,7 +26,8 @@ function CommandsList({ showCategories, ghostCommands }) {
 
   useEffect(() => {
     setSearchResults(null);
-  }, []);
+    setSearch("");
+  }, [location]);
 
   // filter commands on search
   useEffect(() => {
@@ -82,7 +85,7 @@ function CommandsList({ showCategories, ghostCommands }) {
         <CommandsTable
           commands={searchResults ? searchResults : ghostCommands}
           showCategories={showCategories}
-          isLoading={!searchResults && !search}
+          isLoading={!searchResults && search === ""}
         />
       </Box>
     </>

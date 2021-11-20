@@ -1,11 +1,11 @@
 import { Input, Button, HStack, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 import { useState } from "react";
-import { GoPlus } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import { addLinkCategoryToDB } from "../../../services/linkCategories/addLinkCategoryToDB";
 import { setAddLinkCategory } from "../../../redux/links/linksSlice";
+import { AiFillFolderAdd } from "react-icons/ai";
 
 function AddLinkCategory() {
   const uid = useSelector(selectUserUid);
@@ -29,7 +29,7 @@ function AddLinkCategory() {
       <Button
         size="xs"
         aria-label="add link category"
-        leftIcon={<GoPlus />}
+        leftIcon={<AiFillFolderAdd />}
         onClick={onToggle}
       >
         Add category

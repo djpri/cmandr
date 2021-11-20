@@ -1,7 +1,7 @@
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import CreateCommand from "./components/commands/CreateCommand/CreateCommand";
 import { selectUserUid, setAuthListener } from "./redux/auth/authSlice";
 import { useAppDispatch } from "./redux/store";
@@ -36,17 +36,15 @@ export const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/manage-commands" element={<CreateCommand />} />
-          <Route path="/commands" element={<AllCommandsPage />} />
-          <Route path="/commands/:id" element={<CommandCategoryPage />} />
-          <Route path="/links" element={<Links />} />
-          <Route path="/links/:id" element={<LinkCategory />} />
-          <Route path="/account/login" element={<LoginPage />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/manage-commands" element={<CreateCommand />} />
+        <Route path="/commands" element={<AllCommandsPage />} />
+        <Route path="/commands/:id" element={<CommandCategoryPage />} />
+        <Route path="/links" element={<Links />} />
+        <Route path="/links/:id" element={<LinkCategory />} />
+        <Route path="/account/login" element={<LoginPage />} />
+      </Routes>
     </ChakraProvider>
   );
 };

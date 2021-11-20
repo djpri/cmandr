@@ -1,7 +1,8 @@
 import { Box, Link, Text, StackDivider, Stack, HStack } from "@chakra-ui/react";
 import * as React from "react";
+import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import AddCommandCategory from "../../../components/commands/AddCommandCategory/AddCommandCategory";
 import AddLinkCategory from "../../../components/links/AddLinkCategory/AddLinkCategory";
 import { selectCategoriesWithIds } from "../../../redux/commands/commandsSlice";
@@ -11,6 +12,8 @@ import { CommandCategory } from "../../../types/types";
 function SideBarLinks() {
   const commandCategories = useSelector(selectCategoriesWithIds);
   const linkCategories = useSelector(selectLinkCategories);
+  const location = useLocation();
+
   return (
     <Stack divider={<StackDivider borderColor="gray.500" />} pl="6" pr="5">
       <Stack>
@@ -38,6 +41,11 @@ function SideBarLinks() {
         {commandCategories &&
           commandCategories.map((item: CommandCategory) => (
             <HStack key={item.id}>
+              {location.pathname === `/commands/${item.id}` ? (
+                <AiFillFolderOpen />
+              ) : (
+                <AiFillFolder />
+              )}
               <Link as={RouterLink} to={`/commands/${item.id}`}>
                 {item.name}
               </Link>
@@ -46,7 +54,7 @@ function SideBarLinks() {
         <AddCommandCategory />
       </Stack>
 
-      {/* COMMANDS */}
+      {/* LINKS */}
       <Stack>
         <Box flex="1" textAlign="left">
           <Text fontWeight="700" letterSpacing="1px">
@@ -61,6 +69,11 @@ function SideBarLinks() {
         {linkCategories &&
           linkCategories.map((item: CommandCategory) => (
             <HStack key={item.id}>
+              {location.pathname === `/links/${item.id}` ? (
+                <AiFillFolderOpen />
+              ) : (
+                <AiFillFolder />
+              )}
               <Link as={RouterLink} to={`/links/${item.id}`}>
                 {item.name}
               </Link>

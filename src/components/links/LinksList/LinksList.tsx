@@ -15,7 +15,7 @@ import AddLinkButton from "./AddLinkButton/AddLinkButton";
 import { selectAllLinks } from "../../../redux/links/linksSlice";
 import { useSelector } from "react-redux";
 import { Link } from "../../../types/types";
-import LinksTable from "./LinksTable/LinksTable";
+import LinksTable from "./LinksGrid/LinksGrid";
 
 function LinksList({ showCategories }) {
   const reduxLinks = useSelector(selectAllLinks);
@@ -101,7 +101,11 @@ function LinksList({ showCategories }) {
           </Box>
           <Box ref={ref} />
         </Box>
-        <LinksTable links={searchResults} showCategories={showCategories} />
+        <LinksTable
+          isLoading={false}
+          links={searchResults}
+          showCategories={showCategories}
+        />
       </Box>
     </>
   );
