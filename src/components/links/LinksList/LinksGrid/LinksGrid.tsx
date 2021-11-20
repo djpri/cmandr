@@ -1,10 +1,16 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import * as React from "react";
-import { Command } from "../../../../types/types";
+import { Link } from "../../../../types/types";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
 
-function CommandsTable({ commands, showCategories, isLoading }) {
+interface IProps {
+  links: Link[];
+  showCategories: boolean;
+  isLoading: boolean;
+}
+
+function LinksTable({ links, showCategories, isLoading }: IProps) {
   return (
     <Box p="1" display="flex" flexDirection="column" w="100%">
       <Grid
@@ -14,8 +20,8 @@ function CommandsTable({ commands, showCategories, isLoading }) {
         gap={4}
         p="4"
       >
-        <Header field="description" label="Description" />
-        <Header field="command" label="Command" />
+        <Header field="title" label="Title" />
+        <Header field="link" label="Url" />
         {showCategories && <Header field="category" label="Category" />}
         <GridItem />
       </Grid>
@@ -26,11 +32,11 @@ function CommandsTable({ commands, showCategories, isLoading }) {
         templateColumns={["repeat(auto-fill, 200px)", null, null, "1fr"]}
         gap={[4, null, null, 0]}
       >
-        {commands.map((command: Command) => (
+        {links.map((link: Link) => (
           <Row
             isLoading={isLoading}
-            commandItem={command}
-            key={command.id}
+            linkItem={link}
+            key={link.id}
             showCategories={showCategories}
           />
         ))}
@@ -39,4 +45,4 @@ function CommandsTable({ commands, showCategories, isLoading }) {
   );
 }
 
-export default CommandsTable;
+export default LinksTable;

@@ -5,7 +5,9 @@ import {
   Button,
   Link,
   Grid,
+  Text,
   Skeleton,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { GoLinkExternal } from "react-icons/go";
@@ -15,6 +17,7 @@ import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/c
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { Command } from "../../../../../types/types";
+import { AiFillFolder } from "react-icons/ai";
 
 type Props = {
   commandItem: Command;
@@ -26,6 +29,7 @@ function Row({ commandItem, showCategories, isLoading }: Props) {
   const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
   const { id, description, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
+  const categoryTextColor = useColorModeValue("gray.500", "gray.300");
 
   const handleCopy = () => {
     setIsCopied(true);
@@ -67,7 +71,12 @@ function Row({ commandItem, showCategories, isLoading }: Props) {
       {showCategories && (
         <Skeleton isLoaded={!isLoading}>
           <GridItem bgColor={isLoading && "blackAlpha.400"}>
-            {categoriesList[category?.id]}
+            <HStack>
+              <AiFillFolder color="gray" />
+              <Text color={categoryTextColor}>
+                {categoriesList[category?.id]}
+              </Text>
+            </HStack>
           </GridItem>
         </Skeleton>
       )}

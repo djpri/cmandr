@@ -1,6 +1,6 @@
 import { Input, Button, HStack, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
-import { GoPlus } from "react-icons/go";
+import { AiFillFolderAdd } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import { addCommandCategory } from "../../../redux/commands/commandsSlice";
@@ -28,7 +28,7 @@ function AddCommandCategory() {
       <Button
         size="xs"
         aria-label="add command category"
-        leftIcon={<GoPlus />}
+        leftIcon={<AiFillFolderAdd />}
         onClick={onToggle}
       >
         Add category

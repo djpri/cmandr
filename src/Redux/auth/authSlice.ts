@@ -49,6 +49,8 @@ export const authSlice = createSlice({
 export const selectIsLoggedIn = (state: RootState) =>
   state.userAuth?.isLoggedIn;
 export const selectIsLoading = (state: RootState) => state.userAuth.isLoading;
+export const selectIsInitialized = (state: RootState) =>
+  state.userAuth.initialized;
 export const selectUserUid = (state: RootState) =>
   state.userAuth?.userData?.id || null;
 export const selectDisplayName = (state: RootState) =>
