@@ -1,11 +1,69 @@
-import React from 'react';
+import { Stack, Input, FormLabel, Select, Button } from "@chakra-ui/react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import {
+  selectCategoriesWithIds,
+  selectCategoriesAsKeyValuePairs,
+} from "../../../redux/commands/commandsSlice";
+import { useEditLink } from "../../../services/links/editLinkInDB";
+import { Link, LinkCategory } from "../../../types/types";
 
-function EditLinkForm() {
+type IProps = {
+  linkItem: Link;
+  onClose: () => void;
+};
+
+function EditLinkForm({ linkItem, onClose }: IProps) {
+  const { id, title, link, category } = linkItem;
+  const categories: LinkCategory[] = useSelector(selectCategoriesWithIds);
+  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
+  const { editLinkInDB } = useEditLink();
+
+  const { handleSubmit, register, setValue, getValues } = useForm<Link>({
+    defaultValues: {
+      id,
+      title,
+      link,
+      category,
+    },
+  });
+
+  const onSubmit = (values: Link) => {
+    setValue("category.name", categoryList[getValues("category.id")]);
+    editLinkInDB(values);
+    // closes popover if using form from popover only
+    if (onClose) onClose();
+  };
+
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Stack mb="10" mt="3">
+        <Input {...register("id")} placeholder="id" isDisabled type="hidden" />
 
-    </div>
-  )
+        <FormLabel htmlFor="description">Title</FormLabel>
+        <Input {...register("title")} placeholder="Link Title" />
+
+        <FormLabel htmlFor="Link">Url</FormLabel>
+        <Input {...register("link")} placeholder="URL for link" />
+
+        <FormLabel htmlFor="category">Category</FormLabel>
+        <Select {...register("category.id")}>
+          <option value="">Select Category</option>
+          {categories &&
+            categories.map((category) => (
+              <option value={category.id} key={category.id}>
+                {category.name}
+              </option>
+            ))}
+        </Select>
+
+        <Button type="submit" colorScheme="orange">
+          Save
+        </Button>
+      </Stack>
+    </form>
+  );
 }
 
 export default EditLinkForm;

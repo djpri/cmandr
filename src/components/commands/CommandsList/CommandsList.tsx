@@ -24,6 +24,7 @@ function CommandsList({ showCategories, ghostCommands }) {
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
 
+  // reset results for each new page
   useEffect(() => {
     setSearchResults(null);
     setSearch("");
@@ -38,7 +39,7 @@ function CommandsList({ showCategories, ghostCommands }) {
         );
         return newArray;
       });
-    }, 500);
+    }, 250);
     return () => {
       clearTimeout(timeout);
     };
