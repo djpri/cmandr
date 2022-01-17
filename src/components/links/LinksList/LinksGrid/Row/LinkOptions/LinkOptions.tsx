@@ -14,6 +14,8 @@ import {
 import * as React from "react";
 import { IoMdOptions } from "react-icons/io";
 import { Link } from "../../../../../../types/types";
+import DeleteLinkButton from "../../../../DeleteLinkButton/DeleteLinkButton";
+import EditLinkForm from "../../../../EditLinkForm/EditLinkForm";
 
 type IProps = {
   link: Link;
@@ -51,11 +53,10 @@ function CommandOptions({ link }: IProps) {
               >
                 Edit
               </Button>
-              <Button>Delete</Button>
-              {/* <DeleteCommandButton commandId={link.id} onClose={onClose} /> */}
+              <DeleteLinkButton linkId={link.id} onClose={onClose} />
             </HStack>
             <Box display={isVisible ? "block" : "none"}>
-              {/* <EditLinkForm commandItem={link} onClose={onClose} /> */}
+              <EditLinkForm linkItem={link} onClose={onClose} />
             </Box>
           </PopoverBody>
         </PopoverContent>

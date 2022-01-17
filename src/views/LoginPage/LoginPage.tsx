@@ -36,8 +36,17 @@ function LoginPage() {
       alignItems="center"
       flexDirection="column"
       justifyContent="center"
+      w="container.md"
+      mx="auto"
     >
-      <Heading as="h1" mb="30">
+      <Heading
+        as="h1"
+        mb="30"
+        w="100%"
+        textAlign="center"
+        borderBottomWidth="2px"
+        borderColor="whiteAlpha.500"
+      >
         Cmandr
       </Heading>
       <Container maxW="container.md">
