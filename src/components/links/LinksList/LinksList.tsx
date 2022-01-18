@@ -66,6 +66,7 @@ function LinksList({ showCategories }) {
         borderColor="gray.700"
         bgColor={bgColor}
         position="relative"
+        mb="40"
       >
         <Box zIndex="100" mb="2" pt="5" pl="5" pr="5">
           {isSearching && (

@@ -11,13 +11,13 @@ function NavBar() {
 
   return (
     <Box
-      position="sticky"
+      position="fixed"
       top="0"
       w="100%"
       bgColor="gray.800"
-      zIndex="200"
       h="50"
       shadow="base"
+      zIndex={200}
     >
       {/* TOP BUTTONS */}
       <HStack

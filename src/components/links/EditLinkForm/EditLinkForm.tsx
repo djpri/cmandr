@@ -3,9 +3,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import {
-  selectCategoriesWithIds,
-  selectCategoriesAsKeyValuePairs,
-} from "../../../redux/commands/commandsSlice";
+  selectLinkCategories,
+  selectLinksCategoriesAsObject,
+} from "../../../redux/links/linksSlice";
 import { useEditLink } from "../../../services/links/editLinkInDB";
 import { Link, LinkCategory } from "../../../types/types";
 
@@ -16,8 +16,8 @@ type IProps = {
 
 function EditLinkForm({ linkItem, onClose }: IProps) {
   const { id, title, link, category } = linkItem;
-  const categories: LinkCategory[] = useSelector(selectCategoriesWithIds);
-  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
+  const categories: LinkCategory[] = useSelector(selectLinkCategories);
+  const categoryList = useSelector(selectLinksCategoriesAsObject);
   const { editLinkInDB } = useEditLink();
 
   const { handleSubmit, register, setValue, getValues } = useForm<Link>({

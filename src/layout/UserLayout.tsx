@@ -28,7 +28,7 @@ function UserLayout({ children }) {
       <Container
         maxW="container.xl"
         maxH="80vh"
-        mt="30px"
+        mt="80px"
         mb="50px"
         ml={isSidebarOpen ? "auto" : "2vw"}
         position="relative"
