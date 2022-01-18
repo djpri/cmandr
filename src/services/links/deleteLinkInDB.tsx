@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { setDeleteCommand } from "../../redux/commands/commandsSlice";
+import { setDeleteLink } from "../../redux/links/linksSlice";
 import { supabase } from "../../supabase/supabase";
 
 export const useDeleteLink = () => {
@@ -8,16 +8,13 @@ export const useDeleteLink = () => {
   const toast = useToast();
 
   const deleteLinkInDB = async (id: number) => {
-    const { error } = await supabase
-      .from("commands")
-      .delete()
-      .match({ id: id });
+    const { error } = await supabase.from("links").delete().match({ id: id });
 
     if (error === null) {
-      dispatch(setDeleteCommand(id));
+      dispatch(setDeleteLink(id));
       toast({
-        title: "Command Changed",
-        description: "command changed successfully",
+        title: "Link Deleted",
+        description: "Link deleted successfully",
         status: "success",
         duration: 3000,
         isClosable: true,
