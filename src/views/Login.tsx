@@ -3,12 +3,9 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import LogInForm from "../../components/auth/LogInForm/LogInForm";
-import SignUpForm from "../../components/auth/SignUpForm/SignUpForm";
-import {
-  selectIsInitialized,
-  selectIsLoggedIn,
-} from "../../redux/auth/authSlice";
+import LogInForm from "../components/auth/LogInForm/LogInForm";
+import SignUpForm from "../components/auth/SignUpForm/SignUpForm";
+import { selectIsInitialized, selectIsLoggedIn } from "../redux/auth/authSlice";
 
 function LoginPage() {
   const [formType, setFormType] = useState("login");

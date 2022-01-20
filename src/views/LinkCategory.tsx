@@ -10,12 +10,12 @@ import React, { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import DeleteLinkCategory from "../../components/links/DeleteLinkCategory/DeleteLinkCategory";
-import EditLinkCategory from "../../components/links/EditLinkCategory/EditLinkCategory";
-import LinksList from "../../components/links/LinksList/LinksList";
-import UserLayout from "../../layout/UserLayout";
-import { selectLinksCategoriesAsObject } from "../../redux/links/linksSlice";
-import { getLinksByCategoryFromDB } from "../../services/links/getLinksByCategoryFromDB";
+import DeleteLinkCategory from "../components/links/DeleteLinkCategory/DeleteLinkCategory";
+import EditLinkCategory from "../components/links/EditLinkCategory/EditLinkCategory";
+import LinksList from "../components/links/LinksList/LinksList";
+import UserLayout from "../layout/UserLayout";
+import { selectLinksCategoriesAsObject } from "../redux/links/linksSlice";
+import { getLinksByCategoryFromDB } from "../services/links/getLinksByCategoryFromDB";
 
 function LinkCategory() {
   const dispatch = useDispatch();
