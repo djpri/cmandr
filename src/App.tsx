@@ -8,12 +8,12 @@ import { useAppDispatch } from "./redux/store";
 import { getCommandCategoriesFromDB } from "./services/commandCategories/getCommandCategoriesFromDB";
 import { getLinkCategoriesFromDB } from "./services/linkCategories/getLinkCategoriesFromDB";
 import theme from "./theme/theme";
-import AllCommandsPage from "./views/Commands/AllCommandsPage";
-import CommandCategoryPage from "./views/CommandCategory/CommandCategoryPage";
-import HomePage from "./views/Home/HomePage";
-import LinkCategory from "./views/LinkCategory/LinkCategory";
-import Links from "./views/Links/Links";
-import LoginPage from "./views/LoginPage/LoginPage";
+import AllCommandsPage from "./views/AllCommands";
+import CommandCategoryPage from "./views/CommandCategory";
+import HomePage from "./views/Home";
+import LinkCategory from "./views/LinkCategory";
+import Links from "./views/AllLinks";
+import LoginPage from "./views/Login";
 
 export const App = () => {
   const dispatch = useAppDispatch();

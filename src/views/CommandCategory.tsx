@@ -11,17 +11,17 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
-import CommandsList from "../../components/commands/CommandsList/CommandsList";
-import UserLayout from "../../layout/UserLayout";
+import CommandsList from "../components/commands/CommandsList/CommandsList";
+import UserLayout from "../layout/UserLayout";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCategoriesAsKeyValuePairs } from "../../redux/commands/commandsSlice";
+import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
 import { FaEdit } from "react-icons/fa";
-import DeleteCategoryModal from "../../components/commands/DeleteCommandCategory/DeleteCategoryModal";
-import { getCommandsByCategoryFromDB } from "../../services/commands/getCommandsByCategoryFromDB";
-import EditCommandCategory from "../../components/commands/EditCommandCategory/EditCommandCategory";
+import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
+import { getCommandsByCategoryFromDB } from "../services/commands/getCommandsByCategoryFromDB";
+import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import { useEffect } from "react";
-import { Command } from "../../types/types";
+import { Command } from "../types/types";
 
 const ghostCommands = () => {
   const ghostData: Command[] = [];

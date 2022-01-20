@@ -7,9 +7,9 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import UserLayout from "../../layout/UserLayout";
-import { selectCategoriesWithIds } from "../../redux/commands/commandsSlice";
-import { selectLinkCategories } from "../../redux/links/linksSlice";
+import UserLayout from "../layout/UserLayout";
+import { selectCategoriesWithIds } from "../redux/commands/commandsSlice";
+import { selectLinkCategories } from "../redux/links/linksSlice";
 import { Link as RouterLink } from "react-router-dom";
 
 function HomePage() {
@@ -29,7 +29,7 @@ function HomePage() {
               to={`/commands/${item.id}`}
               boxShadow="base"
               p="5px 10px"
-              rounded="md"
+              rounded="sm"
               textAlign="left"
               bgColor={linkBgColor}
               _hover={{
@@ -52,7 +52,7 @@ function HomePage() {
               to={`/commands/${item.id}`}
               boxShadow="base"
               p="5px 10px"
-              rounded="md"
+              rounded="sm"
               textAlign="left"
               bgColor={linkBgColor}
               _hover={{

@@ -1,10 +1,10 @@
 import { Heading } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import CommandsList from "../../components/commands/CommandsList/CommandsList";
-import UserLayout from "../../layout/UserLayout";
-import { getCommandsFromDB } from "../../services/commands/getCommandsFromDB";
-import { Command } from "../../types/types";
+import CommandsList from "../components/commands/CommandsList/CommandsList";
+import UserLayout from "../layout/UserLayout";
+import { getCommandsFromDB } from "../services/commands/getCommandsFromDB";
+import { Command } from "../types/types";
 
 const ghostCommands = () => {
   const ghostData: Command[] = [];
