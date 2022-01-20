@@ -1,7 +1,15 @@
 import React from "react";
 import EditLinkForm from "./EditLinkForm";
-import { render, screen } from "../../../test-utils";
+import { render } from "../../../test-utils";
+import { Link } from "../../../types/types";
+
+const testLink: Link = {
+  id: 1,
+  title: "laravel",
+  link: "https://laravel.com/docs/8.x#getting-started-on-windows",
+  category: { id: 1, name: "general" },
+};
 
 test("renders without crashing", () => {
-  render(<EditLinkForm />);
+  render(<EditLinkForm linkItem={testLink} onClose={() => {}} />);
 });
