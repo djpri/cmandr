@@ -20,7 +20,7 @@ function Links() {
       <Heading as="h2" mb="30px" fontWeight="900">
         All Links
       </Heading>
-      <Stack>
+      <Stack w="100%">
         <LinksList showCategories />
       </Stack>
     </UserLayout>

@@ -55,60 +55,58 @@ function LinksList({ showCategories }) {
   }, [reduxLinks]);
 
   return (
-    <>
-      <Box
-        minW="container.xl"
-        maxW="container.xl"
-        w="container.xl"
-        boxShadow="base"
-        rounded="md"
-        border={border}
-        borderColor="gray.700"
-        bgColor={bgColor}
-        position="relative"
-        mb="40"
-      >
-        <Box zIndex="100" mb="2" pt="5" pl="5" pr="5">
-          {isSearching && (
-            <Spinner position="absolute" top="3" right="3" color="blue.500" />
-          )}
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-            mb="3"
-          >
-            <AddLinkButton ref={ref} />
-            {/* SEARCH BAR */}
-            <InputGroup maxW="md" w={["xs", "xs", "sm", "md"]}>
-              <Input
-                type="text"
-                placeholder="Search by title"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                mb="5"
-              />
-              <InputRightElement
-                children={
-                  <IconButton
-                    size="sm"
-                    aria-label="search-button"
-                    icon={<AiOutlineSearch color="gray.300" />}
-                  />
-                }
-              />
-            </InputGroup>
-          </Box>
-          <Box ref={ref} />
+    <Box
+      minW="container.xl"
+      maxW="container.xl"
+      w={["100%", null, null, "container.xl"]}
+      boxShadow="base"
+      rounded="md"
+      border={border}
+      borderColor="gray.700"
+      bgColor={bgColor}
+      position="relative"
+      mb="40"
+    >
+      <Box zIndex="100" mb="2" pt="5" pl="5" pr="5">
+        {isSearching && (
+          <Spinner position="absolute" top="3" right="3" color="blue.500" />
+        )}
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+          mb="3"
+        >
+          <AddLinkButton ref={ref} />
+          {/* SEARCH BAR */}
+          <InputGroup maxW="md" w={["xs", "xs", "sm", "md"]}>
+            <Input
+              type="text"
+              placeholder="Search by title"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              mb="5"
+            />
+            <InputRightElement
+              children={
+                <IconButton
+                  size="sm"
+                  aria-label="search-button"
+                  icon={<AiOutlineSearch color="gray.300" />}
+                />
+              }
+            />
+          </InputGroup>
         </Box>
-        <LinksTable
-          isLoading={false}
-          links={searchResults}
-          showCategories={showCategories}
-        />
+        <Box ref={ref} />
       </Box>
-    </>
+      <LinksTable
+        isLoading={false}
+        links={searchResults}
+        showCategories={showCategories}
+      />
+    </Box>
   );
 }
 

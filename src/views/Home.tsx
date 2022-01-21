@@ -22,7 +22,7 @@ function HomePage() {
     <UserLayout>
       <Box fontSize="xl">
         <Heading as="h1">Commands</Heading>
-        <Grid my="30px" gap={3} templateColumns="repeat(6, 1fr)">
+        <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
           {commandCategories.map((item) => (
             <GridItem
               as={RouterLink}
@@ -45,11 +45,11 @@ function HomePage() {
           ))}
         </Grid>
         <Heading as="h1">Links</Heading>
-        <Grid my="30px" gap={3} templateColumns="repeat(6, 1fr)">
+        <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
           {linkCategories.map((item) => (
             <GridItem
               as={RouterLink}
-              to={`/commands/${item.id}`}
+              to={`/links/${item.id}`}
               boxShadow="base"
               p="5px 10px"
               rounded="sm"
