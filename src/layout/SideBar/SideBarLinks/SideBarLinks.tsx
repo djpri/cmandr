@@ -55,7 +55,7 @@ function SideBarLinks() {
       </Stack>
 
       {/* LINKS */}
-      <Stack>
+      <Stack mb="100px">
         <Box flex="1" textAlign="left">
           <Text fontWeight="700" letterSpacing="1px">
             Links

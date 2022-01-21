@@ -26,11 +26,11 @@ function UserLayout({ children }) {
       <NavBar />
       <SideBar />
       <Container
-        maxW="container.xl"
+        w={isSidebarOpen ? "70%" : "97.5%"}
         maxH="80vh"
         mt="80px"
         mb="50px"
-        ml={isSidebarOpen ? "auto" : "2vw"}
+        ml={isSidebarOpen ? "300px" : "2.5%"}
         position="relative"
       >
         {children}

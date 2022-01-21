@@ -47,19 +47,22 @@ function SideBar() {
   if (!isOpen) return null;
 
   return (
-    // <Slide direction="left" in={isOpen} unmountOnExit>
     <Box
       pr="2"
       h="100vh"
       bgColor={bgColor}
-      w="250px"
+      w="242px"
       top="50"
       position="fixed"
       borderColor="gray.500"
-      overflowY="auto"
+      overflowY="hidden"
       sx={scrollbarStyles}
-      boxSizing="content-box"
+      _hover={{
+        overflowY: "auto",
+        width: "250px",
+      }}
       zIndex="500"
+      boxSizing="content-box"
     >
       {/* SIDE LINKS */}
       <Stack mt="5">
@@ -68,7 +71,6 @@ function SideBar() {
         </StackItem>
       </Stack>
     </Box>
-    // </Slide>
   );
 }
 
