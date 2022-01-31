@@ -1,7 +1,7 @@
-import { Command, CommandsState } from "./../../types/types";
+import { Command, CommandsState } from "../../models/models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
-import { CommandCategory } from "./../../types/types";
+import { CommandCategory } from "../../models/models";
 
 const initialState: CommandsState = {
   commands: [],

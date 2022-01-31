@@ -1,7 +1,7 @@
 import React from "react";
 import EditCommandForm from "./EditCommandForm";
 import { render } from "../../../test-utils";
-import { Command } from "../../../types/types";
+import { Command } from "../../../models/models";
 
 const testCommand: Command = {
   command: "php artisan serve",

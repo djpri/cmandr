@@ -1,4 +1,4 @@
-import { UserAuthState } from "./../../types/types";
+import { UserAuthState } from "../../models/models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { supabase } from "../../supabase/supabase";
 import { AppThunk, RootState } from "../store";

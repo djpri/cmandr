@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import AddLinkButton from "./AddLinkButton/AddLinkButton";
 import { selectAllLinks } from "../../../redux/links/linksSlice";
 import { useSelector } from "react-redux";
-import { Link } from "../../../types/types";
+import { Link } from "../../../models/models";
 import LinksTable from "./LinksGrid/LinksGrid";
 
 function LinksList({ showCategories }) {

@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setEditCommand } from "../../redux/commands/commandsSlice";
 import { supabase } from "../../supabase/supabase";
-import { Command } from "../../types/types";
+import { Command } from "../../models/models";
 
 export const useEditCommand = () => {
   const dispatch = useDispatch();

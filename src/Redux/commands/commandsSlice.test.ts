@@ -15,7 +15,7 @@ import {
   editedTestItem,
   testStateAfterDeletion,
 } from "./testData";
-import { CommandsState } from "./../../types/types";
+import { CommandsState } from "../../models/models";
 
 test("setCommands", () => {
   expect(reducer(undefined, setCommands(testState))).toEqual({

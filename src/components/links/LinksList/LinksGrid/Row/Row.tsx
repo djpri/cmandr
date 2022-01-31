@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "../../../../../types/types";
+import { Link } from "../../../../../models/models";
 import LinkOptions from "./LinkOptions/LinkOptions";
 import { selectLinksCategoriesAsObject } from "../../../../../redux/links/linksSlice";
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
 import { setAddLink } from "../../redux/links/linksSlice";
 import { supabase } from "../../supabase/supabase";
-import { Link } from "../../types/types";
+import { Link } from "../../models/models";
 
 export const useAddLink = () => {
   const dispatch = useDispatch();

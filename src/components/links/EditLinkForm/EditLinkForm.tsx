@@ -7,7 +7,7 @@ import {
   selectLinksCategoriesAsObject,
 } from "../../../redux/links/linksSlice";
 import { useEditLink } from "../../../services/links/editLinkInDB";
-import { Link, LinkCategory } from "../../../types/types";
+import { Link, LinkCategory } from "../../../models/models";
 
 type IProps = {
   linkItem: Link;
