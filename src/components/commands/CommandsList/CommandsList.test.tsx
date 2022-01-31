@@ -1,7 +1,7 @@
 import React from "react";
 import CommandsList from "./CommandsList";
 import { render } from "../../../test-utils";
-import { Command } from "../../../types/types";
+import { Command } from "../../../models/models";
 
 const ghostCommands = () => {
   const ghostData: Command[] = [];

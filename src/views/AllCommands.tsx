@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
 import UserLayout from "../layout/UserLayout";
 import { getCommandsFromDB } from "../services/commands/getCommandsFromDB";
-import { Command } from "../types/types";
+import { Command } from "../models/models";
 
 const ghostCommands = () => {
   const ghostData: Command[] = [];

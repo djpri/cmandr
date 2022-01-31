@@ -1,4 +1,4 @@
-import { Command } from "./../../types/types";
+import { Command } from "../../models/models";
 
 export const testState: Command[] = [
   {

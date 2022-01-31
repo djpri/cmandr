@@ -26,7 +26,7 @@ function UserLayout({ children }) {
       <NavBar />
       <SideBar />
       <Container
-        w={isSidebarOpen ? "70%" : "97.5%"}
+        maxW={isSidebarOpen ? "70%" : "97.5%"}
         maxH="80vh"
         mt="80px"
         mb="50px"

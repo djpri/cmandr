@@ -7,7 +7,7 @@ import AddCommandCategory from "../../../components/commands/AddCommandCategory/
 import AddLinkCategory from "../../../components/links/AddLinkCategory/AddLinkCategory";
 import { selectCategoriesWithIds } from "../../../redux/commands/commandsSlice";
 import { selectLinkCategories } from "../../../redux/links/linksSlice";
-import { CommandCategory } from "../../../types/types";
+import { CommandCategory } from "../../../models/models";
 
 function SideBarLinks() {
   const commandCategories = useSelector(selectCategoriesWithIds);

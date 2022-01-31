@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../redux/auth/authSlice";
 import { setAddCommand } from "../../redux/commands/commandsSlice";
 import { supabase } from "../../supabase/supabase";
-import { Command } from "../../types/types";
+import { Command } from "../../models/models";
 
 export const useAddCommand = () => {
   const dispatch = useDispatch();

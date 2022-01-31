@@ -1,6 +1,6 @@
 import { AppThunk, RootState } from "./../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Link, LinkCategory, LinksState } from "../../types/types";
+import { Link, LinkCategory, LinksState } from "../../models/models";
 
 const initialState: LinksState = {
   links: [],

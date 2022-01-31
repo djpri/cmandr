@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setEditLink } from "../../redux/links/linksSlice";
 import { supabase } from "../../supabase/supabase";
-import { Link } from "../../types/types";
+import { Link } from "../../models/models";
 
 export const useEditLink = () => {
   const dispatch = useDispatch();

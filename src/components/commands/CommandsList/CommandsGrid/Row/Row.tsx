@@ -16,7 +16,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { Command } from "../../../../../types/types";
+import { Command } from "../../../../../models/models";
 import { AiFillFolder } from "react-icons/ai";
 
 type Props = {

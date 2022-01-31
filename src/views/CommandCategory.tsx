@@ -21,7 +21,7 @@ import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/De
 import { getCommandsByCategoryFromDB } from "../services/commands/getCommandsByCategoryFromDB";
 import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import { useEffect } from "react";
-import { Command } from "../types/types";
+import { Command } from "../models/models";
 
 const ghostCommands = () => {
   const ghostData: Command[] = [];

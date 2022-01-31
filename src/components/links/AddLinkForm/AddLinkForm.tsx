@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectLinkCategories } from "../../../redux/links/linksSlice";
 import { useAddLink } from "../../../services/links/addLinkToDB";
-import { Link, LinkCategory } from "../../../types/types";
+import { Link, LinkCategory } from "../../../models/models";
 
 function AddLinkForm() {
   const categories: LinkCategory[] = useSelector(selectLinkCategories);

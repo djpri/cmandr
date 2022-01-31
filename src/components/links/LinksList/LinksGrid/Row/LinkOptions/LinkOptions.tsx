@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { IoMdOptions } from "react-icons/io";
-import { Link } from "../../../../../../types/types";
+import { Link } from "../../../../../../models/models";
 import DeleteLinkButton from "../../../../DeleteLinkButton/DeleteLinkButton";
 import EditLinkForm from "../../../../EditLinkForm/EditLinkForm";
 

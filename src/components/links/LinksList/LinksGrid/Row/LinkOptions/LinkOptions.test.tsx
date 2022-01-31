@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "../../../../../../test-utils";
-import { Link } from "../../../../../../types/types";
+import { Link } from "../../../../../../models/models";
 import LinkOptions from "./LinkOptions";
 
 const testLink: Link = {

@@ -9,7 +9,7 @@ import {
   selectCategoriesWithIds,
 } from "../../../redux/commands/commandsSlice";
 import { useAddCommand } from "../../../services/commands/addCommandToDB";
-import { Command, CommandCategory } from "../../../types/types";
+import { Command, CommandCategory } from "../../../models/models";
 
 function AddCommandForm() {
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);

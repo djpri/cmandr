@@ -1,7 +1,7 @@
 import React from "react";
 import EditLinkForm from "./EditLinkForm";
 import { render } from "../../../test-utils";
-import { Link } from "../../../types/types";
+import { Link } from "../../../models/models";
 
 const testLink: Link = {
   id: 1,
