@@ -4,6 +4,7 @@ import {
   GridItem,
   Grid,
   Skeleton,
+  Image,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
@@ -21,6 +22,17 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
   const categoriesList = useSelector(selectLinksCategoriesAsObject);
   const { title, link, category } = linkItem;
 
+  const getFaviconUrl = (link) => {
+    try {
+      const url = new URL(link);
+      const hostName = url.hostname.replace("www.", "");
+      console.log(hostName);
+      return `https://${hostName}/favicon.ico`;
+    } catch (error) {
+      return null;
+    }
+  };
+
   return (
     <Grid
       templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
@@ -32,6 +44,15 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
           <ChakraLink href={link} isExternal>
+            {getFaviconUrl(link) !== null && (
+              <Image
+                display="inline"
+                mr="5px"
+                height="16px"
+                src={getFaviconUrl(link)}
+              />
+            )}
+
             {title.charAt(0).toUpperCase() + title.slice(1)}
           </ChakraLink>
         </GridItem>
@@ -40,7 +61,7 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
           <ChakraLink href={link} isExternal>
-            {link}
+            {`${link.substring(0, 30)}...`}
           </ChakraLink>
         </GridItem>
       </Skeleton>

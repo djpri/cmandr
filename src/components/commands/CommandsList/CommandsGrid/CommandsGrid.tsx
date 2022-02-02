@@ -26,14 +26,15 @@ function CommandsTable({ commands, showCategories, isLoading }) {
         templateColumns={["repeat(auto-fill, 200px)", null, null, "1fr"]}
         gap={[4, null, null, 0]}
       >
-        {commands.map((command: Command) => (
-          <Row
-            isLoading={isLoading}
-            commandItem={command}
-            key={command.id}
-            showCategories={showCategories}
-          />
-        ))}
+        {commands &&
+          commands.map((command: Command) => (
+            <Row
+              isLoading={isLoading}
+              commandItem={command}
+              key={command.id}
+              showCategories={showCategories}
+            />
+          ))}
       </Grid>
     </Box>
   );
