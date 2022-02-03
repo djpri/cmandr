@@ -29,7 +29,6 @@ function CommandsTable({ commands, showCategories, isLoading }) {
         {commands &&
           commands.map((command: Command) => (
             <Row
-              isLoading={isLoading}
               commandItem={command}
               key={command.id}
               showCategories={showCategories}

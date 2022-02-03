@@ -6,7 +6,6 @@ import {
   Link,
   Grid,
   Text,
-  Skeleton,
   useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -22,10 +21,9 @@ import { AiFillFolder } from "react-icons/ai";
 type Props = {
   commandItem: Command;
   showCategories: boolean;
-  isLoading: boolean | null;
 };
 
-function Row({ commandItem, showCategories, isLoading }: Props) {
+function Row({ commandItem, showCategories }: Props) {
   const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
   const { id, description, command, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
@@ -46,98 +44,88 @@ function Row({ commandItem, showCategories, isLoading }: Props) {
       rounded="md"
       className="gridRow"
     >
-      <Skeleton isLoaded={!isLoading}>
-        <GridItem>
-          {description.charAt(0).toUpperCase() + description.slice(1)}
-        </GridItem>
-      </Skeleton>
+      <GridItem>
+        {description.charAt(0).toUpperCase() + description.slice(1)}
+      </GridItem>
 
-      <Skeleton isLoaded={!isLoading}>
-        <GridItem bgColor={isLoading && "blackAlpha.400"}>
-          <CopyToClipboard text={command} onCopy={() => handleCopy()}>
-            <Code
-              _hover={{
-                cursor: "pointer",
-                backgroundColor: "gray.200",
-                color: "black",
-              }}
-            >
-              {command}
-            </Code>
-          </CopyToClipboard>
-        </GridItem>
-      </Skeleton>
+      <GridItem>
+        <CopyToClipboard text={command} onCopy={() => handleCopy()}>
+          <Code
+            _hover={{
+              cursor: "pointer",
+              backgroundColor: "gray.200",
+              color: "black",
+            }}
+          >
+            {command}
+          </Code>
+        </CopyToClipboard>
+      </GridItem>
 
       {showCategories && (
-        <Skeleton isLoaded={!isLoading}>
-          <GridItem bgColor={isLoading && "blackAlpha.400"}>
-            <HStack>
-              <AiFillFolder color="gray" />
-              <Text color={categoryTextColor}>
-                {categoriesList[category?.id]}
-              </Text>
-            </HStack>
-          </GridItem>
-        </Skeleton>
+        <GridItem>
+          <HStack>
+            <AiFillFolder color="gray" />
+            <Text color={categoryTextColor}>
+              {categoriesList[category?.id]}
+            </Text>
+          </HStack>
+        </GridItem>
       )}
 
-      <Skeleton isLoaded={!isLoading}>
-        <GridItem>
-          <HStack spacing="4">
-            <CopyToClipboard text={command} onCopy={() => handleCopy()}>
-              <Button
-                isDisabled={isLoading}
-                size="xs"
-                bgColor={isCopied ? "blue.400" : "blue.500"}
-                color="white"
-                w="70px"
-                display={["none", null, null, "block"]}
-              >
-                {isCopied ? "Copied" : "Copy"}
-              </Button>
-            </CopyToClipboard>
-            {/* BUTTONS */}
-            {!reference ? (
+      <GridItem>
+        <HStack spacing="4">
+          <CopyToClipboard text={command} onCopy={() => handleCopy()}>
+            <Button
+              size="xs"
+              bgColor={isCopied ? "blue.400" : "blue.500"}
+              color="white"
+              w="70px"
+              display={["none", null, null, "block"]}
+            >
+              {isCopied ? "Copied" : "Copy"}
+            </Button>
+          </CopyToClipboard>
+          {/* BUTTONS */}
+          {!reference ? (
+            <Button
+              size="xs"
+              bgColor="cyan.600"
+              color="white"
+              leftIcon={<GoLinkExternal />}
+              isDisabled={!reference}
+            >
+              Link
+            </Button>
+          ) : (
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              href={reference}
+              style={{ textDecoration: "none" }}
+            >
               <Button
                 size="xs"
                 bgColor="cyan.600"
                 color="white"
                 leftIcon={<GoLinkExternal />}
-                isDisabled={!reference || isLoading}
+                isDisabled={!reference}
               >
                 Link
               </Button>
-            ) : (
-              <Link
-                target="_blank"
-                rel="noreferrer"
-                href={reference}
-                style={{ textDecoration: "none" }}
-              >
-                <Button
-                  size="xs"
-                  bgColor="cyan.600"
-                  color="white"
-                  leftIcon={<GoLinkExternal />}
-                  isDisabled={!reference || isLoading}
-                >
-                  Link
-                </Button>
-              </Link>
-            )}
-            <CommandOptions
-              isLoading={isLoading}
-              command={{
-                id,
-                description,
-                command,
-                reference,
-                category,
-              }}
-            />
-          </HStack>
-        </GridItem>
-      </Skeleton>
+            </Link>
+          )}
+          <CommandOptions
+            command={{
+              id,
+              description,
+              command,
+              reference,
+              category,
+            }}
+          />
+        </HStack>
+      </GridItem>
     </Grid>
   );
 }
