@@ -11,6 +11,7 @@ export const getLinksFromDB = (): AppThunk => async (dispatch) => {
         id,
         title,
         link,
+        favicon_url,
         category:link_categories(
           id,
           name

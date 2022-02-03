@@ -20,6 +20,7 @@ export interface Link {
   id: number;
   title: string;
   link: string;
+  favicon_url: string;
   category: LinkCategory;
 }
 

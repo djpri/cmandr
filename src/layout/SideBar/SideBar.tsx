@@ -38,6 +38,7 @@ function SideBar() {
   const isOpen = useSelector(selectIsSidebarOpen);
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
   const bgColor = useColorModeValue("gray.50", "gray.800");
+  const borderColor = useColorModeValue("gray.300", "gray.700");
 
   // sidebar is initially closed on smaller devices
   React.useEffect(() => {
@@ -54,7 +55,8 @@ function SideBar() {
       w="242px"
       top="50"
       position="fixed"
-      borderColor="gray.500"
+      borderColor={borderColor}
+      borderRightWidth="1px"
       overflowY="hidden"
       sx={scrollbarStyles}
       _hover={{

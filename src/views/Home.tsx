@@ -25,6 +25,7 @@ function HomePage() {
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
           {commandCategories.map((item) => (
             <GridItem
+              key={item.id}
               as={RouterLink}
               to={`/commands/${item.id}`}
               boxShadow="base"
@@ -48,6 +49,7 @@ function HomePage() {
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
           {linkCategories.map((item) => (
             <GridItem
+              key={item.id}
               as={RouterLink}
               to={`/links/${item.id}`}
               boxShadow="base"

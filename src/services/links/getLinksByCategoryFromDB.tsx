@@ -13,6 +13,7 @@ export const getLinksByCategoryFromDB =
         id,
         title,
         link,
+        favicon_url,
         category:link_categories(
           id,
           name
