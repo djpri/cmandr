@@ -23,10 +23,10 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
   const { title, link, category } = linkItem;
 
   const getFaviconUrl = (link) => {
+    if (linkItem.favicon_url !== null) return linkItem.favicon_url;
     try {
       const url = new URL(link);
       const hostName = url.hostname.replace("www.", "");
-      console.log(hostName);
       return `https://${hostName}/favicon.ico`;
     } catch (error) {
       return null;

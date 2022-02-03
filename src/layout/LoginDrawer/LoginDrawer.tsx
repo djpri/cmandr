@@ -1,14 +1,15 @@
 import {
   Button,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
   Stack,
   useDisclosure,
   Text,
+  Popover,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  PopoverArrow,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { FaUser } from "react-icons/fa";
@@ -24,53 +25,53 @@ function LoginDrawer() {
   const btnRef: React.Ref<any> = React.useRef();
   const user = useSelector(selectUserEmail);
 
+  const PopoverButton = () => (
+    <PopoverTrigger>
+      <Button
+        ref={btnRef}
+        colorScheme="whatsapp"
+        onClick={onOpen}
+        fontSize="xs"
+      >
+        <FaUser />
+      </Button>
+    </PopoverTrigger>
+  );
+
   if (user)
     return (
       <>
-        <Drawer
+        <Popover
           isOpen={isOpen}
-          placement="right"
+          placement="bottom"
           onClose={onClose}
-          finalFocusRef={btnRef}
+          // initialFocusRef={btnRef}
         >
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>{user}</DrawerHeader>
-            <DrawerBody>
+          <PopoverButton />
+          <PopoverContent top="-5px" right="30px" border="hidden">
+            <PopoverArrow ml="30px" />
+            <PopoverCloseButton />
+            <PopoverHeader>{`Email: ${user}`}</PopoverHeader>
+            <PopoverBody>
               <SignOutButton />
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-        <Button
-          ref={btnRef}
-          colorScheme="whatsapp"
-          onClick={onOpen}
-          fontSize="xs"
-        >
-          <FaUser />
-        </Button>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       </>
     );
 
   return (
     <>
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>
+      <Popover isOpen={isOpen} placement="right" onClose={onClose}>
+        <PopoverContent>
+          <PopoverCloseButton />
+          <PopoverHeader>
             {user && user}
             {formType === "login"
               ? "Log in to your account"
               : "Create a new account"}
-          </DrawerHeader>
-          <DrawerBody>
+          </PopoverHeader>
+          <PopoverBody>
             {formType === "login" ? <LogInForm /> : <SignUpForm />}
             <Stack mt="5">
               {formType === "login" ? (
@@ -89,9 +90,9 @@ function LoginDrawer() {
                 </>
               )}
             </Stack>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
       <Button
         ref={btnRef}
         colorScheme="whatsapp"

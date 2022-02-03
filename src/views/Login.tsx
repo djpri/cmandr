@@ -36,17 +36,10 @@ function LoginPage() {
       w="container.md"
       mx="auto"
     >
-      <Heading
-        as="h1"
-        mb="30"
-        w="100%"
-        textAlign="center"
-        borderBottomWidth="2px"
-        borderColor="whiteAlpha.500"
-      >
+      <Heading as="h1" mb="30" w="100%" textAlign="center">
         Cmandr
       </Heading>
-      <Container maxW="container.md">
+      <Container maxW="container.sm">
         <Heading mb="5">
           {formType === "login"
             ? "Log in to your account"
