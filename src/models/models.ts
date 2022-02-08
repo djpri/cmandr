@@ -16,13 +16,13 @@ export interface CommandsState {
   categories: CommandCategory[];
 }
 
-export interface Link {
+export type Link = {
   id: number;
   title: string;
   link: string;
   favicon_url: string;
   category: LinkCategory;
-}
+};
 
 export interface LinkCategory {
   id: number;
