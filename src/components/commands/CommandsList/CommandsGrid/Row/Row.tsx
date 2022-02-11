@@ -25,7 +25,7 @@ type Props = {
 
 function Row({ commandItem, showCategories }: Props) {
   const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
-  const { id, description, command, reference, category } = commandItem;
+  const { id, description, line, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
 
@@ -49,7 +49,7 @@ function Row({ commandItem, showCategories }: Props) {
       </GridItem>
 
       <GridItem>
-        <CopyToClipboard text={command} onCopy={() => handleCopy()}>
+        <CopyToClipboard text={line} onCopy={() => handleCopy()}>
           <Code
             _hover={{
               cursor: "pointer",
@@ -57,7 +57,7 @@ function Row({ commandItem, showCategories }: Props) {
               color: "black",
             }}
           >
-            {command}
+            {line}
           </Code>
         </CopyToClipboard>
       </GridItem>
@@ -75,7 +75,7 @@ function Row({ commandItem, showCategories }: Props) {
 
       <GridItem>
         <HStack spacing="4">
-          <CopyToClipboard text={command} onCopy={() => handleCopy()}>
+          <CopyToClipboard text={line} onCopy={() => handleCopy()}>
             <Button
               size="xs"
               bgColor={isCopied ? "blue.400" : "blue.500"}
@@ -119,7 +119,7 @@ function Row({ commandItem, showCategories }: Props) {
             command={{
               id,
               description,
-              command,
+              line,
               reference,
               category,
             }}

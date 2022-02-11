@@ -1,7 +1,7 @@
 export interface Command {
   id: number;
   description: string;
-  command: string;
+  line: string;
   reference: string;
   category: CommandCategory;
 }
