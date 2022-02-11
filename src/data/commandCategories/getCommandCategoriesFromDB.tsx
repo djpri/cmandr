@@ -1,12 +1,9 @@
 import { setCommandCategories } from "../../redux/commands/commandsSlice";
 import { AppThunk } from "../../redux/store";
-import { supabase } from "../../supabase/supabase";
+import { CmandrApi } from "../api";
 
 export const getCommandCategoriesFromDB = (): AppThunk => async (dispatch) => {
-  const { data: categories } = await supabase
-    .from("command_categories")
-    .select(`id, name`)
-    .order("name");
+  const { data } = await CmandrApi.get("commands/categories");
 
-  if (categories !== null) dispatch(setCommandCategories(categories));
+  if (data !== null) dispatch(setCommandCategories(data));
 };

@@ -1,27 +1,16 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setEditCommand } from "../../redux/commands/commandsSlice";
-import { supabase } from "../../supabase/supabase";
 import { Command } from "../../models/models";
+import { CmandrApi } from "../api";
 
 export const useEditCommand = () => {
   const dispatch = useDispatch();
   const toast = useToast();
 
   const editCommandInDB = async (values: Command) => {
-    const { id, description, command, category, reference } = values;
-
-    const { error } = await supabase
-      .from("commands")
-      .update({
-        description,
-        command,
-        category_id: category.id,
-        reference,
-      })
-      .match({ id: id });
-
-    if (error === null) {
+    try {
+      await CmandrApi.put("commands");
       dispatch(setEditCommand(values));
       toast({
         title: "Command Changed",
@@ -30,7 +19,7 @@ export const useEditCommand = () => {
         duration: 3000,
         isClosable: true,
       });
-    } else {
+    } catch (error) {
       toast({
         title: "Error",
         description: "something went wrong...",
