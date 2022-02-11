@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { GiCrosshair } from "react-icons/gi";
 import { useLocation } from "react-router-dom";
 
-function CommandsList({ showCategories, ghostCommands }) {
+function CommandsList({ showCategories }) {
   const location = useLocation();
   const reduxCommands = useSelector(selectCommands);
   const [search, setSearch] = useState("");

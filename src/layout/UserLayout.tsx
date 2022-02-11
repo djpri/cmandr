@@ -15,9 +15,9 @@ function UserLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    if (!isLoggedIn) navigate("/account/login", { state: { from: location } });
-  }, [isLoggedIn, navigate, location]);
+  // useEffect(() => {
+  //   if (!isLoggedIn) navigate("/account/login", { state: { from: location } });
+  // }, [isLoggedIn, navigate, location]);
 
   if (!isInitialized) return null;
 
