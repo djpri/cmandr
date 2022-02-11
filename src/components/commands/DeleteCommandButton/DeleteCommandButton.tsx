@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import * as React from "react";
-import { useDeleteCommand } from "../../../services/commands/deleteCommandInDB";
+import { useDeleteCommand } from "../../../data/commands/deleteCommandInDB";
 
 function DeleteCommandButton({ commandId, onClose }) {
   const { deleteCommandInDB } = useDeleteCommand();

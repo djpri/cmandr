@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
 import { FaEdit } from "react-icons/fa";
 import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
-import { getCommandsByCategoryFromDB } from "../services/commands/getCommandsByCategoryFromDB";
+import { getCommandsByCategoryFromDB } from "../data/commands/getCommandsByCategoryFromDB";
 import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import { useEffect } from "react";
 import { Command } from "../models/models";

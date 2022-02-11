@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editCommandCategoryInDB } from "../../../services/commandCategories/editCommandCategoryInDB";
+import { editCommandCategoryInDB } from "../../../data/commandCategories/editCommandCategoryInDB";
 
 function EditCommandCategory({ isOpen, onClose, categoryId }) {
   const [categoryName, setCategoryName] = useState("");
