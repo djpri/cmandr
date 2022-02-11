@@ -8,7 +8,7 @@ import {
   selectCategoriesAsKeyValuePairs,
   selectCategoriesWithIds,
 } from "../../../redux/commands/commandsSlice";
-import { useAddCommand } from "../../../services/commands/addCommandToDB";
+import { useAddCommand } from "../../../data/commands/addCommandToDB";
 import { Command, CommandCategory } from "../../../models/models";
 
 function AddCommandForm() {

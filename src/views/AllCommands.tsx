@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
 import UserLayout from "../layout/UserLayout";
-import { getCommandsFromDB } from "../services/commands/getCommandsFromDB";
+import { getCommandsFromDB } from "../data/commands/getCommandsFromDB";
 import { Command } from "../models/models";
 
 const ghostCommands = () => {

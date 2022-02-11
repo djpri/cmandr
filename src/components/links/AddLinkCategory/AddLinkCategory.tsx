@@ -3,7 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../../redux/auth/authSlice";
-import { addLinkCategoryToDB } from "../../../services/linkCategories/addLinkCategoryToDB";
+import { addLinkCategoryToDB } from "../../../data/linkCategories/addLinkCategoryToDB";
 import { setAddLinkCategory } from "../../../redux/links/linksSlice";
 import { AiFillFolderAdd } from "react-icons/ai";
 
