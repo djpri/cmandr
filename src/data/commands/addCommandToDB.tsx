@@ -12,14 +12,14 @@ export const useAddCommand = () => {
 
   const addCommandToDB = async ({
     description,
-    command,
+    line,
     category,
     reference,
   }: Command) => {
     const { data, error } = await supabase.from("commands").insert([
       {
         description,
-        command,
+        line,
         reference,
         user_id: uid,
         category_id: category.id,
@@ -31,7 +31,7 @@ export const useAddCommand = () => {
         setAddCommand({
           id: data[0].id,
           description,
-          command,
+          line,
           reference,
           category,
         })
