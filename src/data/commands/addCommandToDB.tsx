@@ -1,14 +1,12 @@
 import { useToast } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUserUid } from "../../redux/auth/authSlice";
+import { useDispatch } from "react-redux";
 import { setAddCommand } from "../../redux/commands/commandsSlice";
-import { supabase } from "../../supabase/supabase";
-import { Command } from "../../models/models";
+import { Command } from "../../models/command";
+import { CmandrApi } from "../apiAxiosInstance";
 
 export const useAddCommand = () => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const uid: string = useSelector(selectUserUid);
 
   const addCommandToDB = async ({
     description,
@@ -16,36 +14,32 @@ export const useAddCommand = () => {
     category,
     reference,
   }: Command) => {
-    const { data, error } = await supabase.from("commands").insert([
-      {
-        description,
+    try {
+      const { data } = await CmandrApi.post("commands", {
         line,
+        description,
         reference,
-        user_id: uid,
-        category_id: category.id,
-      },
-    ]);
-
-    if (data !== null) {
-      dispatch(
-        setAddCommand({
-          id: data[0].id,
-          description,
-          line,
-          reference,
-          category,
-        })
-      );
-      toast({
-        title: "Command Added",
-        description: "command added successfully",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
+        categoryId: category.id,
       });
-    }
-
-    if (error) {
+      if (data !== null) {
+        dispatch(
+          setAddCommand({
+            id: data[0].id,
+            description,
+            line,
+            reference,
+            category,
+          })
+        );
+        toast({
+          title: "Command Added",
+          description: "command added successfully",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
       toast({
         title: "Error",
         description: "something went wrong",

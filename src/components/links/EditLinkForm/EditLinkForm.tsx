@@ -7,7 +7,8 @@ import {
   selectLinksCategoriesAsObject,
 } from "../../../redux/links/linksSlice";
 import { useEditLink } from "../../../data/links/editLinkInDB";
-import { Link, LinkCategory } from "../../../models/models";
+import { LinkCategory } from "../../../models/category";
+import { Link, LinkUpdateDto } from "../../../models/link";
 
 type IProps = {
   linkItem: Link;
@@ -20,16 +21,17 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   const categoryList = useSelector(selectLinksCategoriesAsObject);
   const { editLinkInDB } = useEditLink();
 
-  const { handleSubmit, register, setValue, getValues } = useForm<Link>({
-    defaultValues: {
-      id,
-      title,
-      link,
-      category,
-    },
-  });
+  const { handleSubmit, register, setValue, getValues } =
+    useForm<LinkUpdateDto>({
+      defaultValues: {
+        id,
+        title,
+        link,
+        category,
+      },
+    });
 
-  const onSubmit = (values: Link) => {
+  const onSubmit = (values: LinkUpdateDto) => {
     setValue("category.name", categoryList[getValues("category.id")]);
     editLinkInDB(values);
     // closes popover if using form from popover only

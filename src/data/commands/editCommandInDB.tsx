@@ -1,8 +1,8 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setEditCommand } from "../../redux/commands/commandsSlice";
-import { Command } from "../../models/models";
-import { CmandrApi } from "../api";
+import { Command } from "../../models/command";
+import { CmandrApi } from "../apiAxiosInstance";
 
 export const useEditCommand = () => {
   const dispatch = useDispatch();

@@ -9,7 +9,8 @@ import {
   selectCategoriesWithIds,
 } from "../../../redux/commands/commandsSlice";
 import { useAddCommand } from "../../../data/commands/addCommandToDB";
-import { Command, CommandCategory } from "../../../models/models";
+import { CommandCategory } from "../../../models/category";
+import { Command } from "../../../models/command";
 
 function AddCommandForm() {
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
@@ -58,7 +59,7 @@ function AddCommandForm() {
         </Box>
 
         <Box>
-          <FormLabel htmlFor="command">Command</FormLabel>
+          <FormLabel htmlFor="line">Command</FormLabel>
           <Input {...register("line")} placeholder="Command" />
         </Box>
 

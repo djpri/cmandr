@@ -11,16 +11,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
-import CommandsList from "../components/commands/CommandsList/CommandsList";
-import UserLayout from "../layout/UserLayout";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
-import { FaEdit } from "react-icons/fa";
-import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
-import { getCommandsByCategoryFromDB } from "../data/commands/getCommandsByCategoryFromDB";
-import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import { useEffect } from "react";
+import { FaEdit } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import CommandsList from "../components/commands/CommandsList/CommandsList";
+import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
+import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
+import { getCommandsByCategoryFromDB } from "../data/commands/getCommandsByCategoryFromDB";
+import UserLayout from "../layout/UserLayout";
+import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();

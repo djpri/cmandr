@@ -1,7 +1,7 @@
-import { Command } from "../../models/models";
+import { Command } from "../../models/command";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
-import { CommandCategory } from "../../models/models";
+import { CommandCategory } from "../../models/category";
 
 export interface CommandsState {
   commands: Command[];
@@ -112,7 +112,7 @@ export const sortCommandsByField =
   async (dispatch, getState) => {
     let newState = [...getState().commands.commands];
 
-    if (field === "description" || field === "command") {
+    if (field === "description" || field === "line") {
       newState.sort((a, b) => {
         let valueA = a[field].toUpperCase();
         let valueB = b[field].toUpperCase();

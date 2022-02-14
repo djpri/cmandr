@@ -1,6 +1,6 @@
 import { setCommandCategories } from "../../redux/commands/commandsSlice";
 import { AppThunk } from "../../redux/store";
-import { CmandrApi } from "../api";
+import { CmandrApi } from "../apiAxiosInstance";
 
 export const getCommandCategoriesFromDB = (): AppThunk => async (dispatch) => {
   const { data } = await CmandrApi.get("commands/categories");

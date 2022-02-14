@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "../../../../../../test-utils";
-import { Command } from "../../../../../../models/models";
+import { Command } from "../../../../../../models/command";
 import CommandOptions from "./CommandOptions";
 
 const testCommand: Command = {

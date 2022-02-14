@@ -2,9 +2,8 @@ import { Heading } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
-import UserLayout from "../layout/UserLayout";
 import { getCommandsFromDB } from "../data/commands/getCommandsFromDB";
-import { Command } from "../models/models";
+import UserLayout from "../layout/UserLayout";
 
 function AllCommandsPage() {
   const dispatch = useDispatch();

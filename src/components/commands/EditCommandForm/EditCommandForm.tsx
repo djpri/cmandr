@@ -7,7 +7,8 @@ import {
   selectCategoriesAsKeyValuePairs,
 } from "../../../redux/commands/commandsSlice";
 import { useEditCommand } from "../../../data/commands/editCommandInDB";
-import { Command, CommandCategory } from "../../../models/models";
+import { CommandCategory } from "../../../models/category";
+import { Command } from "../../../models/command";
 
 type IProps = {
   commandItem: Command;
