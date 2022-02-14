@@ -4,7 +4,7 @@ import { Command } from "../../../../../../models/models";
 import CommandOptions from "./CommandOptions";
 
 const testCommand: Command = {
-  command: "php artisan serve",
+  line: "php artisan serve",
   description: "serve laravel app",
   reference: "https://laravel.com/docs/8.x#getting-started-on-windows",
   category: { id: 1, name: "general" },
@@ -33,7 +33,7 @@ test("Shows edit form with correct default information when edit button is click
   fireEvent.click(editButton);
   // then view the edit command form
   const defaultDescription = screen.getByDisplayValue(testCommand.description);
-  const defaultCommand = screen.getByDisplayValue(testCommand.command);
+  const defaultCommand = screen.getByDisplayValue(testCommand.line);
   const defaultCategory = screen.getByDisplayValue(testCommand.category.name);
   const defaultReference = screen.getByDisplayValue(testCommand.reference);
   const saveButton = screen.getByText("Save");

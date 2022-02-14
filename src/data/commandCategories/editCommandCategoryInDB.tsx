@@ -1,16 +1,14 @@
 import { setEditCommandCategory } from "../../redux/commands/commandsSlice";
 import { AppThunk } from "../../redux/store";
-import { supabase } from "../../supabase/supabase";
+import { CmandrApi } from "../api";
 
 export const editCommandCategoryInDB =
   (id: number, name: string): AppThunk =>
   async (dispatch) => {
-    const { error } = await supabase
-      .from("command_categories")
-      .update({ name })
-      .match({ id: id });
-
-    dispatch(setEditCommandCategory({ id, name }));
-
-    return { error };
+    try {
+      await CmandrApi.put(`/commands/${id}`);
+      dispatch(setEditCommandCategory({ id, name }));
+    } catch (error) {
+      return error;
+    }
   };

@@ -15,7 +15,7 @@ type IProps = {
 };
 
 function EditCommandForm({ commandItem, onClose }: IProps) {
-  const { id, description, command, category, reference } = commandItem;
+  const { id, description, line, category, reference } = commandItem;
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
   const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const { editCommandInDB } = useEditCommand();
@@ -24,7 +24,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
     defaultValues: {
       id,
       description,
-      command,
+      line,
       category,
       reference,
     },
@@ -49,7 +49,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         />
 
         <FormLabel htmlFor="command">Command</FormLabel>
-        <Input {...register("command")} placeholder="Command" />
+        <Input {...register("line")} placeholder="Command" />
 
         <FormLabel htmlFor="category">Category</FormLabel>
         <Select {...register("category.id")}>

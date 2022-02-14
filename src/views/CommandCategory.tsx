@@ -21,24 +21,6 @@ import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/De
 import { getCommandsByCategoryFromDB } from "../data/commands/getCommandsByCategoryFromDB";
 import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import { useEffect } from "react";
-import { Command } from "../models/models";
-
-const ghostCommands = () => {
-  const ghostData: Command[] = [];
-  for (let i = 0; i < 10; i++) {
-    ghostData.push({
-      id: i,
-      description: "",
-      command: "",
-      reference: "    ",
-      category: {
-        id: null,
-        name: "",
-      },
-    });
-  }
-  return ghostData;
-};
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -85,7 +67,7 @@ function CommandCategoryPage() {
           </Popover>
         </Box>
       </Stack>
-      <CommandsList showCategories={false} ghostCommands={ghostCommands()} />
+      <CommandsList showCategories={false} />
       <DeleteCategoryModal
         isOpen={isOpen}
         onClose={onClose}

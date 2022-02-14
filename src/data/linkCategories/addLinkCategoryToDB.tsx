@@ -1,12 +1,16 @@
-import { supabase } from "../../supabase/supabase";
+import { CmandrApi } from "../api";
 
 export const addLinkCategoryToDB = async (uid: string, category: string) => {
-  const { data, error } = await supabase.from("link_categories").insert([
-    {
-      user_id: uid,
-      name: category,
-    },
-  ]);
-  if (data) return { data: data[0], error };
-  return { data, error };
+  try {
+    const { data } = await CmandrApi({
+      method: "post",
+      url: "/links/categories",
+      data: {
+        name: category,
+      },
+    });
+    return data;
+  } catch (error) {
+    return error;
+  }
 };

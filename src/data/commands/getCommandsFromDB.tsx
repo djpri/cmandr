@@ -6,10 +6,10 @@ export const getCommandsFromDB = (): AppThunk => async (dispatch) => {
   const addData = async () => {
     try {
       console.log("I tried");
-      const data = await CmandrApi.get("commands/categories");
+      const { data } = await CmandrApi.get("commands");
       console.log(data);
       if (data !== null) {
-        dispatch(setCommands([]));
+        dispatch(setCommands(data));
       }
     } catch (error) {
       dispatch(setCommands([]));

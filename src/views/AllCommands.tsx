@@ -6,23 +6,6 @@ import UserLayout from "../layout/UserLayout";
 import { getCommandsFromDB } from "../data/commands/getCommandsFromDB";
 import { Command } from "../models/models";
 
-const ghostCommands = () => {
-  const ghostData: Command[] = [];
-  for (let i = 0; i < 20; i++) {
-    ghostData.push({
-      id: i,
-      description: "",
-      command: "",
-      reference: "    ",
-      category: {
-        id: null,
-        name: "",
-      },
-    });
-  }
-  return ghostData;
-};
-
 function AllCommandsPage() {
   const dispatch = useDispatch();
 
@@ -35,7 +18,7 @@ function AllCommandsPage() {
       <Heading as="h2" mb="30px" fontWeight="900">
         All Commands
       </Heading>
-      <CommandsList showCategories ghostCommands={ghostCommands()} />
+      <CommandsList showCategories />
     </UserLayout>
   );
 }
