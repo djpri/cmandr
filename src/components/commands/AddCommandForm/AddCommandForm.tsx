@@ -59,7 +59,7 @@ function AddCommandForm() {
 
         <Box>
           <FormLabel htmlFor="command">Command</FormLabel>
-          <Input {...register("command")} placeholder="Command" />
+          <Input {...register("line")} placeholder="Command" />
         </Box>
 
         {showCategorySelect && (

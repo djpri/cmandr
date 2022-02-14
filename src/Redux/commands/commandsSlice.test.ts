@@ -7,6 +7,7 @@ import reducer, {
   setAddCommandCategory,
   setDeleteCommandCategory,
   setEditCommandCategory,
+  CommandsState,
 } from "./commandsSlice";
 import {
   testState,
@@ -15,7 +16,6 @@ import {
   editedTestItem,
   testStateAfterDeletion,
 } from "./testData";
-import { CommandsState } from "../../models/models";
 
 test("setCommands", () => {
   expect(reducer(undefined, setCommands(testState))).toEqual({

@@ -3,5 +3,5 @@ import EditLinkCategory from "./EditLinkCategory";
 import { render, screen } from "../../../test-utils";
 
 test("renders without crashing", () => {
-  render(<EditLinkCategory />);
+    render(<EditLinkCategory categoryId={"1"} isOpen={() => { }} onClose={() => { }} />);
 });

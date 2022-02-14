@@ -7,7 +7,7 @@ export const mockStore = {
       {
         id: 13,
         description: "Add jest as dev dependency",
-        command: "yarn add --dev jest",
+        line: "yarn add --dev jest",
         reference: "https://jestjs.io/docs/26.x/getting-started",
         category: {
           id: 2,
@@ -17,7 +17,7 @@ export const mockStore = {
       {
         id: 17,
         description: "Install react hook form",
-        command: "yarn add react-hook-form",
+        line: "yarn add react-hook-form",
         reference: "https://www.react-hook-form.com/get-started",
         category: {
           id: 2,
@@ -27,7 +27,7 @@ export const mockStore = {
       {
         id: 18,
         description: "View all dotnet templates",
-        command: "dotnet new --list",
+        line: "dotnet new --list",
         reference:
           "https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new-list",
         category: {
@@ -38,7 +38,7 @@ export const mockStore = {
       {
         id: 19,
         description: "Install redux toolkit",
-        command: "yarn add @reduxjs/toolkit",
+        line: "yarn add @reduxjs/toolkit",
         reference: "https://redux-toolkit.js.org/introduction/getting-started",
         category: {
           id: 2,
@@ -48,7 +48,7 @@ export const mockStore = {
       {
         id: 20,
         description: "Install Tailwind CSS for Next JS",
-        command:
+        line:
           "npm install -D tailwindcss@latest postcss@latest autoprefixer@latest",
         reference: "https://tailwindcss.com/docs/guides/nextjs",
         category: {
@@ -59,7 +59,7 @@ export const mockStore = {
       {
         id: 12,
         description: "Install react router v6",
-        command: "yarn add history@5 react-router-dom@6",
+        line: "yarn add history@5 react-router-dom@6",
         reference: "https://reactrouter.com/docs/en/v6",
         category: {
           id: 2,
@@ -69,7 +69,7 @@ export const mockStore = {
       {
         id: 21,
         description: "Install supabase",
-        command: "npm install @supabase/supabase-js",
+        line: "npm install @supabase/supabase-js",
         reference:
           "https://supabase.io/docs/guides/with-react#initialize-a-react-app",
         category: {
@@ -80,7 +80,7 @@ export const mockStore = {
       {
         id: 22,
         description: "Create react app with typescript",
-        command: "yarn create react-app my-app --template typescript",
+        line: "yarn create react-app my-app --template typescript",
         reference: "https://create-react-app.dev/docs/adding-typescript/",
         category: {
           id: 12,
@@ -90,7 +90,7 @@ export const mockStore = {
       {
         id: 23,
         description: "Create react app with chakra ui",
-        command:
+        line:
           "yarn create react-app my-app --template @chakra-ui/typescript",
         reference: "https://chakra-ui.com/guides/integrations/with-cra",
         category: {
@@ -101,7 +101,7 @@ export const mockStore = {
       {
         id: 25,
         description: "View globally installed packages",
-        command: "npm list -g --depth 0",
+        line: "npm list -g --depth 0",
         reference: "https://devhints.io/npm",
         category: {
           id: 2,
@@ -111,7 +111,7 @@ export const mockStore = {
       {
         id: 26,
         description: "View globally installed packages for yarn",
-        command: "yarn global list",
+        line: "yarn global list",
         reference:
           "https://stackoverflow.com/questions/43501514/how-to-display-yarn-globally-installed-packages",
         category: {
@@ -122,8 +122,8 @@ export const mockStore = {
       {
         id: 27,
         description: "Show installed extensions for vscode",
-        command: "code --list-extensions",
-        reference: "https://code.visualstudio.com/docs/editor/command-line",
+        line: "code --list-extensions",
+        reference: "https://code.visualstudio.com/docs/editor/line-line",
         category: {
           id: 1,
           name: "general",
@@ -132,8 +132,8 @@ export const mockStore = {
       {
         id: 28,
         description: "VSCode install extension",
-        command: "code --install-extension <ext>",
-        reference: "https://code.visualstudio.com/docs/editor/command-line",
+        line: "code --install-extension <ext>",
+        reference: "https://code.visualstudio.com/docs/editor/line-line",
         category: {
           id: 1,
           name: "general",
@@ -142,7 +142,7 @@ export const mockStore = {
       {
         id: 29,
         description: "Delete remote branch",
-        command: "git push origin --delete :$branchname",
+        line: "git push origin --delete :$branchname",
         reference: "https://devhints.io/git-branch",
         category: {
           id: 14,
@@ -152,7 +152,7 @@ export const mockStore = {
       {
         id: 30,
         description: "Delete local remote-tracking branches",
-        command: "git remote prune origin",
+        line: "git remote prune origin",
         reference: "https://devhints.io/git-branch",
         category: {
           id: 14,
@@ -162,7 +162,7 @@ export const mockStore = {
       {
         id: 31,
         description: "Create site with Gatsby",
-        command: "npm init gatsby",
+        line: "npm init gatsby",
         reference: "https://www.gatsbyjs.com/docs/quick-start/",
         category: {
           id: 12,
@@ -172,7 +172,7 @@ export const mockStore = {
       {
         id: 32,
         description: "Create app with AngularJS",
-        command: "ng new my-app",
+        line: "ng new my-app",
         reference: "https://angular.io/guide/setup-local",
         category: {
           id: 15,

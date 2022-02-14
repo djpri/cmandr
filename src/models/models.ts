@@ -8,24 +8,20 @@ export interface Command {
 
 export interface CommandCategory {
   id: number;
+  userId?: string;
   name: string;
 }
-
-export interface CommandsState {
-  commands: Command[];
-  categories: CommandCategory[];
-}
-
-export type Link = {
+export interface Link {
   id: number;
   title: string;
   link: string;
-  favicon_url: string;
+  favicon_url?: string | null;
   category: LinkCategory;
-};
+}
 
 export interface LinkCategory {
   id: number;
+  userId?: string;
   name: string;
 }
 

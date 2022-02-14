@@ -1,7 +1,12 @@
-import { Command, CommandsState } from "../../models/models";
+import { Command } from "../../models/models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
 import { CommandCategory } from "../../models/models";
+
+export interface CommandsState {
+  commands: Command[];
+  categories: CommandCategory[];
+}
 
 const initialState: CommandsState = {
   commands: [],
@@ -133,7 +138,7 @@ export const sortCommandsByField =
 
 export const addCommandCategory =
   (category: CommandCategory): AppThunk =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     dispatch(setAddCommandCategory(category));
   };
 

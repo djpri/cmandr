@@ -5,6 +5,6 @@ import { mockStore } from "../../../../redux/mockStore";
 
 test("renders without crashing", () => {
   render(
-    <CommandsTable commands={mockStore.commands.commands} showCategories />
+      <CommandsTable isLoading={false} commands={mockStore.commands.commands} showCategories />
   );
 });
