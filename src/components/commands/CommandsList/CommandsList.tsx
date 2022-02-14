@@ -86,7 +86,6 @@ function CommandsList({ showCategories }) {
         <CommandsTable
           commands={searchResults}
           showCategories={showCategories}
-          isLoading={!searchResults && search === ""}
         />
       </Box>
     </>

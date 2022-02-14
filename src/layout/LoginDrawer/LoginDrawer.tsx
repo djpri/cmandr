@@ -10,6 +10,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
   PopoverArrow,
+  Box,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { FaUser } from "react-icons/fa";
@@ -40,7 +41,7 @@ function LoginDrawer() {
 
   if (user)
     return (
-      <>
+      <Box p="0" m="0">
         <Popover
           isOpen={isOpen}
           placement="bottom"
@@ -57,11 +58,11 @@ function LoginDrawer() {
             </PopoverBody>
           </PopoverContent>
         </Popover>
-      </>
+      </Box>
     );
 
   return (
-    <>
+    <Box>
       <Popover isOpen={isOpen} placement="right" onClose={onClose}>
         <PopoverContent>
           <PopoverCloseButton />
@@ -101,7 +102,7 @@ function LoginDrawer() {
       >
         <FaUser />
       </Button>
-    </>
+    </Box>
   );
 }
 

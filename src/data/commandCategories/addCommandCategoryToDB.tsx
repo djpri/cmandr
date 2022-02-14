@@ -1,6 +1,9 @@
-import { CmandrApi } from "../api";
+import { CmandrApi } from "../apiAxiosInstance";
 
-export const addCommandCategoryToDB = async (uid: string, category: string) => {
+export const addCommandCategoryToDB = async (
+  _uid: string,
+  category: string
+) => {
   try {
     const { data } = await CmandrApi({
       method: "post",

@@ -1,6 +1,6 @@
 import { setCommands } from "../../redux/commands/commandsSlice";
 import { AppThunk } from "../../redux/store";
-import { CmandrApi } from "../api";
+import { CmandrApi } from "../apiAxiosInstance";
 
 export const getCommandsFromDB = (): AppThunk => async (dispatch) => {
   const addData = async () => {

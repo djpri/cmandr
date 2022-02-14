@@ -1,7 +1,15 @@
-import { UserAuthState } from "../../models/models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { supabase } from "../../supabase/supabase";
 import { AppThunk, RootState } from "../store";
+
+interface UserAuthState {
+  userData: any;
+  displayName: string | null;
+  initialized: boolean;
+  isLoading: boolean;
+  isLoggedIn: boolean;
+  errorMessage: string | null;
+}
 
 const initialState: UserAuthState = {
   userData: null,

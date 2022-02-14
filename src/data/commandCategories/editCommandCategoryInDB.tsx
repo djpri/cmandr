@@ -1,6 +1,6 @@
 import { setEditCommandCategory } from "../../redux/commands/commandsSlice";
 import { AppThunk } from "../../redux/store";
-import { CmandrApi } from "../api";
+import { CmandrApi } from "../apiAxiosInstance";
 
 export const editCommandCategoryInDB =
   (id: number, name: string): AppThunk =>
