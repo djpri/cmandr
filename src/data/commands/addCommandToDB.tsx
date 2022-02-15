@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setAddCommand } from "../../redux/commands/commandsSlice";
-import { Command } from "../../models/command";
+import { CommandCreateDto } from "../../models/command";
 import { CmandrApi } from "../apiAxiosInstance";
 
 export const useAddCommand = () => {
@@ -13,7 +13,7 @@ export const useAddCommand = () => {
     line,
     category,
     reference,
-  }: Command) => {
+  }: CommandCreateDto) => {
     try {
       const { data } = await CmandrApi.post("commands", {
         line,
@@ -22,15 +22,7 @@ export const useAddCommand = () => {
         categoryId: category.id,
       });
       if (data !== null) {
-        dispatch(
-          setAddCommand({
-            id: data[0].id,
-            description,
-            line,
-            reference,
-            category,
-          })
-        );
+        dispatch(setAddCommand(data));
         toast({
           title: "Command Added",
           description: "command added successfully",

@@ -32,7 +32,6 @@ export const useAddLink = () => {
     }
 
     if (error) {
-      console.log(error);
       toast({
         title: "Error",
         description: "something went wrong",

@@ -15,7 +15,7 @@ function AddCommandCategory() {
   const handleAddCategory = async () => {
     const { data, error } = await addCommandCategoryToDB(uid, category);
     if (data) {
-      dispatch(addCommandCategory({ id: data.id, name: category }));
+      dispatch(addCommandCategory(data));
       onToggle();
     }
     if (error) {

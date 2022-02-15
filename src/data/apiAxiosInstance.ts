@@ -6,7 +6,7 @@ export const CmandrApi: AxiosInstance = axios.create({
 });
 
 CmandrApi.interceptors.response.use((res) => {
-  console.log(res.data.json);
+  console.log(res.data);
   // Important: response interceptors **must** return the response.
   return res;
 });
