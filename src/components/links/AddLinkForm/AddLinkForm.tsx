@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectLinkCategories } from "../../../redux/links/linksSlice";
-import { useAddLink } from "../../../data/links/addLinkToDB";
+import { useAddLink } from "../../../api/handlers/links/addLinkToDB";
 import { LinkCategory } from "../../../models/category";
 import { Link } from "../../../models/link";
 

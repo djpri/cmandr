@@ -2,6 +2,11 @@ import { Button } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { signOutUser } from "../../../redux/auth/authSlice";
+import {
+  setCommandCategories,
+  setCommands,
+} from "../../../redux/commands/commandsSlice";
+import { setLinkCategories, setLinks } from "../../../redux/links/linksSlice";
 
 function SignOutButton() {
   const dispatch = useDispatch();
@@ -10,6 +15,10 @@ function SignOutButton() {
       colorScheme="blue"
       // isDisabled={!isLoggedIn}
       onClick={() => {
+        dispatch(setCommands([]));
+        dispatch(setCommandCategories([]));
+        dispatch(setLinks([]));
+        dispatch(setLinkCategories([]));
         dispatch(signOutUser());
       }}
     >

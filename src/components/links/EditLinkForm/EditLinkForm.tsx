@@ -6,7 +6,7 @@ import {
   selectLinkCategories,
   selectLinksCategoriesAsObject,
 } from "../../../redux/links/linksSlice";
-import { useEditLink } from "../../../data/links/editLinkInDB";
+import { useEditLink } from "../../../api/handlers/links/editLinkInDB";
 import { LinkCategory } from "../../../models/category";
 import { Link, LinkUpdateDto } from "../../../models/link";
 

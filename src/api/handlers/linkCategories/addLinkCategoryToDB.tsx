@@ -1,4 +1,4 @@
-import { CmandrApi } from "../apiAxiosInstance";
+import { CmandrApi } from "../../endpoints";
 
 export const addLinkCategoryToDB = async (_uid: string, category: string) => {
   try {

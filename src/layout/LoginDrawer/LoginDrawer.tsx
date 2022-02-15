@@ -62,9 +62,10 @@ function LoginDrawer() {
     );
 
   return (
-    <Box>
-      <Popover isOpen={isOpen} placement="right" onClose={onClose}>
-        <PopoverContent>
+    <Box p="0" m="0">
+      <Popover isOpen={isOpen} placement="bottom" onClose={onClose}>
+        <PopoverButton />
+        <PopoverContent top="-5px" right="30px">
           <PopoverCloseButton />
           <PopoverHeader>
             {user && user}
@@ -94,14 +95,6 @@ function LoginDrawer() {
           </PopoverBody>
         </PopoverContent>
       </Popover>
-      <Button
-        ref={btnRef}
-        colorScheme="whatsapp"
-        onClick={onOpen}
-        fontSize="xs"
-      >
-        <FaUser />
-      </Button>
     </Box>
   );
 }

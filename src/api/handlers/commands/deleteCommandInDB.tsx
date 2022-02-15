@@ -1,20 +1,19 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { setEditCommand } from "../../redux/commands/commandsSlice";
-import { Command } from "../../models/command";
-import { CmandrApi } from "../apiAxiosInstance";
+import { setDeleteCommand } from "../../../redux/commands/commandsSlice";
+import { Commands } from "../../endpoints/commands";
 
-export const useEditCommand = () => {
+export const useDeleteCommand = () => {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const editCommandInDB = async (values: Command) => {
+  const deleteCommandInDB = async (id: number) => {
     try {
-      await CmandrApi.put("commands");
-      dispatch(setEditCommand(values));
+      await Commands.remove(id);
+      dispatch(setDeleteCommand(id));
       toast({
         title: "Command Changed",
-        description: "command changed successfully",
+        description: "command deleted successfully",
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -30,5 +29,5 @@ export const useEditCommand = () => {
     }
   };
 
-  return { editCommandInDB };
+  return { deleteCommandInDB };
 };

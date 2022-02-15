@@ -15,7 +15,7 @@ import EditLinkCategory from "../components/links/EditLinkCategory/EditLinkCateg
 import LinksList from "../components/links/LinksList/LinksList";
 import UserLayout from "../layout/UserLayout";
 import { selectLinksCategoriesAsObject } from "../redux/links/linksSlice";
-import { getLinksByCategoryFromDB } from "../data/links/getLinksByCategoryFromDB";
+import { getLinksByCategoryFromDB } from "../api/handlers/links/getLinksByCategoryFromDB";
 
 function LinkCategory() {
   const dispatch = useDispatch();

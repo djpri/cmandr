@@ -33,12 +33,13 @@ function CommandsList({ showCategories }) {
   // filter commands on search
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setSearchResults(() => {
-        const newArray = reduxCommands.filter((item: { description: string }) =>
+      let newArray = [];
+      if (reduxCommands.length >= 1) {
+        newArray = reduxCommands.filter((item: { description: string }) =>
           item.description.match(new RegExp(search, "i"))
         );
-        return newArray;
-      });
+      }
+      setSearchResults(newArray);
     }, 250);
     return () => {
       clearTimeout(timeout);

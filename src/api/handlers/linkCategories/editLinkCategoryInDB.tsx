@@ -1,6 +1,6 @@
-import { setEditLinkCategory } from "../../redux/links/linksSlice";
-import { AppThunk } from "../../redux/store";
-import { CmandrApi } from "../apiAxiosInstance";
+import { setEditLinkCategory } from "../../../redux/links/linksSlice";
+import { AppThunk } from "../../../redux/store";
+import { CmandrApi } from "../../endpoints";
 
 export const editLinkCategoryInDB =
   (id: number, name: string): AppThunk =>

@@ -8,9 +8,9 @@ import {
   selectCategoriesAsKeyValuePairs,
   selectCategoriesWithIds,
 } from "../../../redux/commands/commandsSlice";
-import { useAddCommand } from "../../../data/commands/addCommandToDB";
+import { useAddCommand } from "../../../api/handlers/commands/addCommandToDB";
 import { CommandCategory } from "../../../models/category";
-import { Command, CommandCreateDto } from "../../../models/command";
+import { Command } from "../../../models/command";
 
 function AddCommandForm() {
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
@@ -30,10 +30,9 @@ function AddCommandForm() {
     }
   }, [params, setValue]);
 
-  const onSubmit = (values: CommandCreateDto) => {
+  const onSubmit = (values: Command) => {
     setValue("category.name", categoryList[getValues("category.id")]);
-    // addCommandToDB(values);
-    alert(JSON.stringify(values, null, 2));
+    addCommandToDB(values);
     reset();
   };
 
