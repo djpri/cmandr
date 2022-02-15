@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { setDeleteLink } from "../../redux/links/linksSlice";
-import { supabase } from "../../supabase/supabase";
+import { setDeleteLink } from "../../../redux/links/linksSlice";
+import { supabase } from "../../../supabase/supabase";
 
 export const useDeleteLink = () => {
   const dispatch = useDispatch();

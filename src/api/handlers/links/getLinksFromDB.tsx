@@ -1,6 +1,6 @@
-import { setLinks } from "../../redux/links/linksSlice";
-import { AppThunk } from "../../redux/store";
-import { supabase } from "../../supabase/supabase";
+import { setLinks } from "../../../redux/links/linksSlice";
+import { AppThunk } from "../../../redux/store";
+import { supabase } from "../../../supabase/supabase";
 
 export const getLinksFromDB = (): AppThunk => async (dispatch) => {
   const addData = async () => {

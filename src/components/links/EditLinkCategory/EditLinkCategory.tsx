@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editLinkCategoryInDB } from "../../../data/linkCategories/editLinkCategoryInDB";
+import { editLinkCategoryInDB } from "../../../api/handlers/linkCategories/editLinkCategoryInDB";
 
 function EditLinkCategory({ isOpen, onClose, categoryId }) {
   const [categoryName, setCategoryName] = useState("");

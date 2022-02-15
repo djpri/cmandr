@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import React from "react";
-import { useDeleteLink } from "../../../data/links/deleteLinkInDB";
+import { useDeleteLink } from "../../../api/handlers/links/deleteLinkInDB";
 
 function DeleteLinkButton({ linkId, onClose }) {
   const { deleteLinkInDB } = useDeleteLink();

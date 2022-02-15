@@ -1,9 +1,9 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserUid } from "../../redux/auth/authSlice";
-import { setAddLink } from "../../redux/links/linksSlice";
-import { supabase } from "../../supabase/supabase";
-import { Link } from "../../models/link";
+import { selectUserUid } from "../../../redux/auth/authSlice";
+import { setAddLink } from "../../../redux/links/linksSlice";
+import { supabase } from "../../../supabase/supabase";
+import { Link } from "../../../models/link";
 
 export const useAddLink = () => {
   const dispatch = useDispatch();

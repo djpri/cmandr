@@ -1,6 +1,6 @@
-import { deleteCommandCategory } from "../../redux/commands/commandsSlice";
-import { AppThunk } from "../../redux/store";
-import { CmandrApi } from "../apiAxiosInstance";
+import { deleteCommandCategory } from "../../../redux/commands/commandsSlice";
+import { AppThunk } from "../../../redux/store";
+import { CmandrApi } from "../../endpoints";
 
 export const deleteCommandCategoryInDB =
   (id: number): AppThunk =>

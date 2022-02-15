@@ -1,6 +1,6 @@
-import { setDeleteLinkCategory } from "../../redux/links/linksSlice";
-import { AppThunk } from "../../redux/store";
-import { CmandrApi } from "../apiAxiosInstance";
+import { setDeleteLinkCategory } from "../../../redux/links/linksSlice";
+import { AppThunk } from "../../../redux/store";
+import { CmandrApi } from "../../endpoints";
 
 export const deleteLinkCategoryInDB =
   (id: number): AppThunk =>

@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteCommandCategoryInDB } from "../../../data/commandCategories/deleteCommandCategoryInDB";
+import { deleteCommandCategoryInDB } from "../../../api/handlers/commandCategories/deleteCommandCategoryInDB";
 
 interface IProps {
   isOpen: boolean;

@@ -4,7 +4,7 @@ import { AiFillFolderAdd } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserUid } from "../../../redux/auth/authSlice";
 import { addCommandCategory } from "../../../redux/commands/commandsSlice";
-import { addCommandCategoryToDB } from "../../../data/commandCategories/addCommandCategoryToDB";
+import { addCommandCategoryToDB } from "../../../api/handlers/commandCategories/addCommandCategoryToDB";
 
 function AddCommandCategory() {
   const uid = useSelector(selectUserUid);
