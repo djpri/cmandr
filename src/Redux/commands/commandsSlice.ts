@@ -1,7 +1,7 @@
-import { Command } from "../../models/command";
+import { Command } from "../../api/models/command";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
-import { CommandCategory } from "../../models/category";
+import { CommandCategory } from "../../api/models/category";
 
 export interface CommandsState {
   commands: Command[];

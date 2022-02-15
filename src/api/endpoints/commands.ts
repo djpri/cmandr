@@ -1,8 +1,8 @@
-import { CommandCreateDto } from "../../models/command";
-import { CommandUpdateDto } from "../../models/command";
+import { CommandCreateDto } from "../models/command";
+import { CommandUpdateDto } from "../models/command";
 import { get, post, put, remove } from ".";
 
-export const Commands = {
+export const ApiCommands = {
   getAll: () => get("commands"),
   getById: (id: number) => get(`commands/${id}`),
   getAllByCategoryId: (id: number) => get(`commands/categories/${id}`),

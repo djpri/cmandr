@@ -1,12 +1,11 @@
-import { CommandCreateDto } from "../../models/command";
 import { get, post, put, remove } from ".";
-import { CommandCategory } from "../../models/category";
+import { CategoryCreateDto, CategoryUpdateDto } from "../models/category";
 
-export const CommandCategories = {
+export const ApiCommandCategories = {
   getAll: () => get("commands/categories"),
   getById: (id: number) => get(`commands/categories${id}`),
-  create: (body: CommandCreateDto) => post("commands/categories", body),
-  update: (id: number, body: CommandCategory) =>
+  create: (body: CategoryCreateDto) => post("commands/categories", body),
+  update: (id: number, body: CategoryUpdateDto) =>
     put(`commands/categories${id}`, body),
   remove: (id: number) => remove(`commands/categories/${id}`),
 };

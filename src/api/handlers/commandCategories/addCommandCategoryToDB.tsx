@@ -1,18 +1,11 @@
-import { CmandrApi } from "../../endpoints";
+import { ApiCommandCategories } from "../../endpoints/commandCategories";
 
 export const addCommandCategoryToDB = async (
   _uid: string,
   category: string
 ) => {
   try {
-    // const { data } = await CommandCategories;
-    const { data } = await CmandrApi({
-      method: "post",
-      url: "/commands/categories",
-      data: {
-        name: category,
-      },
-    });
+    const { data } = await ApiCommandCategories.create({ name: category });
     return { data };
   } catch (error) {
     return { error };
