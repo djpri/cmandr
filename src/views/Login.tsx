@@ -20,7 +20,6 @@ function LoginPage() {
 
   useEffect(() => {
     if (isInitialized && isLoggedIn) {
-      console.log(location.state.from.pathname);
       navigate(location.state.from.pathname || "/");
     }
   }, [isLoggedIn, isInitialized, navigate, location.state.from.pathname]);

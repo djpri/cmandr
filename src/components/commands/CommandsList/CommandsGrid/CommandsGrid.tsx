@@ -1,15 +1,10 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import * as React from "react";
-import { useEffect } from "react";
 import { Command } from "../../../../models/command";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
 
 function CommandsTable({ commands, showCategories }) {
-  useEffect(() => {
-    console.log(commands);
-  }, [commands]);
-
   return (
     <Box p="1" display="flex" flexDirection="column" w="100%">
       <Grid

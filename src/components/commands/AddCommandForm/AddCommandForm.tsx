@@ -10,7 +10,7 @@ import {
 } from "../../../redux/commands/commandsSlice";
 import { useAddCommand } from "../../../data/commands/addCommandToDB";
 import { CommandCategory } from "../../../models/category";
-import { Command } from "../../../models/command";
+import { Command, CommandCreateDto } from "../../../models/command";
 
 function AddCommandForm() {
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
@@ -30,9 +30,10 @@ function AddCommandForm() {
     }
   }, [params, setValue]);
 
-  const onSubmit = (values) => {
+  const onSubmit = (values: CommandCreateDto) => {
     setValue("category.name", categoryList[getValues("category.id")]);
-    addCommandToDB(values);
+    // addCommandToDB(values);
+    alert(JSON.stringify(values, null, 2));
     reset();
   };
 

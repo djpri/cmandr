@@ -12,8 +12,8 @@ export const addCommandCategoryToDB = async (
         name: category,
       },
     });
-    return data;
+    return { data };
   } catch (error) {
-    return error;
+    return { error };
   }
 };

@@ -12,7 +12,6 @@ function Links() {
 
   useEffect(() => {
     dispatch(getLinksFromDB());
-    console.log(location);
   }, [dispatch, location]);
 
   return (
