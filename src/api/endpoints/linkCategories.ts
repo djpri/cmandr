@@ -1,8 +1,8 @@
 import { get, post, put, remove } from ".";
-import { LinkCategory } from "../../models/category";
-import { LinkCreateDto } from "../../models/link";
+import { LinkCategory } from "../models/category";
+import { LinkCreateDto } from "../models/link";
 
-export const LinkCategories = {
+export const ApiLinkCategories = {
   getAll: () => get("links/categories"),
   getById: (id: number) => get(`links/categories${id}`),
   create: (body: LinkCreateDto) => post("links/categories", body),

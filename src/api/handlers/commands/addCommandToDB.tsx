@@ -1,8 +1,8 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setAddCommand } from "../../../redux/commands/commandsSlice";
-import { Command } from "../../../models/command";
-import { Commands } from "../../endpoints/commands";
+import { Command } from "../../models/command";
+import { ApiCommands } from "../../endpoints/commands";
 
 export const useAddCommand = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export const useAddCommand = () => {
     reference,
   }: Command) => {
     try {
-      const { data } = await Commands.create({
+      const { data } = await ApiCommands.create({
         line,
         description,
         reference,

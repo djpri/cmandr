@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import * as React from "react";
-import { Link } from "../../../../models/link";
+import { Link } from "../../../../api/models/link";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
 

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { HiDotsVertical } from "react-icons/hi";
-import { Command } from "../../../../../../models/command";
+import { Command } from "../../../../../../api/models/command";
 import DeleteCommandButton from "../../../../DeleteCommandButton/DeleteCommandButton";
 import EditCommandForm from "../../../../EditCommandForm/EditCommandForm";
 

@@ -7,8 +7,8 @@ import {
   selectLinksCategoriesAsObject,
 } from "../../../redux/links/linksSlice";
 import { useEditLink } from "../../../api/handlers/links/editLinkInDB";
-import { LinkCategory } from "../../../models/category";
-import { Link, LinkUpdateDto } from "../../../models/link";
+import { LinkCategory } from "../../../api/models/category";
+import { Link, LinkUpdateDto } from "../../../api/models/link";
 
 type IProps = {
   linkItem: Link;
