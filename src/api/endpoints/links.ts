@@ -5,7 +5,7 @@ import { get, post, put, remove } from ".";
 export const Links = {
   getAll: () => get("links"),
   getById: (id: number) => get(`links/${id}`),
-  getAllByCategoryId: (id: number) => get(`links/categories/${id}`),
+  getAllByCategoryId: (id: number) => get(`links/list/${id}`),
   create: (body: CommandCreateDto) => post("links", body),
   update: (id: number, body: CommandUpdateDto) => put(`links/${id}`, body),
   remove: (id: number) => remove(`links/${id}`),
