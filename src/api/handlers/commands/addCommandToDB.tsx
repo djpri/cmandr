@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setAddCommand } from "../../../redux/commands/commandsSlice";
 import { Command } from "../../models/command";
-import { ApiCommands } from "../../endpoints/commands";
+import { Commands } from "../../endpoints/commands";
 
 export const useAddCommand = () => {
   const dispatch = useDispatch();
@@ -15,22 +15,23 @@ export const useAddCommand = () => {
     reference,
   }: Command) => {
     try {
-      const { data } = await ApiCommands.create({
+      const requestBody = {
         line,
         description,
         reference,
         categoryId: category.id,
+      };
+
+      const { data } = await Commands.create(requestBody);
+
+      dispatch(setAddCommand(data));
+      toast({
+        title: "Command Added",
+        description: "command added successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
       });
-      if (data !== null) {
-        dispatch(setAddCommand(data));
-        toast({
-          title: "Command Added",
-          description: "command added successfully",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
     } catch (error) {
       toast({
         title: "Error",

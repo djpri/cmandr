@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setDeleteCommand } from "../../../redux/commands/commandsSlice";
-import { ApiCommands } from "../../endpoints/commands";
+import { Commands } from "../../endpoints/commands";
 
 export const useDeleteCommand = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,8 @@ export const useDeleteCommand = () => {
 
   const deleteCommandInDB = async (id: number) => {
     try {
-      await ApiCommands.remove(id);
+      await Commands.remove(id);
+
       dispatch(setDeleteCommand(id));
       toast({
         title: "Command Changed",

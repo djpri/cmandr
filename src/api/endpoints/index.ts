@@ -12,4 +12,5 @@ CmandrApi.interceptors.response.use((res) => {
 });
 
 const { get, post, put, delete: remove } = CmandrApi;
+
 export { get, post, put, remove };

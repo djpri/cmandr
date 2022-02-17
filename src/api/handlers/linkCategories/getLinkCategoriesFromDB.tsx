@@ -1,12 +1,8 @@
 import { setLinkCategories } from "../../../redux/links/linksSlice";
 import { AppThunk } from "../../../redux/store";
-import { supabase } from "../../../supabase/supabase";
+import { LinkCategories } from "../../endpoints/linkCategories";
 
 export const getLinkCategoriesFromDB = (): AppThunk => async (dispatch) => {
-  const { data: categories } = await supabase
-    .from("link_categories")
-    .select(`id, name`)
-    .order("name");
-
-  if (categories !== null) dispatch(setLinkCategories(categories));
+  const { data } = await LinkCategories.getAll();
+  if (data !== null) dispatch(setLinkCategories(data));
 };

@@ -1,12 +1,13 @@
 import { setEditLinkCategory } from "../../../redux/links/linksSlice";
 import { AppThunk } from "../../../redux/store";
-import { CmandrApi } from "../../endpoints";
+import { LinkCategories } from "../../endpoints/linkCategories";
 
 export const editLinkCategoryInDB =
   (id: number, name: string): AppThunk =>
   async (dispatch) => {
     try {
-      await CmandrApi.put(`/links/categories/${id}`);
+      const requestBody = { id, name };
+      await LinkCategories.update(id, requestBody);
       dispatch(setEditLinkCategory({ id, name }));
     } catch (error) {
       return error;

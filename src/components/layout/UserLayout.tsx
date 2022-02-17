@@ -1,11 +1,14 @@
 import * as React from "react";
 import NavBar from "./NavBar/NavBar";
-import SideBar from "../layout/SideBar/SideBar";
+import SideBar from "./SideBar/SideBar";
 import { Container } from "@chakra-ui/layout";
-import { selectIsSidebarOpen } from "../redux/layout/layoutSlice";
+import { selectIsSidebarOpen } from "../../redux/layout/layoutSlice";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { selectIsInitialized, selectIsLoggedIn } from "../redux/auth/authSlice";
+import {
+  selectIsInitialized,
+  selectIsLoggedIn,
+} from "../../redux/auth/authSlice";
 import { useEffect } from "react";
 
 function UserLayout({ children }) {

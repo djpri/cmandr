@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSidebarOpen,
   setSidebarClosed,
-} from "../../redux/layout/layoutSlice";
+} from "../../../redux/layout/layoutSlice";
 import SideBarLinks from "./SideBarLinks/SideBarLinks";
 
 const scrollbarStyles = {

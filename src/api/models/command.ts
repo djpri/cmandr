@@ -8,19 +8,14 @@ export interface Command {
   category: CommandCategory;
 }
 
-export interface CommandUpdateDto {
-  description: string;
-  line: string;
-  reference: string;
-  categoryId: number;
-}
-
 export interface CommandCreateDto {
   description: string;
   line: string;
   reference: string;
   categoryId: number;
 }
+
+export interface CommandUpdateDto extends CommandCreateDto {}
 
 export class CommandMapper {
   static asUpdateDto(command: Command) {

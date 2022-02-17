@@ -19,7 +19,7 @@ import CommandsList from "../components/commands/CommandsList/CommandsList";
 import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
 import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import { getCommandsByCategoryFromDB } from "../api/handlers/commands/getCommandsByCategoryFromDB";
-import UserLayout from "../layout/UserLayout";
+import UserLayout from "../components/layout/UserLayout";
 import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
 
 function CommandCategoryPage() {
