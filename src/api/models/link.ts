@@ -10,13 +10,13 @@ export interface Link {
   dateCreated?: Date;
 }
 
-export interface LinkUpdateDto extends Link {}
-
 export interface LinkCreateDto {
   link: string;
   title: string;
   category: LinkCategory;
 }
+
+export interface LinkUpdateDto extends LinkCreateDto {}
 
 export class LinksMapper {
   static asUpdateDto(linkItem: Link) {

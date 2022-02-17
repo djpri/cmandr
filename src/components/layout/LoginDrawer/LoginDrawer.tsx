@@ -15,10 +15,10 @@ import {
 import * as React from "react";
 import { FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import LogInForm from "../../components/auth/LogInForm/LogInForm";
-import SignOutButton from "../../components/auth/SignOutButton/SignOutButton";
-import SignUpForm from "../../components/auth/SignUpForm/SignUpForm";
-import { selectUserEmail } from "../../redux/auth/authSlice";
+import LogInForm from "../../auth/LogInForm/LogInForm";
+import SignOutButton from "../../auth/SignOutButton/SignOutButton";
+import SignUpForm from "../../auth/SignUpForm/SignUpForm";
+import { selectUserEmail } from "../../../redux/auth/authSlice";
 
 function LoginDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();

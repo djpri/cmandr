@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import LinksList from "../components/links/LinksList/LinksList";
-import UserLayout from "../layout/UserLayout";
+import UserLayout from "../components/layout/UserLayout";
 import { getLinksFromDB } from "../api/handlers/links/getLinksFromDB";
 
 function Links() {

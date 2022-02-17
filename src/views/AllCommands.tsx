@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
 import { getCommandsFromDB } from "../api/handlers/commands/getCommandsFromDB";
-import UserLayout from "../layout/UserLayout";
+import UserLayout from "../components/layout/UserLayout";
 
 function AllCommandsPage() {
   const dispatch = useDispatch();
