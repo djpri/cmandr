@@ -1,6 +1,6 @@
+import { Link } from "api/models/link";
 import React from "react";
-import { render, screen, fireEvent } from "../../../../../../test-utils";
-import { Link } from "../../../../../../api/models/link";
+import { fireEvent, render, screen } from "test-utils";
 import LinkOptions from "./LinkOptions";
 
 const testLink: Link = {

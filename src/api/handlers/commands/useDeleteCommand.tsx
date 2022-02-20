@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { setDeleteCommand } from "../../../redux/commands/commandsSlice";
+import { setDeleteCommand } from "redux/commands/commandsSlice";
 import { Commands } from "../../endpoints/commands";
 
 export const useDeleteCommand = () => {

@@ -11,11 +11,11 @@ import {
   PopoverTrigger,
   useDisclosure,
 } from "@chakra-ui/react";
+import { Link } from "api/models/link";
+import DeleteLinkButton from "components/links/DeleteLinkButton/DeleteLinkButton";
+import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
 import * as React from "react";
 import { IoMdOptions } from "react-icons/io";
-import { Link } from "../../../../../../api/models/link";
-import DeleteLinkButton from "../../../../DeleteLinkButton/DeleteLinkButton";
-import EditLinkForm from "../../../../EditLinkForm/EditLinkForm";
 
 type IProps = {
   link: Link;

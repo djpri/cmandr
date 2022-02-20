@@ -1,22 +1,22 @@
 import {
-  GridItem,
-  Code,
-  HStack,
   Button,
-  Link,
+  Code,
   Grid,
+  GridItem,
+  HStack,
+  Link,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Command } from "api/models/command";
 import * as React from "react";
-import { GoLinkExternal } from "react-icons/go";
-import CommandOptions from "./CommandOptions/CommandOptions";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/commandsSlice";
-import { useSelector } from "react-redux";
 import { useState } from "react";
-import { Command } from "../../../../../api/models/command";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillFolder } from "react-icons/ai";
+import { GoLinkExternal } from "react-icons/go";
+import { useSelector } from "react-redux";
+import { selectCategoriesAsKeyValuePairs } from "redux/commands/commandsSlice";
+import CommandOptions from "./CommandOptions/CommandOptions";
 
 type Props = {
   commandItem: Command;

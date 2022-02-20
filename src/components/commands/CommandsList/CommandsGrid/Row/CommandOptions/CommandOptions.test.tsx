@@ -1,6 +1,6 @@
+import { Command } from "api/models/command";
 import React from "react";
-import { render, screen, fireEvent } from "../../../../../../test-utils";
-import { Command } from "../../../../../../api/models/command";
+import { fireEvent, render, screen } from "../../../../../../test-utils";
 import CommandOptions from "./CommandOptions";
 
 const testCommand: Command = {

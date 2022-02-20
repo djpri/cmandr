@@ -1,15 +1,12 @@
+import { Container } from "@chakra-ui/layout";
 import * as React from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { selectIsInitialized, selectIsLoggedIn } from "redux/auth/authSlice";
+import { selectIsSidebarOpen } from "redux/layout/layoutSlice";
 import NavBar from "./NavBar/NavBar";
 import SideBar from "./SideBar/SideBar";
-import { Container } from "@chakra-ui/layout";
-import { selectIsSidebarOpen } from "../../redux/layout/layoutSlice";
-import { useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
-import {
-  selectIsInitialized,
-  selectIsLoggedIn,
-} from "../../redux/auth/authSlice";
-import { useEffect } from "react";
 
 function UserLayout({ children }) {
   const isSidebarOpen = useSelector(selectIsSidebarOpen);
@@ -18,9 +15,9 @@ function UserLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) navigate("/account/login", { state: { from: location } });
-  // }, [isLoggedIn, navigate, location]);
+  useEffect(() => {
+    if (!isLoggedIn) navigate("/account/login", { state: { from: location } });
+  }, [isLoggedIn, navigate, location]);
 
   if (!isInitialized) return null;
 
