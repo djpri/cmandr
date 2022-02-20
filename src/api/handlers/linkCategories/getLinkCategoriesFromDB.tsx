@@ -1,5 +1,5 @@
-import { setLinkCategories } from "../../../redux/links/linksSlice";
-import { AppThunk } from "../../../redux/store";
+import { setLinkCategories } from "redux/links/linksSlice";
+import { AppThunk } from "redux/store";
 import { LinkCategories } from "../../endpoints/linkCategories";
 
 export const getLinkCategoriesFromDB = (): AppThunk => async (dispatch) => {

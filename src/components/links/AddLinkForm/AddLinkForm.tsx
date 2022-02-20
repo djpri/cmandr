@@ -1,13 +1,13 @@
-import { Button, FormLabel, Input, Select, Grid, Box } from "@chakra-ui/react";
+import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectLinkCategories } from "../../../redux/links/linksSlice";
-import { useAddLink } from "../../../api/handlers/links/addLinkToDB";
+import { useAddLink } from "../../../api/handlers/links/useAddLink";
 import { LinkCategory } from "../../../api/models/category";
 import { Link } from "../../../api/models/link";
+import { selectLinkCategories } from "../../../redux/links/linksSlice";
 
 function AddLinkForm() {
   const categories: LinkCategory[] = useSelector(selectLinkCategories);

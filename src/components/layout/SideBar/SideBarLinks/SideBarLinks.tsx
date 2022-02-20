@@ -1,13 +1,13 @@
-import { Box, Link, Text, StackDivider, Stack, HStack } from "@chakra-ui/react";
+import { Box, HStack, Link, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { CommandCategory } from "api/models/category";
 import * as React from "react";
 import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import { selectCategoriesWithIds } from "redux/commands/commandsSlice";
+import { selectLinkCategories } from "redux/links/linksSlice";
 import AddCommandCategory from "../../../commands/AddCommandCategory/AddCommandCategory";
 import AddLinkCategory from "../../../links/AddLinkCategory/AddLinkCategory";
-import { selectCategoriesWithIds } from "../../../../redux/commands/commandsSlice";
-import { selectLinkCategories } from "../../../../redux/links/linksSlice";
-import { CommandCategory } from "../../../../api/models/category";
 
 function SideBarLinks() {
   const commandCategories = useSelector(selectCategoriesWithIds);

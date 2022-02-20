@@ -1,5 +1,5 @@
-import { setEditLinkCategory } from "../../../redux/links/linksSlice";
-import { AppThunk } from "../../../redux/store";
+import { setEditLinkCategory } from "redux/links/linksSlice";
+import { AppThunk } from "redux/store";
 import { LinkCategories } from "../../endpoints/linkCategories";
 
 export const editLinkCategoryInDB =

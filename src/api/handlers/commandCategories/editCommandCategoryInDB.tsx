@@ -1,5 +1,5 @@
-import { setEditCommandCategory } from "../../../redux/commands/commandsSlice";
-import { AppThunk } from "../../../redux/store";
+import { setEditCommandCategory } from "redux/commands/commandsSlice";
+import { AppThunk } from "redux/store";
 import { CommandCategories } from "../../endpoints/commandCategories";
 
 export const editCommandCategoryInDB =

@@ -1,5 +1,5 @@
-import { deleteCommandCategory } from "../../../redux/commands/commandsSlice";
-import { AppThunk } from "../../../redux/store";
+import { deleteCommandCategory } from "redux/commands/commandsSlice";
+import { AppThunk } from "redux/store";
 import { CommandCategories } from "../../endpoints/commandCategories";
 
 export const deleteCommandCategoryInDB =

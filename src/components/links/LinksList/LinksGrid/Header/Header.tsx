@@ -1,8 +1,8 @@
-import { HStack, Tooltip, IconButton, Text, GridItem } from "@chakra-ui/react";
+import { GridItem, HStack, IconButton, Text, Tooltip } from "@chakra-ui/react";
 import React from "react";
-import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { sortLinksByField } from "../../../../../redux/links/linksSlice";
+import { sortLinksByField } from "redux/links/linksSlice";
 
 function TableHeader({ field, label }) {
   const dispatch = useDispatch();

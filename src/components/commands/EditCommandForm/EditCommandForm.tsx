@@ -6,7 +6,7 @@ import {
   selectCategoriesWithIds,
   selectCategoriesAsKeyValuePairs,
 } from "../../../redux/commands/commandsSlice";
-import { useEditCommand } from "../../../api/handlers/commands/editCommandInDB";
+import { useEditCommand } from "../../../api/handlers/commands/useEditCommand";
 import { CommandCategory } from "../../../api/models/category";
 import { Command } from "../../../api/models/command";
 

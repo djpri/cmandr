@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import {
   selectLinkCategories,
   selectLinksCategoriesAsObject,
-} from "../../../redux/links/linksSlice";
-import { useEditLink } from "../../../api/handlers/links/editLinkInDB";
-import { LinkCategory } from "../../../api/models/category";
-import { Link, LinkUpdateDto } from "../../../api/models/link";
+} from "redux/links/linksSlice";
+import { useEditLink } from "api/handlers/links/useEditLink";
+import { LinkCategory } from "api/models/category";
+import { Link, LinkUpdateDto } from "api/models/link";
 
 type IProps = {
   linkItem: Link;
