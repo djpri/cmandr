@@ -91,6 +91,7 @@ function LoginDrawer() {
                   </Button>
                 </>
               )}
+              <SignOutButton />
             </Stack>
           </PopoverBody>
         </PopoverContent>
