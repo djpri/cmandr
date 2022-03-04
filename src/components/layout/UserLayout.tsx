@@ -1,3 +1,4 @@
+import { useIsAuthenticated } from "@azure/msal-react";
 import { Container } from "@chakra-ui/layout";
 import * as React from "react";
 import { useEffect } from "react";
@@ -14,10 +15,15 @@ function UserLayout({ children }) {
   const isInitialized = useSelector(selectIsInitialized);
   const navigate = useNavigate();
   const location = useLocation();
+  const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
-    if (!isLoggedIn) navigate("/account/login", { state: { from: location } });
-  }, [isLoggedIn, navigate, location]);
+    console.log(`Is authenticated? ${isAuthenticated}`);
+  }, [isAuthenticated]);
+
+  // useEffect(() => {
+  //   if (!isLoggedIn) navigate("/account/login", { state: { from: location } });
+  // }, [isLoggedIn, navigate, location]);
 
   if (!isInitialized) return null;
 

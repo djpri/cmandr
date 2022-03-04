@@ -1,4 +1,6 @@
+import { useMsal } from "@azure/msal-react";
 import { Stack, Input, Button, Text } from "@chakra-ui/react";
+import { apiConfig } from "auth/apiConfig";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import {
@@ -14,6 +16,7 @@ function LogInForm() {
   const errorMessage = useSelector(selectErrorMessage);
   const isLoading = useSelector(selectIsLoading);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const { instance } = useMsal();
 
   const dispatch = useAppDispatch();
   const [formDetails, setFormDetails] = React.useState({
@@ -28,6 +31,16 @@ function LogInForm() {
       // [] gives a computed property name
       [id]: value,
     }));
+  };
+
+  const loginRedirect = async () => {
+    try {
+      await instance.loginRedirect({
+        scopes: apiConfig.b2cScopes,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -51,9 +64,10 @@ function LogInForm() {
       <Button
         isLoading={isLoading}
         colorScheme="red"
-        onClick={() =>
-          dispatch(submitLoginDetails(formDetails.email, formDetails.password))
-        }
+        onClick={() => {
+          loginRedirect();
+          dispatch(submitLoginDetails(formDetails.email, formDetails.password));
+        }}
         isDisabled={isLoggedIn}
       >
         Log In
