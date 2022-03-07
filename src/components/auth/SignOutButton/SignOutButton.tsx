@@ -2,7 +2,6 @@ import { useMsal } from "@azure/msal-react";
 import { Button } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signOutUser } from "../../../redux/auth/authSlice";
 import {
   setCommandCategories,
   setCommands,
@@ -22,7 +21,6 @@ function SignOutButton() {
         dispatch(setCommandCategories([]));
         dispatch(setLinks([]));
         dispatch(setLinkCategories([]));
-        dispatch(signOutUser());
       }}
     >
       Sign Out

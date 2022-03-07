@@ -1,9 +1,9 @@
 import React from "react";
-import LogInForm from "./LogInForm";
+import LoginButton from "./LoginButton";
 import { render, screen } from "../../../test-utils";
 
 test("renders sign up button", () => {
-  render(<LogInForm />);
-  const linkElement = screen.getByText(/log in/i);
+  render(<LoginButton />);
+  const linkElement = screen.getByText(/Log In/i);
   expect(linkElement).toBeInTheDocument();
 });

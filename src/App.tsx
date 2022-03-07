@@ -1,13 +1,13 @@
 import { useAccount, useMsal } from "@azure/msal-react";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
+import { CmandrApi } from "api/endpoints";
 import { apiConfig } from "auth/apiConfig";
+import { msalInstance } from "index";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { getCommandCategoriesFromDB } from "./api/handlers/commandCategories/getCommandCategoriesFromDB";
 import { getLinkCategoriesFromDB } from "./api/handlers/linkCategories/getLinkCategoriesFromDB";
 import CreateCommand from "./components/commands/CreateCommand/CreateCommand";
-import { selectUserUid, setAuthListener } from "./redux/auth/authSlice";
 import { useAppDispatch } from "./redux/store";
 import theme from "./theme/theme";
 import AllCommandsPage from "./views/AllCommands";
@@ -21,7 +21,6 @@ export const App = () => {
   const dispatch = useAppDispatch();
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
-  const user = useSelector(selectUserUid);
 
   useEffect(() => {
     const handleRedirect = async () => {
@@ -40,22 +39,37 @@ export const App = () => {
         console.log(response.accessToken);
       }
     };
+    CmandrApi.interceptors.request.use(
+      async function (config) {
+        console.log("making a request");
+        const getToken = async () => {
+          const accounts = instance.getAllAccounts();
+          if (accounts.length > 0) {
+            const response = await instance.acquireTokenSilent({
+              scopes: apiConfig.b2cScopes,
+              account: accounts[0],
+            });
+            return response.accessToken;
+          } else {
+            console.log("no account");
+          }
+        };
+        const token = await getToken();
+        config.headers.Authorization = `bearer ${token}`;
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
     handleRedirect();
-  }, []);
-
-  // check if user is still logged in from previous session
-  // update redux state when current user is logged in or out
-  useEffect(() => {
-    dispatch(setAuthListener());
-  }, [dispatch]);
+  }, [instance, account]);
 
   // fill category data if there is a user logged in, empty when user logs out
   useEffect(() => {
-    if (user) {
-      dispatch(getCommandCategoriesFromDB());
-      dispatch(getLinkCategoriesFromDB());
-    }
-  }, [user, dispatch]);
+    dispatch(getCommandCategoriesFromDB());
+    dispatch(getLinkCategoriesFromDB());
+  }, [account, dispatch]);
 
   return (
     <ChakraProvider theme={theme}>

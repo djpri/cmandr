@@ -15,21 +15,26 @@ import SideBarLinks from "./SideBarLinks/SideBarLinks";
 
 const scrollbarStyles = {
   "::-webkit-scrollbar": {
+    position: "absolute",
     width: "8px",
   },
   "::-webkit-scrollbar-track": {
-    background: "#b3b6bb",
+    opacity: 0,
   },
   "::-webkit-scrollbar-thumb": {
-    background: "#888",
-  },
-  /* Handle on hover */
-  "::-webkit-scrollbar-thumb:hover": {
     background: "#555",
+    display: "none",
+    borderRadius: "4px",
   },
   "@-moz-document url-prefix()": {
     scrollbarWidth: "thin",
     scrollbarColor: "#555",
+  },
+};
+
+const hoverStyle = {
+  "::-webkit-scrollbar-thumb": {
+    display: "block",
   },
 };
 
@@ -57,12 +62,9 @@ function SideBar() {
       position="fixed"
       borderColor={borderColor}
       borderRightWidth="1px"
-      overflowY="hidden"
+      overflowY="auto"
       sx={scrollbarStyles}
-      _hover={{
-        overflowY: "auto",
-        width: "250px",
-      }}
+      _hover={hoverStyle}
       zIndex="500"
       boxSizing="content-box"
     >
