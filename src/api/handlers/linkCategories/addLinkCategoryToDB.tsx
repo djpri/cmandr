@@ -1,6 +1,6 @@
 import { LinkCategories } from "../../endpoints/linkCategories";
 
-export const addLinkCategoryToDB = async (_uid: string, category: string) => {
+export const addLinkCategoryToDB = async (category: string) => {
   try {
     const requestBody = {
       name: category,

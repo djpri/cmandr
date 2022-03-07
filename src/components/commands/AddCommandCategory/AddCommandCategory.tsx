@@ -2,18 +2,16 @@ import { Input, Button, HStack, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 import { AiFillFolderAdd } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserUid } from "../../../redux/auth/authSlice";
 import { addCommandCategory } from "../../../redux/commands/commandsSlice";
 import { addCommandCategoryToDB } from "../../../api/handlers/commandCategories/addCommandCategoryToDB";
 
 function AddCommandCategory() {
-  const uid = useSelector(selectUserUid);
   const [category, setCategory] = React.useState("");
   const dispatch = useDispatch();
   const { isOpen, onToggle } = useDisclosure();
 
   const handleAddCategory = async () => {
-    const { data, error } = await addCommandCategoryToDB(uid, category);
+    const { data, error } = await addCommandCategoryToDB(category);
     if (data) {
       dispatch(addCommandCategory(data));
       onToggle();
