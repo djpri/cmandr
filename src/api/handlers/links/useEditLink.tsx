@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
+import { Links } from "api/endpoints/links";
 import { useDispatch } from "react-redux";
 import { setEditLink } from "redux/links/linksSlice";
-import { supabase } from "supabase/supabase";
 import { Link } from "../../models/link";
 
 export const useEditLink = () => {
@@ -11,17 +11,15 @@ export const useEditLink = () => {
   const editLinkInDB = async (values: Link) => {
     const { id, title, link, category } = values;
 
-    const { error } = await supabase
-      .from("links")
-      .update({
-        link,
-        title,
-        category_id: category.id,
-      })
-      .match({ id: id });
+    const requestBody = {
+      title,
+      link,
+      category: category.id,
+    };
 
-    if (error === null) {
-      dispatch(setEditLink(values));
+    try {
+      const { data } = await Links.update(values.id, requestBody);
+      dispatch(setEditLink(data));
       toast({
         title: "Link Changed",
         description: "Link changed successfully",
@@ -29,7 +27,7 @@ export const useEditLink = () => {
         duration: 3000,
         isClosable: true,
       });
-    } else {
+    } catch (error) {
       toast({
         title: "Error",
         description: "something went wrong...",

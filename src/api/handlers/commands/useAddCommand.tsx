@@ -14,14 +14,14 @@ export const useAddCommand = () => {
     category,
     reference,
   }: Command) => {
-    try {
-      const requestBody = {
-        line,
-        description,
-        reference,
-        categoryId: category.id,
-      };
+    const requestBody = {
+      line,
+      description,
+      reference,
+      categoryId: category.id,
+    };
 
+    try {
       const { data } = await Commands.create(requestBody);
 
       dispatch(setAddCommand(data));
