@@ -3,16 +3,12 @@ import { AppThunk } from "redux/store";
 import { Commands } from "../../endpoints/commands";
 
 export const getCommandsFromDB = (): AppThunk => async (dispatch) => {
-  const addData = async () => {
-    try {
-      const { data } = await Commands.getAll();
-      if (data !== null) {
-        dispatch(setCommands(data));
-      }
-    } catch (error) {
-      dispatch(setCommands([]));
+  try {
+    const { data } = await Commands.getAll();
+    if (data !== null) {
+      dispatch(setCommands(data));
     }
-  };
-
-  addData();
+  } catch (error) {
+    dispatch(setCommands([]));
+  }
 };

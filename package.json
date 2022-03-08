@@ -33,6 +33,11 @@
     "typescript": "^3.9.5",
     "web-vitals": "^0.2.2"
   },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.0",
+    "crypto": "^1.0.1",
+    "plop": "^2.7.6"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -55,10 +60,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/react-router-dom": "^5.3.0",
-    "crypto": "^1.0.1",
-    "plop": "^2.7.6"
   }
 }

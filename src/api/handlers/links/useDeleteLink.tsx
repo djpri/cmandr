@@ -1,16 +1,15 @@
 import { useToast } from "@chakra-ui/react";
+import { Links } from "api/endpoints/links";
 import { useDispatch } from "react-redux";
 import { setDeleteLink } from "redux/links/linksSlice";
-import { supabase } from "supabase/supabase";
 
 export const useDeleteLink = () => {
   const dispatch = useDispatch();
   const toast = useToast();
 
   const deleteLinkInDB = async (id: number) => {
-    const { error } = await supabase.from("links").delete().match({ id: id });
-
-    if (error === null) {
+    try {
+      await Links.remove(id);
       dispatch(setDeleteLink(id));
       toast({
         title: "Link Deleted",
@@ -19,7 +18,7 @@ export const useDeleteLink = () => {
         duration: 3000,
         isClosable: true,
       });
-    } else {
+    } catch (error) {
       toast({
         title: "Error",
         description: "something went wrong...",

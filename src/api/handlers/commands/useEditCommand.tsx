@@ -9,7 +9,7 @@ export const useEditCommand = () => {
   const toast = useToast();
 
   const editCommandInDB = async (values: Command) => {
-    const commandUpdateDto: CommandUpdateDto = {
+    const requestBody: CommandUpdateDto = {
       description: values.description,
       line: values.line,
       reference: values.reference,
@@ -17,7 +17,7 @@ export const useEditCommand = () => {
     };
 
     try {
-      const { data } = await Commands.update(values.id, commandUpdateDto);
+      const { data } = await Commands.update(values.id, requestBody);
       dispatch(setEditCommand(data));
       toast({
         title: "Command Changed",

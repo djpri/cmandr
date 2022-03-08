@@ -1,27 +1,22 @@
 import { useToast } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUserUid } from "redux/auth/authSlice";
+import { Links } from "api/endpoints/links";
+import { useDispatch } from "react-redux";
 import { setAddLink } from "redux/links/linksSlice";
-import { supabase } from "supabase/supabase";
-import { Link } from "../../models/link";
+import { LinkCreateDto } from "../../models/link";
 
 export const useAddLink = () => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const uid: string = useSelector(selectUserUid);
 
-  const addLinkToDB = async ({ link, category, title }: Link) => {
-    const { data, error } = await supabase.from("links").insert([
-      {
-        link,
-        title,
-        user_id: uid,
-        category_id: category.id,
-      },
-    ]);
-
-    if (data !== null) {
-      dispatch(setAddLink({ id: data[0].id, link, category, title }));
+  const addLinkToDB = async ({ link, category, title }) => {
+    const requestBody: LinkCreateDto = {
+      link,
+      title,
+      categoryId: category.id,
+    };
+    try {
+      const { data } = await Links.create(requestBody);
+      dispatch(setAddLink(data));
       toast({
         title: "Link Added",
         description: "Link added successfully",
@@ -29,9 +24,7 @@ export const useAddLink = () => {
         duration: 3000,
         isClosable: true,
       });
-    }
-
-    if (error) {
+    } catch (error) {
       toast({
         title: "Error",
         description: "something went wrong",

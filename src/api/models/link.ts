@@ -13,21 +13,7 @@ export interface Link {
 export interface LinkCreateDto {
   link: string;
   title: string;
-  category: LinkCategory;
+  categoryId: number;
 }
 
 export interface LinkUpdateDto extends LinkCreateDto {}
-
-export class LinksMapper {
-  static asUpdateDto(linkItem: Link) {
-    const { link, title, category } = linkItem;
-    return {
-      link,
-      title,
-      category,
-    };
-  }
-  static asCreateDto(link: Link) {
-    return this.asUpdateDto(link);
-  }
-}
