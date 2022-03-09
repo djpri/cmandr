@@ -2,7 +2,6 @@ import { useAccount, useMsal } from "@azure/msal-react";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import { CmandrApi } from "api/endpoints";
 import { apiConfig } from "auth/apiConfig";
-import { msalInstance } from "index";
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { getCommandCategoriesFromDB } from "./api/handlers/commandCategories/getCommandCategoriesFromDB";
@@ -28,10 +27,7 @@ export const App = () => {
 
       const accounts = instance.getAllAccounts();
       console.log(accounts);
-      if (accounts.length === 0) {
-        // No user signed in
-        // SHOW LOGIN PAGE
-      } else {
+      if (accounts.length > 0) {
         const response = await instance.acquireTokenSilent({
           scopes: apiConfig.b2cScopes,
           account: account,

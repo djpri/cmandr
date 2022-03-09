@@ -8,6 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Stack,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -33,6 +34,7 @@ function CommandCategoryPage() {
   const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
   const categoryName = categoryList[params.id] || "";
+  const itemCount = categoryList[params.id].items || "0";
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,7 +43,7 @@ function CommandCategoryPage() {
 
   return (
     <UserLayout>
-      <Stack mb="30px" display="flex" alignItems="center" direction="row">
+      <Stack mb="5px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900">
           {categoryName}
         </Heading>
@@ -67,6 +69,9 @@ function CommandCategoryPage() {
           </Popover>
         </Box>
       </Stack>
+      <Text mb="30px" color="gray.500" fontWeight="700">
+        {itemCount} items
+      </Text>
       <CommandsList showCategories={false} />
       <DeleteCategoryModal
         isOpen={isOpen}

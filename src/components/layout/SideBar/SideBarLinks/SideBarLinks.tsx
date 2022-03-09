@@ -49,6 +49,15 @@ function SideBarLinks() {
               <Link as={RouterLink} to={`/commands/${item.id}`}>
                 {item.name}
               </Link>
+              {item.items ? (
+                <Text color="gray.500" fontWeight="700">
+                  {item.items}
+                </Text>
+              ) : (
+                <Text color="gray.500" fontWeight="700">
+                  0
+                </Text>
+              )}
             </HStack>
           ))}
         <AddCommandCategory />

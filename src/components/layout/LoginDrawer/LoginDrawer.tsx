@@ -1,7 +1,6 @@
 import { useMsal } from "@azure/msal-react";
 import {
   Button,
-  Stack,
   useDisclosure,
   Text,
   Popover,
@@ -15,16 +14,16 @@ import {
 } from "@chakra-ui/react";
 import LoginButton from "components/auth/LoginButton/LoginButton";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import SignOutButton from "../../auth/SignOutButton/SignOutButton";
 
 function LoginDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [formType, setFormType] = React.useState("login");
+  const [formType] = React.useState("login");
   const btnRef: React.Ref<any> = React.useRef();
   const { accounts } = useMsal();
-  const [user, setUser] = useState(null);
+  const [user] = useState(accounts[0]);
 
   const PopoverButton = () => (
     <PopoverTrigger>
@@ -39,7 +38,7 @@ function LoginDrawer() {
     </PopoverTrigger>
   );
 
-  if (accounts[0])
+  if (user)
     return (
       <Box p="0" m="0">
         <Popover
@@ -52,7 +51,14 @@ function LoginDrawer() {
           <PopoverContent top="-5px" right="30px" border="hidden">
             <PopoverArrow ml="30px" />
             <PopoverCloseButton />
-            <PopoverHeader>{`Email: ${accounts[0]?.name}`}</PopoverHeader>
+            <PopoverHeader>
+              <Text>
+                Signed in as{" "}
+                <Text as="span" fontWeight="700">
+                  {user?.name}
+                </Text>
+              </Text>
+            </PopoverHeader>
             <PopoverBody>
               <SignOutButton />
             </PopoverBody>

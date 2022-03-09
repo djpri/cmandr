@@ -3,15 +3,14 @@ import { Container } from "@chakra-ui/layout";
 import * as React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
 import { selectIsSidebarOpen } from "redux/layout/layoutSlice";
 import NavBar from "./NavBar/NavBar";
 import SideBar from "./SideBar/SideBar";
 
 function UserLayout({ children }) {
   const isSidebarOpen = useSelector(selectIsSidebarOpen);
-  const navigate = useNavigate();
-  const location = useLocation();
+  //const navigate = useNavigate();
+  //const location = useLocation();
   const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
