@@ -7,14 +7,33 @@ import * as serviceWorker from "./serviceWorker";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { MsalProvider } from "@azure/msal-react";
+import { Configuration, PublicClientApplication } from "@azure/msal-browser";
+import { b2cPolicies } from "auth/policies";
+
+const msalConfig: Configuration = {
+  auth: {
+    clientId: "aa645fe5-eb96-4321-8a0c-fbb8fdba76e2",
+    authority: b2cPolicies.authorities.signUpSignIn.authority,
+    knownAuthorities: [b2cPolicies.authorityDomain],
+  },
+  cache: {
+    cacheLocation: "localStorage",
+    storeAuthStateInCookie: true,
+  },
+};
+
+export const msalInstance = new PublicClientApplication(msalConfig);
 
 ReactDOM.render(
   <React.StrictMode>
     <ColorModeScript />
     <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <MsalProvider instance={msalInstance}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </MsalProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

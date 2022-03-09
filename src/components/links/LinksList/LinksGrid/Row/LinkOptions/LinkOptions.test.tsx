@@ -1,6 +1,6 @@
+import { Link } from "api/models/link";
 import React from "react";
-import { render, screen, fireEvent } from "../../../../../../test-utils";
-import { Link } from "../../../../../../models/models";
+import { fireEvent, render, screen } from "test-utils";
 import LinkOptions from "./LinkOptions";
 
 const testLink: Link = {
@@ -22,7 +22,7 @@ test("Shows edit and delete buttons when clicked", () => {
   expect(deleteButton).toBeInTheDocument();
 });
 
-test.skip("Shows edit form with correct default information when edit button is clicked", () => {
+test("Shows edit form with correct default information when edit button is clicked", () => {
   render(<LinkOptions link={testLink} />);
   // click button
   const button = screen.getByRole("button");

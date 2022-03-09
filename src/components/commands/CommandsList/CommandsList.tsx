@@ -1,20 +1,13 @@
-import {
-  Box,
-  Input,
-  InputGroup,
-  InputRightElement,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
 import { selectCommands } from "../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
-import { GiCrosshair } from "react-icons/gi";
 import { useLocation } from "react-router-dom";
 
-function CommandsList({ showCategories, ghostCommands }) {
+function CommandsList({ showCategories }) {
   const location = useLocation();
   const reduxCommands = useSelector(selectCommands);
   const [search, setSearch] = useState("");
@@ -33,12 +26,13 @@ function CommandsList({ showCategories, ghostCommands }) {
   // filter commands on search
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setSearchResults(() => {
-        const newArray = reduxCommands.filter((item: { description: string }) =>
+      let newArray = [];
+      if (reduxCommands.length >= 1) {
+        newArray = reduxCommands.filter((item: { description: string }) =>
           item.description.match(new RegExp(search, "i"))
         );
-        return newArray;
-      });
+      }
+      setSearchResults(newArray);
     }, 250);
     return () => {
       clearTimeout(timeout);
@@ -74,11 +68,6 @@ function CommandsList({ showCategories, ghostCommands }) {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              {search && (
-                <InputRightElement
-                  children={<GiCrosshair color="gray.300" />}
-                />
-              )}
             </InputGroup>
           </Box>
           <Box ref={ref} />
@@ -86,7 +75,6 @@ function CommandsList({ showCategories, ghostCommands }) {
         <CommandsTable
           commands={searchResults}
           showCategories={showCategories}
-          isLoading={!searchResults && search === ""}
         />
       </Box>
     </>

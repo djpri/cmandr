@@ -1,16 +1,16 @@
 import {
-  HStack,
-  Link as ChakraLink,
-  GridItem,
   Grid,
-  Skeleton,
+  GridItem,
+  HStack,
   Image,
+  Link as ChakraLink,
+  Skeleton,
 } from "@chakra-ui/react";
+import { Link } from "api/models/link";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "../../../../../models/models";
+import { selectLinksCategoriesAsObject } from "redux/links/linksSlice";
 import LinkOptions from "./LinkOptions/LinkOptions";
-import { selectLinksCategoriesAsObject } from "../../../../../redux/links/linksSlice";
 
 interface IProps {
   linkItem: Link;

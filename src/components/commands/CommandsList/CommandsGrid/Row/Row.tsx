@@ -1,22 +1,22 @@
 import {
-  GridItem,
-  Code,
-  HStack,
   Button,
-  Link,
+  Code,
   Grid,
+  GridItem,
+  HStack,
+  Link,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Command } from "api/models/command";
 import * as React from "react";
-import { GoLinkExternal } from "react-icons/go";
-import CommandOptions from "./CommandOptions/CommandOptions";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { selectCategoriesAsKeyValuePairs } from "../../../../../redux/commands/commandsSlice";
-import { useSelector } from "react-redux";
 import { useState } from "react";
-import { Command } from "../../../../../models/models";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillFolder } from "react-icons/ai";
+import { GoLinkExternal } from "react-icons/go";
+import { useSelector } from "react-redux";
+import { selectCategoriesAsKeyValuePairs } from "redux/commands/commandsSlice";
+import CommandOptions from "./CommandOptions/CommandOptions";
 
 type Props = {
   commandItem: Command;
@@ -25,7 +25,7 @@ type Props = {
 
 function Row({ commandItem, showCategories }: Props) {
   const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
-  const { id, description, command, reference, category } = commandItem;
+  const { id, description, line, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
 
@@ -49,7 +49,7 @@ function Row({ commandItem, showCategories }: Props) {
       </GridItem>
 
       <GridItem>
-        <CopyToClipboard text={command} onCopy={() => handleCopy()}>
+        <CopyToClipboard text={line} onCopy={() => handleCopy()}>
           <Code
             _hover={{
               cursor: "pointer",
@@ -57,7 +57,7 @@ function Row({ commandItem, showCategories }: Props) {
               color: "black",
             }}
           >
-            {command}
+            {line}
           </Code>
         </CopyToClipboard>
       </GridItem>
@@ -75,7 +75,7 @@ function Row({ commandItem, showCategories }: Props) {
 
       <GridItem>
         <HStack spacing="4">
-          <CopyToClipboard text={command} onCopy={() => handleCopy()}>
+          <CopyToClipboard text={line} onCopy={() => handleCopy()}>
             <Button
               size="xs"
               bgColor={isCopied ? "blue.400" : "blue.500"}
@@ -119,7 +119,7 @@ function Row({ commandItem, showCategories }: Props) {
             command={{
               id,
               description,
-              command,
+              line,
               reference,
               category,
             }}

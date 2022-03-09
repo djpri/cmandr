@@ -2,26 +2,8 @@ import { Heading } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
-import UserLayout from "../layout/UserLayout";
-import { getCommandsFromDB } from "../services/commands/getCommandsFromDB";
-import { Command } from "../models/models";
-
-const ghostCommands = () => {
-  const ghostData: Command[] = [];
-  for (let i = 0; i < 20; i++) {
-    ghostData.push({
-      id: i,
-      description: "",
-      command: "",
-      reference: "    ",
-      category: {
-        id: null,
-        name: "",
-      },
-    });
-  }
-  return ghostData;
-};
+import { getCommandsFromDB } from "../api/handlers/commands/getCommandsFromDB";
+import UserLayout from "../components/layout/UserLayout";
 
 function AllCommandsPage() {
   const dispatch = useDispatch();
@@ -35,7 +17,7 @@ function AllCommandsPage() {
       <Heading as="h2" mb="30px" fontWeight="900">
         All Commands
       </Heading>
-      <CommandsList showCategories ghostCommands={ghostCommands()} />
+      <CommandsList showCategories />
     </UserLayout>
   );
 }

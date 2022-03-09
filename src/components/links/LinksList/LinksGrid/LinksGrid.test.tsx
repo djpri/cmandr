@@ -3,6 +3,6 @@ import LinksTable from "./LinksGrid";
 import { render } from "../../../../test-utils";
 import { mockStore } from "../../../../redux/mockStore";
 
-test("renders without crashing", () => {
-  render(<LinksTable links={mockStore.links.links} showCategories />);
+test("Render LinksTable with correct props", () => {
+  render(<LinksTable links={mockStore.links.links} showCategories isLoading />);
 });
