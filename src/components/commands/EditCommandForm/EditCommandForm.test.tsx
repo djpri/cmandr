@@ -11,6 +11,6 @@ const testCommand: Command = {
   id: 10,
 };
 
-test("renders without crashing", () => {
+test("Renders with correct command passed in as prop", () => {
   render(<EditCommandForm commandItem={testCommand} onClose={() => {}} />);
 });
