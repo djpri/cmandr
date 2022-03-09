@@ -1,8 +1,8 @@
 import React from "react";
-import DeleteCategoryModal from "./DeleteCategoryModal";
 import { render } from "../../../test-utils";
+import DeleteCategoryModal from "./DeleteCategoryModal";
 
-test("renders without crashing", () => {
+test("Model renders with correct props passed in", () => {
   render(
     <DeleteCategoryModal
       isOpen={false}

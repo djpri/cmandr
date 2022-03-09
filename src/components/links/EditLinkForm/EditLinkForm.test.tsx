@@ -10,6 +10,6 @@ const testLink: Link = {
   category: { id: 1, name: "general" },
 };
 
-test("renders without crashing", () => {
+test("Renders EditLinkForm with correct link item passed in as prop", () => {
   render(<EditLinkForm linkItem={testLink} onClose={() => {}} />);
 });
