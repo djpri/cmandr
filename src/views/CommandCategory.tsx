@@ -8,37 +8,20 @@ import {
   PopoverContent,
   PopoverTrigger,
   Stack,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
-import CommandsList from "../components/commands/CommandsList/CommandsList";
-import UserLayout from "../layout/UserLayout";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
-import { FaEdit } from "react-icons/fa";
-import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
-import { getCommandsByCategoryFromDB } from "../services/commands/getCommandsByCategoryFromDB";
-import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import { useEffect } from "react";
-import { Command } from "../models/models";
-
-const ghostCommands = () => {
-  const ghostData: Command[] = [];
-  for (let i = 0; i < 10; i++) {
-    ghostData.push({
-      id: i,
-      description: "",
-      command: "",
-      reference: "    ",
-      category: {
-        id: null,
-        name: "",
-      },
-    });
-  }
-  return ghostData;
-};
+import { FaEdit } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import CommandsList from "../components/commands/CommandsList/CommandsList";
+import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
+import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
+import { getCommandsByCategoryFromDB } from "../api/handlers/commands/getCommandsByCategoryFromDB";
+import UserLayout from "../components/layout/UserLayout";
+import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,6 +34,7 @@ function CommandCategoryPage() {
   const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
   const categoryName = categoryList[params.id] || "";
+  const itemCount = categoryList[params.id]?.items || "0";
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,7 +43,7 @@ function CommandCategoryPage() {
 
   return (
     <UserLayout>
-      <Stack mb="30px" display="flex" alignItems="center" direction="row">
+      <Stack mb="5px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900">
           {categoryName}
         </Heading>
@@ -85,7 +69,10 @@ function CommandCategoryPage() {
           </Popover>
         </Box>
       </Stack>
-      <CommandsList showCategories={false} ghostCommands={ghostCommands()} />
+      <Text mb="30px" color="gray.500" fontWeight="700">
+        {itemCount} items
+      </Text>
+      <CommandsList showCategories={false} />
       <DeleteCategoryModal
         isOpen={isOpen}
         onClose={onClose}

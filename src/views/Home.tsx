@@ -3,11 +3,12 @@ import {
   Grid,
   Heading,
   GridItem,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import UserLayout from "../layout/UserLayout";
+import UserLayout from "../components/layout/UserLayout";
 import { selectCategoriesWithIds } from "../redux/commands/commandsSlice";
 import { selectLinkCategories } from "../redux/links/linksSlice";
 import { Link as RouterLink } from "react-router-dom";
@@ -40,8 +41,17 @@ function HomePage() {
               fontSize="lg"
               fontWeight="bold"
               transition="0.1s"
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              {item.name}
+              <Text>{item.name}</Text>
+              <Text fontSize="sm">
+                <Text as="span" color="gray.500" fontWeight="700">
+                  {item?.items}
+                </Text>{" "}
+                items
+              </Text>
             </GridItem>
           ))}
         </Grid>

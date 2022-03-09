@@ -11,11 +11,11 @@ import {
   PopoverTrigger,
   useDisclosure,
 } from "@chakra-ui/react";
+import { Command } from "api/models/command";
+import DeleteCommandButton from "components/commands/DeleteCommandButton/DeleteCommandButton";
+import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
 import * as React from "react";
 import { HiDotsVertical } from "react-icons/hi";
-import { Command } from "../../../../../../models/models";
-import DeleteCommandButton from "../../../../DeleteCommandButton/DeleteCommandButton";
-import EditCommandForm from "../../../../EditCommandForm/EditCommandForm";
 
 type IProps = {
   command: Command;

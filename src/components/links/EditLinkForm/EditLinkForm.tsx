@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 import {
   selectLinkCategories,
   selectLinksCategoriesAsObject,
-} from "../../../redux/links/linksSlice";
-import { useEditLink } from "../../../services/links/editLinkInDB";
-import { Link, LinkCategory } from "../../../models/models";
+} from "redux/links/linksSlice";
+import { useEditLink } from "api/handlers/links/useEditLink";
+import { LinkCategory } from "api/models/category";
+import { Link, LinkUpdateDto } from "api/models/link";
 
 type IProps = {
   linkItem: Link;
@@ -20,16 +21,17 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   const categoryList = useSelector(selectLinksCategoriesAsObject);
   const { editLinkInDB } = useEditLink();
 
-  const { handleSubmit, register, setValue, getValues } = useForm<Link>({
-    defaultValues: {
-      id,
-      title,
-      link,
-      category,
-    },
-  });
+  const { handleSubmit, register, setValue, getValues } =
+    useForm<LinkUpdateDto>({
+      defaultValues: {
+        id,
+        title,
+        link,
+        category,
+      },
+    });
 
-  const onSubmit = (values: Link) => {
+  const onSubmit = (values: LinkUpdateDto) => {
     setValue("category.name", categoryList[getValues("category.id")]);
     editLinkInDB(values);
     // closes popover if using form from popover only

@@ -1,8 +1,8 @@
 import React from "react";
 import DeleteLinkCategory from "./DeleteLinkCategory";
-import { render, screen } from "../../../test-utils";
+import { render } from "../../../test-utils";
 
-test("renders without crashing", () => {
+test("renders with correct props", () => {
   render(
     <DeleteLinkCategory
       isOpen={false}

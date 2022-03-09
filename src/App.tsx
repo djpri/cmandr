@@ -1,37 +1,71 @@
+import { useAccount, useMsal } from "@azure/msal-react";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
-import * as React from "react";
-import { useSelector } from "react-redux";
+import { CmandrApi } from "api/endpoints";
+import { apiConfig } from "auth/apiConfig";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { getCommandCategoriesFromDB } from "./api/handlers/commandCategories/getCommandCategoriesFromDB";
+import { getLinkCategoriesFromDB } from "./api/handlers/linkCategories/getLinkCategoriesFromDB";
 import CreateCommand from "./components/commands/CreateCommand/CreateCommand";
-import { selectUserUid, setAuthListener } from "./redux/auth/authSlice";
 import { useAppDispatch } from "./redux/store";
-import { getCommandCategoriesFromDB } from "./services/commandCategories/getCommandCategoriesFromDB";
-import { getLinkCategoriesFromDB } from "./services/linkCategories/getLinkCategoriesFromDB";
 import theme from "./theme/theme";
 import AllCommandsPage from "./views/AllCommands";
+import Links from "./views/AllLinks";
 import CommandCategoryPage from "./views/CommandCategory";
 import HomePage from "./views/Home";
 import LinkCategory from "./views/LinkCategory";
-import Links from "./views/AllLinks";
 import LoginPage from "./views/Login";
 
 export const App = () => {
   const dispatch = useAppDispatch();
-  const user = useSelector(selectUserUid);
+  const { instance, accounts } = useMsal();
+  const account = useAccount(accounts[0] || {});
 
-  // check if user is still logged in from previous session
-  // update redux state when current user is logged in or out
-  React.useEffect(() => {
-    dispatch(setAuthListener());
-  }, [dispatch]);
+  useEffect(() => {
+    const handleRedirect = async () => {
+      await instance.handleRedirectPromise();
+
+      const accounts = instance.getAllAccounts();
+      console.log(accounts);
+      if (accounts.length > 0) {
+        const response = await instance.acquireTokenSilent({
+          scopes: apiConfig.b2cScopes,
+          account: account,
+        });
+        console.log(response.accessToken);
+      }
+    };
+    CmandrApi.interceptors.request.use(
+      async function (config) {
+        console.log("making a request");
+        const getToken = async () => {
+          const accounts = instance.getAllAccounts();
+          if (accounts.length > 0) {
+            const response = await instance.acquireTokenSilent({
+              scopes: apiConfig.b2cScopes,
+              account: accounts[0],
+            });
+            return response.accessToken;
+          } else {
+            console.log("no account");
+          }
+        };
+        const token = await getToken();
+        config.headers.Authorization = `bearer ${token}`;
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+    handleRedirect();
+  }, [instance, account]);
 
   // fill category data if there is a user logged in, empty when user logs out
-  React.useEffect(() => {
-    if (user) {
-      dispatch(getCommandCategoriesFromDB());
-      dispatch(getLinkCategoriesFromDB());
-    }
-  }, [user, dispatch]);
+  useEffect(() => {
+    dispatch(getCommandCategoriesFromDB());
+    dispatch(getLinkCategoriesFromDB());
+  }, [account, dispatch]);
 
   return (
     <ChakraProvider theme={theme}>

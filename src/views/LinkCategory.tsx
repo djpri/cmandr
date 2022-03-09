@@ -13,9 +13,9 @@ import { useParams } from "react-router-dom";
 import DeleteLinkCategory from "../components/links/DeleteLinkCategory/DeleteLinkCategory";
 import EditLinkCategory from "../components/links/EditLinkCategory/EditLinkCategory";
 import LinksList from "../components/links/LinksList/LinksList";
-import UserLayout from "../layout/UserLayout";
+import UserLayout from "../components/layout/UserLayout";
 import { selectLinksCategoriesAsObject } from "../redux/links/linksSlice";
-import { getLinksByCategoryFromDB } from "../services/links/getLinksByCategoryFromDB";
+import { getLinksByCategoryFromDB } from "../api/handlers/links/getLinksByCategoryFromDB";
 
 function LinkCategory() {
   const dispatch = useDispatch();

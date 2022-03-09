@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteLinkCategoryInDB } from "../../../services/linkCategories/deleteLinkCategoryInDB";
+import { deleteLinkCategoryInDB } from "../../../api/handlers/linkCategories/deleteLinkCategoryInDB";
 
 interface IProps {
   isOpen: boolean;

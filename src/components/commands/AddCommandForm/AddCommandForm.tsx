@@ -1,4 +1,7 @@
-import { Button, FormLabel, Input, Select, Grid, Box } from "@chakra-ui/react";
+import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
+import { useAddCommand } from "api/handlers/commands/useAddCommand";
+import { CommandCategory } from "api/models/category";
+import { Command } from "api/models/command";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,9 +10,7 @@ import { useParams } from "react-router-dom";
 import {
   selectCategoriesAsKeyValuePairs,
   selectCategoriesWithIds,
-} from "../../../redux/commands/commandsSlice";
-import { useAddCommand } from "../../../services/commands/addCommandToDB";
-import { Command, CommandCategory } from "../../../models/models";
+} from "redux/commands/commandsSlice";
 
 function AddCommandForm() {
   const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
@@ -29,7 +30,7 @@ function AddCommandForm() {
     }
   }, [params, setValue]);
 
-  const onSubmit = (values) => {
+  const onSubmit = (values: Command) => {
     setValue("category.name", categoryList[getValues("category.id")]);
     addCommandToDB(values);
     reset();
@@ -58,8 +59,8 @@ function AddCommandForm() {
         </Box>
 
         <Box>
-          <FormLabel htmlFor="command">Command</FormLabel>
-          <Input {...register("command")} placeholder="Command" />
+          <FormLabel htmlFor="line">Command</FormLabel>
+          <Input {...register("line")} placeholder="Command" />
         </Box>
 
         {showCategorySelect && (
