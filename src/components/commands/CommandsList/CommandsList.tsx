@@ -1,17 +1,10 @@
-import {
-  Box,
-  Input,
-  InputGroup,
-  InputRightElement,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
 import { selectCommands } from "../../../redux/commands/commandsSlice";
 import { useSelector } from "react-redux";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
-import { GiCrosshair } from "react-icons/gi";
 import { useLocation } from "react-router-dom";
 
 function CommandsList({ showCategories }) {
@@ -75,11 +68,6 @@ function CommandsList({ showCategories }) {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              {search && (
-                <InputRightElement
-                  children={<GiCrosshair color="gray.300" />}
-                />
-              )}
             </InputGroup>
           </Box>
           <Box ref={ref} />

@@ -1,7 +1,7 @@
 import { Input, Button, HStack, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 import { AiFillFolderAdd } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addCommandCategory } from "../../../redux/commands/commandsSlice";
 import { addCommandCategoryToDB } from "../../../api/handlers/commandCategories/addCommandCategoryToDB";
 

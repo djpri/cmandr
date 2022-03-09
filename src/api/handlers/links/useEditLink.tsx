@@ -9,12 +9,12 @@ export const useEditLink = () => {
   const toast = useToast();
 
   const editLinkInDB = async (values: Link) => {
-    const { id, title, link, category } = values;
+    const { title, link, category } = values;
 
     const requestBody = {
       title,
       link,
-      category: category.id,
+      categoryId: category.id,
     };
 
     try {

@@ -1,14 +1,12 @@
-import { Button, Stack, Text, Heading, Container, Box } from "@chakra-ui/react";
+import { Heading, Container, Box } from "@chakra-ui/react";
 import LoginButton from "components/auth/LoginButton/LoginButton";
 import * as React from "react";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 
 function LoginPage() {
-  const [formType, setFormType] = useState("login");
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [formType] = useState("login");
+  // const navigate = useNavigate();
+  // const location = useLocation();
 
   // if (isInitialized && isLoggedIn) {
   //   navigate(state.path || "/");
