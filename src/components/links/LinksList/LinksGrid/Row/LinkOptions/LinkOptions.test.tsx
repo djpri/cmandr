@@ -22,7 +22,7 @@ test("Shows edit and delete buttons when clicked", () => {
   expect(deleteButton).toBeInTheDocument();
 });
 
-test.skip("Shows edit form with correct default information when edit button is clicked", () => {
+test("Shows edit form with correct default information when edit button is clicked", () => {
   render(<LinkOptions link={testLink} />);
   // click button
   const button = screen.getByRole("button");

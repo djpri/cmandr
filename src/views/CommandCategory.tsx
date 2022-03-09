@@ -34,7 +34,7 @@ function CommandCategoryPage() {
   const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
   const categoryName = categoryList[params.id] || "";
-  const itemCount = categoryList[params.id].items || "0";
+  const itemCount = categoryList[params.id]?.items || "0";
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -32,6 +32,7 @@ function LoginDrawer() {
         colorScheme="whatsapp"
         onClick={onOpen}
         fontSize="xs"
+        label="profile"
       >
         <FaUser />
       </Button>
@@ -40,7 +41,7 @@ function LoginDrawer() {
 
   if (user)
     return (
-      <Box p="0" m="0">
+      <Box position="relative" m="0">
         <Popover
           isOpen={isOpen}
           placement="bottom"
