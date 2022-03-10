@@ -1,20 +1,11 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
-import { useAddCommand } from "api/handlers/commands/useAddCommand";
-import { CommandCategory } from "api/models/category";
-import { Command } from "api/models/command";
+import { Command, CommandCreateDto } from "api/models/command";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-  selectCategoriesAsKeyValuePairs,
-  selectCategoriesWithIds,
-} from "redux/commands/commandsSlice";
 
 function AddCommandForm() {
-  const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
-  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const { handleSubmit, register, reset, setValue, getValues } =
@@ -30,7 +21,7 @@ function AddCommandForm() {
     }
   }, [params, setValue]);
 
-  const onSubmit = (values: Command) => {
+  const onSubmit = (values: CommandCreateDto) => {
     setValue("category.name", categoryList[getValues("category.id")]);
     addCommandToDB(values);
     reset();

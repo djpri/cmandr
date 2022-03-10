@@ -10,6 +10,9 @@ import { BrowserRouter } from "react-router-dom";
 import { MsalProvider } from "@azure/msal-react";
 import { Configuration, PublicClientApplication } from "@azure/msal-browser";
 import { b2cPolicies } from "auth/policies";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const msalConfig: Configuration = {
   auth: {
@@ -29,11 +32,13 @@ ReactDOM.render(
   <React.StrictMode>
     <ColorModeScript />
     <BrowserRouter>
-      <MsalProvider instance={msalInstance}>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </MsalProvider>
+      <QueryClientProvider client={queryClient}>
+        <MsalProvider instance={msalInstance}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </MsalProvider>
+      </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

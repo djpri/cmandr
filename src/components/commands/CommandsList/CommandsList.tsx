@@ -1,15 +1,14 @@
 import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
+import UseCommandsData from "hooks/useCommands";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
-import { selectCommands } from "../../../redux/commands/commandsSlice";
-import { useSelector } from "react-redux";
-import React, { useRef } from "react";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 function CommandsList({ showCategories }) {
   const location = useLocation();
-  const reduxCommands = useSelector(selectCommands);
+  const commandsData = UseCommandsData("commands");
+  const [commands, setCommands] = useState([]);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const ref = useRef(null);
@@ -23,12 +22,16 @@ function CommandsList({ showCategories }) {
     setSearch("");
   }, [location]);
 
+  useEffect(() => {
+    setCommands(commandsData.allCommands.data);
+  }, [commandsData]);
+
   // filter commands on search
   useEffect(() => {
     const timeout = setTimeout(() => {
       let newArray = [];
-      if (reduxCommands.length >= 1) {
-        newArray = reduxCommands.filter((item: { description: string }) =>
+      if (commands.length >= 1) {
+        newArray = commands.filter((item: { description: string }) =>
           item.description.match(new RegExp(search, "i"))
         );
       }
@@ -37,7 +40,7 @@ function CommandsList({ showCategories }) {
     return () => {
       clearTimeout(timeout);
     };
-  }, [search, reduxCommands]);
+  }, [search, commands]);
 
   return (
     <>
