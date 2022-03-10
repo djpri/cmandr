@@ -8,10 +8,9 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
+import useCommandCategories from "hooks/useCommandCategories";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteCommandCategoryInDB } from "../../../api/handlers/commandCategories/deleteCommandCategoryInDB";
 
 interface IProps {
   isOpen: boolean;
@@ -27,7 +26,7 @@ function DeleteCategoryModal({
   categoryId,
 }: IProps) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { deleteCategoryMutation } = useCommandCategories();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -46,7 +45,7 @@ function DeleteCategoryModal({
             onClick={() => {
               onClose();
               navigate("/commands");
-              dispatch(deleteCommandCategoryInDB(categoryId));
+              deleteCategoryMutation.mutate(categoryId);
             }}
           >
             Delete

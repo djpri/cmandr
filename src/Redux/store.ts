@@ -1,11 +1,11 @@
 import {
-  configureStore,
-  ThunkAction,
   Action,
   combineReducers,
+  configureStore,
+  ThunkAction,
 } from "@reduxjs/toolkit";
-import layoutReducer from "./layout/layoutSlice";
 import { useDispatch } from "react-redux";
+import layoutReducer from "./layout/layoutSlice";
 
 export const rootReducer = combineReducers({
   layout: layoutReducer,

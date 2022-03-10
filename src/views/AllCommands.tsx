@@ -1,17 +1,9 @@
 import { Heading } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
-import { getCommandsFromDB } from "../api/handlers/commands/getCommandsFromDB";
 import UserLayout from "../components/layout/UserLayout";
 
 function AllCommandsPage() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCommandsFromDB());
-  }, [dispatch]);
-
   return (
     <UserLayout>
       <Heading as="h2" mb="30px" fontWeight="900">

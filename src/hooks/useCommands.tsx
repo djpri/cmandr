@@ -1,16 +1,37 @@
-import { Commands } from "api/endpoints";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Commands } from "api";
+import { asReactQueryFunction } from "helpers/helpers";
+import { CommandReadDto } from "models/command";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "react-query";
 import useChakraToast from "./useChakraToast";
 
-function UseCommandsData(props) {
+/**
+ * Custom hook that contains react query logic for commands
+ *
+ * @example
+ *
+ * ```js
+ * const { allCommandsQuery } = useCommands();
+ * const commandsData = allCommandsQuery.data;
+ * ```
+ */
+function useCommands(props) {
   const queryClient = useQueryClient();
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const allCommandsQuery = useQuery("commands", Commands.getAll);
-  const singleCategoryQuery = useQuery(["commands", props.categoryId], () =>
-    Commands.getAllByCategoryId(props.categoryId)
+  const allCommandsQuery = useQuery(
+    "commands",
+    asReactQueryFunction(Commands.getAll)
+  );
+  const singleCategoryQuery = useQuery(
+    ["commands", props.categoryId],
+    asReactQueryFunction(() => Commands.getAllByCategoryId(props.categoryId))
   );
 
   // Mutations
@@ -46,4 +67,4 @@ function UseCommandsData(props) {
   };
 }
 
-export default UseCommandsData;
+export default useCommands;

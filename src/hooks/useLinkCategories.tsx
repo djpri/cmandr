@@ -1,20 +1,19 @@
-import { CommandCategories } from "api";
+import { LinkCategories } from "api";
 import { asReactQueryFunction } from "helpers/helpers";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { CategoryReadDto } from "../models/category";
 import useChakraToast from "./useChakraToast";
 
 /**
- * Custom hook that contains react query logic for command categories
+ * Custom hook that contains react query logic for link categories
  *
  * @example
  *
  * ```js
- * const { allCommandCategoriesQuery } = useCommandCategories();
- * const commandCategoriesData = allCommandCategoriesQuery.data;
+ * const { allLinkCategoriesQuery } = useLinkCategories();
+ * const linkCategoriesData = allLinkCategoriesQuery.data;
  * ```
  */
-function useCommandCategories() {
+function useLinkCategories() {
   const queryClient = useQueryClient();
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
@@ -22,21 +21,21 @@ function useCommandCategories() {
   // Queries
   const allCategoriesQuery = useQuery(
     "commandCategories",
-    asReactQueryFunction(CommandCategories.getAll)
+    asReactQueryFunction(LinkCategories.getAll)
   );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
-  const addCategoryMutation = useMutation(CommandCategories.create, {
+  const addCategoryMutation = useMutation(LinkCategories.create, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commandCategories");
+      queryClient.invalidateQueries("linkCategories");
       showSuccessToast("Command Added", "Command added successfully");
     },
     onError: showErrorToast,
   });
-  const editCategoryMutation = useMutation(CommandCategories.update, {
+  const editCategoryMutation = useMutation(LinkCategories.update, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commandCategories");
+      queryClient.invalidateQueries("linkCategories");
       showSuccessToast("Command Edited", "Command edited successfully");
     },
     onError: showErrorToast,
@@ -48,9 +47,9 @@ function useCommandCategories() {
    * deleteCommandMutation.mutate(commandId);
    * ```
    */
-  const deleteCategoryMutation = useMutation(CommandCategories.remove, {
+  const deleteCategoryMutation = useMutation(LinkCategories.remove, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commandCategories");
+      queryClient.invalidateQueries("linkCategories");
       showSuccessToast("Command Deleted", "Command deleted successfully");
     },
     onError: showErrorToast,
@@ -64,4 +63,4 @@ function useCommandCategories() {
   };
 }
 
-export default useCommandCategories;
+export default useLinkCategories;

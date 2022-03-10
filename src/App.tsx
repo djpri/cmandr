@@ -1,6 +1,6 @@
 import { useAccount, useMsal } from "@azure/msal-react";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
-import { CmandrApi } from "api/endpoints";
+import { CmandrApi } from "api";
 import { apiConfig } from "auth/apiConfig";
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";

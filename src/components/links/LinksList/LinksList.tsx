@@ -7,20 +7,18 @@ import {
   Spinner,
   useColorModeValue,
 } from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
-import React, { useRef } from "react";
-import { useEffect, useState } from "react";
+import useLinks from "../../../hooks/useLinks";
+import { Link } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton/AddLinkButton";
-import { selectAllLinks } from "../../../redux/links/linksSlice";
-import { useSelector } from "react-redux";
-import { Link } from "../../../api/models/link";
 import LinksTable from "./LinksGrid/LinksGrid";
 
 function LinksList({ showCategories }) {
-  const reduxLinks = useSelector(selectAllLinks);
+  const { allLinksQuery } = useLinks("");
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState(reduxLinks);
+  const [searchResults, setSearchResults] = useState(allLinksQuery.data);
   const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
   const ref = useRef(null);
@@ -33,7 +31,7 @@ function LinksList({ showCategories }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSearchResults(() => {
-        const newArray = reduxLinks.filter((item: Link) =>
+        const newArray = allLinksQuery.data.filter((item: Link) =>
           item.title.match(new RegExp(search, "i"))
         );
         return newArray;
@@ -44,15 +42,15 @@ function LinksList({ showCategories }) {
       setIsSearching(true);
       clearTimeout(timeout);
     };
-  }, [search, reduxLinks]);
+  }, [search, allLinksQuery.data]);
 
   useEffect(() => {
     setSearchResults([]);
   }, [location]);
 
   useEffect(() => {
-    setSearchResults(reduxLinks);
-  }, [reduxLinks]);
+    setSearchResults(allLinksQuery.data);
+  }, [allLinksQuery.data]);
 
   return (
     <Box

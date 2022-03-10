@@ -1,21 +1,20 @@
 import {
   Box,
   Grid,
-  Heading,
   GridItem,
+  Heading,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import useCommandCategories from "hooks/useCommandCategories";
+import useLinkCategories from "hooks/useLinkCategories";
 import * as React from "react";
-import { useSelector } from "react-redux";
-import UserLayout from "../components/layout/UserLayout";
-import { selectCategoriesWithIds } from "../redux/commands/commandsSlice";
-import { selectLinkCategories } from "../redux/links/linksSlice";
 import { Link as RouterLink } from "react-router-dom";
+import UserLayout from "../components/layout/UserLayout";
 
 function HomePage() {
-  const commandCategories = useSelector(selectCategoriesWithIds);
-  const linkCategories = useSelector(selectLinkCategories);
+  const { allCategoriesQuery: commandCategoryQuery } = useCommandCategories();
+  const { allCategoriesQuery: linkCategoryQuery } = useLinkCategories();
   const linkBgColor = useColorModeValue("green.50", "teal.900");
   const linkBgHoverColor = useColorModeValue("green.100", "teal.600");
 
@@ -24,7 +23,7 @@ function HomePage() {
       <Box fontSize="xl">
         <Heading as="h1">Commands</Heading>
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
-          {commandCategories.map((item) => (
+          {commandCategoryQuery.data.map((item) => (
             <GridItem
               key={item.id}
               as={RouterLink}
@@ -57,7 +56,7 @@ function HomePage() {
         </Grid>
         <Heading as="h1">Links</Heading>
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
-          {linkCategories.map((item) => (
+          {linkCategoryQuery.data.map((item) => (
             <GridItem
               key={item.id}
               as={RouterLink}

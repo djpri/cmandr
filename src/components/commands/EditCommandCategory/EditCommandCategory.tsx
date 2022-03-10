@@ -9,16 +9,22 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
+import useCommandCategories from "hooks/useCommandCategories";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { editCommandCategoryInDB } from "../../../api/handlers/commandCategories/editCommandCategoryInDB";
 
 function EditCommandCategory({ isOpen, onClose, categoryId }) {
   const [categoryName, setCategoryName] = useState("");
-  const dispatch = useDispatch();
+  const { editCategoryMutation } = useCommandCategories();
+
+  const editCommandRequest = {
+    id: categoryId,
+    body: {
+      name: categoryName,
+    },
+  };
 
   const handleEdit = () => {
-    dispatch(editCommandCategoryInDB(categoryId, categoryName));
+    editCategoryMutation.mutate(editCommandRequest);
     setCategoryName("");
     onClose();
   };

@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Command } from "api/models/command";
+import { Command } from "models/command";
 import DeleteCommandButton from "components/commands/DeleteCommandButton/DeleteCommandButton";
 import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
 import * as React from "react";

@@ -1,17 +1,16 @@
 import { Box, HStack, Link, Stack, StackDivider, Text } from "@chakra-ui/react";
-import { CommandCategory } from "api/models/category";
+import useCommandCategories from "hooks/useCommandCategories";
+import useLinkCategories from "hooks/useLinkCategories";
+import { CommandCategory } from "models/category";
 import * as React from "react";
 import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
-import { useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import { selectCategoriesWithIds } from "redux/commands/commandsSlice";
-import { selectLinkCategories } from "redux/links/linksSlice";
 import AddCommandCategory from "../../../commands/AddCommandCategory/AddCommandCategory";
 import AddLinkCategory from "../../../links/AddLinkCategory/AddLinkCategory";
 
 function SideBarLinks() {
-  const commandCategories = useSelector(selectCategoriesWithIds);
-  const linkCategories = useSelector(selectLinkCategories);
+  const { allCategoriesQuery: commandCategories } = useCommandCategories();
+  const { allCategoriesQuery: linkCategories } = useLinkCategories();
   const location = useLocation();
 
   return (
@@ -39,7 +38,7 @@ function SideBarLinks() {
           <Text>All commands</Text>
         </Link>
         {commandCategories &&
-          commandCategories.map((item: CommandCategory) => (
+          commandCategories.data.map((item: CommandCategory) => (
             <HStack key={item.id}>
               {location.pathname === `/commands/${item.id}` ? (
                 <AiFillFolderOpen />
@@ -76,7 +75,7 @@ function SideBarLinks() {
         </Link>
 
         {linkCategories &&
-          linkCategories.map((item: CommandCategory) => (
+          linkCategories.data.map((item: CommandCategory) => (
             <HStack key={item.id}>
               {location.pathname === `/links/${item.id}` ? (
                 <AiFillFolderOpen />

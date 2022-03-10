@@ -2,22 +2,18 @@ import { Button, HStack, Input, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 import { useState } from "react";
 import { AiFillFolderAdd } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { addLinkCategoryToDB } from "../../../api/handlers/linkCategories/addLinkCategoryToDB";
-import { setAddLinkCategory } from "../../../redux/links/linksSlice";
+import useLinkCategories from "../../../hooks/useLinkCategories";
 
 function AddLinkCategory() {
   const [category, setCategory] = useState("");
-  const dispatch = useDispatch();
   const { isOpen, onToggle } = useDisclosure();
+  const { addCategoryMutation } = useLinkCategories();
 
   const handleAddCategory = async () => {
-    const { data, error } = await addLinkCategoryToDB(category);
-    if (data) {
-      dispatch(setAddLinkCategory(data));
+    try {
+      await addCategoryMutation.mutateAsync({ name: category });
       onToggle();
-    }
-    if (error) {
+    } catch (error) {
       console.log(error);
     }
   };
