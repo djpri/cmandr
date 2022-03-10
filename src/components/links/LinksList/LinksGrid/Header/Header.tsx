@@ -10,7 +10,7 @@ function TableHeader({ field, label }) {
         <Tooltip label="sort A -> Z" openDelay={500}>
           <IconButton
             size="xs"
-            // onClick={() => dispatch(sortLinksByField(field))}
+            onClick={() => console.log(field)}
             icon={<AiFillCaretUp />}
             aria-label="sort how to field ascending"
           />
@@ -18,7 +18,7 @@ function TableHeader({ field, label }) {
         <Tooltip label="sort Z -> A" openDelay={500}>
           <IconButton
             size="xs"
-            // onClick={() => dispatch(sortLinksByField(field, false))}
+            onClick={() => console.log(field)}
             icon={<AiFillCaretDown />}
             aria-label="sort how to field descending"
           />

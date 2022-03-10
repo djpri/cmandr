@@ -17,7 +17,8 @@ import useLinks from "hooks/useLinks";
 
 function LinkCategory() {
   const params: { id: string } = useParams();
-  const { singleCategoryQuery } = useLinks(params.id);
+    const { singleCategoryQuery } = useLinks(params.id);
+    const categoryName = "";
 
   const {
     isOpen: isEditModalOpen,

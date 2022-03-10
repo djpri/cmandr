@@ -8,8 +8,7 @@ function CommandsTable({ commands, showCategories }) {
   return (
     <Box p="1" display="flex" flexDirection="column" w="100%">
       <Grid
-        variant="unstyled"
-        size="md"
+        // size="md"
         templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
         gap={4}
         p="4"

@@ -1,32 +1,30 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
 import useLinkCategories from "hooks/useLinkCategories";
 import useLinks from "hooks/useLinks";
-import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { Link } from "../../../models/link";
+import { Link, LinkCreateDto } from "../../../models/link";
 
 function AddLinkForm() {
   const { addLinkMutation } = useLinks("");
   const { allCategoriesQuery } = useLinkCategories();
-  const params: { id: string } = useParams();
+  const params = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const { handleSubmit, register, reset, setValue } = useForm<Link>();
 
   useEffect(() => {
-    if (params && params.id) {
+    if (params) {
       setShowCategorySelect(false);
-      setValue("category.id", parseInt(params.id));
     } else {
       setShowCategorySelect(true);
     }
   }, [params, setValue]);
 
-  const onSubmit = (values: Link) => {
+  const onSubmit = (values: LinkCreateDto) => {
     setValue("category.name", "docs");
-    addLinkMutation.mutate(values);
-    // alert(JSON.stringify(values));
+    // addLinkMutation.mutate(values);
+    alert(JSON.stringify(values));
     reset();
   };
 
