@@ -11,17 +11,14 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useQuery } from "react-query";
 import * as React from "react";
-import { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
 import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
 import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
-import { getCommandsByCategoryFromDB } from "../api/handlers/commands/getCommandsByCategoryFromDB";
 import UserLayout from "../components/layout/UserLayout";
-import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,15 +28,10 @@ function CommandCategoryPage() {
     onClose: editModalClose,
   } = useDisclosure();
 
-  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
   const params: { id: string } = useParams();
+  const categoryList = useQuery(["commandCategories", params.id]);
   const categoryName = categoryList[params.id] || "";
   const itemCount = categoryList[params.id]?.items || "0";
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCommandsByCategoryFromDB(parseInt(params.id)));
-  }, [dispatch, params.id]);
 
   return (
     <UserLayout>
