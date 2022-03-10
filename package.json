@@ -20,7 +20,6 @@
     "@types/react-dom": "^16.9.0",
     "axios": "^0.25.0",
     "framer-motion": "^4.0.0",
-    "global": "^4.4.0",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
@@ -44,11 +43,12 @@
     "serve": "serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "tsc -w -p . --noEmit",
     "plop": "plop"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app"
+    ]
   },
   "browserslist": {
     "production": [

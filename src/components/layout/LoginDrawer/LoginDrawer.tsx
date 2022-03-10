@@ -32,7 +32,6 @@ function LoginDrawer() {
         colorScheme="whatsapp"
         onClick={onOpen}
         fontSize="xs"
-        label="profile"
       >
         <FaUser />
       </Button>

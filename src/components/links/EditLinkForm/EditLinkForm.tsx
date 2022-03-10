@@ -12,15 +12,15 @@ type IProps = {
 };
 
 function EditLinkForm({ linkItem, onClose }: IProps) {
-  const { id, title, link, category } = linkItem;
+  const { id, title, link } = linkItem;
   const { allCategoriesQuery } = useLinkCategories();
   const { editLinkMutation } = useLinks("");
 
-  const { handleSubmit, register, getValues } = useForm<LinkUpdateDto>({
+  const { handleSubmit, register } = useForm<LinkUpdateDto>({
     defaultValues: {
       title,
       link,
-      categoryId,
+      categoryId: linkItem.category.id,
     },
   });
 
@@ -33,8 +33,6 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack mb="10" mt="3">
-        <Input {...register("id")} placeholder="id" isDisabled type="hidden" />
-
         <FormLabel htmlFor="description">Title</FormLabel>
         <Input {...register("title")} placeholder="Link Title" />
 

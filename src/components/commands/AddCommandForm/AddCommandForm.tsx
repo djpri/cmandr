@@ -8,7 +8,7 @@ import useCommands from "../../../hooks/useCommands";
 import { CommandCreateDto } from "../../../models/command";
 
 function AddCommandForm() {
-  const params: { id: string } = useParams();
+  const params = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const { handleSubmit, register, reset, setValue } =
     useForm<CommandCreateDto>();

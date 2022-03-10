@@ -1,9 +1,8 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
-import * as React from "react";
 import { useForm } from "react-hook-form";
 import useCommandCategories from "../../../hooks/useCommandCategories";
-import { CommandCategory } from "../../../models/category";
-import { Command } from "../../../models/command";
+import useCommands from "../../../hooks/useCommands";
+import { Command, CommandUpdateDto } from "../../../models/command";
 
 type IProps = {
   commandItem: Command;
@@ -11,24 +10,23 @@ type IProps = {
 };
 
 function EditCommandForm({ commandItem, onClose }: IProps) {
-  const { id, description, line, category, reference } = commandItem;
-  const { allCategoriesQuery, editCategoryMutation } = useCommandCategories();
+  const { description, line, reference } = commandItem;
+  const { allCategoriesQuery } = useCommandCategories();
+  const { editCommandMutation } = useCommands("");
 
-  const categories: CommandCategory[] = allCategoriesQuery.data;
+  const categories = allCategoriesQuery.data;
 
-  const { handleSubmit, register, setValue, getValues } = useForm<Command>({
+  const { handleSubmit, register } = useForm<CommandUpdateDto>({
     defaultValues: {
-      id,
       description,
       line,
-      category,
       reference,
+      categoryId: commandItem.category.id,
     },
   });
 
-  const onSubmit = (values: Command) => {
-    setValue("category.name", category.name);
-    editCategoryMutation.mutate({ id: category.id, body: { ...values } });
+  const onSubmit = (values: CommandUpdateDto) => {
+    editCommandMutation.mutate({ id: commandItem.id, body: { ...values } });
     // closes popover if using form from popover only
     if (onClose) onClose();
   };
@@ -36,8 +34,6 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack mb="10" mt="3">
-        <Input {...register("id")} placeholder="id" isDisabled type="hidden" />
-
         <FormLabel htmlFor="description">Description</FormLabel>
         <Input
           {...register("description")}
@@ -48,7 +44,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         <Input {...register("line")} placeholder="Command" />
 
         <FormLabel htmlFor="category">Category</FormLabel>
-        <Select {...register("category.id")}>
+        <Select {...register("categoryId")}>
           <option value="">Select Category</option>
           {categories &&
             categories.map((category) => (

@@ -14,7 +14,7 @@ import React, { useState } from "react";
 
 function EditLinkCategory({ isOpen, onClose, categoryId }) {
   const [categoryName, setCategoryName] = useState("");
-  const { editCategoryMutation } = useLinkCategories("");
+  const { editCategoryMutation } = useLinkCategories();
 
   const handleEdit = () => {
     editCategoryMutation.mutate({
