@@ -1,24 +1,26 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   Button,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
+import useLinkCategories from "hooks/useLinkCategories";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { editLinkCategoryInDB } from "../../../api/handlers/linkCategories/editLinkCategoryInDB";
 
 function EditLinkCategory({ isOpen, onClose, categoryId }) {
   const [categoryName, setCategoryName] = useState("");
-  const dispatch = useDispatch();
+  const { editCategoryMutation } = useLinkCategories("");
 
   const handleEdit = () => {
-    dispatch(editLinkCategoryInDB(categoryId, categoryName));
+    editCategoryMutation.mutate({
+      id: categoryId,
+      body: { name: categoryName },
+    });
     setCategoryName("");
     onClose();
   };

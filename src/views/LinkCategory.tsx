@@ -6,22 +6,18 @@ import {
   PopoverBody,
 } from "@chakra-ui/popover";
 import { Box, Button, HStack, useDisclosure } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import { FaEdit } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import DeleteLinkCategory from "../components/links/DeleteLinkCategory/DeleteLinkCategory";
 import EditLinkCategory from "../components/links/EditLinkCategory/EditLinkCategory";
 import LinksList from "../components/links/LinksList/LinksList";
 import UserLayout from "../components/layout/UserLayout";
-import { selectLinksCategoriesAsObject } from "../redux/links/linksSlice";
-import { getLinksByCategoryFromDB } from "../api/handlers/links/getLinksByCategoryFromDB";
+import useLinks from "hooks/useLinks";
 
 function LinkCategory() {
-  const dispatch = useDispatch();
   const params: { id: string } = useParams();
-  const linkCategories = useSelector(selectLinksCategoriesAsObject);
-  const categoryName = linkCategories[params.id] || "";
+  const { singleCategoryQuery } = useLinks(params.id);
 
   const {
     isOpen: isEditModalOpen,
@@ -30,15 +26,11 @@ function LinkCategory() {
   } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  useEffect(() => {
-    dispatch(getLinksByCategoryFromDB(parseInt(params.id)));
-  }, [dispatch, params.id]);
-
   return (
     <UserLayout>
       <Stack mb="30px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900">
-          {linkCategories[params.id]}
+          Category header
         </Heading>
         <Box m="0" p="0">
           <Popover placement="right">

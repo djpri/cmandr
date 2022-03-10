@@ -12,6 +12,7 @@ import { ChakraProvider, theme } from "@chakra-ui/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { render, RenderOptions } from "@testing-library/react";
 import * as React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { testAccount, TEST_CONFIG } from "testConstants";
@@ -79,16 +80,23 @@ afterEach(() => {
   cachedAccounts = [];
 });
 
+const queryClient = new QueryClient();
+
 const AllProviders = ({ children }: { children?: React.ReactNode }) => (
-  <Provider
-    store={configureStore({ reducer: rootReducer, preloadedState: mockStore })}
-  >
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <MsalProvider instance={pca}>{children}</MsalProvider>
-      </BrowserRouter>
-    </ChakraProvider>
-  </Provider>
+  <QueryClientProvider client={queryClient}>
+    <Provider
+      store={configureStore({
+        reducer: rootReducer,
+        preloadedState: mockStore,
+      })}
+    >
+      <ChakraProvider theme={theme}>
+        <BrowserRouter>
+          <MsalProvider instance={pca}>{children}</MsalProvider>
+        </BrowserRouter>
+      </ChakraProvider>
+    </Provider>
+  </QueryClientProvider>
 );
 
 const customRender = (ui: React.ReactElement, options?: RenderOptions) =>

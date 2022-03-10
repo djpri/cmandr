@@ -8,6 +8,14 @@ export interface Command {
   category: CommandCategory;
 }
 
+export interface CommandReadDto {
+  id: number;
+  description: string;
+  line: string;
+  reference: string;
+  category: CommandCategory;
+}
+
 export interface CommandCreateDto {
   description: string;
   line: string;

@@ -1,5 +1,19 @@
 import { useToast } from "@chakra-ui/toast";
 
+/**
+ * Provides implementations of ChakraUI toast with a success and error toast
+ *
+ * @example
+ *
+ * ```js
+ * const { showSuccessToast } = useChakraToast();
+ * if (success) {
+ *  showSuccessToast("Title", "Description")
+ * } else {
+ *  showErrorToast("Title", "Description")
+ * }
+ * ```
+ */
 function useChakraToast() {
   const toast = useToast();
   const showSuccessToast = (title: string, description: string) => {

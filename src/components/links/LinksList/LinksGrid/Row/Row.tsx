@@ -6,10 +6,9 @@ import {
   Link as ChakraLink,
   Skeleton,
 } from "@chakra-ui/react";
-import { Link } from "api/models/link";
+import useLinkCategories from "hooks/useLinkCategories";
+import { Link } from "models/link";
 import * as React from "react";
-import { useSelector } from "react-redux";
-import { selectLinksCategoriesAsObject } from "redux/links/linksSlice";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
 interface IProps {
@@ -19,7 +18,7 @@ interface IProps {
 }
 
 function TableRow({ linkItem, showCategories, isLoading }: IProps) {
-  const categoriesList = useSelector(selectLinksCategoriesAsObject);
+  const { allCategoriesQuery } = useLinkCategories();
   const { title, link, category } = linkItem;
 
   const getFaviconUrl = (link) => {
@@ -68,7 +67,7 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
 
       {showCategories && (
         <Skeleton isLoaded={!isLoading}>
-          <GridItem>{categoriesList[category.id]}</GridItem>
+          <GridItem>{allCategoriesQuery.data[category.id]}</GridItem>
         </Skeleton>
       )}
 

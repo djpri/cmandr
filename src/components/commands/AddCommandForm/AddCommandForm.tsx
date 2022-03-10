@@ -1,29 +1,30 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
-import { Command, CommandCreateDto } from "api/models/command";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import useCommandCategories from "../../../hooks/useCommandCategories";
+import useCommands from "../../../hooks/useCommands";
+import { CommandCreateDto } from "../../../models/command";
 
 function AddCommandForm() {
   const params: { id: string } = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
-  const { handleSubmit, register, reset, setValue, getValues } =
-    useForm<Command>();
-  const { addCommandToDB } = useAddCommand();
+  const { handleSubmit, register, reset, setValue } =
+    useForm<CommandCreateDto>();
+  const { addCommandMutation } = useCommands(null);
+  const { allCategoriesQuery } = useCommandCategories();
 
   useEffect(() => {
     if (params && params.id) {
       setShowCategorySelect(false);
-      setValue("category.id", parseInt(params.id));
     } else {
       setShowCategorySelect(true);
     }
   }, [params, setValue]);
 
   const onSubmit = (values: CommandCreateDto) => {
-    setValue("category.name", categoryList[getValues("category.id")]);
-    addCommandToDB(values);
+    addCommandMutation.mutate(values);
     reset();
   };
 
@@ -56,15 +57,14 @@ function AddCommandForm() {
 
         {showCategorySelect && (
           <Box>
-            <FormLabel htmlFor="category">Category</FormLabel>
-            <Select {...register("category.id")}>
+            <FormLabel htmlFor="categoryId">Category</FormLabel>
+            <Select {...register("categoryId")}>
               <option value="">Select Category</option>
-              {categories &&
-                categories.map((category, index) => (
-                  <option value={category.id} key={index}>
-                    {category.name}
-                  </option>
-                ))}
+              {allCategoriesQuery.data.map((category, index) => (
+                <option value={category.id} key={index}>
+                  {category.name}
+                </option>
+              ))}
             </Select>
           </Box>
         )}

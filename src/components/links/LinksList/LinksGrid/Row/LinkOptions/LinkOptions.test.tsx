@@ -1,4 +1,4 @@
-import { Link } from "api/models/link";
+import { Link } from "models/link";
 import React from "react";
 import { fireEvent, render, screen } from "test-utils";
 import LinkOptions from "./LinkOptions";

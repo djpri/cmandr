@@ -1,14 +1,9 @@
+import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
 import * as React from "react";
-import { Button, Stack, Input, FormLabel, Select } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import {
-  selectCategoriesWithIds,
-  selectCategoriesAsKeyValuePairs,
-} from "../../../redux/commands/commandsSlice";
-import { useEditCommand } from "../../../api/handlers/commands/useEditCommand";
-import { CommandCategory } from "../../../api/models/category";
-import { Command } from "../../../api/models/command";
+import useCommandCategories from "../../../hooks/useCommandCategories";
+import { CommandCategory } from "../../../models/category";
+import { Command } from "../../../models/command";
 
 type IProps = {
   commandItem: Command;
@@ -17,9 +12,9 @@ type IProps = {
 
 function EditCommandForm({ commandItem, onClose }: IProps) {
   const { id, description, line, category, reference } = commandItem;
-  const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
-  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
-  const { editCommandInDB } = useEditCommand();
+  const { allCategoriesQuery, editCategoryMutation } = useCommandCategories();
+
+  const categories: CommandCategory[] = allCategoriesQuery.data;
 
   const { handleSubmit, register, setValue, getValues } = useForm<Command>({
     defaultValues: {
@@ -32,8 +27,8 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
   });
 
   const onSubmit = (values: Command) => {
-    setValue("category.name", categoryList[getValues("category.id")]);
-    editCommandInDB(values);
+    setValue("category.name", category.name);
+    editCategoryMutation.mutate({ id: category.id, body: { ...values } });
     // closes popover if using form from popover only
     if (onClose) onClose();
   };

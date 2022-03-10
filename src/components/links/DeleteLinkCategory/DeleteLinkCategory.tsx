@@ -9,9 +9,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteLinkCategoryInDB } from "../../../api/handlers/linkCategories/deleteLinkCategoryInDB";
+import useLinkCategories from "../../../hooks/useLinkCategories";
 
 interface IProps {
   isOpen: boolean;
@@ -26,8 +25,8 @@ function DeleteLinkCategory({
   categoryName,
   categoryId,
 }: IProps) {
-  let navigate = useNavigate();
-  const dispatch = useDispatch();
+    let navigate = useNavigate();
+    const { deleteCategoryMutation } = useLinkCategories();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -46,7 +45,7 @@ function DeleteLinkCategory({
             onClick={() => {
               onClose();
               navigate("/links");
-              dispatch(deleteLinkCategoryInDB(categoryId));
+               deleteCategoryMutation.mutate(categoryId);
             }}
           >
             Delete

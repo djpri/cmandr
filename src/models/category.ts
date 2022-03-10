@@ -1,6 +1,5 @@
 export interface CommandCategory {
   id: number;
-  userId?: number;
   name: string;
   parentId?: number;
   items?: number;
@@ -8,20 +7,27 @@ export interface CommandCategory {
 
 export interface LinkCategory {
   id: number;
-  userId?: number;
   name: string;
   parentId?: number;
 }
 
-export interface CategoryCreateDto {
-  userId?: number;
+/** Object that is received from response body of api */
+export interface CategoryReadDto {
+  id: number;
   name: string;
   parentId?: number;
   items?: number;
 }
 
+/** Object that is sent as request body to api when adding a new category */
+export interface CategoryCreateDto {
+  name: string;
+  parentId?: number;
+  items?: number;
+}
+
+/** Object that is sent as request body to api when editing an existing category */
 export interface CategoryUpdateDto {
-  userId?: number;
   name: string;
   parentId?: number;
   items?: number;

@@ -1,5 +1,5 @@
 import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
-import UseCommandsData from "hooks/useCommands";
+import useCommands from "hooks/useCommands";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
@@ -7,7 +7,7 @@ import CommandsTable from "./CommandsGrid/CommandsGrid";
 
 function CommandsList({ showCategories }) {
   const location = useLocation();
-  const commandsData = UseCommandsData("commands");
+  const commandsData = useCommands("commands");
   const [commands, setCommands] = useState([]);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);

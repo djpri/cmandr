@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import AddLinkForm from "../../AddLinkForm/AddLinkForm";
 
-const AddCommandButton = forwardRef((props, ref: any) => {
+const AddCommandButton = forwardRef((_props, ref: any) => {
   const { isOpen, onToggle } = useDisclosure();
   return (
     <>

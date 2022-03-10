@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "noImplicitAny": false,
     "strictNullChecks": false,
     "noUnusedLocals": false,
@@ -25,7 +25,9 @@
     "watchFile": "useFsEvents",
     "watchDirectory": "useFsEvents",
     "fallbackPolling": "dynamicPriority",
-    "synchronousWatchDirectory": true
+    "synchronousWatchDirectory": true,
+    "excludeDirectories": ["**/node_modules", "build"],
+    "excludeFiles": ["build/fileWhichChangesOften.ts"]
   },
   "include": ["src"]
 }

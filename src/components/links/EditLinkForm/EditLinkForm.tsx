@@ -1,14 +1,10 @@
-import { Stack, Input, FormLabel, Select, Button } from "@chakra-ui/react";
+import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
+import useLinkCategories from "hooks/useLinkCategories";
+import useLinks from "hooks/useLinks";
+import { LinkCategory } from "models/category";
+import { Link, LinkUpdateDto } from "models/link";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import {
-  selectLinkCategories,
-  selectLinksCategoriesAsObject,
-} from "redux/links/linksSlice";
-import { useEditLink } from "api/handlers/links/useEditLink";
-import { LinkCategory } from "api/models/category";
-import { Link, LinkUpdateDto } from "api/models/link";
 
 type IProps = {
   linkItem: Link;
@@ -17,23 +13,19 @@ type IProps = {
 
 function EditLinkForm({ linkItem, onClose }: IProps) {
   const { id, title, link, category } = linkItem;
-  const categories: LinkCategory[] = useSelector(selectLinkCategories);
-  const categoryList = useSelector(selectLinksCategoriesAsObject);
-  const { editLinkInDB } = useEditLink();
+  const { allCategoriesQuery } = useLinkCategories();
+  const { editLinkMutation } = useLinks("");
 
-  const { handleSubmit, register, setValue, getValues } =
-    useForm<LinkUpdateDto>({
-      defaultValues: {
-        id,
-        title,
-        link,
-        category,
-      },
-    });
+  const { handleSubmit, register, getValues } = useForm<LinkUpdateDto>({
+    defaultValues: {
+      title,
+      link,
+      categoryId,
+    },
+  });
 
   const onSubmit = (values: LinkUpdateDto) => {
-    setValue("category.name", categoryList[getValues("category.id")]);
-    editLinkInDB(values);
+    editLinkMutation.mutate({ id, body: values });
     // closes popover if using form from popover only
     if (onClose) onClose();
   };
@@ -50,10 +42,10 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
         <Input {...register("link")} placeholder="URL for link" />
 
         <FormLabel htmlFor="category">Category</FormLabel>
-        <Select {...register("category.id")}>
+        <Select {...register("categoryId")}>
           <option value="">Select Category</option>
-          {categories &&
-            categories.map((category) => (
+          {allCategoriesQuery.data &&
+            allCategoriesQuery.data.map((category) => (
               <option value={category.id} key={category.id}>
                 {category.name}
               </option>
