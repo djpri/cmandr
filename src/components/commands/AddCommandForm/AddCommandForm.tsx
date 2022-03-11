@@ -13,7 +13,7 @@ function AddCommandForm() {
   const { handleSubmit, register, reset, setValue } =
     useForm<CommandCreateDto>();
   const { addCommandMutation } = useCommands();
-  const { allCategoriesQuery } = useCommandCategories();
+  const { query: allCategoriesQuery } = useCommandCategories();
 
   useEffect(() => {
     if (params && params.id) {

@@ -18,7 +18,7 @@ interface IProps {
 }
 
 function TableRow({ linkItem, showCategories, isLoading }: IProps) {
-  const { allCategoriesQuery } = useLinkCategories();
+  const { query: allCategoriesQuery } = useLinkCategories();
   const { title, link, category } = linkItem;
 
   const getFaviconUrl = (link) => {

@@ -1,12 +1,6 @@
 import { Commands } from "api";
 import { asReactQueryFunction } from "helpers/helpers";
-import { CommandReadDto } from "models/command";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import useChakraToast from "./useChakraToast";
 
 /**
@@ -15,8 +9,8 @@ import useChakraToast from "./useChakraToast";
  * @example
  *
  * ```js
- * const { allCommandsQuery } = useCommands();
- * const commandsData = allCommandsQuery.data;
+ * const { query } = useCommands();
+ * const commandsData = query.data;
  * ```
  */
 function useCommands() {
@@ -25,10 +19,7 @@ function useCommands() {
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const allCommandsQuery = useQuery(
-    "commands",
-    asReactQueryFunction(Commands.getAll)
-  );
+  const query = useQuery("commands", asReactQueryFunction(Commands.getAll));
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
@@ -55,7 +46,10 @@ function useCommands() {
   });
 
   return {
-    allCommandsQuery,
+    query,
+    data: query.data,
+    isLoading: query.isLoading,
+    isError: query.isError,
     addCommandMutation,
     editCommandMutation,
     deleteCommandMutation,

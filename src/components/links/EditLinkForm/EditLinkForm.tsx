@@ -13,7 +13,7 @@ type IProps = {
 
 function EditLinkForm({ linkItem, onClose }: IProps) {
   const { id, title, link } = linkItem;
-  const { allCategoriesQuery } = useLinkCategories();
+  const { query: allCategoriesQuery } = useLinkCategories();
   const { editLinkMutation } = useLinks("");
 
   const { handleSubmit, register } = useForm<LinkUpdateDto>({

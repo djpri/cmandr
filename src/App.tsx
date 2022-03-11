@@ -21,18 +21,18 @@ export const App = () => {
     const handleRedirect = async () => {
       await instance.handleRedirectPromise();
     };
+    const getToken = async () => {
+      const accounts = instance.getAllAccounts();
+      if (accounts.length > 0) {
+        const response = await instance.acquireTokenSilent({
+          scopes: apiConfig.b2cScopes,
+          account: accounts[0],
+        });
+        return response.accessToken;
+      }
+    };
     CmandrApi.interceptors.request.use(
       async function (config) {
-        const getToken = async () => {
-          const accounts = instance.getAllAccounts();
-          if (accounts.length > 0) {
-            const response = await instance.acquireTokenSilent({
-              scopes: apiConfig.b2cScopes,
-              account: accounts[0],
-            });
-            return response.accessToken;
-          }
-        };
         const token = await getToken();
         config.headers.Authorization = `bearer ${token}`;
         return config;
