@@ -48,8 +48,7 @@ export const mockStore = {
       {
         id: 20,
         description: "Install Tailwind CSS for Next JS",
-        line:
-          "npm install -D tailwindcss@latest postcss@latest autoprefixer@latest",
+        line: "npm install -D tailwindcss@latest postcss@latest autoprefixer@latest",
         reference: "https://tailwindcss.com/docs/guides/nextjs",
         category: {
           id: 2,
@@ -90,8 +89,7 @@ export const mockStore = {
       {
         id: 23,
         description: "Create react app with chakra ui",
-        line:
-          "yarn create react-app my-app --template @chakra-ui/typescript",
+        line: "yarn create react-app my-app --template @chakra-ui/typescript",
         reference: "https://chakra-ui.com/guides/integrations/with-cra",
         category: {
           id: 12,
@@ -261,3 +259,5 @@ export const mockStore = {
     errorMessage: null,
   },
 };
+
+export const mockData = {};

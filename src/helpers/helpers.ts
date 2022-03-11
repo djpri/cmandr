@@ -11,7 +11,7 @@ export const asReactQueryFunction = (
       const { data } = await apiCall();
       return data;
     } catch (error) {
-      return error;
+      throw new Error("Could not fetch data");
     }
   };
 

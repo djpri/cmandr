@@ -3,7 +3,7 @@ import useCommands from "hooks/useCommands";
 import * as React from "react";
 
 function DeleteCommandButton({ commandId, onClose }) {
-  const { deleteCommandMutation } = useCommands(null);
+  const { deleteCommandMutation } = useCommands();
 
   return (
     <Button

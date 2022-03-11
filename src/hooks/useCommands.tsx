@@ -19,7 +19,7 @@ import useChakraToast from "./useChakraToast";
  * const commandsData = allCommandsQuery.data;
  * ```
  */
-function useCommands(props) {
+function useCommands() {
   const queryClient = useQueryClient();
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
@@ -28,10 +28,6 @@ function useCommands(props) {
   const allCommandsQuery = useQuery(
     "commands",
     asReactQueryFunction(Commands.getAll)
-  );
-  const singleCategoryQuery = useQuery(
-    ["commands", props.categoryId],
-    asReactQueryFunction(() => Commands.getAllByCategoryId(props.categoryId))
   );
 
   // Mutations
@@ -59,8 +55,7 @@ function useCommands(props) {
   });
 
   return {
-    allCommands: allCommandsQuery.data,
-    singleCategoryCommands: singleCategoryQuery.data,
+    allCommandsQuery,
     addCommandMutation,
     editCommandMutation,
     deleteCommandMutation,

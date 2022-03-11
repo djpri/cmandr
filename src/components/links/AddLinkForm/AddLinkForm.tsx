@@ -11,7 +11,7 @@ function AddLinkForm() {
   const { allCategoriesQuery } = useLinkCategories();
   const params = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
-  const { handleSubmit, register, reset, setValue } = useForm<Link>();
+  const { handleSubmit, register, reset, setValue } = useForm<LinkCreateDto>();
 
   useEffect(() => {
     if (params) {
@@ -22,9 +22,8 @@ function AddLinkForm() {
   }, [params, setValue]);
 
   const onSubmit = (values: LinkCreateDto) => {
-    setValue("category.name", "docs");
     // addLinkMutation.mutate(values);
-    alert(JSON.stringify(values));
+    // alert(JSON.stringify(values));
     reset();
   };
 
@@ -55,7 +54,7 @@ function AddLinkForm() {
         {showCategorySelect && (
           <Box>
             <FormLabel htmlFor="category">Category</FormLabel>
-            <Select {...register("category.id")}>
+            <Select {...register("categoryId")}>
               <option value="">Select Category</option>
               {allCategoriesQuery.data &&
                 allCategoriesQuery.data.map((category, index) => (

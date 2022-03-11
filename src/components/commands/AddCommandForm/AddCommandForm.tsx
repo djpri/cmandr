@@ -12,7 +12,7 @@ function AddCommandForm() {
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const { handleSubmit, register, reset, setValue } =
     useForm<CommandCreateDto>();
-  const { addCommandMutation } = useCommands(null);
+  const { addCommandMutation } = useCommands();
   const { allCategoriesQuery } = useCommandCategories();
 
   useEffect(() => {
