@@ -1,24 +1,24 @@
 import { Heading, Stack } from "@chakra-ui/layout";
 import {
   Popover,
-  PopoverTrigger,
-  PopoverContent,
   PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
 } from "@chakra-ui/popover";
 import { Box, Button, HStack, useDisclosure } from "@chakra-ui/react";
+import useLinks from "hooks/useLinks";
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import UserLayout from "../components/layout/UserLayout";
 import DeleteLinkCategory from "../components/links/DeleteLinkCategory/DeleteLinkCategory";
 import EditLinkCategory from "../components/links/EditLinkCategory/EditLinkCategory";
 import LinksList from "../components/links/LinksList/LinksList";
-import UserLayout from "../components/layout/UserLayout";
-import useLinks from "hooks/useLinks";
 
 function LinkCategory() {
-  const params: { id: string } = useParams();
-    const { singleCategoryQuery } = useLinks(params.id);
-    const categoryName = "";
+  const params = useParams();
+  const { singleCategoryQuery } = useLinks(params.id);
+  const categoryName = "";
 
   const {
     isOpen: isEditModalOpen,

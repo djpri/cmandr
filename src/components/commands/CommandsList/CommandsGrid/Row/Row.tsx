@@ -23,7 +23,6 @@ type Props = {
 };
 
 function Row({ commandItem, showCategories }: Props) {
-  const { data } = useQuery("linkCategories");
   const { id, description, line, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
@@ -65,7 +64,7 @@ function Row({ commandItem, showCategories }: Props) {
         <GridItem>
           <HStack>
             <AiFillFolder color="gray" />
-            <Text color={categoryTextColor}>{data[category?.id]}</Text>
+            <Text color={categoryTextColor}>{commandItem.category.name}</Text>
           </HStack>
         </GridItem>
       )}

@@ -23,7 +23,6 @@ function LoginDrawer() {
   const [formType] = React.useState("login");
   const btnRef: React.Ref<any> = React.useRef();
   const { accounts } = useMsal();
-  const [user] = useState(accounts[0]);
 
   const PopoverButton = () => (
     <PopoverTrigger>
@@ -38,7 +37,7 @@ function LoginDrawer() {
     </PopoverTrigger>
   );
 
-  if (user)
+  if (accounts[0])
     return (
       <Box position="relative" m="0">
         <Popover
@@ -55,7 +54,7 @@ function LoginDrawer() {
               <Text>
                 Signed in as{" "}
                 <Text as="span" fontWeight="700">
-                  {user?.name}
+                  {accounts[0]?.name}
                 </Text>
               </Text>
             </PopoverHeader>

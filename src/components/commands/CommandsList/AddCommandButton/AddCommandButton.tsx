@@ -9,7 +9,7 @@ import * as React from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import AddCommandForm from "../../AddCommandForm/AddCommandForm";
 
-const AddCommandButton = forwardRef((_props, ref: any) => {
+const AddCommandButton = forwardRef((props, ref: any) => {
   const { isOpen, onToggle } = useDisclosure();
   return (
     <>

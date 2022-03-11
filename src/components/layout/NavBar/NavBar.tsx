@@ -1,10 +1,9 @@
 import { Box, Button, Heading, HStack } from "@chakra-ui/react";
-import * as React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ColorModeSwitcher } from "../../other/ColorModeSwitcher";
-import { setSidebarToggle } from "../../../redux/layout/layoutSlice";
-import { useAppDispatch } from "../../../redux/store";
+import { useAppDispatch } from "redux/store";
 import LoginDrawer from "../LoginDrawer/LoginDrawer";
+import { setSidebarToggle } from "redux/layout/layoutSlice";
 
 function NavBar() {
   const dispatch = useAppDispatch();

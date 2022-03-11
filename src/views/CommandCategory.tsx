@@ -28,8 +28,9 @@ function CommandCategoryPage() {
     onClose: editModalClose,
   } = useDisclosure();
 
-  const params: { id: string } = useParams();
-  const categoryList = useQuery(["commandCategories", params.id]);
+  const params = useParams();
+  // const categoryList = useQuery(["commandCategories", params.id]);
+  const categoryList = null;
   const categoryName = categoryList[params.id] || "";
   const itemCount = categoryList[params.id]?.items || "0";
 

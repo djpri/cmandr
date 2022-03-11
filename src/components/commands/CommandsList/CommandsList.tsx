@@ -1,4 +1,5 @@
 import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
+import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import useCommands from "hooks/useCommands";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -7,7 +8,7 @@ import CommandsTable from "./CommandsGrid/CommandsGrid";
 
 function CommandsList({ showCategories }) {
   const location = useLocation();
-  const commandsData = useCommands("commands");
+  const { allCommandsQuery } = useCommands();
   const [commands, setCommands] = useState([]);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);
@@ -23,14 +24,14 @@ function CommandsList({ showCategories }) {
   }, [location]);
 
   useEffect(() => {
-    setCommands(commandsData.allCommands.data);
-  }, [commandsData]);
+    setCommands(allCommandsQuery.data);
+  }, [allCommandsQuery.data]);
 
   // filter commands on search
   useEffect(() => {
     const timeout = setTimeout(() => {
       let newArray = [];
-      if (commands.length >= 1) {
+      if (commands?.length >= 1) {
         newArray = commands.filter((item: { description: string }) =>
           item.description.match(new RegExp(search, "i"))
         );
@@ -43,7 +44,7 @@ function CommandsList({ showCategories }) {
   }, [search, commands]);
 
   return (
-    <>
+    <ErrorBoundaryWrapper>
       <Box
         maxW="container.xl"
         w={["100%", null, null, null, "container.xl"]}
@@ -80,7 +81,7 @@ function CommandsList({ showCategories }) {
           showCategories={showCategories}
         />
       </Box>
-    </>
+    </ErrorBoundaryWrapper>
   );
 }
 

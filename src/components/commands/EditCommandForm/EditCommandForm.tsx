@@ -12,7 +12,7 @@ type IProps = {
 function EditCommandForm({ commandItem, onClose }: IProps) {
   const { description, line, reference } = commandItem;
   const { allCategoriesQuery } = useCommandCategories();
-  const { editCommandMutation } = useCommands("");
+  const { editCommandMutation } = useCommands();
 
   const categories = allCategoriesQuery.data;
 

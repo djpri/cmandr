@@ -19,7 +19,10 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "noUnusedLocals": false,
-    "noUnusedParameters": true
+    "noUnusedParameters": false
+  },
+  "watchOptions": {
+    "excludeDirectories": ["**/node_modules", "build"]
   },
   "include": ["src"]
 }

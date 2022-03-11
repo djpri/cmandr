@@ -1,44 +1,26 @@
 import { Box, HStack, Link, Stack, StackDivider, Text } from "@chakra-ui/react";
 import useCommandCategories from "hooks/useCommandCategories";
 import useLinkCategories from "hooks/useLinkCategories";
-import { CommandCategory } from "models/category";
+import { CommandCategory, LinkCategory } from "models/category";
 import * as React from "react";
+import { useState } from "react";
 import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import AddCommandCategory from "../../../commands/AddCommandCategory/AddCommandCategory";
 import AddLinkCategory from "../../../links/AddLinkCategory/AddLinkCategory";
 
 function SideBarLinks() {
-  const { allCategoriesQuery: commandCategories } = useCommandCategories();
-  const { allCategoriesQuery: linkCategories } = useLinkCategories();
   const location = useLocation();
 
-  return (
-    <Stack divider={<StackDivider borderColor="gray.500" />} pl="6" pr="5">
-      <Stack>
-        {/* MENU */}
-        <Box flex="1" textAlign="left">
-          <Text fontWeight="700" letterSpacing="1px">
-            <Link as={RouterLink} to="/">
-              Home
-            </Link>
-          </Text>
-        </Box>
-      </Stack>
+  const CommandCategoryLinks = () => {
+    const { allCategoriesQuery } = useCommandCategories();
 
-      {/* COMMANDS */}
-      <Stack>
-        <Box flex="1" textAlign="left">
-          <Text fontWeight="700" letterSpacing="1px">
-            Commands
-          </Text>
-        </Box>
+    if (allCategoriesQuery.isLoading) return <p>LOADING...</p>;
 
-        <Link as={RouterLink} to="/commands">
-          <Text>All commands</Text>
-        </Link>
-        {commandCategories &&
-          commandCategories.data.map((item: CommandCategory) => (
+    return (
+      <>
+        {allCategoriesQuery.data &&
+          allCategoriesQuery.data.map((item: CommandCategory) => (
             <HStack key={item.id}>
               {location.pathname === `/commands/${item.id}` ? (
                 <AiFillFolderOpen />
@@ -60,22 +42,19 @@ function SideBarLinks() {
             </HStack>
           ))}
         <AddCommandCategory />
-      </Stack>
+      </>
+    );
+  };
 
-      {/* LINKS */}
-      <Stack mb="100px">
-        <Box flex="1" textAlign="left">
-          <Text fontWeight="700" letterSpacing="1px">
-            Links
-          </Text>
-        </Box>
+  const LinkCategoryLinks = () => {
+    const { allCategoriesQuery } = useLinkCategories();
 
-        <Link as={RouterLink} to="/links">
-          <Text>All links</Text>
-        </Link>
+    if (allCategoriesQuery.isLoading) return <p>LOADING...</p>;
 
-        {linkCategories &&
-          linkCategories.data.map((item: CommandCategory) => (
+    return (
+      <>
+        {allCategoriesQuery.data &&
+          allCategoriesQuery?.data.map((item: LinkCategory) => (
             <HStack key={item.id}>
               {location.pathname === `/links/${item.id}` ? (
                 <AiFillFolderOpen />
@@ -88,6 +67,50 @@ function SideBarLinks() {
             </HStack>
           ))}
         <AddLinkCategory />
+      </>
+    );
+  };
+
+  return (
+    <Stack divider={<StackDivider borderColor="gray.500" />} pl="6" pr="5">
+      <Stack>
+        {/* MENU */}
+        <Box flex="1" textAlign="left">
+          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+            <Link as={RouterLink} to="/">
+              Home
+            </Link>
+          </Text>
+        </Box>
+      </Stack>
+
+      {/* COMMANDS */}
+      <Stack>
+        <Box flex="1" textAlign="left">
+          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+            Commands
+          </Text>
+        </Box>
+
+        <Link as={RouterLink} to="/commands">
+          <Text>All commands</Text>
+        </Link>
+        <CommandCategoryLinks />
+      </Stack>
+
+      {/* LINKS */}
+      <Stack mb="100px">
+        <Box flex="1" textAlign="left">
+          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+            Links
+          </Text>
+        </Box>
+
+        <Link as={RouterLink} to="/links">
+          <Text>All links</Text>
+        </Link>
+
+        <LinkCategoryLinks />
       </Stack>
     </Stack>
   );

@@ -15,9 +15,8 @@ import * as React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { rootReducer } from "redux/store";
 import { testAccount, TEST_CONFIG } from "testConstants";
-import { mockStore } from "./redux/mockStore";
-import { rootReducer } from "./redux/store";
 
 const msalConfig: Configuration = TEST_CONFIG;
 
@@ -80,14 +79,25 @@ afterEach(() => {
   cachedAccounts = [];
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // turns retries off
+      retry: false,
+    },
+  },
+});
 
 const AllProviders = ({ children }: { children?: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>
     <Provider
       store={configureStore({
         reducer: rootReducer,
-        preloadedState: mockStore,
+        preloadedState: {
+          layout: {
+            isSidebarOpen: false,
+          },
+        },
       })}
     >
       <ChakraProvider theme={theme}>
