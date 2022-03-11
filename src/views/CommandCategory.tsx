@@ -11,7 +11,6 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useQuery } from "react-query";
 import * as React from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
@@ -19,6 +18,7 @@ import CommandsList from "../components/commands/CommandsList/CommandsList";
 import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
 import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import UserLayout from "../components/layout/UserLayout";
+import useCommandsFromSingleCategory from "hooks/useCommandsFromSingleCategory";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,18 +27,14 @@ function CommandCategoryPage() {
     onOpen: editModalOpen,
     onClose: editModalClose,
   } = useDisclosure();
-
-  const params = useParams();
-  // const categoryList = useQuery(["commandCategories", params.id]);
-  const categoryList = null;
-  const categoryName = categoryList[params.id] || "";
-  const itemCount = categoryList[params.id]?.items || "0";
+  const { id: categoryId } = useParams();
+  const { query } = useCommandsFromSingleCategory(parseInt(categoryId));
 
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900">
-          {categoryName}
+          {"[Category Name]"}
         </Heading>
         <Box m="0" p="0">
           <Popover placement="right">
@@ -63,20 +59,22 @@ function CommandCategoryPage() {
         </Box>
       </Stack>
       <Text mb="30px" color="gray.500" fontWeight="700">
-        {itemCount} items
+        {"[Item Count]"} items
       </Text>
-      <CommandsList showCategories={false} />
       <DeleteCategoryModal
         isOpen={isOpen}
         onClose={onClose}
-        categoryName={categoryName}
-        categoryId={parseInt(params.id)}
+        categoryName={"categoryName"}
+        categoryId={parseInt(categoryId)}
       />
       <EditCommandCategory
         isOpen={isEditModalOpen}
         onClose={editModalClose}
-        categoryId={parseInt(params.id)}
+        categoryId={parseInt(categoryId)}
       />
+      {query.data && (
+        <CommandsList showCategories={false} commands={query.data} />
+      )}
     </UserLayout>
   );
 }

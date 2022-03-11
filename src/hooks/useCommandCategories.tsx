@@ -1,7 +1,6 @@
 import { CommandCategories } from "api";
 import { asReactQueryFunction } from "helpers/helpers";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { CategoryReadDto } from "../models/category";
 import useChakraToast from "./useChakraToast";
 
 /**
@@ -10,8 +9,8 @@ import useChakraToast from "./useChakraToast";
  * @example
  *
  * ```js
- * const { allCommandCategoriesQuery } = useCommandCategories();
- * const commandCategoriesData = allCommandCategoriesQuery.data;
+ * const { query } = useCommandCategories();
+ * const categories = query.data;
  * ```
  */
 function useCommandCategories() {
@@ -20,7 +19,7 @@ function useCommandCategories() {
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const allCategoriesQuery = useQuery(
+  const query = useQuery(
     "commandCategories",
     asReactQueryFunction(CommandCategories.getAll)
   );
@@ -41,13 +40,6 @@ function useCommandCategories() {
     },
     onError: showErrorToast,
   });
-  /**
-   * @example
-   *
-   * ```js
-   * deleteCommandMutation.mutate(commandId);
-   * ```
-   */
   const deleteCategoryMutation = useMutation(CommandCategories.remove, {
     onSuccess: () => {
       queryClient.invalidateQueries("commandCategories");
@@ -57,7 +49,7 @@ function useCommandCategories() {
   });
 
   return {
-    allCategoriesQuery,
+    query,
     addCategoryMutation,
     editCategoryMutation,
     deleteCategoryMutation,

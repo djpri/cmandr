@@ -1,10 +1,5 @@
-import { CommandReadDto } from "./../models/command";
-import {
-  CategoryCreateDto,
-  CategoryUpdateDto,
-  LinkCategory,
-} from "models/category";
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { CategoryCreateDto, CategoryUpdateDto } from "models/category";
+import axios, { AxiosInstance } from "axios";
 import { CommandCreateDto, CommandUpdateDto } from "models/command";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
 
@@ -15,10 +10,18 @@ export const CmandrApi: AxiosInstance = axios.create({
 
 const { get, post, put, delete: remove } = CmandrApi;
 
-/** Api endpoints for commands */
+/**
+ * Api endpoints for commands
+ */
 export const Commands = {
   getAll: () => get("commands"),
+  /**
+   * Get information about a single command
+   */
   getById: (id: number) => get(`commands/${id}`),
+  /**
+   * Get all commands from a single category
+   */
   getAllByCategoryId: (id: number) => get(`commands/list/${id}`),
   create: (body: CommandCreateDto) => post("commands", body),
   update: (request: { id: number; body: CommandUpdateDto }) =>
@@ -38,7 +41,13 @@ export const CommandCategories = {
 
 export const Links = {
   getAll: () => get("links"),
+  /**
+   * Get information about a single link
+   */
   getById: (id: number) => get(`links/${id}`),
+  /**
+   * Get all links from a single category
+   */
   getAllByCategoryId: (id: number) => get(`links/list/${id}`),
   create: (body: LinkCreateDto) => post("links", body),
   update: (request: { id: number; body: LinkUpdateDto }) =>

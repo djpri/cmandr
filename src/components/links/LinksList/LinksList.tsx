@@ -16,7 +16,7 @@ import AddLinkButton from "./AddLinkButton/AddLinkButton";
 import LinksTable from "./LinksGrid/LinksGrid";
 
 function LinksList({ showCategories }) {
-  const { allLinksQuery } = useLinks("");
+  const { query: allLinksQuery } = useLinks();
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(allLinksQuery.data);
   const [isSearching, setIsSearching] = useState(false);

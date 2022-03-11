@@ -1,15 +1,12 @@
 import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
-import useCommands from "hooks/useCommands";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
 
-function CommandsList({ showCategories }) {
+function CommandsList({ showCategories, commands }) {
   const location = useLocation();
-  const { allCommandsQuery } = useCommands();
-  const [commands, setCommands] = useState([]);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const ref = useRef(null);
@@ -22,10 +19,6 @@ function CommandsList({ showCategories }) {
     setSearchResults(null);
     setSearch("");
   }, [location]);
-
-  useEffect(() => {
-    setCommands(allCommandsQuery.data);
-  }, [allCommandsQuery.data]);
 
   // filter commands on search
   useEffect(() => {

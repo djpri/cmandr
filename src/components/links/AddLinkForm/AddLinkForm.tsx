@@ -4,11 +4,11 @@ import useLinks from "hooks/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { Link, LinkCreateDto } from "../../../models/link";
+import { LinkCreateDto } from "../../../models/link";
 
 function AddLinkForm() {
-  const { addLinkMutation } = useLinks("");
-  const { allCategoriesQuery } = useLinkCategories();
+  const { addLinkMutation } = useLinks();
+  const { query: allCategoriesQuery } = useLinkCategories();
   const params = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const { handleSubmit, register, reset, setValue } = useForm<LinkCreateDto>();
@@ -23,7 +23,7 @@ function AddLinkForm() {
 
   const onSubmit = (values: LinkCreateDto) => {
     // addLinkMutation.mutate(values);
-    // alert(JSON.stringify(values));
+    alert(JSON.stringify(values));
     reset();
   };
 

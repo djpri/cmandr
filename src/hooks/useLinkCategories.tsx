@@ -9,8 +9,8 @@ import useChakraToast from "./useChakraToast";
  * @example
  *
  * ```js
- * const { allLinkCategoriesQuery } = useLinkCategories();
- * const linkCategoriesData = allLinkCategoriesQuery.data;
+ * const { query } = useLinkCategories();
+ * const categories = query.data;
  * ```
  */
 function useLinkCategories() {
@@ -19,7 +19,7 @@ function useLinkCategories() {
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const allCategoriesQuery = useQuery(
+  const query = useQuery(
     "commandCategories",
     asReactQueryFunction(LinkCategories.getAll)
   );
@@ -40,13 +40,6 @@ function useLinkCategories() {
     },
     onError: showErrorToast,
   });
-  /**
-   * @example
-   *
-   * ```js
-   * deleteCommandMutation.mutate(commandId);
-   * ```
-   */
   const deleteCategoryMutation = useMutation(LinkCategories.remove, {
     onSuccess: () => {
       queryClient.invalidateQueries("linkCategories");
@@ -56,7 +49,7 @@ function useLinkCategories() {
   });
 
   return {
-    allCategoriesQuery,
+    query,
     addCategoryMutation,
     editCategoryMutation,
     deleteCategoryMutation,

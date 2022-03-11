@@ -17,10 +17,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: Infinity,
-      retry: 3,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
-      enabled: false,
     },
   },
 });
@@ -37,7 +35,7 @@ const msalConfig: Configuration = {
   },
 };
 
-export const msalInstance = new PublicClientApplication(msalConfig);
+const msalInstance = new PublicClientApplication(msalConfig);
 
 ReactDOM.render(
   <React.StrictMode>

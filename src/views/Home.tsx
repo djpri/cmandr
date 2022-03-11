@@ -13,8 +13,8 @@ import { Link as RouterLink } from "react-router-dom";
 import UserLayout from "../components/layout/UserLayout";
 
 function HomePage() {
-  const { allCategoriesQuery: commandCategoryQuery } = useCommandCategories();
-  const { allCategoriesQuery: linkCategoryQuery } = useLinkCategories();
+  const { query: commandCategoryQuery } = useCommandCategories();
+  const { query: linkCategoryQuery } = useLinkCategories();
   const linkBgColor = useColorModeValue("green.50", "teal.900");
   const linkBgHoverColor = useColorModeValue("green.100", "teal.600");
 

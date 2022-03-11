@@ -13,7 +13,7 @@ function SideBarLinks() {
   const location = useLocation();
 
   const CommandCategoryLinks = () => {
-    const { allCategoriesQuery } = useCommandCategories();
+    const { query: allCategoriesQuery } = useCommandCategories();
 
     if (allCategoriesQuery.isLoading) return <p>LOADING...</p>;
 
@@ -47,7 +47,7 @@ function SideBarLinks() {
   };
 
   const LinkCategoryLinks = () => {
-    const { allCategoriesQuery } = useLinkCategories();
+    const { query: allCategoriesQuery } = useLinkCategories();
 
     if (allCategoriesQuery.isLoading) return <p>LOADING...</p>;
 
