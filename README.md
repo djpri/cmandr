@@ -11,21 +11,21 @@ Also includes a bookmark manager for storing links related to development work.
 
 #### Frontend Folder Structure
 
-📦src
- ┣ 📂api - *contains axios instance and all of the api endpoints*
- ┣ 📂auth - *contains Azure Active Directory B2C policies and msal config*
- ┣ 📂components
- ┃ ┣ 📂auth
- ┃ ┣ 📂commands
- ┃ ┣ 📂layout
- ┃ ┣ 📂links
- ┃ ┗ 📂other
- ┣ 📂helpers - *helper functions*
- ┣ 📂hooks - *custom react hooks, mainly for react query logic*
- ┣ 📂models - *view models based on the web api DTOs (data transfer objects)*
- ┣ 📂redux - *contains redux store and all slices*
- ┣ 📂theme - *theme configuration for chakra ui*
- ┣ 📂views - *individual components for each page of the site*
+📦src  
+ ┣ 📂api - *contains axios instance and all of the api endpoints*  
+ ┣ 📂auth - *contains Azure Active Directory B2C policies and msal config*  
+ ┣ 📂components  
+ ┃ ┣ 📂auth  
+ ┃ ┣ 📂commands  
+ ┃ ┣ 📂layout  
+ ┃ ┣ 📂links  
+ ┃ ┗ 📂other  
+ ┣ 📂helpers - *helper functions*  
+ ┣ 📂hooks - *custom react hooks, mainly for react query logic*  
+ ┣ 📂models - *view models based on the web api DTOs (data transfer objects)*  
+ ┣ 📂redux - *contains redux store and all slices*  
+ ┣ 📂theme - *theme configuration for chakra ui*  
+ ┣ 📂views - *individual components for each page of the site*  
 
 ## Local Development Setup ( Frontend )
 
