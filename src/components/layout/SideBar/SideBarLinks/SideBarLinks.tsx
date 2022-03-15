@@ -5,8 +5,8 @@ import { CommandCategory, LinkCategory } from "models/category";
 import * as React from "react";
 import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import AddCommandCategory from "../../../commands/AddCommandCategory/AddCommandCategory";
-import AddLinkCategory from "../../../links/AddLinkCategory/AddLinkCategory";
+import AddCommandCategory from "../../../commandCategories/AddCommandCategory/AddCommandCategory";
+import AddLinkCategory from "../../../linkCategories/AddLinkCategory/AddLinkCategory";
 
 function SideBarLinks() {
   const location = useLocation();

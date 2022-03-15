@@ -11,16 +11,16 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import useCommandCategories from "hooks/useCommandCategories";
+import useCommandsFromSingleCategory from "hooks/useCommandsFromSingleCategory";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import DeleteCategoryModal from "../components/commandCategories/DeleteCommandCategory/DeleteCategoryModal";
+import EditCommandCategory from "../components/commandCategories/EditCommandCategory/EditCommandCategory";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
-import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
-import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import UserLayout from "../components/layout/UserLayout";
-import useCommandsFromSingleCategory from "hooks/useCommandsFromSingleCategory";
-import useCommandCategories from "hooks/useCommandCategories";
-import { useEffect, useState } from "react";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
