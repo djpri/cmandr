@@ -27,7 +27,8 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
 
   const onSubmit = (values: CommandUpdateDto) => {
     editCommandMutation.mutate({ id: commandItem.id, body: { ...values } });
-    // closes popover if using form from popover only
+    // alert(JSON.stringify(values, null, 2));
+    // closes popover if using the form inside a popover
     if (onClose) onClose();
   };
 

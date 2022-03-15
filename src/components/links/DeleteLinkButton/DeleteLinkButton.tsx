@@ -3,7 +3,7 @@ import useLinks from "hooks/useLinks";
 import React from "react";
 
 function DeleteLinkButton({ linkId, onClose }) {
-  const { deleteLinkMutation } = useLinks("");
+  const { deleteLinkMutation } = useLinks();
 
   return (
     <Button

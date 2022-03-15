@@ -9,7 +9,7 @@ Also includes a bookmark manager for storing links related to development work.
 - Backend: ASP.NET Core 6.0 Web API
 - Database: Azure SQL server
 
-#### Frontend Folder Structure
+## Frontend Folder Structure
 
 📦src  
  ┣ 📂api - *contains axios instance and all of the api endpoints*  
@@ -29,27 +29,27 @@ Also includes a bookmark manager for storing links related to development work.
 
 ## Local Development Setup ( Frontend )
 
-Make sure [Node.js](https://nodejs.org/en/) (**14.17.0**) and [Yarn](https://yarnpkg.com/) are installed.
+Make sure [Node.js](https://nodejs.org/en/) (**16.4.0**) and [Yarn](https://yarnpkg.com/) are installed.
 
 Then in the project directory, run
 ```sh
 $ yarn
 ```
-### Scripts
-##### Run development server
+## Scripts
+### Run development server
 Open http://localhost:3000/ to view the app if page doesn't load automatically
 ```sh
 $ yarn start
 ```
-##### Create build folder for production
+### Create build folder for production
 ```sh
 $ yarn build
 ```
-##### Serve build
+### Serve build
 ```sh
 $ yarn serve
 ```
-##### Run tests using Jest
+### Run tests using Jest
 ```sh
 $ yarn test
 ```

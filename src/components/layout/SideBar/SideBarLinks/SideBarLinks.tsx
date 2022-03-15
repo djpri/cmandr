@@ -3,7 +3,6 @@ import useCommandCategories from "hooks/useCommandCategories";
 import useLinkCategories from "hooks/useLinkCategories";
 import { CommandCategory, LinkCategory } from "models/category";
 import * as React from "react";
-import { useState } from "react";
 import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import AddCommandCategory from "../../../commands/AddCommandCategory/AddCommandCategory";

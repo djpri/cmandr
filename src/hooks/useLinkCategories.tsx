@@ -20,7 +20,7 @@ function useLinkCategories() {
 
   // Queries
   const query = useQuery(
-    "commandCategories",
+    "linkCategories",
     asReactQueryFunction(LinkCategories.getAll)
   );
 

@@ -8,7 +8,7 @@ import { LinkCreateDto } from "../../../models/link";
 
 function AddLinkForm() {
   const { addLinkMutation } = useLinks();
-  const { query: allCategoriesQuery } = useLinkCategories();
+  const { query } = useLinkCategories();
   const params = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const { handleSubmit, register, reset, setValue } = useForm<LinkCreateDto>();
@@ -56,8 +56,8 @@ function AddLinkForm() {
             <FormLabel htmlFor="category">Category</FormLabel>
             <Select {...register("categoryId")}>
               <option value="">Select Category</option>
-              {allCategoriesQuery.data &&
-                allCategoriesQuery.data.map((category, index) => (
+              {query.data &&
+                query.data.map((category, index) => (
                   <option value={category.id} key={index}>
                     {category.name}
                   </option>

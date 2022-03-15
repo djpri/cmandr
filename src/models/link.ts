@@ -2,7 +2,7 @@ import { LinkCategory } from "./category";
 
 export interface Link {
   id: number;
-  link: string;
+  url: string;
   title: string;
   category: LinkCategory;
   previewImageUrl?: string;

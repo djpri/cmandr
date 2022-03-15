@@ -1,6 +1,5 @@
 import { Button } from "@chakra-ui/react";
 import useCommands from "hooks/useCommands";
-import * as React from "react";
 
 function DeleteCommandButton({ commandId, onClose }) {
   const { deleteCommandMutation } = useCommands();

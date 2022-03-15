@@ -6,7 +6,7 @@ import { Link } from "models/link";
 const testLink: Link = {
   id: 1,
   title: "laravel",
-  link: "https://laravel.com/docs/8.x#getting-started-on-windows",
+  url: "https://laravel.com/docs/8.x#getting-started-on-windows",
   category: { id: 1, name: "general" },
 };
 

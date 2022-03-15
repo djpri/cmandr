@@ -6,6 +6,8 @@ import useChakraToast from "./useChakraToast";
 /**
  * Custom hook that contains react query logic for commands
  *
+ * @see https://react-query.tanstack.com/guides/queries
+ *
  * @example
  *
  * ```js

@@ -1,11 +1,10 @@
 import { Link } from "models/link";
-import React from "react";
 import { fireEvent, render, screen } from "test-utils";
 import LinkOptions from "./LinkOptions";
 
 const testLink: Link = {
   title: "Laravel",
-  link: "https://laravel.com/docs/8.x#getting-started-on-windows",
+  url: "https://laravel.com/docs/8.x#getting-started-on-windows",
   category: { id: 1, name: "general" },
   id: 10,
 };
@@ -32,7 +31,7 @@ test("Shows edit form with correct default information when edit button is click
   fireEvent.click(editButton);
   // then view the edit command form
   const defaultTitle = screen.getByDisplayValue(testLink.title);
-  const defaultLink = screen.getByDisplayValue(testLink.link);
+  const defaultLink = screen.getByDisplayValue(testLink.url);
   const defaultCategory = screen.getByDisplayValue(testLink.category.name);
   const saveButton = screen.getByText("Save");
 

@@ -30,14 +30,15 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
         templateColumns={["repeat(auto-fill, 200px)", null, null, "1fr"]}
         gap={[4, null, null, 0]}
       >
-        {links.map((link: Link) => (
-          <Row
-            isLoading={isLoading}
-            linkItem={link}
-            key={link.id}
-            showCategories={showCategories}
-          />
-        ))}
+        {links &&
+          links.map((link: Link) => (
+            <Row
+              isLoading={isLoading}
+              linkItem={link}
+              key={link.id}
+              showCategories={showCategories}
+            />
+          ))}
       </Grid>
     </Box>
   );
