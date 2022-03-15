@@ -1,6 +1,5 @@
-import { Input, Button, HStack, useDisclosure } from "@chakra-ui/react";
+import { Button, HStack, Input, useDisclosure } from "@chakra-ui/react";
 import useCommandCategories from "hooks/useCommandCategories";
-import * as React from "react";
 import { useState } from "react";
 import { AiFillFolderAdd } from "react-icons/ai";
 
@@ -9,13 +8,8 @@ function AddCommandCategory() {
   const [category, setCategory] = useState<string>(null);
   const { isOpen, onToggle } = useDisclosure();
 
-  const handleAddCategory = async () => {
-      try {
-          await addCategoryMutation.mutateAsync({ name: category });
-          onToggle();
-    } catch (error) {
-      console.log(error);
-    }
+  const handleAddCategory = () => {
+    addCategoryMutation.mutate({ name: category });
   };
 
   return (
