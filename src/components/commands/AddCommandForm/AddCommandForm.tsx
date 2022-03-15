@@ -2,13 +2,15 @@ import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import useCommandCategories from "../../../hooks/useCommandCategories";
 import useCommands from "../../../hooks/useCommands";
 import { CommandCreateDto } from "../../../models/command";
 
-function AddCommandForm() {
-  const params = useParams();
+interface IProps {
+  categoryId?: number;
+}
+
+function AddCommandForm({ categoryId }: IProps) {
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const { handleSubmit, register, reset, setValue } =
     useForm<CommandCreateDto>();
@@ -16,15 +18,17 @@ function AddCommandForm() {
   const { query: allCategoriesQuery } = useCommandCategories();
 
   useEffect(() => {
-    if (params && params.id) {
+    if (categoryId) {
       setShowCategorySelect(false);
+      setValue("categoryId", categoryId);
     } else {
       setShowCategorySelect(true);
     }
-  }, [params, setValue]);
+  }, [categoryId, setValue]);
 
   const onSubmit = (values: CommandCreateDto) => {
     addCommandMutation.mutate(values);
+    // alert(JSON.stringify(values, null, 2));
     reset();
   };
 

@@ -18,8 +18,8 @@ interface IProps {
 }
 
 function TableRow({ linkItem, showCategories, isLoading }: IProps) {
-  const { query: allCategoriesQuery } = useLinkCategories();
-  const { title, link, category } = linkItem;
+  const { query } = useLinkCategories();
+  const { title, url, category } = linkItem;
 
   const getFaviconUrl = (link) => {
     if (linkItem.favicon_url !== null) return linkItem.favicon_url;
@@ -42,13 +42,13 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
     >
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
-          <ChakraLink href={link} isExternal>
-            {getFaviconUrl(link) !== null && (
+          <ChakraLink href={url} isExternal>
+            {getFaviconUrl(url) !== null && (
               <Image
                 display="inline"
                 mr="5px"
                 height="16px"
-                src={getFaviconUrl(link)}
+                src={getFaviconUrl(url)}
               />
             )}
 
@@ -59,15 +59,15 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
 
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
-          <ChakraLink href={link} isExternal>
-            {`${link.substring(0, 30)}...`}
+          <ChakraLink href={url} isExternal>
+            {`${url.substring(0, 30)}...`}
           </ChakraLink>
         </GridItem>
       </Skeleton>
 
       {showCategories && (
         <Skeleton isLoaded={!isLoading}>
-          <GridItem>{allCategoriesQuery.data[category.id]}</GridItem>
+          <GridItem>{linkItem?.category?.name}</GridItem>
         </Skeleton>
       )}
 

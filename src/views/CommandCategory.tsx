@@ -19,6 +19,8 @@ import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/De
 import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
 import UserLayout from "../components/layout/UserLayout";
 import useCommandsFromSingleCategory from "hooks/useCommandsFromSingleCategory";
+import useCommandCategories from "hooks/useCommandCategories";
+import { useEffect, useState } from "react";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,12 +31,21 @@ function CommandCategoryPage() {
   } = useDisclosure();
   const { id: categoryId } = useParams();
   const { query } = useCommandsFromSingleCategory(parseInt(categoryId));
+  const { query: categoriesQuery } = useCommandCategories();
+  const [category, setCategory] = useState(null);
+
+  useEffect(() => {
+    setCategory(
+      categoriesQuery.data.find((item) => item.id === parseInt(categoryId))
+    );
+  }, [categoryId, categoriesQuery.data]);
 
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900">
-          {"[Category Name]"}
+          {/* {query.data && query.data[0]?.category.name} */}
+          {category ? category.name : ""}
         </Heading>
         <Box m="0" p="0">
           <Popover placement="right">
@@ -59,7 +70,7 @@ function CommandCategoryPage() {
         </Box>
       </Stack>
       <Text mb="30px" color="gray.500" fontWeight="700">
-        {"[Item Count]"} items
+        {category && category.items} items
       </Text>
       <DeleteCategoryModal
         isOpen={isOpen}
@@ -73,7 +84,10 @@ function CommandCategoryPage() {
         categoryId={parseInt(categoryId)}
       />
       {query.data && (
-        <CommandsList showCategories={false} commands={query.data} />
+        <CommandsList
+          categoryId={category ? category.id : null}
+          commands={query.data}
+        />
       )}
     </UserLayout>
   );

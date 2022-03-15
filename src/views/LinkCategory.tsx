@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/popover";
 import { Box, Button, HStack, useDisclosure } from "@chakra-ui/react";
 import useLinks from "hooks/useLinks";
+import useLinksFromSingleCategory from "hooks/useLinksFromSingleCategory";
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
@@ -17,7 +18,7 @@ import LinksList from "../components/links/LinksList/LinksList";
 
 function LinkCategory() {
   const params = useParams();
-  const { singleCategoryQuery } = useLinks(params.id);
+  const { query } = useLinksFromSingleCategory(parseInt(params.id));
   const categoryName = "";
 
   const {
@@ -55,7 +56,7 @@ function LinkCategory() {
           </Popover>
         </Box>
       </Stack>
-      <LinksList showCategories={false} />
+      <LinksList showCategories={false} links={query.data} />
       <DeleteLinkCategory
         isOpen={isOpen}
         onClose={onClose}

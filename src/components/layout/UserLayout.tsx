@@ -1,8 +1,6 @@
-import { AuthenticatedTemplate, useIsAuthenticated } from "@azure/msal-react";
+import { AuthenticatedTemplate } from "@azure/msal-react";
 import { Container } from "@chakra-ui/layout";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
 import { selectIsSidebarOpen } from "redux/layout/layoutSlice";
 import NavBar from "./NavBar/NavBar";
 import SideBar from "./SideBar/SideBar";
@@ -12,15 +10,7 @@ import SideBar from "./SideBar/SideBar";
  * @see https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-react/docs/getting-started.md#determining-whether-a-user-is-authenticated
  */
 function UserLayout({ children }) {
-  const isAuthenticated = useIsAuthenticated();
   const isSidebarOpen = useSelector(selectIsSidebarOpen);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (!isAuthenticated)
-      navigate("/account/login", { state: { from: location } });
-  }, [isAuthenticated, navigate, location]);
 
   return (
     <>

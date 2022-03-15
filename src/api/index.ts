@@ -1,10 +1,15 @@
-import { CategoryCreateDto, CategoryUpdateDto } from "models/category";
 import axios, { AxiosInstance } from "axios";
+import { CategoryCreateDto, CategoryUpdateDto } from "models/category";
 import { CommandCreateDto, CommandUpdateDto } from "models/command";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
 
+const urls = {
+  IIS: "https://localhost:44310/api/",
+  Docker: "https://localhost:49155/api/",
+};
+
 export const CmandrApi: AxiosInstance = axios.create({
-  baseURL: "https://localhost:44310/api/",
+  baseURL: urls.Docker,
   timeout: 6000,
 });
 

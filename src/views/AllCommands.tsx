@@ -11,7 +11,7 @@ function AllCommandsPage() {
       <Heading as="h2" mb="30px" fontWeight="900">
         All Commands
       </Heading>
-      {query.data && <CommandsList showCategories commands={query.data} />}
+      {query.data && <CommandsList commands={query.data} />}
     </UserLayout>
   );
 }

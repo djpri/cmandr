@@ -1,11 +1,17 @@
 import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
+import { CommandReadDto } from "models/command";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
 
-function CommandsList({ showCategories, commands }) {
+interface IProps {
+  categoryId?: number;
+  commands: CommandReadDto[];
+}
+
+function CommandsList({ categoryId, commands }: IProps) {
   const location = useLocation();
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);
@@ -56,7 +62,7 @@ function CommandsList({ showCategories, commands }) {
             alignItems="center"
             mb="3"
           >
-            <AddCommandButton ref={ref} />
+            <AddCommandButton ref={ref} categoryId={categoryId} />
             {/* SEARCH BAR */}
             <InputGroup maxW="md" w={["xs", "xs", "sm", "md"]}>
               <Input
@@ -69,10 +75,7 @@ function CommandsList({ showCategories, commands }) {
           </Box>
           <Box ref={ref} />
         </Box>
-        <CommandsTable
-          commands={searchResults}
-          showCategories={showCategories}
-        />
+        <CommandsTable commands={searchResults} showCategories={!categoryId} />
       </Box>
     </ErrorBoundaryWrapper>
   );
