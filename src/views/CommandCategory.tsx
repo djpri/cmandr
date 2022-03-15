@@ -75,7 +75,7 @@ function CommandCategoryPage() {
       <DeleteCategoryModal
         isOpen={isOpen}
         onClose={onClose}
-        categoryName={"categoryName"}
+        categoryName={category ? category.name : null}
         categoryId={parseInt(categoryId)}
       />
       <EditCommandCategory

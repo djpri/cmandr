@@ -10,7 +10,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import useCommandCategories from "hooks/useCommandCategories";
-import React, { useState } from "react";
+import { useState } from "react";
 
 function EditCommandCategory({ isOpen, onClose, categoryId }) {
   const [categoryName, setCategoryName] = useState("");

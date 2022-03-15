@@ -64,11 +64,12 @@ function AddCommandForm({ categoryId }: IProps) {
             <FormLabel htmlFor="categoryId">Category</FormLabel>
             <Select {...register("categoryId")}>
               <option value="">Select Category</option>
-              {allCategoriesQuery.data.map((category, index) => (
-                <option value={category.id} key={index}>
-                  {category.name}
-                </option>
-              ))}
+              {allCategoriesQuery.data &&
+                allCategoriesQuery.data.map((category, index) => (
+                  <option value={category.id} key={index}>
+                    {category.name}
+                  </option>
+                ))}
             </Select>
           </Box>
         )}
