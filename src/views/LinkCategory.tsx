@@ -6,14 +6,13 @@ import {
   PopoverTrigger,
 } from "@chakra-ui/popover";
 import { Box, Button, HStack, useDisclosure } from "@chakra-ui/react";
-import useLinks from "hooks/useLinks";
 import useLinksFromSingleCategory from "hooks/useLinksFromSingleCategory";
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import UserLayout from "../components/layout/UserLayout";
-import DeleteLinkCategory from "../components/links/DeleteLinkCategory/DeleteLinkCategory";
-import EditLinkCategory from "../components/links/EditLinkCategory/EditLinkCategory";
+import DeleteLinkCategory from "../components/linkCategories/DeleteLinkCategory/DeleteLinkCategory";
+import EditLinkCategory from "../components/linkCategories/EditLinkCategory/EditLinkCategory";
 import LinksList from "../components/links/LinksList/LinksList";
 
 function LinkCategory() {
