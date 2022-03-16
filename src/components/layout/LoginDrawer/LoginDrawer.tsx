@@ -25,12 +25,7 @@ function LoginDrawer() {
 
   const PopoverButton = () => (
     <PopoverTrigger>
-      <Button
-        ref={btnRef}
-        colorScheme="whatsapp"
-        onClick={onOpen}
-        fontSize="xs"
-      >
+      <Button ref={btnRef} colorScheme="twitter" onClick={onOpen} fontSize="xs">
         <FaUser />
       </Button>
     </PopoverTrigger>

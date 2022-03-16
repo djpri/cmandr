@@ -1,5 +1,8 @@
 import { CommandReadDto } from "models/command";
 
+/**
+ * Sort functions to be used with useCommandsFilter hook
+ */
 export const sortFunctions = {
   description: {
     ascend: (a: CommandReadDto, b: CommandReadDto) => {

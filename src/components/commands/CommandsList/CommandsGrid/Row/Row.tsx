@@ -35,7 +35,7 @@ function Row({ commandItem, showCategories }: Props) {
 
   return (
     <Grid
-      templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
+      templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
       p="4"
       gap={4}
       rounded="md"
@@ -48,6 +48,9 @@ function Row({ commandItem, showCategories }: Props) {
       <GridItem>
         <CopyToClipboard text={line} onCopy={() => handleCopy()}>
           <Code
+            p={1}
+            overflowX="auto"
+            display="block"
             _hover={{
               cursor: "pointer",
               backgroundColor: "gray.200",

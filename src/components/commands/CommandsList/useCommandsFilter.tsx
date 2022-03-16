@@ -1,13 +1,10 @@
-import { sortFunctions } from "helpers/commandsSortFunctions";
 import { CommandReadDto } from "models/command";
 import { useEffect, useMemo, useState } from "react";
 
 function useCommandsFilter(commands: CommandReadDto[]) {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);
-  const [sortFunction, setSortFunction] = useState(
-    () => sortFunctions.description.descend
-  );
+  const [sortFunction, setSortFunction] = useState(null);
 
   const filterCommands = useMemo(() => {
     let newArray = [];
