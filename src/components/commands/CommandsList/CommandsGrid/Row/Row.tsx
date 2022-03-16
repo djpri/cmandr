@@ -14,7 +14,6 @@ import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillFolder } from "react-icons/ai";
 import { GoLinkExternal } from "react-icons/go";
-import { useQuery } from "react-query";
 import CommandOptions from "./CommandOptions/CommandOptions";
 
 type Props = {

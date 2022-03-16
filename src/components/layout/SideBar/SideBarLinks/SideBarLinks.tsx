@@ -6,6 +6,7 @@ import {
   Stack,
   StackDivider,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import useCommandCategories from "hooks/useCommandCategories";
 import useLinkCategories from "hooks/useLinkCategories";
@@ -34,9 +35,12 @@ function SideBarLinks() {
               ) : (
                 <AiFillFolder />
               )}
-              <Link as={RouterLink} to={`/commands/${item.id}`}>
-                {item.name}
-              </Link>
+              <Tooltip label={item.name} placement="right" openDelay={500}>
+                <Link as={RouterLink} to={`/commands/${item.id}`}>
+                  {item.name.substring(0, 15)}
+                  {item.name.length > 15 && "..."}
+                </Link>
+              </Tooltip>
               {item.items ? (
                 <Text color="gray.500" fontWeight="700">
                   {item.items}
@@ -68,9 +72,21 @@ function SideBarLinks() {
               ) : (
                 <AiFillFolder />
               )}
-              <Link as={RouterLink} to={`/links/${item.id}`}>
-                {item.name}
-              </Link>
+              <Tooltip label={item.name} placement="right" openDelay={500}>
+                <Link as={RouterLink} to={`/links/${item.id}`}>
+                  {item.name.substring(0, 15)}
+                  {item.name.length > 15 && "..."}
+                </Link>
+              </Tooltip>
+              {item.items ? (
+                <Text color="gray.500" fontWeight="700">
+                  {item.items}
+                </Text>
+              ) : (
+                <Text color="gray.500" fontWeight="700">
+                  0
+                </Text>
+              )}
             </HStack>
           ))}
         <AddLinkCategory />

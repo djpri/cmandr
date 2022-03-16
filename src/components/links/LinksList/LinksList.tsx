@@ -11,11 +11,16 @@ import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
-import { Link } from "../../../models/link";
+import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton/AddLinkButton";
 import LinksTable from "./LinksGrid/LinksGrid";
 
-function LinksList({ showCategories, links }) {
+interface IProps {
+  showCategories: boolean;
+  links: LinkReadDto[];
+}
+
+function LinksList({ showCategories, links }: IProps) {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -29,10 +34,13 @@ function LinksList({ showCategories, links }) {
   // wait 500ms after user stops typing before filtering
   useEffect(() => {
     const timeout = setTimeout(() => {
+      let newArray = [];
       setSearchResults(() => {
-        const newArray = links.filter((item: Link) =>
-          item.title.match(new RegExp(search, "i"))
-        );
+        if (links?.length >= 1) {
+          newArray = links.filter((item: LinkReadDto) =>
+            item.title.match(new RegExp(search, "i"))
+          );
+        }
         return newArray;
       });
       setIsSearching(false);

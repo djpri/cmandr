@@ -23,7 +23,7 @@ function AddLinkForm() {
 
   const onSubmit = (values: LinkCreateDto) => {
     // addLinkMutation.mutate(values);
-    alert(JSON.stringify(values));
+    alert(JSON.stringify(values, null, 2));
     reset();
   };
 

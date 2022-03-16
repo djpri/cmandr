@@ -10,6 +10,12 @@ export interface Link {
   dateCreated?: Date;
 }
 
+export interface LinkReadDto {
+  link: string;
+  title: string;
+  categoryId: number;
+}
+
 export interface LinkCreateDto {
   link: string;
   title: string;

@@ -9,6 +9,7 @@ export interface LinkCategory {
   id: number;
   name: string;
   parentId?: number;
+  items?: number;
 }
 
 /** Object that is received from response body of api */

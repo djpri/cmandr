@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import useLinkCategories from "hooks/useLinkCategories";
 import { Link } from "models/link";
-import * as React from "react";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
 interface IProps {
