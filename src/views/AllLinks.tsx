@@ -1,18 +1,10 @@
 import { Heading, Stack } from "@chakra-ui/layout";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import LinksList from "../components/links/LinksList/LinksList";
+import useLinks from "hooks/useLinks";
 import UserLayout from "../components/layout/UserLayout";
-import { getLinksFromDB } from "../api/handlers/links/getLinksFromDB";
+import LinksList from "../components/links/LinksList/LinksList";
 
 function Links() {
-  const location = useLocation();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getLinksFromDB());
-  }, [dispatch, location]);
+  const { query } = useLinks();
 
   return (
     <UserLayout>
@@ -20,7 +12,7 @@ function Links() {
         All Links
       </Heading>
       <Stack w="100%">
-        <LinksList showCategories />
+        {query.data && <LinksList showCategories links={query.data} />}
       </Stack>
     </UserLayout>
   );

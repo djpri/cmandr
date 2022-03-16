@@ -6,10 +6,8 @@ import {
   Link as ChakraLink,
   Skeleton,
 } from "@chakra-ui/react";
-import { Link } from "api/models/link";
-import * as React from "react";
-import { useSelector } from "react-redux";
-import { selectLinksCategoriesAsObject } from "redux/links/linksSlice";
+import useLinkCategories from "hooks/useLinkCategories";
+import { Link } from "models/link";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
 interface IProps {
@@ -19,8 +17,8 @@ interface IProps {
 }
 
 function TableRow({ linkItem, showCategories, isLoading }: IProps) {
-  const categoriesList = useSelector(selectLinksCategoriesAsObject);
-  const { title, link, category } = linkItem;
+  const { query } = useLinkCategories();
+  const { title, url, category } = linkItem;
 
   const getFaviconUrl = (link) => {
     if (linkItem.favicon_url !== null) return linkItem.favicon_url;
@@ -43,13 +41,13 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
     >
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
-          <ChakraLink href={link} isExternal>
-            {getFaviconUrl(link) !== null && (
+          <ChakraLink href={url} isExternal>
+            {getFaviconUrl(url) !== null && (
               <Image
                 display="inline"
                 mr="5px"
                 height="16px"
-                src={getFaviconUrl(link)}
+                src={getFaviconUrl(url)}
               />
             )}
 
@@ -60,15 +58,15 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
 
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
-          <ChakraLink href={link} isExternal>
-            {`${link.substring(0, 30)}...`}
+          <ChakraLink href={url} isExternal>
+            {`${url.substring(0, 30)}...`}
           </ChakraLink>
         </GridItem>
       </Skeleton>
 
       {showCategories && (
         <Skeleton isLoaded={!isLoading}>
-          <GridItem>{categoriesList[category.id]}</GridItem>
+          <GridItem>{linkItem?.category?.name}</GridItem>
         </Skeleton>
       )}
 

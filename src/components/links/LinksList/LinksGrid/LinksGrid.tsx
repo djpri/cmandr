@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import { Link } from "api/models/link";
+import { Link } from "models/link";
 import * as React from "react";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
@@ -14,8 +14,6 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
   return (
     <Box p="1" display="flex" flexDirection="column" w="100%">
       <Grid
-        variant="unstyled"
-        size="md"
         templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
         gap={4}
         p="4"
@@ -32,14 +30,15 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
         templateColumns={["repeat(auto-fill, 200px)", null, null, "1fr"]}
         gap={[4, null, null, 0]}
       >
-        {links.map((link: Link) => (
-          <Row
-            isLoading={isLoading}
-            linkItem={link}
-            key={link.id}
-            showCategories={showCategories}
-          />
-        ))}
+        {links &&
+          links.map((link: Link) => (
+            <Row
+              isLoading={isLoading}
+              linkItem={link}
+              key={link.id}
+              showCategories={showCategories}
+            />
+          ))}
       </Grid>
     </Box>
   );

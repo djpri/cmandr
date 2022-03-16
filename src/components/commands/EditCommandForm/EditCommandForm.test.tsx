@@ -1,7 +1,7 @@
 import React from "react";
+import { Command } from "../../../models/command";
+import { render, waitFor } from "../../../test-utils";
 import EditCommandForm from "./EditCommandForm";
-import { render } from "../../../test-utils";
-import { Command } from "../../../api/models/command";
 
 const testCommand: Command = {
   line: "php artisan serve",
@@ -11,6 +11,7 @@ const testCommand: Command = {
   id: 10,
 };
 
-test("Renders with correct command passed in as prop", () => {
+test("Renders with correct command passed in as prop", async () => {
   render(<EditCommandForm commandItem={testCommand} onClose={() => {}} />);
+  await waitFor(() => Promise.resolve());
 });

@@ -1,9 +1,9 @@
 import { Button } from "@chakra-ui/react";
+import useLinks from "hooks/useLinks";
 import React from "react";
-import { useDeleteLink } from "../../../api/handlers/links/useDeleteLink";
 
 function DeleteLinkButton({ linkId, onClose }) {
-  const { deleteLinkInDB } = useDeleteLink();
+  const { deleteLinkMutation } = useLinks();
 
   return (
     <Button
@@ -11,7 +11,7 @@ function DeleteLinkButton({ linkId, onClose }) {
       bgColor="red.500"
       color="white"
       onClick={() => {
-        deleteLinkInDB(linkId);
+        deleteLinkMutation.mutate(linkId);
         onClose();
       }}
     >

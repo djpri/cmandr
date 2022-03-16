@@ -1,27 +1,26 @@
 import { Heading, Stack } from "@chakra-ui/layout";
 import {
   Popover,
-  PopoverTrigger,
-  PopoverContent,
   PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
 } from "@chakra-ui/popover";
-import { Box, Button, HStack, useDisclosure } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { Box, Button, HStack, useDisclosure, Text } from "@chakra-ui/react";
+import useLinkCategories from "hooks/useLinkCategories";
+import useLinksFromSingleCategory from "hooks/useLinksFromSingleCategory";
+import React, { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import DeleteLinkCategory from "../components/links/DeleteLinkCategory/DeleteLinkCategory";
-import EditLinkCategory from "../components/links/EditLinkCategory/EditLinkCategory";
-import LinksList from "../components/links/LinksList/LinksList";
 import UserLayout from "../components/layout/UserLayout";
-import { selectLinksCategoriesAsObject } from "../redux/links/linksSlice";
-import { getLinksByCategoryFromDB } from "../api/handlers/links/getLinksByCategoryFromDB";
+import DeleteLinkCategory from "../components/linkCategories/DeleteLinkCategory/DeleteLinkCategory";
+import EditLinkCategory from "../components/linkCategories/EditLinkCategory/EditLinkCategory";
+import LinksList from "../components/links/LinksList/LinksList";
 
 function LinkCategory() {
-  const dispatch = useDispatch();
-  const params: { id: string } = useParams();
-  const linkCategories = useSelector(selectLinksCategoriesAsObject);
-  const categoryName = linkCategories[params.id] || "";
+  const { id: categoryId } = useParams();
+  const { query } = useLinksFromSingleCategory(parseInt(categoryId));
+  const { query: categoriesQuery } = useLinkCategories();
+  const categoryName = "";
 
   const {
     isOpen: isEditModalOpen,
@@ -29,16 +28,19 @@ function LinkCategory() {
     onClose: editModalClose,
   } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [category, setCategory] = useState(null);
 
   useEffect(() => {
-    dispatch(getLinksByCategoryFromDB(parseInt(params.id)));
-  }, [dispatch, params.id]);
+    setCategory(
+      categoriesQuery.data.find((item) => item.id === parseInt(categoryId))
+    );
+  }, [categoryId, categoriesQuery.data]);
 
   return (
     <UserLayout>
       <Stack mb="30px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900">
-          {linkCategories[params.id]}
+          {category ? category.name : ""}
         </Heading>
         <Box m="0" p="0">
           <Popover placement="right">
@@ -62,17 +64,20 @@ function LinkCategory() {
           </Popover>
         </Box>
       </Stack>
-      <LinksList showCategories={false} />
+      <Text mb="30px" color="gray.500" fontWeight="700">
+        {category && category.items} items
+      </Text>
+      <LinksList showCategories={false} links={query.data} />
       <DeleteLinkCategory
         isOpen={isOpen}
         onClose={onClose}
         categoryName={categoryName}
-        categoryId={parseInt(params.id)}
+        categoryId={parseInt(categoryId)}
       />
       <EditLinkCategory
         isOpen={isEditModalOpen}
         onClose={editModalClose}
-        categoryId={parseInt(params.id)}
+        categoryId={parseInt(categoryId)}
       />
     </UserLayout>
   );

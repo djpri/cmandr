@@ -11,17 +11,15 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import * as React from "react";
-import { useEffect } from "react";
+import useCommandCategories from "hooks/useCommandCategories";
+import useCommandsFromSingleCategory from "hooks/useCommandsFromSingleCategory";
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import DeleteCategoryModal from "../components/commandCategories/DeleteCommandCategory/DeleteCategoryModal";
+import EditCommandCategory from "../components/commandCategories/EditCommandCategory/EditCommandCategory";
 import CommandsList from "../components/commands/CommandsList/CommandsList";
-import DeleteCategoryModal from "../components/commands/DeleteCommandCategory/DeleteCategoryModal";
-import EditCommandCategory from "../components/commands/EditCommandCategory/EditCommandCategory";
-import { getCommandsByCategoryFromDB } from "../api/handlers/commands/getCommandsByCategoryFromDB";
 import UserLayout from "../components/layout/UserLayout";
-import { selectCategoriesAsKeyValuePairs } from "../redux/commands/commandsSlice";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,22 +28,25 @@ function CommandCategoryPage() {
     onOpen: editModalOpen,
     onClose: editModalClose,
   } = useDisclosure();
-
-  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
-  const params: { id: string } = useParams();
-  const categoryName = categoryList[params.id] || "";
-  const itemCount = categoryList[params.id]?.items || "0";
-  const dispatch = useDispatch();
+  const { id: categoryId } = useParams();
+  const { query } = useCommandsFromSingleCategory(parseInt(categoryId));
+  const { query: categoriesQuery } = useCommandCategories();
+  const [category, setCategory] = useState(null);
 
   useEffect(() => {
-    dispatch(getCommandsByCategoryFromDB(parseInt(params.id)));
-  }, [dispatch, params.id]);
+    if (categoriesQuery.data) {
+      setCategory(
+        categoriesQuery.data.find((item) => item.id === parseInt(categoryId))
+      );
+    }
+  }, [categoryId, categoriesQuery.data]);
 
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900">
-          {categoryName}
+          {/* {query.data && query.data[0]?.category.name} */}
+          {category ? category.name : ""}
         </Heading>
         <Box m="0" p="0">
           <Popover placement="right">
@@ -70,20 +71,25 @@ function CommandCategoryPage() {
         </Box>
       </Stack>
       <Text mb="30px" color="gray.500" fontWeight="700">
-        {itemCount} items
+        {category && category.items} items
       </Text>
-      <CommandsList showCategories={false} />
       <DeleteCategoryModal
         isOpen={isOpen}
         onClose={onClose}
-        categoryName={categoryName}
-        categoryId={parseInt(params.id)}
+        categoryName={category ? category.name : null}
+        categoryId={parseInt(categoryId)}
       />
       <EditCommandCategory
         isOpen={isEditModalOpen}
         onClose={editModalClose}
-        categoryId={parseInt(params.id)}
+        categoryId={parseInt(categoryId)}
       />
+      {query.data && (
+        <CommandsList
+          categoryId={category ? category.id : null}
+          commands={query.data}
+        />
+      )}
     </UserLayout>
   );
 }

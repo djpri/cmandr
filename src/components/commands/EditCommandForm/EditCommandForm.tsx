@@ -1,14 +1,8 @@
-import * as React from "react";
-import { Button, Stack, Input, FormLabel, Select } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import {
-  selectCategoriesWithIds,
-  selectCategoriesAsKeyValuePairs,
-} from "../../../redux/commands/commandsSlice";
-import { useEditCommand } from "../../../api/handlers/commands/useEditCommand";
-import { CommandCategory } from "../../../api/models/category";
-import { Command } from "../../../api/models/command";
+import useCommandCategories from "../../../hooks/useCommandCategories";
+import useCommands from "../../../hooks/useCommands";
+import { Command, CommandUpdateDto } from "../../../models/command";
 
 type IProps = {
   commandItem: Command;
@@ -16,33 +10,31 @@ type IProps = {
 };
 
 function EditCommandForm({ commandItem, onClose }: IProps) {
-  const { id, description, line, category, reference } = commandItem;
-  const categories: CommandCategory[] = useSelector(selectCategoriesWithIds);
-  const categoryList = useSelector(selectCategoriesAsKeyValuePairs);
-  const { editCommandInDB } = useEditCommand();
+  const { description, line, reference } = commandItem;
+  const { query: allCategoriesQuery } = useCommandCategories();
+  const { editCommandMutation } = useCommands();
 
-  const { handleSubmit, register, setValue, getValues } = useForm<Command>({
+  const categories = allCategoriesQuery.data;
+
+  const { handleSubmit, register } = useForm<CommandUpdateDto>({
     defaultValues: {
-      id,
       description,
       line,
-      category,
       reference,
+      categoryId: commandItem.category.id,
     },
   });
 
-  const onSubmit = (values: Command) => {
-    setValue("category.name", categoryList[getValues("category.id")]);
-    editCommandInDB(values);
-    // closes popover if using form from popover only
+  const onSubmit = (values: CommandUpdateDto) => {
+    editCommandMutation.mutate({ id: commandItem.id, body: { ...values } });
+    // alert(JSON.stringify(values, null, 2));
+    // closes popover if using the form inside a popover
     if (onClose) onClose();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack mb="10" mt="3">
-        <Input {...register("id")} placeholder="id" isDisabled type="hidden" />
-
         <FormLabel htmlFor="description">Description</FormLabel>
         <Input
           {...register("description")}
@@ -53,7 +45,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         <Input {...register("line")} placeholder="Command" />
 
         <FormLabel htmlFor="category">Category</FormLabel>
-        <Select {...register("category.id")}>
+        <Select {...register("categoryId")}>
           <option value="">Select Category</option>
           {categories &&
             categories.map((category) => (
