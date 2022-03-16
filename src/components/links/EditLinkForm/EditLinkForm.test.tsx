@@ -1,6 +1,6 @@
 import React from "react";
 import EditLinkForm from "./EditLinkForm";
-import { render } from "../../../test-utils";
+import { render, waitFor } from "../../../test-utils";
 import { Link } from "models/link";
 
 const testLink: Link = {
@@ -10,6 +10,7 @@ const testLink: Link = {
   category: { id: 1, name: "general" },
 };
 
-test("Renders EditLinkForm with correct link item passed in as prop", () => {
+test("Renders EditLinkForm with correct link item passed in as prop", async () => {
   render(<EditLinkForm linkItem={testLink} onClose={() => {}} />);
+  await waitFor(() => Promise.resolve());
 });

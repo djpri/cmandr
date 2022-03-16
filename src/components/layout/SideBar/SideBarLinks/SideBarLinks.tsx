@@ -1,4 +1,12 @@
-import { Box, HStack, Link, Stack, StackDivider, Text } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Link,
+  Spinner,
+  Stack,
+  StackDivider,
+  Text,
+} from "@chakra-ui/react";
 import useCommandCategories from "hooks/useCommandCategories";
 import useLinkCategories from "hooks/useLinkCategories";
 import { CommandCategory, LinkCategory } from "models/category";
@@ -14,7 +22,7 @@ function SideBarLinks() {
   const CommandCategoryLinks = () => {
     const { query: allCategoriesQuery } = useCommandCategories();
 
-    if (allCategoriesQuery.isLoading) return <p>LOADING...</p>;
+    if (allCategoriesQuery.isLoading) return <Spinner />;
 
     return (
       <>
@@ -48,7 +56,7 @@ function SideBarLinks() {
   const LinkCategoryLinks = () => {
     const { query: allCategoriesQuery } = useLinkCategories();
 
-    if (allCategoriesQuery.isLoading) return <p>LOADING...</p>;
+    if (allCategoriesQuery.isLoading) return <Spinner />;
 
     return (
       <>

@@ -33,7 +33,7 @@ let pca: PublicClientApplication;
 let eventCallbacks: EventCallbackFunction[];
 let cachedAccounts: AccountInfo[] = [testAccount];
 
-beforeEach(() => {
+beforeEach(async () => {
   eventCallbacks = [];
   let eventId = 0;
   pca = new PublicClientApplication(msalConfig);
@@ -72,11 +72,13 @@ beforeEach(() => {
   jest.spyOn(pca, "getAllAccounts").mockImplementation(() => cachedAccounts);
 });
 
-afterEach(() => {
+afterEach(async () => {
   // cleanup on exiting
   jest.restoreAllMocks();
   jest.clearAllMocks();
+  queryClient.clear();
   cachedAccounts = [];
+  // await waitFor(() => Promise.resolve());
 });
 
 const queryClient = new QueryClient({
