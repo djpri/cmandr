@@ -14,8 +14,9 @@ import UserLayout from "../components/layout/UserLayout";
 function HomePage() {
   const { query: commandCategoryQuery } = useCommandCategories();
   const { query: linkCategoryQuery } = useLinkCategories();
-  const linkBgColor = useColorModeValue("green.50", "teal.900");
-  const linkBgHoverColor = useColorModeValue("green.100", "teal.600");
+
+  const linkBgColor = useColorModeValue("blue.50", "teal.900");
+  const linkBgHoverColor = useColorModeValue("blue.100", "teal.600");
 
   return (
     <UserLayout>
@@ -40,16 +41,12 @@ function HomePage() {
                 fontSize="lg"
                 fontWeight="bold"
                 transition="0.1s"
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
               >
                 <Text>{item.name}</Text>
                 <Text fontSize="sm">
                   <Text as="span" color="gray.500" fontWeight="700">
-                    {item?.items}
-                  </Text>{" "}
-                  items
+                    {item?.items} items
+                  </Text>
                 </Text>
               </GridItem>
             ))}
@@ -75,7 +72,12 @@ function HomePage() {
                 fontWeight="bold"
                 transition="0.1s"
               >
-                {item.name}
+                <Text>{item.name}</Text>
+                <Text fontSize="sm">
+                  <Text as="span" color="gray.500" fontWeight="700">
+                    {item?.items} items
+                  </Text>
+                </Text>
               </GridItem>
             ))}
         </Grid>

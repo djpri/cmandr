@@ -1,8 +1,7 @@
-import { Configuration, PublicClientApplication } from "@azure/msal-browser";
+import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import { ColorModeScript } from "@chakra-ui/react";
 import { msalConfig } from "auth/authConfig";
-import { b2cPolicies } from "auth/policies";
 import * as React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";

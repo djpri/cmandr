@@ -1,10 +1,24 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Command, CommandReadDto } from "models/command";
 import * as React from "react";
-import { Command } from "models/command";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
 
-function CommandsTable({ commands, showCategories }) {
+interface IProps {
+  commands: CommandReadDto[];
+  showCategories: boolean;
+  sortFunction?: (a: CommandReadDto, b: CommandReadDto) => 1 | -1;
+  setSortFunction?: React.Dispatch<
+    React.SetStateAction<(a: CommandReadDto, b: CommandReadDto) => 1 | -1>
+  >;
+}
+
+function CommandsTable({
+  commands,
+  showCategories,
+  sortFunction,
+  setSortFunction,
+}: IProps) {
   return (
     <Box p="1" display="flex" flexDirection="column" w="100%">
       <Grid
@@ -13,9 +27,26 @@ function CommandsTable({ commands, showCategories }) {
         gap={4}
         p="4"
       >
-        <Header field="description" label="Description" />
-        <Header field="command" label="Command" />
-        {showCategories && <Header field="category" label="Category" />}
+        <Header
+          sortFunction={sortFunction}
+          setSortFunction={setSortFunction}
+          label="Description"
+          field="description"
+        />
+        <Header
+          sortFunction={sortFunction}
+          setSortFunction={setSortFunction}
+          label="Command"
+          field="line"
+        />
+        {showCategories && (
+          <Header
+            sortFunction={sortFunction}
+            setSortFunction={setSortFunction}
+            label="Category"
+            field="category"
+          />
+        )}
         <GridItem />
       </Grid>
 

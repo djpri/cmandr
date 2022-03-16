@@ -1,10 +1,10 @@
 import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { CommandReadDto } from "models/command";
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useRef } from "react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
+import useCommandsFilter from "./useCommandsFilter";
 
 interface IProps {
   categoryId?: number;
@@ -12,35 +12,12 @@ interface IProps {
 }
 
 function CommandsList({ categoryId, commands }: IProps) {
-  const location = useLocation();
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState(null);
   const ref = useRef(null);
-
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
 
-  // reset results for each new page
-  useEffect(() => {
-    setSearchResults(null);
-    setSearch("");
-  }, [location]);
-
-  // filter commands on search
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      let newArray = [];
-      if (commands?.length >= 1) {
-        newArray = commands.filter((item: { description: string }) =>
-          item.description.match(new RegExp(search, "i"))
-        );
-      }
-      setSearchResults(newArray);
-    }, 250);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [search, commands]);
+  const { filteredCommands, search, setSearch, sortFunction, setSortFunction } =
+    useCommandsFilter(commands);
 
   return (
     <ErrorBoundaryWrapper>
@@ -67,7 +44,7 @@ function CommandsList({ categoryId, commands }: IProps) {
             <InputGroup maxW="md" w={["xs", "xs", "sm", "md"]}>
               <Input
                 type="text"
-                placeholder="Search by description"
+                placeholder="Search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -75,7 +52,12 @@ function CommandsList({ categoryId, commands }: IProps) {
           </Box>
           <Box ref={ref} />
         </Box>
-        <CommandsTable commands={searchResults} showCategories={!categoryId} />
+        <CommandsTable
+          commands={filteredCommands}
+          showCategories={!categoryId}
+          sortFunction={sortFunction}
+          setSortFunction={setSortFunction}
+        />
       </Box>
     </ErrorBoundaryWrapper>
   );
