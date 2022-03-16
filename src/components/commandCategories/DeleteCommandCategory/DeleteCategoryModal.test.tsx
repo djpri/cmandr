@@ -1,8 +1,8 @@
 import React from "react";
-import { render } from "../../../test-utils";
+import { render, waitFor } from "../../../test-utils";
 import DeleteCategoryModal from "./DeleteCategoryModal";
 
-test("Model renders with correct props passed in", () => {
+test("Model renders with correct props passed in", async () => {
   render(
     <DeleteCategoryModal
       isOpen={false}
@@ -11,4 +11,5 @@ test("Model renders with correct props passed in", () => {
       categoryId={1}
     />
   );
+  await waitFor(() => Promise.resolve());
 });

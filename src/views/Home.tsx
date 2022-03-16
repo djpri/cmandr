@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import useCommandCategories from "hooks/useCommandCategories";
 import useLinkCategories from "hooks/useLinkCategories";
-import * as React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import UserLayout from "../components/layout/UserLayout";
 

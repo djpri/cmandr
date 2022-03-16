@@ -1,8 +1,8 @@
 import React from "react";
 import DeleteLinkCategory from "./DeleteLinkCategory";
-import { render } from "../../../test-utils";
+import { render, waitFor } from "../../../test-utils";
 
-test("renders with correct props", () => {
+test("renders with correct props", async () => {
   render(
     <DeleteLinkCategory
       isOpen={false}
@@ -11,4 +11,5 @@ test("renders with correct props", () => {
       categoryId={1}
     />
   );
+  await waitFor(() => Promise.resolve());
 });
