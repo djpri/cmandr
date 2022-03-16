@@ -1,39 +1,42 @@
+import { PublicClientApplication } from "@azure/msal-browser";
+import { MsalProvider } from "@azure/msal-react";
 import { ColorModeScript } from "@chakra-ui/react";
+import { msalConfig } from "auth/authConfig";
 import * as React from "react";
 import ReactDOM from "react-dom";
-import { App } from "./App";
-import reportWebVitals from "./reportWebVitals";
-import * as serviceWorker from "./serviceWorker";
-import { store } from "./redux/store";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { MsalProvider } from "@azure/msal-react";
-import { Configuration, PublicClientApplication } from "@azure/msal-browser";
-import { b2cPolicies } from "auth/policies";
+import { App } from "./App";
+import { store } from "./redux/store";
+import reportWebVitals from "./reportWebVitals";
+import * as serviceWorker from "./serviceWorker";
 
-const msalConfig: Configuration = {
-  auth: {
-    clientId: "aa645fe5-eb96-4321-8a0c-fbb8fdba76e2",
-    authority: b2cPolicies.authorities.signUpSignIn.authority,
-    knownAuthorities: [b2cPolicies.authorityDomain],
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+    },
   },
-  cache: {
-    cacheLocation: "localStorage",
-    storeAuthStateInCookie: true,
-  },
-};
+});
 
-export const msalInstance = new PublicClientApplication(msalConfig);
+const msalInstance = new PublicClientApplication(msalConfig);
 
 ReactDOM.render(
   <React.StrictMode>
     <ColorModeScript />
     <BrowserRouter>
-      <MsalProvider instance={msalInstance}>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </MsalProvider>
+      <QueryClientProvider client={queryClient}>
+        <MsalProvider instance={msalInstance}>
+          <Provider store={store}>
+            <App />
+            <ReactQueryDevtools initialIsOpen={true} />
+          </Provider>
+        </MsalProvider>
+      </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

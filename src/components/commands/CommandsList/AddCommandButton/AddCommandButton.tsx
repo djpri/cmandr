@@ -5,7 +5,6 @@ import {
   useDisclosure,
   forwardRef,
 } from "@chakra-ui/react";
-import * as React from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import AddCommandForm from "../../AddCommandForm/AddCommandForm";
 
@@ -23,7 +22,11 @@ const AddCommandButton = forwardRef((props, ref: any) => {
       {ref && (
         <Portal containerRef={ref}>
           <Collapse in={isOpen} animateOpacity>
-            <AddCommandForm />
+            {props.categoryId ? (
+              <AddCommandForm categoryId={props.categoryId} />
+            ) : (
+              <AddCommandForm />
+            )}
           </Collapse>
         </Portal>
       )}

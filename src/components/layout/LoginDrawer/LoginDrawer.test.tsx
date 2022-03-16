@@ -1,9 +1,9 @@
 import React from "react";
 import { testAccount } from "testConstants";
-import { render, screen, fireEvent } from "../../../test-utils";
+import { fireEvent, render, screen, waitFor } from "../../../test-utils";
 import LoginDrawer from "./LoginDrawer";
 
-test("Shows display name for logged in user", () => {
+test("Shows display name for logged in user", async () => {
   render(<LoginDrawer />);
   // click popover button
   const button = screen.getByRole("button");
@@ -14,4 +14,6 @@ test("Shows display name for logged in user", () => {
 
   expect(leftText).toBeInTheDocument();
   expect(displayName).toBeInTheDocument();
+
+  await waitFor(() => Promise.resolve());
 });

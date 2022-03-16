@@ -1,20 +1,14 @@
 import {
-  configureStore,
-  ThunkAction,
   Action,
   combineReducers,
+  configureStore,
+  ThunkAction,
 } from "@reduxjs/toolkit";
-import authReducer from "./auth/authSlice";
-import linksReducer from "./links/linksSlice";
-import layoutReducer from "./layout/layoutSlice";
-import commandsReducer from "./commands/commandsSlice";
 import { useDispatch } from "react-redux";
+import layoutReducer from "./layout/layoutSlice";
 
 export const rootReducer = combineReducers({
   layout: layoutReducer,
-  commands: commandsReducer,
-  userAuth: authReducer,
-  links: linksReducer,
 });
 
 export const store = configureStore({

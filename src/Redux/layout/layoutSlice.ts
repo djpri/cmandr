@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "redux/store";
 
 const initialState = {
   isSidebarOpen: true,
@@ -21,6 +22,7 @@ export const layoutSlice = createSlice({
 export const { setSidebarToggle, setSidebarClosed } = layoutSlice.actions;
 
 // SELECTORS
-export const selectIsSidebarOpen = (state) => state.layout.isSidebarOpen;
+export const selectIsSidebarOpen = (state: RootState) =>
+  state.layout.isSidebarOpen;
 
 export default layoutSlice.reducer;

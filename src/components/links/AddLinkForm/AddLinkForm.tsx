@@ -1,34 +1,29 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
-import * as React from "react";
+import useLinkCategories from "hooks/useLinkCategories";
+import useLinks from "hooks/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useAddLink } from "../../../api/handlers/links/useAddLink";
-import { LinkCategory } from "../../../api/models/category";
-import { Link } from "../../../api/models/link";
-import { selectLinkCategories } from "../../../redux/links/linksSlice";
+import { LinkCreateDto } from "../../../models/link";
 
 function AddLinkForm() {
-  const categories: LinkCategory[] = useSelector(selectLinkCategories);
-  const params: { id: string } = useParams();
+  const { addLinkMutation } = useLinks();
+  const { query } = useLinkCategories();
+  const params = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
-  const { handleSubmit, register, reset, setValue } = useForm<Link>();
-  const { addLinkToDB } = useAddLink();
+  const { handleSubmit, register, reset, setValue } = useForm<LinkCreateDto>();
 
   useEffect(() => {
-    if (params && params.id) {
+    if (params) {
       setShowCategorySelect(false);
-      setValue("category.id", parseInt(params.id));
     } else {
       setShowCategorySelect(true);
     }
   }, [params, setValue]);
 
-  const onSubmit = (values: Link) => {
-    setValue("category.name", "docs");
-    addLinkToDB(values);
-    // alert(JSON.stringify(values));
+  const onSubmit = (values: LinkCreateDto) => {
+    // addLinkMutation.mutate(values);
+    alert(JSON.stringify(values, null, 2));
     reset();
   };
 
@@ -59,10 +54,10 @@ function AddLinkForm() {
         {showCategorySelect && (
           <Box>
             <FormLabel htmlFor="category">Category</FormLabel>
-            <Select {...register("category.id")}>
+            <Select {...register("categoryId")}>
               <option value="">Select Category</option>
-              {categories &&
-                categories.map((category, index) => (
+              {query.data &&
+                query.data.map((category, index) => (
                   <option value={category.id} key={index}>
                     {category.name}
                   </option>

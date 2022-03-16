@@ -8,14 +8,12 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Command } from "api/models/command";
+import { Command } from "models/command";
 import * as React from "react";
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillFolder } from "react-icons/ai";
 import { GoLinkExternal } from "react-icons/go";
-import { useSelector } from "react-redux";
-import { selectCategoriesAsKeyValuePairs } from "redux/commands/commandsSlice";
 import CommandOptions from "./CommandOptions/CommandOptions";
 
 type Props = {
@@ -24,7 +22,6 @@ type Props = {
 };
 
 function Row({ commandItem, showCategories }: Props) {
-  const categoriesList = useSelector(selectCategoriesAsKeyValuePairs);
   const { id, description, line, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
@@ -38,7 +35,7 @@ function Row({ commandItem, showCategories }: Props) {
 
   return (
     <Grid
-      templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
+      templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
       p="4"
       gap={4}
       rounded="md"
@@ -51,6 +48,9 @@ function Row({ commandItem, showCategories }: Props) {
       <GridItem>
         <CopyToClipboard text={line} onCopy={() => handleCopy()}>
           <Code
+            p={1}
+            overflowX="auto"
+            display="block"
             _hover={{
               cursor: "pointer",
               backgroundColor: "gray.200",
@@ -66,9 +66,7 @@ function Row({ commandItem, showCategories }: Props) {
         <GridItem>
           <HStack>
             <AiFillFolder color="gray" />
-            <Text color={categoryTextColor}>
-              {categoriesList[category?.id]}
-            </Text>
+            <Text color={categoryTextColor}>{commandItem.category.name}</Text>
           </HStack>
         </GridItem>
       )}

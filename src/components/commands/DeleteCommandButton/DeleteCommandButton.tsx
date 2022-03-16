@@ -1,9 +1,8 @@
 import { Button } from "@chakra-ui/react";
-import * as React from "react";
-import { useDeleteCommand } from "../../../api/handlers/commands/useDeleteCommand";
+import useCommands from "hooks/useCommands";
 
 function DeleteCommandButton({ commandId, onClose }) {
-  const { deleteCommandInDB } = useDeleteCommand();
+  const { deleteCommandMutation } = useCommands();
 
   return (
     <Button
@@ -11,7 +10,7 @@ function DeleteCommandButton({ commandId, onClose }) {
       bgColor="red.500"
       color="white"
       onClick={() => {
-        deleteCommandInDB(commandId);
+        deleteCommandMutation.mutate(commandId);
         onClose();
       }}
     >
