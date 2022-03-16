@@ -23,7 +23,7 @@ function CommandsTable({
     <Box p="1" display="flex" flexDirection="column" w="100%">
       <Grid
         // size="md"
-        templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
+        templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
         gap={4}
         p="4"
       >

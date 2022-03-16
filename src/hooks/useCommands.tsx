@@ -28,6 +28,7 @@ function useCommands() {
   const addCommandMutation = useMutation(Commands.create, {
     onSuccess: () => {
       queryClient.invalidateQueries("commands");
+      queryClient.invalidateQueries("commandCategories");
       showSuccessToast("Command Added", "Command added successfully");
     },
     onError: showErrorToast,
@@ -35,6 +36,7 @@ function useCommands() {
   const editCommandMutation = useMutation(Commands.update, {
     onSuccess: () => {
       queryClient.invalidateQueries("commands");
+      queryClient.invalidateQueries("commandCategories");
       showSuccessToast("Command Edited", "Command edited successfully");
     },
     onError: showErrorToast,
@@ -42,6 +44,7 @@ function useCommands() {
   const deleteCommandMutation = useMutation(Commands.remove, {
     onSuccess: () => {
       queryClient.invalidateQueries("commands");
+      queryClient.invalidateQueries("commandCategories");
       showSuccessToast("Command Deleted", "Command deleted successfully");
     },
     onError: showErrorToast,

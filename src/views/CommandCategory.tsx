@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import useCommandCategories from "hooks/useCommandCategories";
 import useCommandsFromSingleCategory from "hooks/useCommandsFromSingleCategory";
-import * as React from "react";
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
@@ -35,9 +34,11 @@ function CommandCategoryPage() {
   const [category, setCategory] = useState(null);
 
   useEffect(() => {
-    setCategory(
-      categoriesQuery.data.find((item) => item.id === parseInt(categoryId))
-    );
+    if (categoriesQuery.data) {
+      setCategory(
+        categoriesQuery.data.find((item) => item.id === parseInt(categoryId))
+      );
+    }
   }, [categoryId, categoriesQuery.data]);
 
   return (
