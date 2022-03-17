@@ -18,7 +18,7 @@ import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import DeleteCategoryModal from "../components/commandCategories/DeleteCommandCategory/DeleteCategoryModal";
 import EditCommandCategory from "../components/commandCategories/EditCommandCategory/EditCommandCategory";
-import CommandsList from "../components/commands/CommandsList/CommandsList";
+import CommandsManager from "../components/commands/CommandsManager/CommandsManager";
 import UserLayout from "../components/layout/UserLayout";
 
 function CommandCategoryPage() {
@@ -85,7 +85,7 @@ function CommandCategoryPage() {
         categoryId={parseInt(categoryId)}
       />
       {query.data && (
-        <CommandsList
+        <CommandsManager
           categoryId={category ? category.id : null}
           commands={query.data}
         />

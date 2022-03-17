@@ -20,7 +20,7 @@ interface IProps {
   links: LinkReadDto[];
 }
 
-function LinksList({ showCategories, links }: IProps) {
+function LinksManager({ showCategories, links }: IProps) {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -118,4 +118,4 @@ function LinksList({ showCategories, links }: IProps) {
   );
 }
 
-export default LinksList;
+export default LinksManager;

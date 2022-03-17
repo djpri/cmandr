@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 import UserLayout from "../components/layout/UserLayout";
 import DeleteLinkCategory from "../components/linkCategories/DeleteLinkCategory/DeleteLinkCategory";
 import EditLinkCategory from "../components/linkCategories/EditLinkCategory/EditLinkCategory";
-import LinksList from "../components/links/LinksList/LinksList";
+import LinksManager from "../components/links/LinksManager/LinksManager";
 
 function LinkCategory() {
   const { id: categoryId } = useParams();
@@ -67,7 +67,7 @@ function LinkCategory() {
       <Text mb="30px" color="gray.500" fontWeight="700">
         {category && category.items} items
       </Text>
-      <LinksList showCategories={false} links={query.data} />
+      <LinksManager showCategories={false} links={query.data} />
       <DeleteLinkCategory
         isOpen={isOpen}
         onClose={onClose}
