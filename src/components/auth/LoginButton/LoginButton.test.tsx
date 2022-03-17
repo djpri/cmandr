@@ -1,7 +1,7 @@
-import React from "react";
-import LoginButton from "./LoginButton";
-import { render, screen } from "../../../test-utils";
 import { waitFor } from "@testing-library/react";
+import React from "react";
+import { render, screen } from "../../../test/test-utils";
+import LoginButton from "./LoginButton";
 
 test("Login button shows correct text", async () => {
   render(<LoginButton />);

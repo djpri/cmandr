@@ -8,6 +8,10 @@ const urls = {
   Docker: "https://localhost:49157/api/",
 };
 
+/**
+ * Custom axios instance for accessing api
+ * @see https://axios-http.com/docs/req_config
+ */
 export const CmandrApi: AxiosInstance = axios.create({
   baseURL: urls.Docker,
   timeout: 6000,
@@ -34,7 +38,9 @@ export const Commands = {
   remove: (id: number) => remove(`commands/${id}`),
 };
 
-/** Api endpoints for command categories */
+/**
+ * Api endpoints for command categories
+ */
 export const CommandCategories = {
   getAll: () => get("commands/categories"),
   getById: (id: number) => get(`commands/categories/${id}`),
@@ -44,6 +50,9 @@ export const CommandCategories = {
   remove: (id: number) => remove(`commands/categories/${id}`),
 };
 
+/**
+ * Api endpoints for links
+ */
 export const Links = {
   getAll: () => get("links"),
   /**
@@ -60,6 +69,9 @@ export const Links = {
   remove: (id: number) => remove(`links/${id}`),
 };
 
+/**
+ * Api endpoints for link categories
+ */
 export const LinkCategories = {
   getAll: () => get("links/categories"),
   getById: (id: number) => get(`links/categories/${id}`),

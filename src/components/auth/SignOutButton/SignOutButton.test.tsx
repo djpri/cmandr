@@ -1,6 +1,6 @@
 import React from "react";
+import { render, screen } from "../../../test/test-utils";
 import SignOutButton from "./SignOutButton";
-import { render, screen } from "../../../test-utils";
 
 test.skip("renders without crashing", () => {
   render(<SignOutButton />);

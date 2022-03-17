@@ -1,6 +1,6 @@
 import React from "react";
-import { testAccount } from "testConstants";
-import { fireEvent, render, screen, waitFor } from "../../../test-utils";
+import { testAccount } from "test/testConstants";
+import { fireEvent, render, screen, waitFor } from "../../../test/test-utils";
 import LoginDrawer from "./LoginDrawer";
 
 test("Shows display name for logged in user", async () => {

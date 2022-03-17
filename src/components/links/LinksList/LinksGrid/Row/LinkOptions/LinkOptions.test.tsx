@@ -1,5 +1,5 @@
 import { Link } from "models/link";
-import { fireEvent, render, screen, waitFor } from "test-utils";
+import { fireEvent, render, screen, waitFor } from "test/test-utils";
 import LinkOptions from "./LinkOptions";
 
 const testLink: Link = {

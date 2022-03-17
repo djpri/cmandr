@@ -3,8 +3,8 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
-import { handlers } from "api/mockhandlers";
 import { setupServer } from "msw/node";
+import { handlers } from "test/mockhandlers";
 
 const server = setupServer(...handlers);
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitFor } from "../../../test-utils";
+import { render, waitFor } from "../../../test/test-utils";
 import DeleteCategoryModal from "./DeleteCategoryModal";
 
 test("Model renders with correct props passed in", async () => {

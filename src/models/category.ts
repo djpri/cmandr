@@ -12,7 +12,7 @@ export interface LinkCategory {
   items?: number;
 }
 
-/** Object that is received from response body of api */
+/** Object type that is received from response body of api */
 export interface CategoryReadDto {
   id: number;
   name: string;

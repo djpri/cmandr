@@ -4,7 +4,7 @@ import {
   render,
   screen,
   waitFor,
-} from "../../../../../../test-utils";
+} from "../../../../../../test/test-utils";
 import CommandOptions from "./CommandOptions";
 
 const testCommand: Command = {
