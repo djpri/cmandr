@@ -1,8 +1,8 @@
 import React from "react";
 import { mockStore } from "redux/mockStore";
 import { render } from "../../../test/test-utils";
-import CommandsList from "./CommandsList";
+import CommandsManager from "./CommandsManager";
 
 test.skip("renders without crashing", () => {
-  render(<CommandsList commands={mockStore.commands.commands} />);
+  render(<CommandsManager commands={mockStore.commands.commands} />);
 });

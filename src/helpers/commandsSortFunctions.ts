@@ -53,3 +53,8 @@ export const sortFunctions = {
     },
   },
 };
+
+export type CommandSortFunction = (
+  a: CommandReadDto,
+  b: CommandReadDto
+) => 1 | -1;

@@ -1,7 +1,7 @@
 import { Heading, Stack } from "@chakra-ui/layout";
 import useLinks from "hooks/useLinks";
 import UserLayout from "../components/layout/UserLayout";
-import LinksList from "../components/links/LinksList/LinksList";
+import LinksManager from "../components/links/LinksManager/LinksManager";
 
 function Links() {
   const { query } = useLinks();
@@ -12,7 +12,7 @@ function Links() {
         All Links
       </Heading>
       <Stack w="100%">
-        {query.data && <LinksList showCategories links={query.data} />}
+        {query.data && <LinksManager showCategories links={query.data} />}
       </Stack>
     </UserLayout>
   );

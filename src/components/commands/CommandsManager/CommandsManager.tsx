@@ -11,7 +11,7 @@ interface IProps {
   commands: CommandReadDto[];
 }
 
-function CommandsList({ categoryId, commands }: IProps) {
+function CommandsManager({ categoryId, commands }: IProps) {
   const ref = useRef(null);
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
@@ -63,4 +63,4 @@ function CommandsList({ categoryId, commands }: IProps) {
   );
 }
 
-export default CommandsList;
+export default CommandsManager;

@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "../../../test/test-utils";
-import CreateCommand from "./CreateCommand";
+import LinksManager from "./LinksManager";
 
 test.skip("renders without crashing", () => {
-  render(<CreateCommand />);
+  render(<LinksManager showCategories links={[]} />);
 });
