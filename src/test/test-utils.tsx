@@ -16,7 +16,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { rootReducer } from "redux/store";
-import { testAccount, TEST_CONFIG } from "testConstants";
+import { testAccount, TEST_CONFIG } from "test/testConstants";
 
 const msalConfig: Configuration = TEST_CONFIG;
 

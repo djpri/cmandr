@@ -1,7 +1,7 @@
 import React from "react";
-import CommandsTable from "./CommandsGrid";
-import { render, waitFor } from "../../../../test-utils";
 import { mockStore } from "../../../../redux/mockStore";
+import { render, waitFor } from "../../../../test/test-utils";
+import CommandsTable from "./CommandsGrid";
 
 test("Render CommandsTable with correct props", async () => {
   render(

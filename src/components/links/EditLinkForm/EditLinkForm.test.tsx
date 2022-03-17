@@ -1,7 +1,7 @@
-import React from "react";
-import EditLinkForm from "./EditLinkForm";
-import { render, waitFor } from "../../../test-utils";
 import { Link } from "models/link";
+import React from "react";
+import { render, waitFor } from "../../../test/test-utils";
+import EditLinkForm from "./EditLinkForm";
 
 const testLink: Link = {
   id: 1,

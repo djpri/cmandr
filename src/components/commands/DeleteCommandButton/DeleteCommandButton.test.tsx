@@ -1,6 +1,6 @@
 import React from "react";
+import { render } from "../../../test/test-utils";
 import DeleteCommandButton from "./DeleteCommandButton";
-import { render } from "../../../test-utils";
 
 test.skip("renders without crashing", () => {
   render(<DeleteCommandButton onClose={() => {}} commandId={5} />);

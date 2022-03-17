@@ -1,6 +1,6 @@
 import React from "react";
 import { Command } from "../../../models/command";
-import { render, waitFor } from "../../../test-utils";
+import { render, waitFor } from "../../../test/test-utils";
 import EditCommandForm from "./EditCommandForm";
 
 const testCommand: Command = {
