@@ -11,12 +11,11 @@ import { MsalProvider } from "@azure/msal-react";
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { render, RenderOptions } from "@testing-library/react";
-import * as React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { rootReducer } from "redux/store";
-import { testAccount, TEST_CONFIG } from "test/testConstants";
+import { testAccount, TEST_CONFIG } from "tests/testConstants";
 
 const msalConfig: Configuration = TEST_CONFIG;
 

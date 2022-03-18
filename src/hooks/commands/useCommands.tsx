@@ -1,47 +1,49 @@
-import { CommandCategories } from "api";
+import { Commands } from "api";
 import { asReactQueryFunction } from "helpers/helpers";
+import useChakraToast from "hooks/other/useChakraToast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import useChakraToast from "./useChakraToast";
 
 /**
- * Custom hook that contains react query logic for command categories
+ * Custom hook that contains react query logic for commands
+ *
+ * @see https://react-query.tanstack.com/guides/queries
  *
  * @example
  *
  * ```js
- * const { query } = useCommandCategories();
- * const categories = query.data;
+ * const { query } = useCommands();
+ * const commandsData = query.data;
  * ```
  */
-function useCommandCategories() {
+function useCommands() {
   const queryClient = useQueryClient();
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useQuery(
-    "commandCategories",
-    asReactQueryFunction(CommandCategories.getAll)
-  );
+  const query = useQuery("commands", asReactQueryFunction(Commands.getAll));
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
-  const addCategoryMutation = useMutation(CommandCategories.create, {
+  const addCommandMutation = useMutation(Commands.create, {
     onSuccess: () => {
+      queryClient.invalidateQueries("commands");
       queryClient.invalidateQueries("commandCategories");
       showSuccessToast("Command Added", "Command added successfully");
     },
     onError: showErrorToast,
   });
-  const editCategoryMutation = useMutation(CommandCategories.update, {
+  const editCommandMutation = useMutation(Commands.update, {
     onSuccess: () => {
+      queryClient.invalidateQueries("commands");
       queryClient.invalidateQueries("commandCategories");
       showSuccessToast("Command Edited", "Command edited successfully");
     },
     onError: showErrorToast,
   });
-  const deleteCategoryMutation = useMutation(CommandCategories.remove, {
+  const deleteCommandMutation = useMutation(Commands.remove, {
     onSuccess: () => {
+      queryClient.invalidateQueries("commands");
       queryClient.invalidateQueries("commandCategories");
       showSuccessToast("Command Deleted", "Command deleted successfully");
     },
@@ -50,10 +52,13 @@ function useCommandCategories() {
 
   return {
     query,
-    addCategoryMutation,
-    editCategoryMutation,
-    deleteCategoryMutation,
+    data: query.data,
+    isLoading: query.isLoading,
+    isError: query.isError,
+    addCommandMutation,
+    editCommandMutation,
+    deleteCommandMutation,
   };
 }
 
-export default useCommandCategories;
+export default useCommands;

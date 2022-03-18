@@ -1,6 +1,5 @@
-import React from "react";
-import { render, screen } from "../../../tests/test-utils";
-import SignOutButton from "./SignOutButton";
+import SignOutButton from "components/auth/SignOutButton/SignOutButton";
+import { render, screen } from "./test-utils";
 
 test.skip("renders without crashing", () => {
   render(<SignOutButton />);

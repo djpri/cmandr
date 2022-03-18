@@ -2,9 +2,9 @@ import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { CommandReadDto } from "models/command";
 import React, { useRef } from "react";
+import useCommandsFilter from "../../../hooks/commands/useCommandsFilter";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
-import useCommandsFilter from "./useCommandsFilter";
 
 interface IProps {
   categoryId?: number;

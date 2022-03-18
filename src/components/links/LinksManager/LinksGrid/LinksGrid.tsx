@@ -1,16 +1,24 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import { Link } from "models/link";
-import * as React from "react";
+import { LinksSortFunction } from "helpers/linksSortFunctions";
+import { LinkReadDto } from "models/link";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
 
 interface IProps {
-  links: Link[];
+  links: LinkReadDto[];
   showCategories: boolean;
   isLoading: boolean;
+  sortFunction?: (a: LinkReadDto, b: LinkReadDto) => 1 | -1;
+  setSortFunction?: React.Dispatch<React.SetStateAction<LinksSortFunction>>;
 }
 
-function LinksTable({ links, showCategories, isLoading }: IProps) {
+function LinksTable({
+  links,
+  showCategories,
+  isLoading,
+  sortFunction,
+  setSortFunction,
+}: IProps) {
   return (
     <Box p="1" display="flex" flexDirection="column" w="100%">
       <Grid
@@ -18,9 +26,26 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
         gap={4}
         p="4"
       >
-        <Header field="title" label="Title" />
-        <Header field="link" label="Url" />
-        {showCategories && <Header field="category" label="Category" />}
+        <Header
+          sortFunction={sortFunction}
+          setSortFunction={setSortFunction}
+          field="title"
+          label="Title"
+        />
+        <Header
+          sortFunction={sortFunction}
+          setSortFunction={setSortFunction}
+          field="url"
+          label="Url"
+        />
+        {showCategories && (
+          <Header
+            sortFunction={sortFunction}
+            setSortFunction={setSortFunction}
+            field="category"
+            label="Category"
+          />
+        )}
         <GridItem />
       </Grid>
 
@@ -31,7 +56,7 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
         gap={[4, null, null, 0]}
       >
         {links &&
-          links.map((link: Link) => (
+          links.map((link: LinkReadDto) => (
             <Row
               isLoading={isLoading}
               linkItem={link}

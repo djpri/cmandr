@@ -13,17 +13,17 @@ import {
 } from "@chakra-ui/react";
 import DeleteLinkButton from "components/links/DeleteLinkButton/DeleteLinkButton";
 import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
-import { Link } from "models/link";
-import * as React from "react";
+import { LinkReadDto } from "models/link";
+import { useState } from "react";
 import { IoMdOptions } from "react-icons/io";
 
 type IProps = {
-  link: Link;
+  link: LinkReadDto;
 };
 
 function CommandOptions({ link }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <Box m="0" position="relative">

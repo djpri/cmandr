@@ -1,26 +1,26 @@
 import { useMsal } from "@azure/msal-react";
 import {
+  Box,
   Button,
-  useDisclosure,
-  Text,
   Popover,
+  PopoverArrow,
   PopoverBody,
   PopoverCloseButton,
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
-  PopoverArrow,
-  Box,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import LoginButton from "components/auth/LoginButton/LoginButton";
-import * as React from "react";
+import { useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import SignOutButton from "../../auth/SignOutButton/SignOutButton";
+import SignOutButton from "../../../auth/SignOutButton/SignOutButton";
 
-function LoginDrawer() {
+function LoginPopover() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [formType] = React.useState("login");
-  const btnRef: React.Ref<any> = React.useRef();
+  const [formType] = useState("login");
+  const btnRef: React.Ref<any> = useRef();
   const { accounts } = useMsal();
 
   const PopoverButton = () => (
@@ -75,4 +75,4 @@ function LoginDrawer() {
   );
 }
 
-export default LoginDrawer;
+export default LoginPopover;

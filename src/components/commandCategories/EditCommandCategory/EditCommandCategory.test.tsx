@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "../../../test/test-utils";
+import { render } from "../../../tests/test-utils";
 import EditCommandCategory from "./EditCommandCategory";
 
 test.skip("renders without crashing", () => {

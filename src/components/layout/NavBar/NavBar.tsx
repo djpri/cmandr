@@ -1,9 +1,9 @@
 import { Box, Button, Heading, HStack } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { ColorModeSwitcher } from "../../other/ColorModeSwitcher";
-import { useAppDispatch } from "redux/store";
-import LoginDrawer from "../LoginDrawer/LoginDrawer";
 import { setSidebarToggle } from "redux/layout/layoutSlice";
+import { useAppDispatch } from "redux/store";
+import { ColorModeSwitcher } from "../../other/ColorModeSwitcher";
+import LoginPopover from "./LoginPopover/LoginPopover";
 
 function NavBar() {
   const dispatch = useAppDispatch();
@@ -46,7 +46,7 @@ function NavBar() {
         </HStack>
         <HStack>
           <ColorModeSwitcher />
-          <LoginDrawer />
+          <LoginPopover />
         </HStack>
       </HStack>
     </Box>

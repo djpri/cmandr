@@ -5,9 +5,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@chakra-ui/popover";
-import { Box, Button, HStack, useDisclosure, Text } from "@chakra-ui/react";
-import useLinkCategories from "hooks/useLinkCategories";
-import useLinksFromSingleCategory from "hooks/useLinksFromSingleCategory";
+import { Box, Button, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import useLinkCategories from "hooks/links/useLinkCategories";
+import useLinksFromSingleCategory from "hooks/links/useLinksFromSingleCategory";
 import React, { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
@@ -67,7 +67,12 @@ function LinkCategory() {
       <Text mb="30px" color="gray.500" fontWeight="700">
         {category && category.items} items
       </Text>
-      <LinksManager showCategories={false} links={query.data} />
+      {query.data && (
+        <LinksManager
+          categoryId={category ? category.id : null}
+          links={query.data}
+        />
+      )}
       <DeleteLinkCategory
         isOpen={isOpen}
         onClose={onClose}

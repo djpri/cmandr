@@ -11,10 +11,10 @@ import {
   PopoverTrigger,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Command } from "models/command";
 import DeleteCommandButton from "components/commands/DeleteCommandButton/DeleteCommandButton";
 import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
-import * as React from "react";
+import { Command } from "models/command";
+import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 
 type IProps = {
@@ -23,7 +23,7 @@ type IProps = {
 
 function CommandOptions({ command }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <Box m="0" position="relative">

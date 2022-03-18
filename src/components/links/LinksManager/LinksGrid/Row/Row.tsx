@@ -6,12 +6,12 @@ import {
   Link as ChakraLink,
   Skeleton,
 } from "@chakra-ui/react";
-import useLinkCategories from "hooks/useLinkCategories";
-import { Link } from "models/link";
+import useLinkCategories from "hooks/links/useLinkCategories";
+import { LinkReadDto } from "models/link";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
 interface IProps {
-  linkItem: Link;
+  linkItem: LinkReadDto;
   showCategories: boolean;
   isLoading: boolean;
 }
@@ -21,11 +21,12 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
   const { title, url, category } = linkItem;
 
   const getFaviconUrl = (link) => {
-    if (linkItem.favicon_url !== null) return linkItem.favicon_url;
+    if (linkItem.faviconImageUrl !== null) return linkItem.faviconImageUrl;
     try {
       const url = new URL(link);
       const hostName = url.hostname.replace("www.", "");
-      return `https://${hostName}/favicon.ico`;
+      // return `https://${hostName}/favicon.ico`;
+      return null;
     } catch (error) {
       return null;
     }

@@ -1,8 +1,7 @@
 import { Button, HStack, Input, useDisclosure } from "@chakra-ui/react";
-import * as React from "react";
 import { useState } from "react";
 import { AiFillFolderAdd } from "react-icons/ai";
-import useLinkCategories from "../../../hooks/useLinkCategories";
+import useLinkCategories from "../../../hooks/links/useLinkCategories";
 
 function AddLinkCategory() {
   const [category, setCategory] = useState("");

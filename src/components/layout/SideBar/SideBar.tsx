@@ -1,11 +1,11 @@
 import {
-  useColorModeValue,
   Box,
   Stack,
   StackItem,
+  useColorModeValue,
   useMediaQuery,
 } from "@chakra-ui/react";
-import * as React from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSidebarOpen,
@@ -46,7 +46,7 @@ function SideBar() {
   const borderColor = useColorModeValue("gray.300", "gray.700");
 
   // sidebar is initially closed on smaller devices
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSmallerThan1280) dispatch(setSidebarClosed());
   }, [isSmallerThan1280, dispatch]);
 

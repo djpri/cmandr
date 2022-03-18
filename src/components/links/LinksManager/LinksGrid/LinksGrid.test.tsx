@@ -1,6 +1,6 @@
 import React from "react";
 import { mockStore } from "../../../../redux/mockStore";
-import { render, waitFor } from "../../../../test/test-utils";
+import { render, waitFor } from "../../../../tests/test-utils";
 import LinksTable from "./LinksGrid";
 
 test("Render LinksTable with correct props", async () => {

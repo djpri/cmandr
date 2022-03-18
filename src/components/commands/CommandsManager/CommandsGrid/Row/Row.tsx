@@ -9,7 +9,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Command } from "models/command";
-import * as React from "react";
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillFolder } from "react-icons/ai";

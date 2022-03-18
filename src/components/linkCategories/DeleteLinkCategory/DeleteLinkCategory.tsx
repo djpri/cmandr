@@ -1,16 +1,16 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useLinkCategories from "../../../hooks/useLinkCategories";
+import useLinkCategories from "../../../hooks/links/useLinkCategories";
 
 interface IProps {
   isOpen: boolean;
@@ -25,8 +25,8 @@ function DeleteLinkCategory({
   categoryName,
   categoryId,
 }: IProps) {
-    let navigate = useNavigate();
-    const { deleteCategoryMutation } = useLinkCategories();
+  let navigate = useNavigate();
+  const { deleteCategoryMutation } = useLinkCategories();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -45,7 +45,7 @@ function DeleteLinkCategory({
             onClick={() => {
               onClose();
               navigate("/links");
-               deleteCategoryMutation.mutate(categoryId);
+              deleteCategoryMutation.mutate(categoryId);
             }}
           >
             Delete

@@ -1,10 +1,13 @@
 import { Button, Collapse, Portal, useDisclosure } from "@chakra-ui/react";
-import * as React from "react";
 import { forwardRef } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import AddLinkForm from "../../AddLinkForm/AddLinkForm";
 
-const AddCommandButton = forwardRef((props, ref: any) => {
+interface IProps {
+  categoryId?: number;
+}
+
+const AddCommandButton = forwardRef((props: IProps, ref: any) => {
   const { isOpen, onToggle } = useDisclosure();
   return (
     <>
@@ -20,7 +23,11 @@ const AddCommandButton = forwardRef((props, ref: any) => {
       {ref && (
         <Portal containerRef={ref}>
           <Collapse in={isOpen} animateOpacity>
-            <AddLinkForm />
+            {props.categoryId ? (
+              <AddLinkForm categoryId={props.categoryId} />
+            ) : (
+              <AddLinkForm />
+            )}
           </Collapse>
         </Portal>
       )}

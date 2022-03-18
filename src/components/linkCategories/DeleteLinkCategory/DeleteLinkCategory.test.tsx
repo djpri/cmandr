@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitFor } from "../../../test/test-utils";
+import { render, waitFor } from "../../../tests/test-utils";
 import DeleteLinkCategory from "./DeleteLinkCategory";
 
 test("renders with correct props", async () => {

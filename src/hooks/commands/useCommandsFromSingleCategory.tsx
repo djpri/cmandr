@@ -1,7 +1,7 @@
 import { CommandCategories, Commands } from "api";
 import { asReactQueryFunction } from "helpers/helpers";
+import useChakraToast from "hooks/other/useChakraToast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import useChakraToast from "./useChakraToast";
 
 function useCommandsFromSingleCategory(categoryId: number) {
   const queryClient = useQueryClient();

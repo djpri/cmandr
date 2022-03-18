@@ -6,8 +6,8 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import useCommandCategories from "hooks/useCommandCategories";
-import useLinkCategories from "hooks/useLinkCategories";
+import useCommandCategories from "hooks/commands/useCommandCategories";
+import useLinkCategories from "hooks/links/useLinkCategories";
 import { Link as RouterLink } from "react-router-dom";
 import UserLayout from "../components/layout/UserLayout";
 

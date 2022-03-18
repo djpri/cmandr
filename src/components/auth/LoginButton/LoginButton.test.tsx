@@ -1,6 +1,6 @@
 import { waitFor } from "@testing-library/react";
 import React from "react";
-import { render, screen } from "../../../test/test-utils";
+import { render, screen } from "../../../tests/test-utils";
 import LoginButton from "./LoginButton";
 
 test("Login button shows correct text", async () => {

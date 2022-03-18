@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { CommandSortFunction } from "helpers/commandsSortFunctions";
 import { Command, CommandReadDto } from "models/command";
-import * as React from "react";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
 
@@ -8,9 +8,7 @@ interface IProps {
   commands: CommandReadDto[];
   showCategories: boolean;
   sortFunction?: (a: CommandReadDto, b: CommandReadDto) => 1 | -1;
-  setSortFunction?: React.Dispatch<
-    React.SetStateAction<(a: CommandReadDto, b: CommandReadDto) => 1 | -1>
-  >;
+  setSortFunction?: React.Dispatch<React.SetStateAction<CommandSortFunction>>;
 }
 
 function CommandsTable({
