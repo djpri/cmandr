@@ -1,6 +1,5 @@
 import { useMsal } from "@azure/msal-react";
 import { Button } from "@chakra-ui/react";
-import React from "react";
 
 function SignOutButton() {
   const { instance } = useMsal();

@@ -10,16 +10,21 @@ export interface Link {
   dateCreated?: Date;
 }
 
+/** Object type that is received from response body of api */
 export interface LinkReadDto {
-  link: string;
+  id: number;
+  url: string;
   title: string;
-  categoryId: number;
+  category: LinkCategory;
+  faviconImageUrl?: string;
 }
 
+/** Object that is sent as request body to api when adding a new link */
 export interface LinkCreateDto {
-  link: string;
+  url: string;
   title: string;
   categoryId: number;
 }
 
+/** Object that is sent as request body to api when editing an existing link */
 export interface LinkUpdateDto extends LinkCreateDto {}

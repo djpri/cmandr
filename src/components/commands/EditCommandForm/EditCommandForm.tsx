@@ -1,7 +1,7 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import useCommandCategories from "../../../hooks/useCommandCategories";
-import useCommands from "../../../hooks/useCommands";
+import useCommandCategories from "../../../hooks/commands/useCommandCategories";
+import useCommands from "../../../hooks/commands/useCommands";
 import { Command, CommandUpdateDto } from "../../../models/command";
 
 type IProps = {

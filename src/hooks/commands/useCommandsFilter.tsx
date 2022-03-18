@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 /**
  * Takes an array of commands as input and then returns a filtered and sorted array of commands
  * @param commands
- * @returns
  */
 function useCommandsFilter(commands: CommandReadDto[]) {
   const [search, setSearch] = useState<string>("");

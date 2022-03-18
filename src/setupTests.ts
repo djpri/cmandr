@@ -4,7 +4,7 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 import { setupServer } from "msw/node";
-import { handlers } from "test/mockhandlers";
+import { handlers } from "tests/mockhandlers";
 
 const server = setupServer(...handlers);
 

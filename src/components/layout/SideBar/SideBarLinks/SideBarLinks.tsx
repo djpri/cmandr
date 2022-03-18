@@ -8,10 +8,9 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import useCommandCategories from "hooks/useCommandCategories";
-import useLinkCategories from "hooks/useLinkCategories";
+import useCommandCategories from "hooks/commands/useCommandCategories";
+import useLinkCategories from "hooks/links/useLinkCategories";
 import { CommandCategory, LinkCategory } from "models/category";
-import * as React from "react";
 import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import AddCommandCategory from "../../../commandCategories/AddCommandCategory/AddCommandCategory";

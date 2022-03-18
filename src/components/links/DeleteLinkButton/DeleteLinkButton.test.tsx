@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "../../../test/test-utils";
+import { render } from "../../../tests/test-utils";
 import DeleteLinkButton from "./DeleteLinkButton";
 
 test.skip("renders without crashing", () => {

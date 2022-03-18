@@ -1,12 +1,12 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
-import useLinkCategories from "hooks/useLinkCategories";
-import useLinks from "hooks/useLinks";
-import { Link, LinkUpdateDto } from "models/link";
+import useLinkCategories from "hooks/links/useLinkCategories";
+import useLinks from "hooks/links/useLinks";
+import { Link, LinkReadDto, LinkUpdateDto } from "models/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 
 type IProps = {
-  linkItem: Link;
+  linkItem: LinkReadDto;
   onClose: () => void;
 };
 
@@ -18,7 +18,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   const { handleSubmit, register } = useForm<LinkUpdateDto>({
     defaultValues: {
       title,
-      link: url,
+      url,
       categoryId: linkItem.category.id,
     },
   });
@@ -36,7 +36,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
         <Input {...register("title")} placeholder="Link Title" />
 
         <FormLabel htmlFor="Link">Url</FormLabel>
-        <Input {...register("link")} placeholder="URL for link" />
+        <Input {...register("url")} placeholder="URL for link" />
 
         <FormLabel htmlFor="category">Category</FormLabel>
         <Select {...register("categoryId")}>

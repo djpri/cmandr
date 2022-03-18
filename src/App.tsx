@@ -1,17 +1,18 @@
 import { useAccount, useMsal } from "@azure/msal-react";
-import { ChakraProvider, CSSReset } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset, Spinner } from "@chakra-ui/react";
 import { CmandrApi } from "api";
 import { apiConfig } from "auth/apiConfig";
-import { useEffect } from "react";
+import UserLayout from "components/layout/UserLayout";
+import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import CreateCommand from "./components/commands/CreateCommand/CreateCommand";
 import theme from "./theme/theme";
 import AllCommandsPage from "./views/AllCommands";
-import Links from "./views/AllLinks";
 import CommandCategoryPage from "./views/CommandCategory";
 import HomePage from "./views/Home";
-import LinkCategory from "./views/LinkCategory";
 import LoginPage from "./views/Login";
+
+const Links = lazy(() => import("./views/AllLinks"));
+const LinkCategory = lazy(() => import("./views/LinkCategory"));
 
 export const App = () => {
   const { instance, accounts } = useMsal();
@@ -47,15 +48,22 @@ export const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/manage-commands" element={<CreateCommand />} />
-        <Route path="/commands" element={<AllCommandsPage />} />
-        <Route path="/commands/:id" element={<CommandCategoryPage />} />
-        <Route path="/links" element={<Links />} />
-        <Route path="/links/:id" element={<LinkCategory />} />
-        <Route path="/account/login" element={<LoginPage />} />
-      </Routes>
+      <Suspense
+        fallback={
+          <UserLayout>
+            <Spinner />
+          </UserLayout>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/commands" element={<AllCommandsPage />} />
+          <Route path="/commands/:id" element={<CommandCategoryPage />} />
+          <Route path="/links" element={<Links />} />
+          <Route path="/links/:id" element={<LinkCategory />} />
+          <Route path="/account/login" element={<LoginPage />} />
+        </Routes>
+      </Suspense>
     </ChakraProvider>
   );
 };

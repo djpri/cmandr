@@ -1,15 +1,15 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   Button,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
-import useCommandCategories from "hooks/useCommandCategories";
+import useCommandCategories from "hooks/commands/useCommandCategories";
 import { useState } from "react";
 
 function EditCommandCategory({ isOpen, onClose, categoryId }) {

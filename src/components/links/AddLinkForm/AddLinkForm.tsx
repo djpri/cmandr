@@ -1,76 +1,108 @@
-import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
-import useLinkCategories from "hooks/useLinkCategories";
-import useLinks from "hooks/useLinks";
+import {
+  Box,
+  Button,
+  FormLabel,
+  Grid,
+  Input,
+  Select,
+  Text,
+} from "@chakra-ui/react";
+import useLinkCategories from "hooks/links/useLinkCategories";
+import useLinks from "hooks/links/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { LinkCreateDto } from "../../../models/link";
 
-function AddLinkForm() {
+interface IProps {
+  categoryId?: number;
+}
+
+/**
+ * Form for adding new links created with react-hook-form
+ * @see https://react-hook-form.com/get-started
+ */
+function AddLinkForm({ categoryId }: IProps) {
   const { addLinkMutation } = useLinks();
   const { query } = useLinkCategories();
-  const params = useParams();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
-  const { handleSubmit, register, reset, setValue } = useForm<LinkCreateDto>();
+  const {
+    handleSubmit,
+    register,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<LinkCreateDto>();
 
   useEffect(() => {
-    if (params) {
+    if (categoryId) {
       setShowCategorySelect(false);
+      setValue("categoryId", categoryId);
     } else {
       setShowCategorySelect(true);
     }
-  }, [params, setValue]);
+  }, [categoryId, setValue]);
 
   const onSubmit = (values: LinkCreateDto) => {
-    // addLinkMutation.mutate(values);
-    alert(JSON.stringify(values, null, 2));
+    addLinkMutation.mutate(values);
     reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-      <Grid
-        mb="10"
-        templateColumns={[
-          "repeat(1, 1fr)",
-          null,
-          "repeat(2, 1fr)",
-          null,
-          "repeat(4, 1fr)",
-        ]}
-        gap={6}
-        alignItems="end"
-      >
-        <Box>
-          <FormLabel htmlFor="title">Title</FormLabel>
-          <Input {...register("title")} placeholder="Title for link" />
-        </Box>
-
-        <Box>
-          <FormLabel htmlFor="link">Link</FormLabel>
-          <Input {...register("link")} placeholder="Link URL" />
-        </Box>
-
-        {showCategorySelect && (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        <Grid
+          mb="10"
+          templateColumns={[
+            "repeat(1, 1fr)",
+            null,
+            "repeat(2, 1fr)",
+            null,
+            "repeat(4, 1fr)",
+          ]}
+          gap={6}
+          alignItems="end"
+        >
           <Box>
-            <FormLabel htmlFor="category">Category</FormLabel>
-            <Select {...register("categoryId")}>
-              <option value="">Select Category</option>
-              {query.data &&
-                query.data.map((category, index) => (
-                  <option value={category.id} key={index}>
-                    {category.name}
-                  </option>
-                ))}
-            </Select>
+            <FormLabel htmlFor="title">Title</FormLabel>
+            <Input {...register("title")} placeholder="Title for link" />
           </Box>
-        )}
 
-        <Button type="submit" colorScheme="green" size="sm" isFullWidth={false}>
-          Add link
-        </Button>
-      </Grid>
-    </form>
+          <Box>
+            <FormLabel htmlFor="link">Link</FormLabel>
+            <Input {...register("url")} placeholder="Link URL" />
+          </Box>
+
+          {showCategorySelect && (
+            <Box>
+              <FormLabel htmlFor="category">Category</FormLabel>
+              <Select {...register("categoryId", { min: 1 })}>
+                <option value={-1}>Select Category</option>
+                {query.data &&
+                  query.data.map((category, index) => (
+                    <option value={category.id} key={index}>
+                      {category.name}
+                    </option>
+                  ))}
+              </Select>
+            </Box>
+          )}
+
+          <Button
+            type="submit"
+            colorScheme="green"
+            size="sm"
+            isFullWidth={false}
+          >
+            Add link
+          </Button>
+        </Grid>
+      </form>
+      {errors.categoryId && (
+        <Text display="block" color="red.500" fontWeight="bold">
+          * Category is required
+        </Text>
+      )}
+    </>
   );
 }
 

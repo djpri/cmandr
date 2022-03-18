@@ -1,5 +1,5 @@
 import { Heading } from "@chakra-ui/react";
-import useCommands from "hooks/useCommands";
+import useCommands from "hooks/commands/useCommands";
 import CommandsManager from "../components/commands/CommandsManager/CommandsManager";
 import UserLayout from "../components/layout/UserLayout";
 

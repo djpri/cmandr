@@ -1,10 +1,9 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
-import * as React from "react";
+import useCommandCategories from "hooks/commands/useCommandCategories";
+import useCommands from "hooks/commands/useCommands";
+import { CommandCreateDto } from "models/command";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import useCommandCategories from "../../../hooks/useCommandCategories";
-import useCommands from "../../../hooks/useCommands";
-import { CommandCreateDto } from "../../../models/command";
 
 interface IProps {
   categoryId?: number;

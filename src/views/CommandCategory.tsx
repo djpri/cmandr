@@ -11,8 +11,8 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import useCommandCategories from "hooks/useCommandCategories";
-import useCommandsFromSingleCategory from "hooks/useCommandsFromSingleCategory";
+import useCommandCategories from "hooks/commands/useCommandCategories";
+import useCommandsFromSingleCategory from "hooks/commands/useCommandsFromSingleCategory";
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";

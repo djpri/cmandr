@@ -1,5 +1,5 @@
 import { Button, HStack, Input, useDisclosure } from "@chakra-ui/react";
-import useCommandCategories from "hooks/useCommandCategories";
+import useCommandCategories from "hooks/commands/useCommandCategories";
 import { useState } from "react";
 import { AiFillFolderAdd } from "react-icons/ai";
 

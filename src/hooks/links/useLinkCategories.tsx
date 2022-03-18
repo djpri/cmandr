@@ -1,7 +1,7 @@
 import { LinkCategories } from "api";
 import { asReactQueryFunction } from "helpers/helpers";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import useChakraToast from "./useChakraToast";
+import useChakraToast from "../other/useChakraToast";
 
 /**
  * Custom hook that contains react query logic for link categories

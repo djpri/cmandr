@@ -24,6 +24,7 @@ Also includes a bookmark manager for storing links related to development work.
  ┣ 📂hooks - *custom react hooks, mainly for react query logic*  
  ┣ 📂models - *view models based on the web api DTOs (data transfer objects)*  
  ┣ 📂redux - *contains redux store and all slices*  
+ ┣ 📂test - *contains test data and test utils (component tests are colocated)*  
  ┣ 📂theme - *theme configuration for chakra ui*  
  ┣ 📂views - *individual components for each page of the site*  
 

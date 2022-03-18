@@ -8,6 +8,7 @@ export interface Command {
   category: CommandCategory;
 }
 
+/** Object type that is received from response body of api */
 export interface CommandReadDto {
   id: number;
   description: string;
@@ -16,6 +17,7 @@ export interface CommandReadDto {
   category: CommandCategory;
 }
 
+/** Object that is sent as request body to api when adding a new command */
 export interface CommandCreateDto {
   description: string;
   line: string;
@@ -23,4 +25,5 @@ export interface CommandCreateDto {
   categoryId: number;
 }
 
+/** Object that is sent as request body to api when editing an existing command */
 export interface CommandUpdateDto extends CommandCreateDto {}

@@ -8,6 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
+import useLinksFilter from "hooks/links/useLinksFilter";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
@@ -16,49 +17,17 @@ import AddLinkButton from "./AddLinkButton/AddLinkButton";
 import LinksTable from "./LinksGrid/LinksGrid";
 
 interface IProps {
-  showCategories: boolean;
+  categoryId?: number;
   links: LinkReadDto[];
 }
 
-function LinksManager({ showCategories, links }: IProps) {
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState(null);
-  const [isSearching, setIsSearching] = useState(false);
-  const location = useLocation();
+function LinksManager({ categoryId, links }: IProps) {
   const ref = useRef(null);
-
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
 
-  // filter commands on search
-  // wait 500ms after user stops typing before filtering
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      let newArray = [];
-      setSearchResults(() => {
-        if (links?.length >= 1) {
-          newArray = links.filter((item: LinkReadDto) =>
-            item.title.match(new RegExp(search, "i"))
-          );
-        }
-        return newArray;
-      });
-      setIsSearching(false);
-    }, 500);
-    return () => {
-      setIsSearching(true);
-      clearTimeout(timeout);
-    };
-  }, [search, links]);
-
-  useEffect(() => {
-    setSearchResults(null);
-    setSearch("");
-  }, [location]);
-
-  useEffect(() => {
-    setSearchResults(links);
-  }, [links]);
+  const { filteredLinks, search, setSearch, sortFunction, setSortFunction } =
+    useLinksFilter(links);
 
   return (
     <ErrorBoundaryWrapper>
@@ -75,9 +44,6 @@ function LinksManager({ showCategories, links }: IProps) {
         mb="40"
       >
         <Box zIndex="100" mb="2" pt="5" pl="5" pr="5">
-          {isSearching && (
-            <Spinner position="absolute" top="3" right="3" color="blue.500" />
-          )}
           <Box
             display="flex"
             flexDirection="row"
@@ -85,7 +51,7 @@ function LinksManager({ showCategories, links }: IProps) {
             alignItems="center"
             mb="3"
           >
-            <AddLinkButton ref={ref} />
+            <AddLinkButton ref={ref} categoryId={categoryId} />
             {/* SEARCH BAR */}
             <InputGroup maxW="md" w={["xs", "xs", "sm", "md"]}>
               <Input
@@ -110,8 +76,10 @@ function LinksManager({ showCategories, links }: IProps) {
         </Box>
         <LinksTable
           isLoading={false}
-          links={searchResults}
-          showCategories={showCategories}
+          links={filteredLinks}
+          showCategories={!categoryId}
+          sortFunction={sortFunction}
+          setSortFunction={setSortFunction}
         />
       </Box>
     </ErrorBoundaryWrapper>
