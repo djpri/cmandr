@@ -11,7 +11,12 @@ import {
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import { CommandCategory, LinkCategory } from "models/category";
-import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
+import {
+  AiFillFolder,
+  AiFillFolderOpen,
+  AiFillWallet,
+  AiOutlineWallet,
+} from "react-icons/ai";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import AddCommandCategory from "../../../commandCategories/AddCommandCategory/AddCommandCategory";
 import AddLinkCategory from "../../../linkCategories/AddLinkCategory/AddLinkCategory";
@@ -115,8 +120,19 @@ function SideBarLinks() {
         </Box>
 
         <Link as={RouterLink} to="/commands">
-          <Text>All commands</Text>
+          <HStack>
+            <AiFillWallet />
+            <Text>All commands</Text>
+          </HStack>
         </Link>
+
+        <Link as={RouterLink} to="/commands">
+          <HStack>
+            <AiOutlineWallet color="gray.200" />
+            <Text>Unsorted</Text>
+          </HStack>
+        </Link>
+
         <CommandCategoryLinks />
       </Stack>
 
@@ -129,7 +145,17 @@ function SideBarLinks() {
         </Box>
 
         <Link as={RouterLink} to="/links">
-          <Text>All links</Text>
+          <HStack>
+            <AiFillWallet />
+            <Text>All links</Text>
+          </HStack>
+        </Link>
+
+        <Link as={RouterLink} to="/links">
+          <HStack>
+            <AiOutlineWallet color="gray.200" />
+            <Text>Unsorted</Text>
+          </HStack>
         </Link>
 
         <LinkCategoryLinks />

@@ -1,10 +1,5 @@
 import { Command } from "models/command";
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "../../../../../../tests/test-utils";
+import { fireEvent, render, screen } from "../../../../../../tests/test-utils";
 import CommandOptions from "./CommandOptions";
 
 const testCommand: Command = {
@@ -25,8 +20,6 @@ test("Shows edit and delete buttons when clicked", async () => {
   expect(heading).toBeInTheDocument();
   expect(editButton).toBeInTheDocument();
   expect(deleteButton).toBeInTheDocument();
-
-  await waitFor(() => Promise.resolve());
 });
 
 test("Shows edit form with correct default information when edit button is clicked", async () => {
@@ -49,6 +42,4 @@ test("Shows edit form with correct default information when edit button is click
   // expect(defaultCategory).toBeInTheDocument();
   expect(defaultReference).toBeInTheDocument();
   expect(saveButton).toBeInTheDocument();
-
-  await waitFor(() => Promise.resolve());
 });

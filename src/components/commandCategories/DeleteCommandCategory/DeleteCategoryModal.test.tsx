@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitFor } from "../../../tests/test-utils";
+import { render } from "../../../tests/test-utils";
 import DeleteCategoryModal from "./DeleteCategoryModal";
 
 test("Model renders with correct props passed in", async () => {
@@ -11,5 +11,4 @@ test("Model renders with correct props passed in", async () => {
       categoryId={1}
     />
   );
-  await waitFor(() => Promise.resolve());
 });
