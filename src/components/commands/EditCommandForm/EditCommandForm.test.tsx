@@ -1,6 +1,6 @@
 import React from "react";
 import { Command } from "../../../models/command";
-import { render, waitFor } from "../../../tests/test-utils";
+import { render } from "../../../tests/test-utils";
 import EditCommandForm from "./EditCommandForm";
 
 const testCommand: Command = {
@@ -13,5 +13,4 @@ const testCommand: Command = {
 
 test("Renders with correct command passed in as prop", async () => {
   render(<EditCommandForm commandItem={testCommand} onClose={() => {}} />);
-  await waitFor(() => Promise.resolve());
 });

@@ -7,6 +7,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Spinner,
   Stack,
   Text,
   useDisclosure,
@@ -84,6 +85,7 @@ function CommandCategoryPage() {
         onClose={editModalClose}
         categoryId={parseInt(categoryId)}
       />
+      {query.isLoading && <Spinner />}
       {query.data && (
         <CommandsManager
           categoryId={category ? category.id : null}

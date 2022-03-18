@@ -10,7 +10,7 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import useLinkCategories from "hooks/links/useLinkCategories";
-import React, { useState } from "react";
+import { useState } from "react";
 
 function EditLinkCategory({ isOpen, onClose, categoryId }) {
   const [categoryName, setCategoryName] = useState("");

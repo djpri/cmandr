@@ -10,7 +10,7 @@ function AddLinkCategory() {
 
   const handleAddCategory = async () => {
     try {
-      await addCategoryMutation.mutateAsync({ name: category });
+      await addCategoryMutation.mutate({ name: category });
       onToggle();
     } catch (error) {
       console.log(error);

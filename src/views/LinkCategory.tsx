@@ -5,7 +5,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@chakra-ui/popover";
-import { Box, Button, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Spinner,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinksFromSingleCategory from "hooks/links/useLinksFromSingleCategory";
 import React, { useEffect, useState } from "react";
@@ -20,7 +27,6 @@ function LinkCategory() {
   const { id: categoryId } = useParams();
   const { query } = useLinksFromSingleCategory(parseInt(categoryId));
   const { query: categoriesQuery } = useLinkCategories();
-  const categoryName = "";
 
   const {
     isOpen: isEditModalOpen,
@@ -67,16 +73,10 @@ function LinkCategory() {
       <Text mb="30px" color="gray.500" fontWeight="700">
         {category && category.items} items
       </Text>
-      {query.data && (
-        <LinksManager
-          categoryId={category ? category.id : null}
-          links={query.data}
-        />
-      )}
       <DeleteLinkCategory
         isOpen={isOpen}
         onClose={onClose}
-        categoryName={categoryName}
+        categoryName={category ? category.name : null}
         categoryId={parseInt(categoryId)}
       />
       <EditLinkCategory
@@ -84,6 +84,14 @@ function LinkCategory() {
         onClose={editModalClose}
         categoryId={parseInt(categoryId)}
       />
+      {query.isLoading && <Spinner />}
+
+      {query.data && (
+        <LinksManager
+          categoryId={category ? category.id : null}
+          links={query.data}
+        />
+      )}
     </UserLayout>
   );
 }

@@ -1,4 +1,5 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
+import { CategoryReadDto } from "models/category";
 import { useForm } from "react-hook-form";
 import useCommandCategories from "../../../hooks/commands/useCommandCategories";
 import useCommands from "../../../hooks/commands/useCommands";
@@ -14,7 +15,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
   const { query: allCategoriesQuery } = useCommandCategories();
   const { editCommandMutation } = useCommands();
 
-  const categories = allCategoriesQuery.data;
+  const categories: CategoryReadDto[] = allCategoriesQuery.data;
 
   const { handleSubmit, register } = useForm<CommandUpdateDto>({
     defaultValues: {
