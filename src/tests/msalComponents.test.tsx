@@ -9,8 +9,9 @@ import {
 } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import { App } from "App";
-import LoginButton from "components/auth/LoginButton/LoginButton";
-import SignOutButton from "components/auth/SignOutButton/SignOutButton";
+import LoginButton from "components/auth/LoginButton";
+import SignOutButton from "components/auth/SignOutButton";
+
 import LoginPopover from "components/layout/NavBar/LoginPopover/LoginPopover";
 import { act, fireEvent, render, screen } from "./test-utils";
 import { testAccount, TEST_CONFIG } from "./testConstants";

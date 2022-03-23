@@ -34,7 +34,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form aria-label="edit command form" onSubmit={handleSubmit(onSubmit)}>
       <Stack mb="10" mt="3">
         <FormLabel htmlFor="description">Description</FormLabel>
         <Input
@@ -47,7 +47,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
 
         <FormLabel htmlFor="category">Category</FormLabel>
         <Select {...register("categoryId")}>
-          <option value="">Select Category</option>
+          <option value={-1}>Select Category</option>
           {categories &&
             categories.map((category) => (
               <option value={category.id} key={category.id}>

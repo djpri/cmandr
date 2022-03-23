@@ -1,9 +1,9 @@
 import {
   Button,
   Collapse,
+  forwardRef,
   Portal,
   useDisclosure,
-  forwardRef,
 } from "@chakra-ui/react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import AddCommandForm from "../../AddCommandForm/AddCommandForm";
@@ -13,9 +13,15 @@ const AddCommandButton = forwardRef((props, ref: any) => {
   return (
     <>
       {isOpen ? (
-        <Button onClick={onToggle}>{<AiFillCaretUp />}</Button>
+        <Button aria-label="hide add command form" onClick={onToggle}>
+          {<AiFillCaretUp />}
+        </Button>
       ) : (
-        <Button onClick={onToggle} rightIcon={<AiFillCaretDown />}>
+        <Button
+          aria-label="show add command form"
+          onClick={onToggle}
+          rightIcon={<AiFillCaretDown />}
+        >
           Add
         </Button>
       )}

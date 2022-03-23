@@ -3,17 +3,12 @@ import { CategoryCreateDto, CategoryUpdateDto } from "models/category";
 import { CommandCreateDto, CommandUpdateDto } from "models/command";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
 
-const urls = {
-  IIS: "https://localhost:44310/api/",
-  Docker: "https://localhost:49159/api/",
-};
-
 /**
  * Custom axios instance for accessing api
  * @see https://axios-http.com/docs/req_config
  */
 export const CmandrApi: AxiosInstance = axios.create({
-  baseURL: urls.Docker,
+  baseURL: process.env.REACT_APP_BASE_URL,
   timeout: 6000,
 });
 

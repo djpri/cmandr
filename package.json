@@ -54,7 +54,10 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "testing-library/no-render-in-setup": "off"
+    }
   },
   "browserslist": {
     "production": [
