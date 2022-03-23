@@ -12,10 +12,10 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import LoginButton from "components/auth/LoginButton/LoginButton";
+import LoginButton from "components/auth/LoginButton";
 import { useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import SignOutButton from "../../../auth/SignOutButton/SignOutButton";
+import SignOutButton from "../../../auth/SignOutButton";
 
 function LoginPopover() {
   const { isOpen, onOpen, onClose } = useDisclosure();

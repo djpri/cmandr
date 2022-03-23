@@ -27,12 +27,15 @@ function AddCommandForm({ categoryId }: IProps) {
 
   const onSubmit = (values: CommandCreateDto) => {
     addCommandMutation.mutate(values);
-    // alert(JSON.stringify(values, null, 2));
     reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+    <form
+      aria-label="add command form"
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+    >
       <Grid
         pb="5"
         templateColumns={[

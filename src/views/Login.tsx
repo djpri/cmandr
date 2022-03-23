@@ -1,5 +1,5 @@
 import { Box, Container, Heading } from "@chakra-ui/react";
-import LoginButton from "components/auth/LoginButton/LoginButton";
+import LoginButton from "components/auth/LoginButton";
 import { useState } from "react";
 
 function LoginPage() {
