@@ -1,11 +1,11 @@
-import { CommandCategory } from "./category";
+import { CategoryReadDto } from "models/category";
 
 export interface Command {
   id: number;
   description: string;
   line: string;
   reference: string;
-  category: CommandCategory;
+  category: CategoryReadDto;
 }
 
 /** Object type that is received from response body of api */
@@ -14,7 +14,7 @@ export interface CommandReadDto {
   description: string;
   line: string;
   reference: string;
-  category: CommandCategory;
+  category: CategoryReadDto;
 }
 
 /** Object that is sent as request body to api when adding a new command */

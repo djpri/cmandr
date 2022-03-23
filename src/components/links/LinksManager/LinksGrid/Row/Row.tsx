@@ -25,6 +25,7 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
     try {
       const url = new URL(link);
       const hostName = url.hostname.replace("www.", "");
+      return `https://www.google.com/s2/favicons?sz=32&domain_url=${hostName}`;
       // return `https://${hostName}/favicon.ico`;
       return null;
     } catch (error) {
@@ -42,12 +43,19 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
     >
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
-          <ChakraLink href={url} isExternal>
+          <ChakraLink
+            href={url}
+            isExternal
+            display="flex"
+            alignItems="flex-start"
+          >
             {getFaviconUrl(url) !== null && (
               <Image
-                display="inline"
-                mr="5px"
+                display="inline-block"
                 height="16px"
+                width="16px"
+                mt="4px"
+                mr="5px"
                 src={getFaviconUrl(url)}
               />
             )}
@@ -59,8 +67,8 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
 
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
-          <ChakraLink href={url} isExternal>
-            {`${url.substring(0, 30)}...`}
+          <ChakraLink href={url} isExternal title={url}>
+            {`${url.substring(0, 30)}${url.length >= 30 ? "..." : ""}`}
           </ChakraLink>
         </GridItem>
       </Skeleton>

@@ -85,7 +85,7 @@ function AddCommandForm({ categoryId }: IProps) {
           />
         </Box>
 
-        <Button type="submit" colorScheme="green" size="sm" isFullWidth={false}>
+        <Button type="submit" variant="add" size="sm" isFullWidth={false}>
           Add command
         </Button>
       </Grid>

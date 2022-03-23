@@ -35,7 +35,7 @@ const theme = extendTheme({
   },
   fonts: {
     heading: "Lato",
-    body: "Nunito Sans",
+    // body: "Nunito Sans",
   },
   textStyles: {
     heading: {

@@ -1,5 +1,5 @@
 import { CommandCategories } from "api";
-import { asReactQueryFunction } from "helpers/helpers";
+import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import useChakraToast from "../other/useChakraToast";
 

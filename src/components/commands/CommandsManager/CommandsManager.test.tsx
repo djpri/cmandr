@@ -1,9 +1,9 @@
-import { mockStore } from "redux/mockStore";
+import { testData } from "tests/testData";
 import { render, screen, fireEvent } from "../../../tests/test-utils";
 import CommandsManager from "./CommandsManager";
 
 test("Add command button toggles display of the add command form", () => {
-  render(<CommandsManager commands={mockStore.commands.commands} />);
+  render(<CommandsManager commands={testData.commands} />);
   // open form
   let button = screen.getByLabelText("show add command form");
   fireEvent.click(button);

@@ -14,7 +14,7 @@ import SignOutButton from "components/auth/SignOutButton";
 
 import LoginPopover from "components/layout/NavBar/LoginPopover/LoginPopover";
 import { act, fireEvent, render, screen } from "./test-utils";
-import { testAccount, TEST_CONFIG } from "./testConstants";
+import { testAccount, TEST_CONFIG } from "./msalTestConstants";
 
 const msalConfig: Configuration = TEST_CONFIG;
 

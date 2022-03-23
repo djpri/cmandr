@@ -1,17 +1,3 @@
-export interface CommandCategory {
-  id: number;
-  name: string;
-  parentId?: number;
-  items?: number;
-}
-
-export interface LinkCategory {
-  id: number;
-  name: string;
-  parentId?: number;
-  items?: number;
-}
-
 /** Object type that is received from response body of api */
 export interface CategoryReadDto {
   id: number;
