@@ -4,7 +4,9 @@ import { CmandrApi } from "api";
 import { apiConfig } from "auth/apiConfig";
 import UserLayout from "components/layout/UserLayout";
 import { lazy, Suspense, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { setAppInitialization } from "redux/slices/appSlice";
 import theme from "./theme/theme";
 import AllCommandsPage from "./views/AllCommands";
 import CommandCategoryPage from "./views/CommandCategory";
@@ -16,6 +18,8 @@ const LinkCategory = lazy(() => import("./views/LinkCategory"));
 
 export const App = () => {
   const { instance, accounts } = useMsal();
+  const dispatch = useDispatch();
+
   const account = useAccount(accounts[0] || {});
 
   useEffect(() => {
@@ -24,13 +28,14 @@ export const App = () => {
     };
     const getToken = async () => {
       const accounts = instance.getAllAccounts();
-      if (accounts.length > 0) {
-        const response = await instance.acquireTokenSilent({
-          scopes: apiConfig.b2cScopes,
-          account: accounts[0],
-        });
-        return response.accessToken;
-      }
+      if (accounts?.length === 0) return null;
+      const response = await instance.acquireTokenSilent({
+        scopes: apiConfig.b2cScopes,
+        account: accounts[0],
+      });
+      if (!response) return null;
+      dispatch(setAppInitialization());
+      return response.accessToken;
     };
     CmandrApi.interceptors.request.use(
       async function (config) {
@@ -43,7 +48,7 @@ export const App = () => {
       }
     );
     handleRedirect();
-  }, [instance, account]);
+  }, [instance, account, dispatch]);
 
   return (
     <ChakraProvider theme={theme}>

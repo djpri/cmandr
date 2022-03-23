@@ -1,15 +1,21 @@
 import { CommandCategories, Commands } from "api";
-import { asReactQueryFunction } from "helpers/helpers";
+import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
+import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
 function useCommandsFromSingleCategory(categoryId: number) {
   const queryClient = useQueryClient();
   const { showSuccessToast, showErrorToast } = useChakraToast();
+  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
   const query = useQuery(
     ["commands", categoryId],
-    asReactQueryFunction(() => Commands.getAllByCategoryId(categoryId))
+    asReactQueryFunction(() => Commands.getAllByCategoryId(categoryId)),
+    {
+      enabled: isAppInitalized,
+    }
   );
 
   const addCategoryMutation = useMutation(CommandCategories.create, {

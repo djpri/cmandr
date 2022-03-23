@@ -1,7 +1,7 @@
 import { AuthenticatedTemplate } from "@azure/msal-react";
 import { Container } from "@chakra-ui/layout";
 import { useSelector } from "react-redux";
-import { selectIsSidebarOpen } from "redux/layout/layoutSlice";
+import { selectIsSidebarOpen } from "redux/slices/layoutSlice";
 import NavBar from "./NavBar/NavBar";
 import SideBar from "./SideBar/SideBar";
 

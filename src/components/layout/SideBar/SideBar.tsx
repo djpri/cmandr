@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSidebarOpen,
   setSidebarClosed,
-} from "redux/layout/layoutSlice";
+} from "redux/slices/layoutSlice";
 import SideBarLinks from "./SideBarLinks/SideBarLinks";
 
 const scrollbarStyles = {
@@ -42,7 +42,7 @@ function SideBar() {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectIsSidebarOpen);
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
-  const bgColor = useColorModeValue("gray.50", "gray.800");
+  const bgColor = useColorModeValue("gray.200", "gray.800");
   const borderColor = useColorModeValue("gray.300", "gray.700");
 
   // sidebar is initially closed on smaller devices

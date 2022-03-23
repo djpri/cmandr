@@ -1,7 +1,9 @@
 import { Commands } from "api";
-import { asReactQueryFunction } from "helpers/helpers";
+import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
+import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
 /**
  * Custom hook that contains react query logic for commands
@@ -17,11 +19,14 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
  */
 function useCommands() {
   const queryClient = useQueryClient();
+  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useQuery("commands", asReactQueryFunction(Commands.getAll));
+  const query = useQuery("commands", asReactQueryFunction(Commands.getAll), {
+    enabled: isAppInitalized,
+  });
 
   // Mutations
   // Note: mutation functions can only take ONE parameter

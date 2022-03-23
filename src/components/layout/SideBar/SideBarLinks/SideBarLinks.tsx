@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useLinkCategories from "hooks/links/useLinkCategories";
-import { CommandCategory, LinkCategory } from "models/category";
+import { CategoryReadDto } from "models/category";
 import {
   AiFillFolder,
   AiFillFolderOpen,
@@ -27,12 +27,13 @@ function SideBarLinks() {
   const CommandCategoryLinks = () => {
     const { query: allCategoriesQuery } = useCommandCategories();
 
+    if (allCategoriesQuery.isIdle) return null;
     if (allCategoriesQuery.isLoading) return <Spinner />;
 
     return (
       <>
         {allCategoriesQuery.data &&
-          allCategoriesQuery.data.map((item: CommandCategory) => (
+          allCategoriesQuery.data.map((item: CategoryReadDto) => (
             <HStack key={item.id}>
               {location.pathname === `/commands/${item.id}` ? (
                 <AiFillFolderOpen />
@@ -46,7 +47,12 @@ function SideBarLinks() {
                 </Link>
               </Tooltip>
               {item.items ? (
-                <Text color="gray.500" fontWeight="700">
+                <Text
+                  color={`hsl(144, ${
+                    (item.items / allCategoriesQuery.data.length) * 100 + 40
+                  }%, 35%)`}
+                  fontWeight="700"
+                >
                   {item.items}
                 </Text>
               ) : (
@@ -64,12 +70,13 @@ function SideBarLinks() {
   const LinkCategoryLinks = () => {
     const { query: allCategoriesQuery } = useLinkCategories();
 
+    if (allCategoriesQuery.isIdle) return null;
     if (allCategoriesQuery.isLoading) return <Spinner />;
 
     return (
       <>
         {allCategoriesQuery.data &&
-          allCategoriesQuery?.data.map((item: LinkCategory) => (
+          allCategoriesQuery?.data.map((item: CategoryReadDto) => (
             <HStack key={item.id}>
               {location.pathname === `/links/${item.id}` ? (
                 <AiFillFolderOpen />
@@ -83,7 +90,12 @@ function SideBarLinks() {
                 </Link>
               </Tooltip>
               {item.items ? (
-                <Text color="gray.500" fontWeight="700">
+                <Text
+                  color={`hsl(144, ${
+                    (item.items / allCategoriesQuery.data.length) * 100 + 40
+                  }%, 35%)`}
+                  fontWeight="700"
+                >
                   {item.items}
                 </Text>
               ) : (

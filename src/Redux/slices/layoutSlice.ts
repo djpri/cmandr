@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const layoutSlice = createSlice({
-  name: "commands",
+  name: "layout",
   initialState,
   reducers: {
     setSidebarToggle: (state) => {

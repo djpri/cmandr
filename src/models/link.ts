@@ -1,10 +1,10 @@
-import { LinkCategory } from "./category";
+import { CategoryReadDto } from "./category";
 
 export interface Link {
   id: number;
   url: string;
   title: string;
-  category: LinkCategory;
+  category: CategoryReadDto;
   previewImageUrl?: string;
   favicon_url?: string;
   dateCreated?: Date;
@@ -15,7 +15,7 @@ export interface LinkReadDto {
   id: number;
   url: string;
   title: string;
-  category: LinkCategory;
+  category: CategoryReadDto;
   faviconImageUrl?: string;
 }
 

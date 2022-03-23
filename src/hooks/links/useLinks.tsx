@@ -1,7 +1,9 @@
 import { Links } from "api";
-import { asReactQueryFunction } from "helpers/helpers";
+import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
+import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
 /**
  * Custom hook that contains react query logic for links
@@ -15,11 +17,14 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
  */
 function useLinks() {
   const queryClient = useQueryClient();
+  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useQuery("links", asReactQueryFunction(Links.getAll));
+  const query = useQuery("links", asReactQueryFunction(Links.getAll), {
+    enabled: isAppInitalized,
+  });
   // const singleCategoryQuery = useQuery(
   //   ["links", props.categoryId],
   //   asReactQueryFunction(() => Links.getAllByCategoryId(props.categoryId))
