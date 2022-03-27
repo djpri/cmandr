@@ -6,7 +6,6 @@ import {
   Link as ChakraLink,
   Skeleton,
 } from "@chakra-ui/react";
-import useLinkCategories from "hooks/links/useLinkCategories";
 import { LinkReadDto } from "models/link";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
@@ -17,7 +16,6 @@ interface IProps {
 }
 
 function TableRow({ linkItem, showCategories, isLoading }: IProps) {
-  const { query } = useLinkCategories();
   const { title, url, category } = linkItem;
 
   const getFaviconUrl = (link) => {
@@ -26,8 +24,6 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
       const url = new URL(link);
       const hostName = url.hostname.replace("www.", "");
       return `https://www.google.com/s2/favicons?sz=32&domain_url=${hostName}`;
-      // return `https://${hostName}/favicon.ico`;
-      return null;
     } catch (error) {
       return null;
     }
@@ -46,7 +42,7 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
           <ChakraLink
             href={url}
             isExternal
-            display="flex"
+            display="inline-flex"
             alignItems="flex-start"
           >
             {getFaviconUrl(url) !== null && (
@@ -75,7 +71,7 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
 
       {showCategories && (
         <Skeleton isLoaded={!isLoading}>
-          <GridItem>{linkItem?.category?.name}</GridItem>
+          <GridItem>{category?.name}</GridItem>
         </Skeleton>
       )}
 

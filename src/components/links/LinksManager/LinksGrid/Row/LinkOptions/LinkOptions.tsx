@@ -15,6 +15,7 @@ import DeleteLinkButton from "components/links/DeleteLinkButton/DeleteLinkButton
 import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
 import { LinkReadDto } from "models/link";
 import { useState } from "react";
+import { AiFillSetting } from "react-icons/ai";
 import { IoMdOptions } from "react-icons/io";
 
 type IProps = {
@@ -36,8 +37,8 @@ function CommandOptions({ link }: IProps) {
         onClose={onClose}
       >
         <PopoverTrigger>
-          <Button size="xs" bgColor="teal.500" color="white">
-            <IoMdOptions />
+          <Button size="xs" variant="options">
+            <AiFillSetting />
           </Button>
         </PopoverTrigger>
         <PopoverContent>
