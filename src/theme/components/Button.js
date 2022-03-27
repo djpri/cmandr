@@ -51,7 +51,7 @@ export const Button = {
       },
     }),
     options: (props) => ({
-      bg: props.colorMode === "dark" ? "teal.400" : "teal.200",
+      bg: props.colorMode === "dark" ? "#2d6a6e" : "teal.200",
       _hover: {
         bg: props.colorMode === "dark" ? "teal.300" : "teal.300",
       },

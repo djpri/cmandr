@@ -15,7 +15,7 @@ import DeleteCommandButton from "components/commands/DeleteCommandButton/DeleteC
 import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
 import { Command } from "models/command";
 import { useState } from "react";
-import { HiDotsVertical } from "react-icons/hi";
+import { AiFillSetting } from "react-icons/ai";
 
 type IProps = {
   command: Command;
@@ -36,8 +36,8 @@ function CommandOptions({ command }: IProps) {
         onClose={onClose}
       >
         <PopoverTrigger>
-          <Button size="xs" bgColor="teal.500" color="white">
-            <HiDotsVertical />
+          <Button size="xs" variant="options">
+            <AiFillSetting />
           </Button>
         </PopoverTrigger>
         <PopoverContent>

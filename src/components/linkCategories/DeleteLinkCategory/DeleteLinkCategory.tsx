@@ -25,7 +25,7 @@ function DeleteLinkCategory({
   categoryName,
   categoryId,
 }: IProps) {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const { deleteCategoryMutation } = useLinkCategories();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

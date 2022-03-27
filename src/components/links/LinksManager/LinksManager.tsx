@@ -4,14 +4,12 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Spinner,
   useColorModeValue,
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import useLinksFilter from "hooks/links/useLinksFilter";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useLocation } from "react-router-dom";
 import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton/AddLinkButton";
 import LinksTable from "./LinksGrid/LinksGrid";

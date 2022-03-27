@@ -1,9 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 import { Button } from "./components/Button";
 import { mode } from "@chakra-ui/theme-tools";
-import "@fontsource/nunito-sans/700.css";
-import "@fontsource/nunito-sans/600.css";
-import "@fontsource/nunito-sans/400.css";
 import "@fontsource/lato/400.css";
 import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";

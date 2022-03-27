@@ -87,7 +87,13 @@ function AddLinkForm({ categoryId }: IProps) {
             </Box>
           )}
 
-          <Button type="submit" variant="add" size="sm" isFullWidth={false}>
+          <Button
+            type="submit"
+            variant="add"
+            size="sm"
+            isFullWidth={false}
+            isLoading={addLinkMutation.isLoading}
+          >
             Add link
           </Button>
         </Grid>
