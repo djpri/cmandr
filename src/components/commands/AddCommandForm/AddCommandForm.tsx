@@ -27,7 +27,12 @@ function AddCommandForm({ categoryId }: IProps) {
 
   const onSubmit = (values: CommandCreateDto) => {
     addCommandMutation.mutate(values);
-    reset();
+    reset({
+      description: "",
+      line: "",
+      reference: "",
+      categoryId: categoryId || -1,
+    });
   };
 
   return (

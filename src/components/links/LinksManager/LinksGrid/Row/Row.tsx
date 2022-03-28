@@ -29,6 +29,11 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
     }
   };
 
+  const formattedTitleString = new DOMParser().parseFromString(
+    title.charAt(0).toUpperCase() + title.slice(1),
+    "text/html"
+  ).body.textContent;
+
   return (
     <Grid
       templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
@@ -56,7 +61,7 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
               />
             )}
 
-            {title.charAt(0).toUpperCase() + title.slice(1)}
+            {formattedTitleString}
           </ChakraLink>
         </GridItem>
       </Skeleton>

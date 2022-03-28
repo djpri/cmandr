@@ -58,7 +58,15 @@ export const Links = {
    * Get all links from a single category
    */
   getAllByCategoryId: (id: number) => get(`links/list/${id}`),
+  /**
+   * Creates link with a manually added title
+   */
   create: (body: LinkCreateDto) => post("links", body),
+  /**
+   * Creates link and automatically adds title and favicon url on the server
+   */
+  quickAdd: (body: { url: string; categoryId: number }) =>
+    post(`links/quickAdd`, body),
   update: (request: { id: number; body: LinkUpdateDto }) =>
     put(`links/${request.id}`, request.body),
   remove: (id: number) => remove(`links/${id}`),
