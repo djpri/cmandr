@@ -25,14 +25,18 @@ function useLinks() {
   const query = useQuery("links", asReactQueryFunction(Links.getAll), {
     enabled: isAppInitalized,
   });
-  // const singleCategoryQuery = useQuery(
-  //   ["links", props.categoryId],
-  //   asReactQueryFunction(() => Links.getAllByCategoryId(props.categoryId))
-  // );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
   const addLinkMutation = useMutation(Links.create, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("links");
+      queryClient.invalidateQueries("linkCategories");
+      showSuccessToast("Link Added", "Link added successfully");
+    },
+    onError: showErrorToast,
+  });
+  const quickAddLinkMutation = useMutation(Links.quickAdd, {
     onSuccess: () => {
       queryClient.invalidateQueries("links");
       queryClient.invalidateQueries("linkCategories");
@@ -60,6 +64,7 @@ function useLinks() {
   return {
     query,
     addLinkMutation,
+    quickAddLinkMutation,
     editLinkMutation,
     deleteLinkMutation,
   };

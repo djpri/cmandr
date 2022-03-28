@@ -1,7 +1,7 @@
 import { Button, Portal, SlideFade, useDisclosure } from "@chakra-ui/react";
+import QuickAddLinkForm from "components/links/QuickAddLinkForm/QuickAddLinkForm";
 import { forwardRef, useEffect } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import AddLinkForm from "../../AddLinkForm/AddLinkForm";
 
 interface IProps {
   categoryId?: number;
@@ -9,15 +9,15 @@ interface IProps {
   setCurrentButtonOpen?: (value: "addLink" | "quickAddLink" | "none") => void;
 }
 
-const AddLinkButton = forwardRef((props: IProps, ref: any) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const AddQuickLink = forwardRef((props: IProps, ref: any) => {
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
   useEffect(() => {
-    props.currentButtonOpen === "addLink" ? onOpen() : onClose();
+    props.currentButtonOpen === "quickAddLink" ? onOpen() : onClose();
   }, [props.currentButtonOpen, onOpen, onClose]);
 
   const handleOpen = () => {
-    props.setCurrentButtonOpen("addLink");
+    props.setCurrentButtonOpen("quickAddLink");
     onOpen();
   };
 
@@ -30,20 +30,20 @@ const AddLinkButton = forwardRef((props: IProps, ref: any) => {
     <>
       {isOpen ? (
         <Button onClick={handleClose} rightIcon={<AiFillCaretUp />}>
-          Add
+          Quick Add
         </Button>
       ) : (
         <Button onClick={handleOpen} rightIcon={<AiFillCaretDown />}>
-          Add
+          Quick Add
         </Button>
       )}
-      {ref && props.currentButtonOpen === "addLink" && (
+      {ref && props.currentButtonOpen === "quickAddLink" && (
         <Portal containerRef={ref}>
           <SlideFade in={isOpen}>
             {props.categoryId ? (
-              <AddLinkForm categoryId={props.categoryId} />
+              <QuickAddLinkForm categoryId={props.categoryId} />
             ) : (
-              <AddLinkForm />
+              <QuickAddLinkForm />
             )}
           </SlideFade>
         </Portal>
@@ -52,4 +52,4 @@ const AddLinkButton = forwardRef((props: IProps, ref: any) => {
   );
 });
 
-export default AddLinkButton;
+export default AddQuickLink;

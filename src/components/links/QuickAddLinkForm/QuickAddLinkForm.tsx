@@ -21,8 +21,8 @@ interface IProps {
  * Form for adding new links created with react-hook-form
  * @see https://react-hook-form.com/get-started
  */
-function AddLinkForm({ categoryId }: IProps) {
-  const { addLinkMutation } = useLinks();
+function QuickAddLinkForm({ categoryId }: IProps) {
+  const { quickAddLinkMutation } = useLinks();
   const { query } = useLinkCategories();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const {
@@ -31,7 +31,12 @@ function AddLinkForm({ categoryId }: IProps) {
     reset,
     setValue,
     formState: { errors },
-  } = useForm<LinkCreateDto>();
+  } = useForm<LinkCreateDto>({
+    defaultValues: {
+      url: "",
+      categoryId: categoryId || -1,
+    },
+  });
 
   useEffect(() => {
     if (categoryId) {
@@ -42,9 +47,9 @@ function AddLinkForm({ categoryId }: IProps) {
     }
   }, [categoryId, setValue]);
 
-  const onSubmit = (values: LinkCreateDto) => {
-    addLinkMutation.mutate(values);
-    reset({ url: "", title: "", categoryId: categoryId || -1 });
+  const onSubmit = (values: { categoryId: number; url: string }) => {
+    quickAddLinkMutation.mutate(values);
+    reset({ url: "", categoryId: categoryId || -1 });
   };
 
   return (
@@ -62,11 +67,6 @@ function AddLinkForm({ categoryId }: IProps) {
           gap={6}
           alignItems="end"
         >
-          <Box>
-            <FormLabel htmlFor="title">Title</FormLabel>
-            <Input {...register("title")} placeholder="Title for link" />
-          </Box>
-
           <Box>
             <FormLabel htmlFor="link">Link</FormLabel>
             <Input {...register("url")} placeholder="Link URL" />
@@ -92,7 +92,7 @@ function AddLinkForm({ categoryId }: IProps) {
             variant="add"
             size="sm"
             isFullWidth={false}
-            isLoading={addLinkMutation.isLoading}
+            isLoading={quickAddLinkMutation.isLoading}
           >
             Add link
           </Button>
@@ -107,4 +107,4 @@ function AddLinkForm({ categoryId }: IProps) {
   );
 }
 
-export default AddLinkForm;
+export default QuickAddLinkForm;

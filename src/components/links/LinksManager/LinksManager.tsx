@@ -1,5 +1,6 @@
 import {
   Box,
+  HStack,
   IconButton,
   Input,
   InputGroup,
@@ -8,10 +9,11 @@ import {
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import useLinksFilter from "hooks/links/useLinksFilter";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton/AddLinkButton";
+import AddQuickLink from "./QuickAddLinkButton/QuickAddLinkButton";
 import LinksTable from "./LinksGrid/LinksGrid";
 
 interface IProps {
@@ -20,10 +22,13 @@ interface IProps {
 }
 
 function LinksManager({ categoryId, links }: IProps) {
-  const ref = useRef(null);
+  const addLinkref = useRef(null);
+  const quickAddLinkref = useRef(null);
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
-
+  const [currentButtonOpen, setCurrentButtonOpen] = useState<
+    "addLink" | "quickAddLink" | "none"
+  >("none");
   const { filteredLinks, search, setSearch, sortFunction, setSortFunction } =
     useLinksFilter(links);
 
@@ -49,7 +54,20 @@ function LinksManager({ categoryId, links }: IProps) {
             alignItems="center"
             mb="3"
           >
-            <AddLinkButton ref={ref} categoryId={categoryId} />
+            <HStack>
+              <AddLinkButton
+                ref={addLinkref}
+                categoryId={categoryId}
+                currentButtonOpen={currentButtonOpen}
+                setCurrentButtonOpen={setCurrentButtonOpen}
+              />
+              <AddQuickLink
+                ref={quickAddLinkref}
+                categoryId={categoryId}
+                currentButtonOpen={currentButtonOpen}
+                setCurrentButtonOpen={setCurrentButtonOpen}
+              />
+            </HStack>
             {/* SEARCH BAR */}
             <InputGroup maxW="md" w={["xs", "xs", "sm", "md"]}>
               <Input
@@ -57,7 +75,6 @@ function LinksManager({ categoryId, links }: IProps) {
                 placeholder="Search by title"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                mb="5"
               />
               <InputRightElement
                 children={
@@ -70,7 +87,8 @@ function LinksManager({ categoryId, links }: IProps) {
               />
             </InputGroup>
           </Box>
-          <Box ref={ref} />
+          <Box ref={addLinkref} />
+          <Box ref={quickAddLinkref} />
         </Box>
         <LinksTable
           isLoading={false}

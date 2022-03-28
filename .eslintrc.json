@@ -7,8 +7,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "react-app",
-    "react-app/jest",
-    "prettier"
+    "react-app/jest"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -21,8 +20,8 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "testing-library/no-render-in-setup": "off",
+    "@typescript-eslint/no-empty-interface": "off",
     "no-explicit-any": "off",
-    "no-empty-interface": "off",
     "no-console": "warn",
     "no-alert": "error"
   }

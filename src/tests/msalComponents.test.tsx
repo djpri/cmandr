@@ -29,7 +29,7 @@ Object.defineProperty(global.self, "crypto", {
 
 let pca: PublicClientApplication;
 let eventCallbacks: EventCallbackFunction[];
-let cachedAccounts: AccountInfo[] = [testAccount];
+const cachedAccounts: AccountInfo[] = [testAccount];
 
 beforeEach(() => {
   eventCallbacks = [];
