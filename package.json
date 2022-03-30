@@ -28,6 +28,7 @@
     "react-redux": "^7.2.5",
     "react-router-dom": "6",
     "react-scripts": "5.0.0",
+    "react-window": "^1.8.6",
     "typescript": "4.5.4",
     "web-vitals": "2.1.2"
   },
@@ -50,6 +51,7 @@
     "build": "react-scripts build",
     "serve": "serve -s build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint --ignore-path .gitignore .",
     "prettier": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",

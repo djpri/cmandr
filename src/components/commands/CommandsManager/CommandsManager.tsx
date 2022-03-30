@@ -2,8 +2,8 @@ import {
   Box,
   Input,
   InputGroup,
-  useColorModeValue,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { CommandReadDto } from "models/command";
@@ -22,8 +22,14 @@ function CommandsManager({ categoryId, commands }: IProps) {
   const bgColor = useColorModeValue("#f2f6fa", "gray.800");
   const border = useColorModeValue("0", "1px");
 
-  const { filteredCommands, search, setSearch, sortFunction, setSortFunction } =
-    useCommandsFilter(commands);
+  const {
+    hasData,
+    filteredCommands,
+    search,
+    setSearch,
+    sortFunction,
+    setSortFunction,
+  } = useCommandsFilter(commands);
 
   return (
     <ErrorBoundaryWrapper>
@@ -58,14 +64,15 @@ function CommandsManager({ categoryId, commands }: IProps) {
           </Box>
           <Box ref={ref} />
         </Box>
-        {filteredCommands?.length > 0 ? (
+        {filteredCommands?.length > 0 && (
           <CommandsTable
             commands={filteredCommands}
             showCategories={!categoryId}
             sortFunction={sortFunction}
             setSortFunction={setSortFunction}
           />
-        ) : (
+        )}
+        {!hasData && (
           <Text px="20px" pb="30px">
             It looks like there are no commands! Click the <b>ADD</b> button
             above to add some.

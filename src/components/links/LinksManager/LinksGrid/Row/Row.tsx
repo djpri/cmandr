@@ -16,10 +16,10 @@ interface IProps {
 }
 
 function TableRow({ linkItem, showCategories, isLoading }: IProps) {
-  const { title, url, category } = linkItem;
+  const { title, url, category, faviconImageUrl, previewImageUrl } = linkItem;
 
   const getFaviconUrl = (link) => {
-    if (linkItem.faviconImageUrl !== null) return linkItem.faviconImageUrl;
+    if (faviconImageUrl !== null) return faviconImageUrl;
     try {
       const url = new URL(link);
       const hostName = url.hostname.replace("www.", "");

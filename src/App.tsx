@@ -6,12 +6,13 @@ import UserLayout from "components/layout/UserLayout";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { setAppInitialization } from "redux/slices/appSlice";
+import { setUserSession } from "redux/slices/appSlice";
+import Home from "views/Home";
 import theme from "./theme/theme";
-import AllCommandsPage from "./views/AllCommands";
-import CommandCategoryPage from "./views/CommandCategory";
-import HomePage from "./views/Home";
-import LoginPage from "./views/Login";
+import AllCommands from "./views/AllCommands";
+import CommandCategory from "./views/CommandCategory";
+import Dashboard from "./views/Dashboard";
+import Login from "./views/Login";
 
 const Links = lazy(() => import("./views/AllLinks"));
 const LinkCategory = lazy(() => import("./views/LinkCategory"));
@@ -34,7 +35,7 @@ export const App = () => {
         account: accounts[0],
       });
       if (!response) return null;
-      dispatch(setAppInitialization());
+      dispatch(setUserSession());
       return response.accessToken;
     };
     CmandrApi.interceptors.request.use(
@@ -53,20 +54,15 @@ export const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <Suspense
-        fallback={
-          <UserLayout>
-            <Spinner />
-          </UserLayout>
-        }
-      >
+      <Suspense fallback={<UserLayout>{/* <Spinner /> */}</UserLayout>}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/commands" element={<AllCommandsPage />} />
-          <Route path="/commands/:id" element={<CommandCategoryPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/commands" element={<AllCommands />} />
+          <Route path="/commands/:id" element={<CommandCategory />} />
           <Route path="/links" element={<Links />} />
           <Route path="/links/:id" element={<LinkCategory />} />
-          <Route path="/account/login" element={<LoginPage />} />
+          <Route path="/account/login" element={<Login />} />
         </Routes>
       </Suspense>
     </ChakraProvider>

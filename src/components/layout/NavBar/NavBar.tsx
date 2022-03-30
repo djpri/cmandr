@@ -3,8 +3,10 @@ import {
   Button,
   Heading,
   HStack,
+  Link,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { setSidebarToggle } from "redux/slices/layoutSlice";
 import { useAppDispatch } from "redux/store";
@@ -42,16 +44,17 @@ function NavBar() {
             <Button
               variant="ghost"
               colorScheme="whiteAlpha"
-              _hover={{ bgColor: "gray.700" }}
               border="0px"
               onClick={() => dispatch(setSidebarToggle())}
             >
               <GiHamburgerMenu size="1.2rem" color={iconColor} />
             </Button>
           </Box>
-          <Heading as="h1" fontSize="lg" fontWeight="900" color="whiteAlpha">
-            Cmandr
-          </Heading>
+          <Link as={RouterLink} to="/">
+            <Heading as="h1" fontSize="lg" fontWeight="900" color="whiteAlpha">
+              Cmandr
+            </Heading>
+          </Link>
         </HStack>
         <HStack>
           <ColorModeSwitcher />
