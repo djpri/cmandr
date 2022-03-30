@@ -9,14 +9,17 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setAppInitialization: (state) => {
+    setUserSession: (state) => {
       state.userHasReceivedToken = true;
+    },
+    setEndOfUserSession: (state) => {
+      state.userHasReceivedToken = false;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setAppInitialization } = appSlice.actions;
+export const { setUserSession, setEndOfUserSession } = appSlice.actions;
 
 // SELECTORS
 export const selectUserHasReceivedToken = (state: RootState) =>
