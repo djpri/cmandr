@@ -1,112 +1,66 @@
-import {
-  Box,
-  HStack,
-  Link,
-  Spinner,
-  Stack,
-  StackDivider,
-  Text,
-  Tooltip,
-} from "@chakra-ui/react";
+import { Box, HStack, Link, Stack, StackDivider, Text } from "@chakra-ui/react";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useLinkCategories from "hooks/links/useLinkCategories";
-import { CategoryReadDto } from "models/category";
-import {
-  AiFillFolder,
-  AiFillFolderOpen,
-  AiFillWallet,
-  AiOutlineWallet,
-} from "react-icons/ai";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import AddCommandCategory from "../../../commandCategories/AddCommandCategory/AddCommandCategory";
-import AddLinkCategory from "../../../linkCategories/AddLinkCategory/AddLinkCategory";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AiFillWallet, AiOutlineWallet } from "react-icons/ai";
+import { Link as RouterLink } from "react-router-dom";
+import CategoriesList from "./CategoriesList/CategoriesList";
 
 function SideBarLinks() {
-  const location = useLocation();
+  const [currentSelectedId, setCurrentSelectedId] = useState("");
+  const displayChildren = useRef({});
+  const [popup, setPopup] = useState({});
+
+  const handleClick = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault();
+      if (
+        !(event.target as HTMLElement).classList.contains(currentSelectedId)
+      ) {
+        setPopup({});
+      }
+    },
+    [currentSelectedId]
+  );
+
+  useEffect(() => {
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [handleClick]);
 
   const CommandCategoryLinks = () => {
     const { query: allCategoriesQuery } = useCommandCategories();
 
-    if (allCategoriesQuery.isIdle) return null;
-    if (allCategoriesQuery.isLoading) return <Spinner />;
-
     return (
-      <>
-        {allCategoriesQuery.data &&
-          allCategoriesQuery.data.map((item: CategoryReadDto) => (
-            <HStack key={item.id}>
-              {location.pathname === `/commands/${item.id}` ? (
-                <AiFillFolderOpen />
-              ) : (
-                <AiFillFolder />
-              )}
-              <Tooltip label={item.name} placement="right" openDelay={500}>
-                <Link as={RouterLink} to={`/commands/${item.id}`}>
-                  {item.name.substring(0, 15)}
-                  {item.name.length > 15 && "..."}
-                </Link>
-              </Tooltip>
-              {item.items ? (
-                <Text
-                  color={`hsl(144, ${
-                    (item.items / allCategoriesQuery.data.length) * 100 + 40
-                  }%, 35%)`}
-                  fontWeight="700"
-                >
-                  {item.items}
-                </Text>
-              ) : (
-                <Text color="gray.500" fontWeight="700">
-                  0
-                </Text>
-              )}
-            </HStack>
-          ))}
-        <AddCommandCategory />
-      </>
+      <CategoriesList
+        isIdle={allCategoriesQuery.isIdle}
+        isLoading={allCategoriesQuery.isLoading}
+        categories={allCategoriesQuery.data}
+        currentSelectedId={currentSelectedId}
+        setCurrentSelectedId={setCurrentSelectedId}
+        popup={popup}
+        setPopup={setPopup}
+        displayChildren={displayChildren}
+      />
     );
   };
 
   const LinkCategoryLinks = () => {
     const { query: allCategoriesQuery } = useLinkCategories();
 
-    if (allCategoriesQuery.isIdle) return null;
-    if (allCategoriesQuery.isLoading) return <Spinner />;
-
     return (
-      <>
-        {allCategoriesQuery.data &&
-          allCategoriesQuery?.data.map((item: CategoryReadDto) => (
-            <HStack key={item.id}>
-              {location.pathname === `/links/${item.id}` ? (
-                <AiFillFolderOpen />
-              ) : (
-                <AiFillFolder />
-              )}
-              <Tooltip label={item.name} placement="right" openDelay={500}>
-                <Link as={RouterLink} to={`/links/${item.id}`}>
-                  {item.name.substring(0, 15)}
-                  {item.name.length > 15 && "..."}
-                </Link>
-              </Tooltip>
-              {item.items ? (
-                <Text
-                  color={`hsl(144, ${
-                    (item.items / allCategoriesQuery.data.length) * 100 + 40
-                  }%, 35%)`}
-                  fontWeight="700"
-                >
-                  {item.items}
-                </Text>
-              ) : (
-                <Text color="gray.500" fontWeight="700">
-                  0
-                </Text>
-              )}
-            </HStack>
-          ))}
-        <AddLinkCategory />
-      </>
+      <CategoriesList
+        isIdle={allCategoriesQuery.isIdle}
+        isLoading={allCategoriesQuery.isLoading}
+        categories={allCategoriesQuery.data}
+        currentSelectedId={currentSelectedId}
+        setCurrentSelectedId={setCurrentSelectedId}
+        popup={popup}
+        setPopup={setPopup}
+        displayChildren={displayChildren}
+      />
     );
   };
 

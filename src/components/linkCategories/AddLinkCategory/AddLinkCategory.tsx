@@ -25,12 +25,13 @@ function AddLinkCategory() {
         leftIcon={<AiFillFolderAdd />}
         onClick={onToggle}
       >
-        Add category
+        Add
       </Button>
       {isOpen && (
-        <HStack>
+        <HStack mt="10px">
           <Input
             size="sm"
+            display="block"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />

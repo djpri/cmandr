@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Input,
   InputGroup,
   Text,
@@ -78,6 +79,9 @@ function CommandsManager({ categoryId, commands }: IProps) {
             above to add some.
           </Text>
         )}
+        <Button w="100%" h="50px" mt="20px" mx="auto" position="relative">
+          Load More
+        </Button>
       </Box>
     </ErrorBoundaryWrapper>
   );

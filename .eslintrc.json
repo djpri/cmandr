@@ -23,6 +23,7 @@
     "@typescript-eslint/no-empty-interface": "off",
     "no-explicit-any": "off",
     "no-console": "warn",
-    "no-alert": "error"
+    "no-alert": "error",
+    "react/jsx-key": "error"
   }
 }

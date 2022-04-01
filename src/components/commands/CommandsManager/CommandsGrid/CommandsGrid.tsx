@@ -17,37 +17,40 @@ function CommandsTable({
   sortFunction,
   setSortFunction,
 }: IProps) {
+  const HeadersRow = () => (
+    <Grid
+      // size="md"
+      templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
+      gap={4}
+      p="4"
+    >
+      <Header
+        sortFunction={sortFunction}
+        setSortFunction={setSortFunction}
+        label="Description"
+        field="description"
+      />
+      <Header
+        sortFunction={sortFunction}
+        setSortFunction={setSortFunction}
+        label="Command"
+        field="line"
+      />
+      {showCategories && (
+        <Header
+          sortFunction={sortFunction}
+          setSortFunction={setSortFunction}
+          label="Category"
+          field="category"
+        />
+      )}
+      <GridItem />
+    </Grid>
+  );
+
   return (
     <Box p="1" display="flex" flexDirection="column" w="100%">
-      <Grid
-        // size="md"
-        templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
-        gap={4}
-        p="4"
-      >
-        <Header
-          sortFunction={sortFunction}
-          setSortFunction={setSortFunction}
-          label="Description"
-          field="description"
-        />
-        <Header
-          sortFunction={sortFunction}
-          setSortFunction={setSortFunction}
-          label="Command"
-          field="line"
-        />
-        {showCategories && (
-          <Header
-            sortFunction={sortFunction}
-            setSortFunction={setSortFunction}
-            label="Category"
-            field="category"
-          />
-        )}
-        <GridItem />
-      </Grid>
-
+      <HeadersRow />
       <Grid
         w="100%"
         marginX="auto"
