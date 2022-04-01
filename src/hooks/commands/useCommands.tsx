@@ -1,6 +1,7 @@
 import { Commands } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
+import { PaginatedCommandsDto } from "models/command";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
@@ -24,9 +25,13 @@ function useCommands() {
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useQuery("commands", asReactQueryFunction(Commands.getAll), {
-    enabled: isAppInitalized,
-  });
+  const query = useQuery<PaginatedCommandsDto>(
+    "commands",
+    asReactQueryFunction(Commands.getAll),
+    {
+      enabled: isAppInitalized,
+    }
+  );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter

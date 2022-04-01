@@ -1,4 +1,3 @@
-import React from "react";
 import { testData } from "tests/testData";
 import { render } from "../../../../tests/test-utils";
 import CommandsTable from "./CommandsGrid";

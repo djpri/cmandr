@@ -1,6 +1,7 @@
 import { Links } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
+import { LinkReadDto } from "models/link";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
@@ -22,9 +23,13 @@ function useLinks() {
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useQuery("links", asReactQueryFunction(Links.getAll), {
-    enabled: isAppInitalized,
-  });
+  const query = useQuery<LinkReadDto[]>(
+    "links",
+    asReactQueryFunction(Links.getAll),
+    {
+      enabled: isAppInitalized,
+    }
+  );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter

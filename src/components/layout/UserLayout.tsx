@@ -19,7 +19,6 @@ function UserLayout({ children }) {
       <AuthenticatedTemplate>
         <Container
           maxW={isSidebarOpen ? "70%" : "97.5%"}
-          maxH="80vh"
           mt="80px"
           mb="50px"
           ml={isSidebarOpen ? "300px" : "2.5%"}
