@@ -16,7 +16,6 @@ import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
 import { LinkReadDto } from "models/link";
 import { useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
-import { IoMdOptions } from "react-icons/io";
 
 type IProps = {
   link: LinkReadDto;

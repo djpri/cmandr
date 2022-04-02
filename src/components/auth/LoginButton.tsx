@@ -11,6 +11,7 @@ function LoginButton() {
         scopes: apiConfig.b2cScopes,
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import useLinksFilter from "hooks/links/useLinksFilter";
-import { useRef, useState } from "react";
+import { ForwardedRef, useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton/AddLinkButton";
@@ -22,8 +22,9 @@ interface IProps {
 }
 
 function LinksManager({ categoryId, links }: IProps) {
-  const addLinkref = useRef(null);
-  const quickAddLinkref = useRef(null);
+  const addLinkref = useRef<HTMLDivElement | null>(null);
+  const quickAddLinkref = useRef<HTMLDivElement | null>(null);
+
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
   const [currentButtonOpen, setCurrentButtonOpen] = useState<
@@ -56,13 +57,13 @@ function LinksManager({ categoryId, links }: IProps) {
           >
             <HStack>
               <AddLinkButton
-                ref={addLinkref}
+                ref={addLinkref as ForwardedRef<HTMLDivElement>}
                 categoryId={categoryId}
                 currentButtonOpen={currentButtonOpen}
                 setCurrentButtonOpen={setCurrentButtonOpen}
               />
               <AddQuickLink
-                ref={quickAddLinkref}
+                ref={quickAddLinkref as ForwardedRef<HTMLDivElement>}
                 categoryId={categoryId}
                 currentButtonOpen={currentButtonOpen}
                 setCurrentButtonOpen={setCurrentButtonOpen}

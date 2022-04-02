@@ -1,21 +1,20 @@
 import { useAccount, useMsal } from "@azure/msal-react";
-import { ChakraProvider, CSSReset, Spinner } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import { CmandrApi } from "api";
 import { apiConfig } from "auth/apiConfig";
 import UserLayout from "components/layout/UserLayout";
-import { lazy, Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { setUserSession } from "redux/slices/appSlice";
+import Links from "views/AllLinks";
 import Home from "views/Home";
+import LinkCategory from "views/LinkCategory";
 import theme from "./theme/theme";
 import AllCommands from "./views/AllCommands";
 import CommandCategory from "./views/CommandCategory";
 import Dashboard from "./views/Dashboard";
 import Login from "./views/Login";
-
-const Links = lazy(() => import("./views/AllLinks"));
-const LinkCategory = lazy(() => import("./views/LinkCategory"));
 
 export const App = () => {
   const { instance, accounts } = useMsal();

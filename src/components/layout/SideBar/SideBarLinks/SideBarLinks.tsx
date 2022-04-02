@@ -1,48 +1,29 @@
-import { Box, HStack, Link, Stack, StackDivider, Text } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  HStack,
+  Text,
+} from "@chakra-ui/react";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useLinkCategories from "hooks/links/useLinkCategories";
-import { useCallback, useEffect, useRef, useState } from "react";
 import { AiFillWallet, AiOutlineWallet } from "react-icons/ai";
+import { IoMdHome } from "react-icons/io";
 import { Link as RouterLink } from "react-router-dom";
 import CategoriesList from "./CategoriesList/CategoriesList";
 
 function SideBarLinks() {
-  const [currentSelectedId, setCurrentSelectedId] = useState("");
-  const displayChildren = useRef({});
-  const [popup, setPopup] = useState({});
-
-  const handleClick = useCallback(
-    (event: MouseEvent) => {
-      event.preventDefault();
-      if (
-        !(event.target as HTMLElement).classList.contains(currentSelectedId)
-      ) {
-        setPopup({});
-      }
-    },
-    [currentSelectedId]
-  );
-
-  useEffect(() => {
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, [handleClick]);
-
   const CommandCategoryLinks = () => {
     const { query: allCategoriesQuery } = useCommandCategories();
 
     return (
       <CategoriesList
+        type="commands"
         isIdle={allCategoriesQuery.isIdle}
         isLoading={allCategoriesQuery.isLoading}
         categories={allCategoriesQuery.data}
-        currentSelectedId={currentSelectedId}
-        setCurrentSelectedId={setCurrentSelectedId}
-        popup={popup}
-        setPopup={setPopup}
-        displayChildren={displayChildren}
       />
     );
   };
@@ -52,81 +33,89 @@ function SideBarLinks() {
 
     return (
       <CategoriesList
+        type="links"
         isIdle={allCategoriesQuery.isIdle}
         isLoading={allCategoriesQuery.isLoading}
         categories={allCategoriesQuery.data}
-        currentSelectedId={currentSelectedId}
-        setCurrentSelectedId={setCurrentSelectedId}
-        popup={popup}
-        setPopup={setPopup}
-        displayChildren={displayChildren}
       />
     );
   };
 
   return (
-    <Stack divider={<StackDivider borderColor="gray.500" />} pl="6" pr="5">
-      <Stack>
-        {/* MENU */}
-        <Box flex="1" textAlign="left">
-          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
-            <Link as={RouterLink} to="/">
-              Home
-            </Link>
-          </Text>
-        </Box>
-      </Stack>
+    <Accordion allowMultiple defaultIndex={[1, 2]}>
+      {/* MENU */}
+      <AccordionItem
+        flex="1"
+        textAlign="left"
+        as={RouterLink}
+        to="/"
+        borderTop="none"
+      >
+        <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+          <IoMdHome />
+          <Text ml="5px">Home</Text>
+        </AccordionButton>
+      </AccordionItem>
 
       {/* COMMANDS */}
-      <Stack>
-        <Box flex="1" textAlign="left">
-          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+      <AccordionItem>
+        <AccordionButton textAlign="left">
+          <Text flex="1" fontFamily="Lato" fontWeight="700" letterSpacing="1px">
             Commands
           </Text>
-        </Box>
-
-        <Link as={RouterLink} to="/commands">
-          <HStack>
-            <AiFillWallet />
-            <Text>All commands</Text>
-          </HStack>
-        </Link>
-
-        <Link as={RouterLink} to="/commands">
-          <HStack>
-            <AiOutlineWallet color="gray.200" />
-            <Text>Unsorted</Text>
-          </HStack>
-        </Link>
-
-        <CommandCategoryLinks />
-      </Stack>
+          <AccordionIcon />
+        </AccordionButton>
+        <AccordionPanel>
+          <AccordionItem as={RouterLink} to="/commands">
+            <AccordionButton>
+              <HStack>
+                <AiFillWallet />
+                <Text fontWeight="500">All commands</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <AccordionItem as={RouterLink} to="/commands">
+            <AccordionButton>
+              <HStack>
+                <AiOutlineWallet color="gray.200" />
+                <Text fontWeight="500">Unsorted</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <CommandCategoryLinks />
+        </AccordionPanel>
+      </AccordionItem>
 
       {/* LINKS */}
-      <Stack mb="100px">
-        <Box flex="1" textAlign="left">
-          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+      <AccordionItem>
+        <AccordionButton textAlign="left">
+          <Text flex="1" fontFamily="Lato" fontWeight="700" letterSpacing="1px">
             Links
           </Text>
-        </Box>
+          <AccordionIcon />
+        </AccordionButton>
 
-        <Link as={RouterLink} to="/links">
-          <HStack>
-            <AiFillWallet />
-            <Text>All links</Text>
-          </HStack>
-        </Link>
-
-        <Link as={RouterLink} to="/links">
-          <HStack>
-            <AiOutlineWallet color="gray.200" />
-            <Text>Unsorted</Text>
-          </HStack>
-        </Link>
-
-        <LinkCategoryLinks />
-      </Stack>
-    </Stack>
+        <AccordionPanel>
+          <AccordionItem as={RouterLink} to="/links">
+            <AccordionButton>
+              <HStack>
+                <AiFillWallet />
+                <Text fontWeight="500">All links</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <AccordionItem as={RouterLink} to="/links">
+            <AccordionButton>
+              <HStack>
+                <AiOutlineWallet color="gray.200" />
+                <Text fontWeight="500">Unsorted</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <LinkCategoryLinks />
+        </AccordionPanel>
+      </AccordionItem>
+    </Accordion>
   );
 }
 

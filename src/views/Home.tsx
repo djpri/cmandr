@@ -17,7 +17,7 @@ import { Link as RouterLink } from "react-router-dom";
 const gradient = "linear-gradient(-90deg,#171923,#1c1f31,#171923)";
 
 function Home() {
-  const { instance } = useMsal();
+  const { instance, accounts } = useMsal();
 
   const loginRedirect = async () => {
     try {
@@ -25,6 +25,7 @@ function Home() {
         scopes: apiConfig.b2cScopes,
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -62,6 +63,7 @@ function Home() {
                 variant="solid"
                 textShadow="outline"
                 textDecoration="cyan"
+                isDisabled={accounts[0] === undefined}
                 _hover={{
                   bgColor: "blue.600",
                 }}
@@ -82,7 +84,7 @@ function Home() {
               onClick={() => {
                 loginRedirect();
               }}
-              isDisabled={instance.getAllAccounts() !== null}
+              isDisabled={accounts[0] !== undefined}
             >
               Log In / Sign Up
             </Button>

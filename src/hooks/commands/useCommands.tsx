@@ -1,8 +1,9 @@
 import { Commands } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
+import { CategoryReadDto } from "models/category";
 import { PaginatedCommandsDto } from "models/command";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
@@ -25,11 +26,12 @@ function useCommands() {
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useQuery<PaginatedCommandsDto>(
+  const query = useInfiniteQuery<PaginatedCommandsDto>(
     "commands",
-    asReactQueryFunction(Commands.getAll),
+    asReactQueryFunction(({ pageParams }) => Commands.getAll(pageParams)),
     {
       enabled: isAppInitalized,
+      getNextPageParam: (lastPage) => lastPage.nextPage,
     }
   );
 
@@ -38,10 +40,38 @@ function useCommands() {
   const addCommandMutation = useMutation(Commands.create, {
     onSuccess: () => {
       queryClient.invalidateQueries("commands");
-      queryClient.invalidateQueries("commandCategories");
+      // queryClient.invalidateQueries("commandCategories");
       showSuccessToast("Command Added", "Command added successfully");
     },
-    onError: showErrorToast,
+    onMutate: async (newCommand): Promise<CategoryReadDto[]> => {
+      // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries("todos");
+
+      // Snapshot the previous value
+      const previousCategories: CategoryReadDto[] =
+        queryClient.getQueryData("commandCategories") || [];
+
+      const newCategories: CategoryReadDto[] = previousCategories.map(
+        (category) => {
+          if (category.id === newCommand.categoryId) {
+            return { ...category, items: category.items + 1 };
+          } else {
+            return category;
+          }
+        }
+      );
+
+      // Optimistically update to the new value
+      queryClient.setQueryData("commandCategories", newCategories);
+
+      // Return a context object with the snapshotted value
+      return previousCategories;
+    },
+
+    onError: () => {
+      queryClient.invalidateQueries("commandCategories");
+      showErrorToast();
+    },
   });
   const editCommandMutation = useMutation(Commands.update, {
     onSuccess: () => {
