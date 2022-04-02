@@ -1,6 +1,5 @@
 import { CategoryReadDto } from "models/category";
-import { FC, memo, useCallback, useState } from "react";
-import { useDrag } from "react-dnd";
+import { FC } from "react";
 
 interface IProps {
   items: CategoryReadDto[];

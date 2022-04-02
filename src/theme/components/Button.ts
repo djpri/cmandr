@@ -1,5 +1,7 @@
-export const Button = {
-  // The styles all button have in common
+import { ComponentStyleConfig } from "@chakra-ui/react";
+import { mode } from "@chakra-ui/theme-tools";
+
+export const Button: ComponentStyleConfig = {
   baseStyle: (props) => ({
     fontFamily: "Lato",
     color: props.colorMode === "dark" ? "gray.50" : "gray.900",
@@ -12,8 +14,8 @@ export const Button = {
   sizes: {
     sm: {
       fontSize: "sm",
-      px: 4, // <-- px is short for paddingLeft and paddingRight
-      py: 3, // <-- py is short for paddingTop and paddingBottom
+      px: 4,
+      py: 3,
     },
     md: {
       fontSize: "md",
@@ -27,9 +29,9 @@ export const Button = {
   },
   variants: {
     add: (props) => ({
-      bg: props.colorMode === "dark" ? "green.400" : "green.100",
+      bg: mode("green.100", "green.400")(props),
       _hover: {
-        bg: props.colorMode === "dark" ? "green.300" : "green.300",
+        bg: mode("green.300", "green.300")(props),
       },
     }),
     edit: (props) => ({
@@ -51,9 +53,9 @@ export const Button = {
       },
     }),
     options: (props) => ({
-      bg: props.colorMode === "dark" ? "#2d6a6e" : "teal.200",
+      bg: props.colorMode === "dark" ? "#2d6a6e" : "teal.100",
       _hover: {
-        bg: props.colorMode === "dark" ? "teal.300" : "teal.300",
+        bg: props.colorMode === "dark" ? "teal.300" : "teal.200",
       },
     }),
   },

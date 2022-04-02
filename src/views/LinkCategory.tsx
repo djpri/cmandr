@@ -44,7 +44,7 @@ function LinkCategory() {
 
   return (
     <UserLayout>
-      <Stack mb="30px" display="flex" alignItems="center" direction="row">
+      <Stack mb="5px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900">
           {category ? category.name : ""}
         </Heading>
@@ -59,7 +59,7 @@ function LinkCategory() {
               <PopoverBody>
                 <HStack>
                   <Button size="xs" onClick={editModalOpen}>
-                    edit
+                    rename
                   </Button>
                   <Button size="xs" onClick={onOpen}>
                     delete

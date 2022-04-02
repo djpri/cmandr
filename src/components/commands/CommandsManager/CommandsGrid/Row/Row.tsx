@@ -67,7 +67,7 @@ function Row({ commandItem, showCategories }: Props) {
       {showCategories && (
         <GridItem>
           <HStack>
-            <AiFillFolder color="gray" />
+            <AiFillFolder color={copyButtonColor} />
             <Text color={categoryTextColor}>{commandItem.category.name}</Text>
           </HStack>
         </GridItem>
