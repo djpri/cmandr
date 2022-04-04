@@ -10,11 +10,15 @@ import {
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import { AiFillWallet, AiOutlineWallet } from "react-icons/ai";
+import { BiCommand } from "react-icons/bi";
+import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { Link as RouterLink } from "react-router-dom";
 import CategoriesList from "./CategoriesList/CategoriesList";
 
 function SideBarLinks() {
+  const textMargin = "8px";
+
   const CommandCategoryLinks = () => {
     const { query: allCategoriesQuery } = useCommandCategories();
 
@@ -22,6 +26,7 @@ function SideBarLinks() {
       <CategoriesList
         type="commands"
         isIdle={allCategoriesQuery.isIdle}
+        isError={allCategoriesQuery.isError}
         isLoading={allCategoriesQuery.isLoading}
         categories={allCategoriesQuery.data}
       />
@@ -35,6 +40,7 @@ function SideBarLinks() {
       <CategoriesList
         type="links"
         isIdle={allCategoriesQuery.isIdle}
+        isError={allCategoriesQuery.isError}
         isLoading={allCategoriesQuery.isLoading}
         categories={allCategoriesQuery.data}
       />
@@ -42,25 +48,38 @@ function SideBarLinks() {
   };
 
   return (
-    <Accordion allowMultiple defaultIndex={[1, 2]}>
+    <Accordion allowMultiple defaultIndex={[2, 5]}>
       {/* MENU */}
+      <AccordionItem textAlign="left" as={RouterLink} to="/" borderTop="none">
+        <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+          <IoMdHome />
+          <Text ml={textMargin}>Home</Text>
+        </AccordionButton>
+      </AccordionItem>
+
       <AccordionItem
-        flex="1"
         textAlign="left"
         as={RouterLink}
-        to="/"
+        to="/dashboard"
         borderTop="none"
       >
         <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
           <IoMdHome />
-          <Text ml="5px">Home</Text>
+          <Text ml={textMargin}>Dashboard</Text>
         </AccordionButton>
       </AccordionItem>
 
       {/* COMMANDS */}
       <AccordionItem>
         <AccordionButton textAlign="left">
-          <Text flex="1" fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+          <BiCommand color="white" />
+          <Text
+            flex="1"
+            fontFamily="Lato"
+            fontWeight="700"
+            letterSpacing="1px"
+            ml={textMargin}
+          >
             Commands
           </Text>
           <AccordionIcon />
@@ -89,7 +108,15 @@ function SideBarLinks() {
       {/* LINKS */}
       <AccordionItem>
         <AccordionButton textAlign="left">
-          <Text flex="1" fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+          <FaExternalLinkSquareAlt />
+
+          <Text
+            flex="1"
+            fontFamily="Lato"
+            fontWeight="700"
+            letterSpacing="1px"
+            ml={textMargin}
+          >
             Links
           </Text>
           <AccordionIcon />

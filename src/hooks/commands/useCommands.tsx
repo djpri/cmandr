@@ -2,8 +2,8 @@ import { Commands } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
 import { CategoryReadDto } from "models/category";
-import { PaginatedCommandsDto } from "models/command";
-import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
+import { CommandReadDto } from "models/command";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
@@ -26,12 +26,11 @@ function useCommands() {
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useInfiniteQuery<PaginatedCommandsDto>(
+  const query = useQuery<CommandReadDto[]>(
     "commands",
-    asReactQueryFunction(({ pageParams }) => Commands.getAll(pageParams)),
+    asReactQueryFunction(({ pageParams }) => Commands.getAll()),
     {
       enabled: isAppInitalized,
-      getNextPageParam: (lastPage) => lastPage.nextPage,
     }
   );
 

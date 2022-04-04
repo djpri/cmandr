@@ -48,7 +48,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
             ))}
         </Select>
 
-        <Button type="submit" colorScheme="orange">
+        <Button type="submit" variant="save">
           Save
         </Button>
       </Stack>

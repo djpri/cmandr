@@ -1,13 +1,11 @@
 import {
   Box,
-  Button,
   Input,
   InputGroup,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
-import useCommands from "hooks/commands/useCommands";
 import { CommandReadDto } from "models/command";
 import { useRef } from "react";
 import useCommandsFilter from "../../../hooks/commands/useCommandsFilter";
@@ -23,7 +21,6 @@ function CommandsManager({ categoryId, commands }: IProps) {
   const ref = useRef(null);
   const bgColor = useColorModeValue("#f2f6fa", "gray.800");
   const border = useColorModeValue("0", "1px");
-  const { query } = useCommands();
 
   const {
     hasData,
@@ -69,7 +66,7 @@ function CommandsManager({ categoryId, commands }: IProps) {
         </Box>
         {filteredCommands?.length > 0 && (
           <CommandsTable
-            commands={filteredCommands}
+            commands={commands}
             showCategories={!categoryId}
             sortFunction={sortFunction}
             setSortFunction={setSortFunction}
@@ -81,17 +78,6 @@ function CommandsManager({ categoryId, commands }: IProps) {
             above to add some.
           </Text>
         )}
-        <Button
-          w="100%"
-          h="50px"
-          mt="20px"
-          mx="auto"
-          position="relative"
-          onClick={() => query.fetchNextPage()}
-          isLoading={query.isFetchingNextPage}
-        >
-          Load More
-        </Button>
       </Box>
     </ErrorBoundaryWrapper>
   );

@@ -21,7 +21,7 @@ function UserLayout({ children }) {
           maxW={isSidebarOpen ? "70%" : "97.5%"}
           mt="80px"
           mb="50px"
-          ml={isSidebarOpen ? "300px" : "2.5%"}
+          ml={isSidebarOpen ? "350px" : "2.5%"}
           position="relative"
         >
           {children}

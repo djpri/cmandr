@@ -1,6 +1,8 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
 import { CommandSortFunction } from "helpers/commandsSortFunctions";
-import { Command, CommandReadDto } from "models/command";
+import { CommandReadDto } from "models/command";
+import React, { Key, useMemo } from "react";
+import { usePagination, useSortBy, useTable } from "react-table";
 import Header from "./Header/Header";
 import Row from "./Row/Row";
 
@@ -11,61 +13,79 @@ interface IProps {
   setSortFunction?: React.Dispatch<React.SetStateAction<CommandSortFunction>>;
 }
 
-function CommandsTable({
-  commands,
-  showCategories,
-  sortFunction,
-  setSortFunction,
-}: IProps) {
-  const HeadersRow = () => (
-    <Grid
-      // size="md"
-      templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
-      gap={4}
-      p="4"
-    >
-      <Header
-        sortFunction={sortFunction}
-        setSortFunction={setSortFunction}
-        label="Description"
-        field="description"
-      />
-      <Header
-        sortFunction={sortFunction}
-        setSortFunction={setSortFunction}
-        label="Command"
-        field="line"
-      />
-      {showCategories && (
-        <Header
-          sortFunction={sortFunction}
-          setSortFunction={setSortFunction}
-          label="Category"
-          field="category"
-        />
-      )}
-      <GridItem />
-    </Grid>
-  );
+function CommandsTable({ commands, showCategories }: IProps) {
+  const columns = useMemo(() => {
+    if (showCategories) {
+      return [
+        {
+          Header: "Description",
+          accessor: "description",
+        },
+        {
+          Header: "Command",
+          accessor: "line",
+        },
+        {
+          Header: "Category",
+          accessor: "category",
+        },
+      ];
+    }
+    return [
+      {
+        Header: "Description",
+        accessor: "description",
+      },
+      {
+        Header: "Command",
+        accessor: "line",
+      },
+    ];
+  }, [showCategories]);
+
+  const data = useMemo(() => {
+    return commands;
+  }, [commands]);
+
+  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow } =
+    useTable({ columns, data }, useSortBy, usePagination);
 
   return (
-    <Box p="1" display="flex" flexDirection="column" w="100%">
-      <HeadersRow />
+    <Box
+      p="1"
+      display="flex"
+      flexDirection="column"
+      w="100%"
+      {...getTableProps()}
+    >
       <Grid
-        w="100%"
-        marginX="auto"
-        templateColumns={["repeat(auto-fill, 200px)", null, null, "1fr"]}
-        gap={[4, null, null, 0]}
+        templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
+        p="4"
+        gap={4}
+        rounded="md"
       >
-        {commands &&
-          commands.map((command: Command) => (
-            <Row
-              commandItem={command}
-              key={command.id}
-              showCategories={showCategories}
-            />
-          ))}
+        {
+          // Loop over the headers in each row
+          headerGroups[0].headers.map((column, index) => (
+            // Apply the header cell props
+            <Header key={index} label={column.render("Header")} />
+          ))
+        }
       </Grid>
+
+      <Box w="100%" {...getTableBodyProps()}>
+        {page.map((row, index: Key) => {
+          prepareRow(row);
+          return (
+            <Row
+              showCategories={showCategories}
+              commandItem={row.values}
+              key={index}
+              {...row.getRowProps()}
+            />
+          );
+        })}
+      </Box>
     </Box>
   );
 }
