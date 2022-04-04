@@ -1,13 +1,5 @@
 import { CategoryReadDto } from "models/category";
 
-export interface Command {
-  id: number;
-  description: string;
-  line: string;
-  reference: string;
-  category: CategoryReadDto;
-}
-
 /** Object type that is received from response body of api */
 export interface CommandReadDto {
   id: number;

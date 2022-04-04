@@ -3,10 +3,10 @@ import { CategoryReadDto } from "models/category";
 import { useForm } from "react-hook-form";
 import useCommandCategories from "../../../hooks/commands/useCommandCategories";
 import useCommands from "../../../hooks/commands/useCommands";
-import { Command, CommandUpdateDto } from "../../../models/command";
+import { CommandReadDto, CommandUpdateDto } from "../../../models/command";
 
 type IProps = {
-  commandItem: Command;
+  commandItem: CommandReadDto;
   onClose: () => void;
 };
 
