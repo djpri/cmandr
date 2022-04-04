@@ -1,7 +1,7 @@
 import { AuthenticatedTemplate } from "@azure/msal-react";
 import { Container } from "@chakra-ui/layout";
 import { useSelector } from "react-redux";
-import { selectIsSidebarOpen } from "redux/layout/layoutSlice";
+import { selectIsSidebarOpen } from "redux/slices/layoutSlice";
 import NavBar from "./NavBar/NavBar";
 import SideBar from "./SideBar/SideBar";
 
@@ -19,7 +19,6 @@ function UserLayout({ children }) {
       <AuthenticatedTemplate>
         <Container
           maxW={isSidebarOpen ? "70%" : "97.5%"}
-          maxH="80vh"
           mt="80px"
           mb="50px"
           ml={isSidebarOpen ? "300px" : "2.5%"}

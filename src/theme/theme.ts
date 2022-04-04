@@ -1,18 +1,17 @@
+import { Accordion } from "./components/Accordion";
 import { extendTheme } from "@chakra-ui/react";
-import { Button } from "./components/Button";
 import { mode } from "@chakra-ui/theme-tools";
-import "@fontsource/nunito-sans/700.css";
-import "@fontsource/nunito-sans/600.css";
-import "@fontsource/nunito-sans/400.css";
+import { Dict } from "@chakra-ui/utils";
 import "@fontsource/lato/400.css";
 import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";
-import { Dict } from "@chakra-ui/utils";
+import { Button } from "./components/Button";
 
 const theme = extendTheme({
   // remove outline on focus
   shadows: {
-    outline: "#A0AEC0 0px 0px 1px 2px;",
+    outline:
+      "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;",
   },
   styles: {
     global: (props: Dict<any>) => ({
@@ -35,7 +34,7 @@ const theme = extendTheme({
   },
   fonts: {
     heading: "Lato",
-    body: "Nunito Sans",
+    // body: "Nunito Sans",
   },
   textStyles: {
     heading: {
@@ -63,9 +62,24 @@ const theme = extendTheme({
   },
   components: {
     Button,
+    Accordion,
     Input: {
       defaultProps: {
-        focusBorderColor: "gray.400",
+        focusBorderColor: "hsla(220, 26%, 39%, 0.5)",
+      },
+    },
+    Link: {
+      baseStyle: {
+        _hover: {
+          color: "purple.500",
+        },
+      },
+    },
+    Popover: {
+      baseStyle: {
+        content: {
+          rounded: "sm",
+        },
       },
     },
     TabPanel: {

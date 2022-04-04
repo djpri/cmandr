@@ -1,16 +1,21 @@
 import {
   Box,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverHeader,
   Stack,
   StackItem,
   useColorModeValue,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { MouseEventHandler, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSidebarOpen,
   setSidebarClosed,
-} from "redux/layout/layoutSlice";
+} from "redux/slices/layoutSlice";
 import SideBarLinks from "./SideBarLinks/SideBarLinks";
 
 const scrollbarStyles = {
@@ -42,7 +47,7 @@ function SideBar() {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectIsSidebarOpen);
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
-  const bgColor = useColorModeValue("gray.50", "gray.800");
+  const bgColor = useColorModeValue("gray.200", "gray.800");
   const borderColor = useColorModeValue("gray.300", "gray.700");
 
   // sidebar is initially closed on smaller devices
@@ -50,10 +55,44 @@ function SideBar() {
     if (isSmallerThan1280) dispatch(setSidebarClosed());
   }, [isSmallerThan1280, dispatch]);
 
+  const [show, setShow] = useState(false);
+  const [categoryId] = useState(null);
+  const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
+
+  const close = () => setShow(false);
+
+  const handleContext: MouseEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+      // e.target.classList.contains("sidebar-category");
+      setAnchorPoint({ x: e.clientX, y: e.clientY });
+      setShow(true);
+    },
+    [setShow]
+  );
+
   if (!isOpen) return null;
+
+  const ContextMenu = ({ anchorPoint, categoryId }) => (
+    <Popover isOpen={show} onClose={close}>
+      <PopoverContent
+        position="fixed"
+        top={anchorPoint.y}
+        left={anchorPoint.x}
+        className="sidebar-popover"
+      >
+        <PopoverArrow />
+        {/* <PopoverCloseButton /> */}
+        <PopoverHeader>Confirmation!</PopoverHeader>
+        <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
+      </PopoverContent>
+    </Popover>
+  );
 
   return (
     <Box
+      id="sidebar"
+      onContextMenu={handleContext}
       pr="2"
       h="100vh"
       bgColor={bgColor}
@@ -67,11 +106,13 @@ function SideBar() {
       _hover={hoverStyle}
       zIndex="500"
       boxSizing="content-box"
+      userSelect="none"
     >
       {/* SIDE LINKS */}
-      <Stack mt="5">
+      <Stack mt="1">
         <StackItem>
           <SideBarLinks />
+          <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} />
         </StackItem>
       </Stack>
     </Box>

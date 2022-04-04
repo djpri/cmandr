@@ -1,6 +1,8 @@
 import { LinkCategories } from "api";
-import { asReactQueryFunction } from "helpers/helpers";
+import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
+import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 import useChakraToast from "../other/useChakraToast";
 
 /**
@@ -15,13 +17,17 @@ import useChakraToast from "../other/useChakraToast";
  */
 function useLinkCategories() {
   const queryClient = useQueryClient();
+  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
   const query = useQuery(
     "linkCategories",
-    asReactQueryFunction(LinkCategories.getAll)
+    asReactQueryFunction(LinkCategories.getAll),
+    {
+      enabled: isAppInitalized,
+    }
   );
 
   // Mutations

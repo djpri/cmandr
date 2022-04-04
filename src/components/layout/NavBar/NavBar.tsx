@@ -1,19 +1,29 @@
-import { Box, Button, Heading, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  Link,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { setSidebarToggle } from "redux/layout/layoutSlice";
+import { setSidebarToggle } from "redux/slices/layoutSlice";
 import { useAppDispatch } from "redux/store";
 import { ColorModeSwitcher } from "../../other/ColorModeSwitcher";
 import LoginPopover from "./LoginPopover/LoginPopover";
 
 function NavBar() {
   const dispatch = useAppDispatch();
+  const bgColor = useColorModeValue("gray.200", "gray.800");
+  const iconColor = useColorModeValue("black", "white");
 
   return (
     <Box
       position="fixed"
       top="0"
       w="100%"
-      bgColor="gray.800"
+      bgColor={bgColor}
       h="50"
       shadow="base"
       zIndex={200}
@@ -32,17 +42,19 @@ function NavBar() {
           {/* OPEN/CLOSE SIDEBAR BUTTON */}
           <Box>
             <Button
-              colorScheme="blackAlpha"
-              _hover={{ bgColor: "gray.700" }}
+              variant="ghost"
+              colorScheme="whiteAlpha"
               border="0px"
               onClick={() => dispatch(setSidebarToggle())}
             >
-              <GiHamburgerMenu size="1.2rem" color="white" />
+              <GiHamburgerMenu size="1.2rem" color={iconColor} />
             </Button>
           </Box>
-          <Heading as="h1" fontSize="lg" fontWeight="900" color="white">
-            Cmandr
-          </Heading>
+          <Link as={RouterLink} to="/">
+            <Heading as="h1" fontSize="lg" fontWeight="900" color="whiteAlpha">
+              Cmandr
+            </Heading>
+          </Link>
         </HStack>
         <HStack>
           <ColorModeSwitcher />

@@ -1,7 +1,10 @@
 import { Links } from "api";
-import { asReactQueryFunction } from "helpers/helpers";
+import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
+import { LinkReadDto } from "models/link";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
+import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
 /**
  * Custom hook that contains react query logic for links
@@ -15,19 +18,30 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
  */
 function useLinks() {
   const queryClient = useQueryClient();
+  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useQuery("links", asReactQueryFunction(Links.getAll));
-  // const singleCategoryQuery = useQuery(
-  //   ["links", props.categoryId],
-  //   asReactQueryFunction(() => Links.getAllByCategoryId(props.categoryId))
-  // );
+  const query = useQuery<LinkReadDto[]>(
+    "links",
+    asReactQueryFunction(Links.getAll),
+    {
+      enabled: isAppInitalized,
+    }
+  );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
   const addLinkMutation = useMutation(Links.create, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("links");
+      queryClient.invalidateQueries("linkCategories");
+      showSuccessToast("Link Added", "Link added successfully");
+    },
+    onError: showErrorToast,
+  });
+  const quickAddLinkMutation = useMutation(Links.quickAdd, {
     onSuccess: () => {
       queryClient.invalidateQueries("links");
       queryClient.invalidateQueries("linkCategories");
@@ -55,6 +69,7 @@ function useLinks() {
   return {
     query,
     addLinkMutation,
+    quickAddLinkMutation,
     editLinkMutation,
     deleteLinkMutation,
   };

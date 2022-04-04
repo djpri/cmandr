@@ -1,38 +1,57 @@
-import { Button, Collapse, Portal, useDisclosure } from "@chakra-ui/react";
-import { forwardRef } from "react";
+import { Button, Portal, SlideFade, useDisclosure } from "@chakra-ui/react";
+import { ForwardedRef, forwardRef, RefObject, useEffect } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import AddLinkForm from "../../AddLinkForm/AddLinkForm";
 
 interface IProps {
   categoryId?: number;
+  currentButtonOpen?: "addLink" | "quickAddLink" | "none";
+  setCurrentButtonOpen?: (value: "addLink" | "quickAddLink" | "none") => void;
 }
 
-const AddCommandButton = forwardRef((props: IProps, ref: any) => {
-  const { isOpen, onToggle } = useDisclosure();
-  return (
-    <>
-      {isOpen ? (
-        <Button onClick={onToggle} mb="4">
-          {<AiFillCaretUp />}
-        </Button>
-      ) : (
-        <Button onClick={onToggle} mb="4" rightIcon={<AiFillCaretDown />}>
-          Add
-        </Button>
-      )}
-      {ref && (
-        <Portal containerRef={ref}>
-          <Collapse in={isOpen} animateOpacity>
-            {props.categoryId ? (
-              <AddLinkForm categoryId={props.categoryId} />
-            ) : (
-              <AddLinkForm />
-            )}
-          </Collapse>
-        </Portal>
-      )}
-    </>
-  );
-});
+const AddLinkButton = forwardRef(
+  (props: IProps, ref: ForwardedRef<HTMLDivElement | null>) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-export default AddCommandButton;
+    useEffect(() => {
+      props.currentButtonOpen === "addLink" ? onOpen() : onClose();
+    }, [props.currentButtonOpen, onOpen, onClose]);
+
+    const handleOpen = () => {
+      props.setCurrentButtonOpen("addLink");
+      onOpen();
+    };
+
+    const handleClose = () => {
+      props.setCurrentButtonOpen("none");
+      onClose();
+    };
+
+    return (
+      <>
+        {isOpen ? (
+          <Button onClick={handleClose} rightIcon={<AiFillCaretUp />}>
+            Add
+          </Button>
+        ) : (
+          <Button onClick={handleOpen} rightIcon={<AiFillCaretDown />}>
+            Add
+          </Button>
+        )}
+        {ref && props.currentButtonOpen === "addLink" && (
+          <Portal containerRef={ref as unknown as RefObject<HTMLElement>}>
+            <SlideFade in={isOpen}>
+              {props.categoryId ? (
+                <AddLinkForm categoryId={props.categoryId} />
+              ) : (
+                <AddLinkForm />
+              )}
+            </SlideFade>
+          </Portal>
+        )}
+      </>
+    );
+  }
+);
+
+export default AddLinkButton;

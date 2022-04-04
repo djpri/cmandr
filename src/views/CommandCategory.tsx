@@ -60,7 +60,7 @@ function CommandCategoryPage() {
               <PopoverBody>
                 <HStack>
                   <Button size="xs" onClick={editModalOpen}>
-                    edit
+                    rename
                   </Button>
                   <Button size="xs" onClick={onOpen}>
                     delete

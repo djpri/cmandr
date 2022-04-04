@@ -27,7 +27,12 @@ function AddCommandForm({ categoryId }: IProps) {
 
   const onSubmit = (values: CommandCreateDto) => {
     addCommandMutation.mutate(values);
-    reset();
+    reset({
+      description: "",
+      line: "",
+      reference: "",
+      categoryId: categoryId || -1,
+    });
   };
 
   return (
@@ -85,7 +90,7 @@ function AddCommandForm({ categoryId }: IProps) {
           />
         </Box>
 
-        <Button type="submit" colorScheme="green" size="sm" isFullWidth={false}>
+        <Button type="submit" variant="add" size="sm" isFullWidth={false}>
           Add command
         </Button>
       </Grid>

@@ -29,7 +29,7 @@ function AddCommandCategory() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
-          <Button size="sm" onClick={handleAddCategory}>
+          <Button size="sm" variant="save" onClick={handleAddCategory}>
             Save
           </Button>
         </HStack>

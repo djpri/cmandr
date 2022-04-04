@@ -1,21 +1,25 @@
 import { useAccount, useMsal } from "@azure/msal-react";
-import { ChakraProvider, CSSReset, Spinner } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import { CmandrApi } from "api";
 import { apiConfig } from "auth/apiConfig";
 import UserLayout from "components/layout/UserLayout";
-import { lazy, Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { setEndOfUserSession, setUserSession } from "redux/slices/appSlice";
+import Links from "views/AllLinks";
+import Home from "views/Home";
+import LinkCategory from "views/LinkCategory";
 import theme from "./theme/theme";
-import AllCommandsPage from "./views/AllCommands";
-import CommandCategoryPage from "./views/CommandCategory";
-import HomePage from "./views/Home";
-import LoginPage from "./views/Login";
-
-const Links = lazy(() => import("./views/AllLinks"));
-const LinkCategory = lazy(() => import("./views/LinkCategory"));
+import AllCommands from "./views/AllCommands";
+import CommandCategory from "./views/CommandCategory";
+import Dashboard from "./views/Dashboard";
+import Login from "./views/Login";
 
 export const App = () => {
   const { instance, accounts } = useMsal();
+  const dispatch = useDispatch();
+
   const account = useAccount(accounts[0] || {});
 
   useEffect(() => {
@@ -24,13 +28,20 @@ export const App = () => {
     };
     const getToken = async () => {
       const accounts = instance.getAllAccounts();
-      if (accounts.length > 0) {
-        const response = await instance.acquireTokenSilent({
-          scopes: apiConfig.b2cScopes,
-          account: accounts[0],
-        });
-        return response.accessToken;
+      if (accounts?.length === 0) {
+        dispatch(setEndOfUserSession());
+        return null;
       }
+      const response = await instance.acquireTokenSilent({
+        scopes: apiConfig.b2cScopes,
+        account: accounts[0],
+      });
+      if (!response) {
+        dispatch(setEndOfUserSession());
+        return null;
+      }
+      dispatch(setUserSession());
+      return response.accessToken;
     };
     CmandrApi.interceptors.request.use(
       async function (config) {
@@ -43,25 +54,20 @@ export const App = () => {
       }
     );
     handleRedirect();
-  }, [instance, account]);
+  }, [instance, account, dispatch]);
 
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <Suspense
-        fallback={
-          <UserLayout>
-            <Spinner />
-          </UserLayout>
-        }
-      >
+      <Suspense fallback={<UserLayout>{/* <Spinner /> */}</UserLayout>}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/commands" element={<AllCommandsPage />} />
-          <Route path="/commands/:id" element={<CommandCategoryPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/commands" element={<AllCommands />} />
+          <Route path="/commands/:id" element={<CommandCategory />} />
           <Route path="/links" element={<Links />} />
           <Route path="/links/:id" element={<LinkCategory />} />
-          <Route path="/account/login" element={<LoginPage />} />
+          <Route path="/account/login" element={<Login />} />
         </Routes>
       </Suspense>
     </ChakraProvider>

@@ -1,8 +1,7 @@
-import { Box, Input, InputGroup, useColorModeValue } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { CommandReadDto } from "models/command";
-import React, { useRef } from "react";
-import useCommandsFilter from "../../../hooks/commands/useCommandsFilter";
+import { useRef } from "react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
 
@@ -13,11 +12,8 @@ interface IProps {
 
 function CommandsManager({ categoryId, commands }: IProps) {
   const ref = useRef(null);
-  const bgColor = useColorModeValue("gray.50", "gray.800");
+  const bgColor = useColorModeValue("#f2f6fa", "gray.800");
   const border = useColorModeValue("0", "1px");
-
-  const { filteredCommands, search, setSearch, sortFunction, setSortFunction } =
-    useCommandsFilter(commands);
 
   return (
     <ErrorBoundaryWrapper>
@@ -40,24 +36,12 @@ function CommandsManager({ categoryId, commands }: IProps) {
             mb="3"
           >
             <AddCommandButton ref={ref} categoryId={categoryId} />
-            {/* SEARCH BAR */}
-            <InputGroup maxW="md" w={["xs", "xs", "sm", "md"]}>
-              <Input
-                type="text"
-                placeholder="Search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </InputGroup>
           </Box>
           <Box ref={ref} />
         </Box>
-        <CommandsTable
-          commands={filteredCommands}
-          showCategories={!categoryId}
-          sortFunction={sortFunction}
-          setSortFunction={setSortFunction}
-        />
+        {commands && (
+          <CommandsTable commands={commands} showCategories={!categoryId} />
+        )}
       </Box>
     </ErrorBoundaryWrapper>
   );
