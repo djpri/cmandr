@@ -96,8 +96,7 @@ function SideBar() {
       pr="2"
       h="100vh"
       bgColor={bgColor}
-      // w="242px"
-      w="280px"
+      w="242px"
       top="50"
       position="fixed"
       borderColor={borderColor}

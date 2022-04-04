@@ -8,7 +8,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Command, CommandReadDto } from "models/command";
+import { CommandReadDto } from "models/command";
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillFolder } from "react-icons/ai";
@@ -34,8 +34,6 @@ function Row({ commandItem, showCategories }: Props) {
       setIsCopied(false);
     }, 1500);
   };
-
-  console.log(commandItem);
 
   return (
     <Grid

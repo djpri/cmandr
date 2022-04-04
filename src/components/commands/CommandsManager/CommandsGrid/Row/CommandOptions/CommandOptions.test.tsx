@@ -1,8 +1,8 @@
-import { Command } from "models/command";
+import { CommandReadDto } from "models/command";
 import { fireEvent, render, screen } from "../../../../../../tests/test-utils";
 import CommandOptions from "./CommandOptions";
 
-const testCommand: Command = {
+const testCommand: CommandReadDto = {
   line: "php artisan serve",
   description: "serve laravel app",
   reference: "https://laravel.com/docs/8.x#getting-started-on-windows",

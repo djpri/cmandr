@@ -13,12 +13,12 @@ import {
 } from "@chakra-ui/react";
 import DeleteCommandButton from "components/commands/DeleteCommandButton/DeleteCommandButton";
 import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
-import { Command } from "models/command";
+import { CommandReadDto } from "models/command";
 import { useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
 
 type IProps = {
-  command: Command;
+  command: CommandReadDto;
 };
 
 function CommandOptions({ command }: IProps) {
