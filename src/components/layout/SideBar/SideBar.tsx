@@ -73,7 +73,7 @@ function SideBar() {
 
   if (!isOpen) return null;
 
-  const Pop = ({ anchorPoint, categoryId }) => (
+  const ContextMenu = ({ anchorPoint, categoryId }) => (
     <Popover isOpen={show} onClose={close}>
       <PopoverContent
         position="fixed"
@@ -96,7 +96,8 @@ function SideBar() {
       pr="2"
       h="100vh"
       bgColor={bgColor}
-      w="242px"
+      // w="242px"
+      w="280px"
       top="50"
       position="fixed"
       borderColor={borderColor}
@@ -109,10 +110,10 @@ function SideBar() {
       userSelect="none"
     >
       {/* SIDE LINKS */}
-      <Stack mt="5">
+      <Stack mt="1">
         <StackItem>
           <SideBarLinks />
-          <Pop anchorPoint={anchorPoint} categoryId={categoryId} />
+          <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} />
         </StackItem>
       </Stack>
     </Box>

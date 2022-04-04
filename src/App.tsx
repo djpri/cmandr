@@ -6,7 +6,7 @@ import UserLayout from "components/layout/UserLayout";
 import { Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { setUserSession } from "redux/slices/appSlice";
+import { setEndOfUserSession, setUserSession } from "redux/slices/appSlice";
 import Links from "views/AllLinks";
 import Home from "views/Home";
 import LinkCategory from "views/LinkCategory";
@@ -28,12 +28,18 @@ export const App = () => {
     };
     const getToken = async () => {
       const accounts = instance.getAllAccounts();
-      if (accounts?.length === 0) return null;
+      if (accounts?.length === 0) {
+        dispatch(setEndOfUserSession());
+        return null;
+      }
       const response = await instance.acquireTokenSilent({
         scopes: apiConfig.b2cScopes,
         account: accounts[0],
       });
-      if (!response) return null;
+      if (!response) {
+        dispatch(setEndOfUserSession());
+        return null;
+      }
       dispatch(setUserSession());
       return response.accessToken;
     };

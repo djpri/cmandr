@@ -24,7 +24,7 @@ const { get, post, put, delete: remove } = CmandrApi;
  * Api endpoints for commands
  */
 export const Commands = {
-  getAll: (page = "commands") => get<PaginatedCommandsDto>(page),
+  getAll: () => get<CommandReadDto[]>("commands"),
   /**
    * Get information about a single command
    */

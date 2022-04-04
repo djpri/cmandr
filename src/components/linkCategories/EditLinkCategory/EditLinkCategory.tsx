@@ -40,8 +40,7 @@ function EditLinkCategory({ isOpen, onClose, categoryId }) {
 
         <ModalFooter>
           <Button
-            bgColor="yellow.500"
-            color="white"
+            variant="save"
             mr={3}
             onClick={handleEdit}
             isDisabled={categoryName === ""}

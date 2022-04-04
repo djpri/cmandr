@@ -47,9 +47,9 @@ export const Button: ComponentStyleConfig = {
       },
     }),
     save: (props) => ({
-      bg: props.colorMode === "dark" ? "yellow.400" : "yellow.200",
+      bg: props.colorMode === "dark" ? "yellow.600" : "yellow.200",
       _hover: {
-        bg: props.colorMode === "dark" ? "yellow.300" : "yellow.300",
+        bg: props.colorMode === "dark" ? "yellow.500" : "yellow.300",
       },
     }),
     options: (props) => ({

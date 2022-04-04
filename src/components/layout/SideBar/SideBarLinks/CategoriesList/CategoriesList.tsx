@@ -1,9 +1,9 @@
 import {
-  AccordionButton,
   AccordionItem,
   Box,
   Flex,
   HStack,
+  Link,
   Spinner,
   Text,
   Tooltip,
@@ -11,24 +11,45 @@ import {
 } from "@chakra-ui/react";
 import AddLinkCategory from "components/linkCategories/AddLinkCategory/AddLinkCategory";
 import { CategoryReadDto } from "models/category";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
 import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import {
+  selectOpenCategories,
+  setCategoryClose,
+  setCategoryOpen,
+} from "redux/slices/layoutSlice";
 
 interface IProps {
   categories: CategoryReadDto[];
   isIdle: boolean;
   isLoading: boolean;
+  isError: boolean;
   type: "commands" | "links";
 }
 
-function CategoriesList({ categories, isIdle, isLoading, type }: IProps) {
+function CategoriesList({
+  categories,
+  isIdle,
+  isLoading,
+  isError,
+  type,
+}: IProps) {
   const location = useLocation();
   const folderColor = useColorModeValue("gray.900", "gray.300");
+  const openCategories = useSelector(selectOpenCategories);
+  const dispatch = useDispatch();
 
   if (isIdle) return null;
   if (isLoading) return <Spinner />;
+  if (isError)
+    return (
+      <AccordionItem p="8px 24px" borderTop="none">
+        Error: Could not load categories
+      </AccordionItem>
+    );
   if (!categories) return null;
 
   const topLevelCategories = categories.filter((item) => item.parentId === 0);
@@ -38,41 +59,73 @@ function CategoriesList({ categories, isIdle, isLoading, type }: IProps) {
   };
 
   const CategoryInfo = ({ item, isChild, depth, type }) => {
-    const [displayChildren, setDisplayChildren] = useState(false);
     const hasChildren = useMemo(() => getChildren(item).length > 0, [item]);
 
     const handleOpen = () => {
-      setDisplayChildren(true);
+      dispatch(setCategoryOpen(item.id));
     };
     const handleClose = () => {
-      setDisplayChildren(false);
+      dispatch(setCategoryClose(item.id));
     };
 
     return (
-      <AccordionItem border="none">
-        <AccordionButton>
+      <AccordionItem border="none" _hover={{ cursor: "default" }}>
+        <Box
+          p="8px 24px"
+          mr="5px"
+          position="relative"
+          _hover={{ cursor: "default" }}
+        >
           <HStack
             position="relative"
             key={item.id}
             id={`category-${item.id}`}
             width="100%"
-            pl={isChild && 15 * depth}
+            pl={isChild && 10 + 20 * depth}
             className={`sidebar-category category-${item.id}`}
-            as={RouterLink}
-            to={`/${type}/${item.id}`}
           >
+            {/* OPEN CLOSE FOLDER BUTTON */}
+            {hasChildren && (
+              <Box
+                h="100%"
+                cursor="pointer"
+                aria-label={"open-folder"}
+                onClick={openCategories[item.id] ? handleClose : handleOpen}
+              >
+                {openCategories[item.id] ? (
+                  <IoMdArrowDropdown
+                    style={{ marginLeft: "-4px" }}
+                    size="1.3rem"
+                  />
+                ) : (
+                  <IoMdArrowDropright
+                    style={{ marginLeft: "-4px" }}
+                    size="1.3rem"
+                  />
+                )}
+              </Box>
+            )}
             {location.pathname === `/${type}/${item.id}` ? (
               <AiFillFolderOpen color={isChild ? "gray" : folderColor} />
             ) : (
               <AiFillFolder color={isChild ? "gray" : folderColor} />
             )}
             <Tooltip label={item.name} placement="right" openDelay={500}>
-              <Text fontWeight="500">
-                {item.name.substring(0, 15)}
-                {item.name.length > 15 && "..."}
-              </Text>
+              <Link
+                fontWeight="500"
+                textAlign="left"
+                maxWidth="60%"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                display="inline"
+                whiteSpace="nowrap"
+                as={RouterLink}
+                to={`/${type}/${item.id}`}
+              >
+                {item.name}
+              </Link>
             </Tooltip>
-            {item.items ? (
+            {item.items && (
               <>
                 <Text
                   color={`hsl(180, ${
@@ -83,31 +136,11 @@ function CategoriesList({ categories, isIdle, isLoading, type }: IProps) {
                   {item.items}
                 </Text>
               </>
-            ) : (
-              <Text color="gray.500" fontWeight="700">
-                0
-              </Text>
             )}
           </HStack>
-        </AccordionButton>
-        {/* OPEN CLOSE FOLDER BUTTON */}
-        {hasChildren && (
-          <Box
-            display="inline"
-            position="relative"
-            cursor="pointer"
-            aria-label={"open-folder"}
-            onClick={displayChildren ? handleClose : handleOpen}
-          >
-            {displayChildren ? (
-              <IoMdArrowDropdown size="1.3rem" />
-            ) : (
-              <IoMdArrowDropright size="1.3rem" />
-            )}
-          </Box>
-        )}
+        </Box>
         {getChildren(item).length > 0 &&
-          displayChildren &&
+          openCategories[item.id] &&
           depth < 4 &&
           getChildren(item).map((child) => (
             <CategoryInfo

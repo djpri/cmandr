@@ -71,7 +71,6 @@ const theme = extendTheme({
     Link: {
       baseStyle: {
         _hover: {
-          textDecoration: "underline",
           color: "purple.500",
         },
       },
