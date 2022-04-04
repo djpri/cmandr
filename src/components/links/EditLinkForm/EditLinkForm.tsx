@@ -1,8 +1,7 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
-import { Link, LinkReadDto, LinkUpdateDto } from "models/link";
-import React from "react";
+import { LinkReadDto, LinkUpdateDto } from "models/link";
 import { useForm } from "react-hook-form";
 
 type IProps = {
@@ -49,7 +48,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
             ))}
         </Select>
 
-        <Button type="submit" colorScheme="orange">
+        <Button type="submit" variant="save">
           Save
         </Button>
       </Stack>

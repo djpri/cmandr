@@ -13,12 +13,12 @@ import {
 } from "@chakra-ui/react";
 import DeleteCommandButton from "components/commands/DeleteCommandButton/DeleteCommandButton";
 import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
-import { Command } from "models/command";
+import { CommandReadDto } from "models/command";
 import { useState } from "react";
-import { HiDotsVertical } from "react-icons/hi";
+import { AiFillSetting } from "react-icons/ai";
 
 type IProps = {
-  command: Command;
+  command: CommandReadDto;
 };
 
 function CommandOptions({ command }: IProps) {
@@ -36,8 +36,8 @@ function CommandOptions({ command }: IProps) {
         onClose={onClose}
       >
         <PopoverTrigger>
-          <Button size="xs" bgColor="teal.500" color="white">
-            <HiDotsVertical />
+          <Button size="xs" variant="options">
+            <AiFillSetting />
           </Button>
         </PopoverTrigger>
         <PopoverContent>
@@ -48,7 +48,7 @@ function CommandOptions({ command }: IProps) {
             <HStack>
               <Button
                 size="xs"
-                colorScheme="orange"
+                variant="edit"
                 onClick={() => setIsVisible((prevState) => !prevState)}
               >
                 Edit

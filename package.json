@@ -1,5 +1,5 @@
 {
-  "name": "commander",
+  "name": "cmandr-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,19 +9,17 @@
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "@fontsource/lato": "^4.5.0",
-    "@fontsource/nunito-sans": "^4.5.1",
     "@reduxjs/toolkit": "^1.6.2",
-    "@testing-library/jest-dom": "5.16.1",
-    "@testing-library/react": "12.1.2",
-    "@testing-library/user-event": "13.5.0",
     "@types/jest": "^25.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "axios": "^0.25.0",
-    "framer-motion": "^4.0.0",
+    "framer-motion": "^6.2.8",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
+    "react-dnd": "^15.1.1",
+    "react-dnd-html5-backend": "^15.1.2",
     "react-dom": "^17.0.2",
     "react-error-boundary": "^3.1.4",
     "react-hook-form": "^7.17.2",
@@ -30,16 +28,24 @@
     "react-redux": "^7.2.5",
     "react-router-dom": "6",
     "react-scripts": "5.0.0",
+    "react-table": "^7.7.0",
+    "react-window": "^1.8.6",
     "typescript": "4.5.4",
     "web-vitals": "2.1.2"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^1.9.0",
+    "@testing-library/jest-dom": "5.16.1",
+    "@testing-library/react": "12.1.2",
+    "@testing-library/user-event": "13.5.0",
     "@types/react-router-dom": "^5.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.12.0",
+    "eslint-plugin-react": "^7.29.4",
     "msw": "^0.39.2",
     "plop": "^2.7.6",
-    "react-error-overlay": "6.0.10"
-  },
-  "resolutions": {
+    "prettier": "^2.6.1",
     "react-error-overlay": "6.0.10"
   },
   "scripts": {
@@ -47,17 +53,11 @@
     "build": "react-scripts build",
     "serve": "serve -s build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage",
     "eject": "react-scripts eject",
+    "lint": "eslint --ignore-path .gitignore .",
+    "prettier": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
     "plop": "plop"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "testing-library/no-render-in-setup": "off"
-    }
   },
   "browserslist": {
     "production": [

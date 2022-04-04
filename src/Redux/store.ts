@@ -5,9 +5,11 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import layoutReducer from "./layout/layoutSlice";
+import layoutReducer from "./slices/layoutSlice";
+import appReducer from "./slices/appSlice";
 
 export const rootReducer = combineReducers({
+  app: appReducer,
   layout: layoutReducer,
 });
 

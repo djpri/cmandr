@@ -1,89 +1,124 @@
+import { useMsal } from "@azure/msal-react";
 import {
   Box,
+  Button,
+  Flex,
   Grid,
   GridItem,
   Heading,
+  HStack,
+  Link,
   Text,
-  useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
-import useCommandCategories from "hooks/commands/useCommandCategories";
-import useLinkCategories from "hooks/links/useLinkCategories";
+import { apiConfig } from "auth/apiConfig";
 import { Link as RouterLink } from "react-router-dom";
-import UserLayout from "../components/layout/UserLayout";
 
-function HomePage() {
-  const { query: commandCategoryQuery } = useCommandCategories();
-  const { query: linkCategoryQuery } = useLinkCategories();
+const gradient = "linear-gradient(-90deg,#171923,#1c1f31,#171923)";
 
-  const linkBgColor = useColorModeValue("blue.50", "teal.900");
-  const linkBgHoverColor = useColorModeValue("blue.100", "teal.600");
+function Home() {
+  const { instance, accounts } = useMsal();
+
+  const loginRedirect = async () => {
+    try {
+      await instance.loginRedirect({
+        scopes: apiConfig.b2cScopes,
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
 
   return (
-    <UserLayout>
-      <Box fontSize="xl">
-        <Heading as="h1">Commands</Heading>
-        <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
-          {commandCategoryQuery?.data?.length >= 1 &&
-            commandCategoryQuery.data.map((item) => (
-              <GridItem
-                key={item.id}
-                as={RouterLink}
-                to={`/commands/${item.id}`}
-                boxShadow="base"
-                p="5px 10px"
-                rounded="sm"
-                textAlign="left"
-                bgColor={linkBgColor}
+    <Flex height="100vh" flexDirection="column" alignItems="center">
+      <VStack
+        mt="50px"
+        mb="100px"
+        w="100%"
+        spacing="5"
+        shadow="base"
+        rounded="md"
+        p="20px"
+        bgGradient={gradient}
+      >
+        <Box px="20px">
+          <Heading
+            as="h1"
+            fontSize="5rem"
+            fontWeight="900"
+            textShadow="outline"
+          >
+            Cmandr
+          </Heading>
+          <Heading as="h2" fontSize="3rem" textShadow="outline" mb="30px">
+            🔧 Store and manage your command snippets
+          </Heading>
+          <HStack>
+            <Link as={RouterLink} to="/dashboard">
+              <Button
+                size="lg"
+                bgColor="blue.800"
+                color="white"
+                variant="solid"
+                textShadow="outline"
+                textDecoration="cyan"
+                isDisabled={accounts[0] === undefined}
                 _hover={{
-                  bgColor: linkBgHoverColor,
+                  bgColor: "blue.600",
                 }}
-                fontFamily="Lato"
-                fontSize="lg"
-                fontWeight="bold"
-                transition="0.1s"
               >
-                <Text>{item.name}</Text>
-                <Text fontSize="sm">
-                  <Text as="span" color="gray.500" fontWeight="700">
-                    {item?.items} items
-                  </Text>
-                </Text>
-              </GridItem>
-            ))}
-        </Grid>
-        <Heading as="h1">Links</Heading>
-        <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
-          {linkCategoryQuery?.data?.length >= 1 &&
-            linkCategoryQuery.data.map((item) => (
-              <GridItem
-                key={item.id}
-                as={RouterLink}
-                to={`/links/${item.id}`}
-                boxShadow="base"
-                p="5px 10px"
-                rounded="sm"
-                textAlign="left"
-                bgColor={linkBgColor}
-                _hover={{
-                  bgColor: linkBgHoverColor,
-                }}
-                fontFamily="Lato"
-                fontSize="lg"
-                fontWeight="bold"
-                transition="0.1s"
-              >
-                <Text>{item.name}</Text>
-                <Text fontSize="sm">
-                  <Text as="span" color="gray.500" fontWeight="700">
-                    {item?.items} items
-                  </Text>
-                </Text>
-              </GridItem>
-            ))}
-        </Grid>
-      </Box>
-    </UserLayout>
+                Open App
+              </Button>
+            </Link>
+            <Button
+              size="lg"
+              bgGradient={gradient}
+              color="white"
+              variant="outline"
+              textShadow="outline"
+              textDecoration="cyan"
+              _hover={{
+                bgGradient: "linear-gradient(-90deg,#2b2e41,#2f3453,#343950)",
+              }}
+              onClick={() => {
+                loginRedirect();
+              }}
+              isDisabled={accounts[0] !== undefined}
+            >
+              Log In / Sign Up
+            </Button>
+          </HStack>
+        </Box>
+      </VStack>
+      <Grid
+        maxW="container.xl"
+        w="95%"
+        templateColumns="repeat(auto-fit, minmax(400px, 1fr))"
+        gap={6}
+      >
+        <GridItem
+          shadow=" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
+          textAlign="center"
+          p="20px"
+        >
+          <Text fontSize="1.3rem">
+            ⌨ Store and manage commands into categories
+          </Text>
+        </GridItem>
+        <GridItem
+          shadow=" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
+          textAlign="center"
+          p="20px"
+        >
+          <Text fontSize="1.3rem">
+            🔗 Also features a bookmark manager for documentation, blogs, or
+            other sites
+          </Text>
+        </GridItem>
+      </Grid>
+    </Flex>
   );
 }
 
-export default HomePage;
+export default Home;

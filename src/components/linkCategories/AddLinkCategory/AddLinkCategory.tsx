@@ -13,6 +13,7 @@ function AddLinkCategory() {
       await addCategoryMutation.mutate({ name: category });
       onToggle();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -25,16 +26,17 @@ function AddLinkCategory() {
         leftIcon={<AiFillFolderAdd />}
         onClick={onToggle}
       >
-        Add category
+        Add
       </Button>
       {isOpen && (
-        <HStack>
+        <HStack mt="10px">
           <Input
             size="sm"
+            display="block"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
-          <Button size="sm" onClick={handleAddCategory}>
+          <Button size="sm" variant="save" onClick={handleAddCategory}>
             Save
           </Button>
         </HStack>

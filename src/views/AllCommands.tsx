@@ -1,17 +1,22 @@
-import { Heading } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
 import useCommands from "hooks/commands/useCommands";
 import CommandsManager from "../components/commands/CommandsManager/CommandsManager";
 import UserLayout from "../components/layout/UserLayout";
 
 function AllCommandsPage() {
-  const { query } = useCommands();
+  const { data } = useCommands();
 
   return (
     <UserLayout>
-      <Heading as="h2" mb="30px" fontWeight="900">
+      <Heading as="h2" mb="5px" fontWeight="900">
         All Commands
       </Heading>
-      {query.data && <CommandsManager commands={query.data} />}
+
+      <Text mb="30px" color="gray.500" fontWeight="700">
+        {data && data.length} items
+      </Text>
+
+      <CommandsManager commands={data} />
     </UserLayout>
   );
 }

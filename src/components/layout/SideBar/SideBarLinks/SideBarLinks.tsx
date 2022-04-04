@@ -1,166 +1,148 @@
 import {
-  Box,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   HStack,
-  Link,
-  Spinner,
-  Stack,
-  StackDivider,
   Text,
-  Tooltip,
 } from "@chakra-ui/react";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useLinkCategories from "hooks/links/useLinkCategories";
-import { CommandCategory, LinkCategory } from "models/category";
-import {
-  AiFillFolder,
-  AiFillFolderOpen,
-  AiFillWallet,
-  AiOutlineWallet,
-} from "react-icons/ai";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import AddCommandCategory from "../../../commandCategories/AddCommandCategory/AddCommandCategory";
-import AddLinkCategory from "../../../linkCategories/AddLinkCategory/AddLinkCategory";
+import { AiFillWallet, AiOutlineWallet } from "react-icons/ai";
+import { BiCommand } from "react-icons/bi";
+import { FaExternalLinkSquareAlt } from "react-icons/fa";
+import { IoMdHome } from "react-icons/io";
+import { Link as RouterLink } from "react-router-dom";
+import CategoriesList from "./CategoriesList/CategoriesList";
 
 function SideBarLinks() {
-  const location = useLocation();
+  const textMargin = "8px";
 
   const CommandCategoryLinks = () => {
     const { query: allCategoriesQuery } = useCommandCategories();
 
-    if (allCategoriesQuery.isLoading) return <Spinner />;
-
     return (
-      <>
-        {allCategoriesQuery.data &&
-          allCategoriesQuery.data.map((item: CommandCategory) => (
-            <HStack key={item.id}>
-              {location.pathname === `/commands/${item.id}` ? (
-                <AiFillFolderOpen />
-              ) : (
-                <AiFillFolder />
-              )}
-              <Tooltip label={item.name} placement="right" openDelay={500}>
-                <Link as={RouterLink} to={`/commands/${item.id}`}>
-                  {item.name.substring(0, 15)}
-                  {item.name.length > 15 && "..."}
-                </Link>
-              </Tooltip>
-              {item.items ? (
-                <Text color="gray.500" fontWeight="700">
-                  {item.items}
-                </Text>
-              ) : (
-                <Text color="gray.500" fontWeight="700">
-                  0
-                </Text>
-              )}
-            </HStack>
-          ))}
-        <AddCommandCategory />
-      </>
+      <CategoriesList
+        type="commands"
+        isIdle={allCategoriesQuery.isIdle}
+        isError={allCategoriesQuery.isError}
+        isLoading={allCategoriesQuery.isLoading}
+        categories={allCategoriesQuery.data}
+      />
     );
   };
 
   const LinkCategoryLinks = () => {
     const { query: allCategoriesQuery } = useLinkCategories();
 
-    if (allCategoriesQuery.isLoading) return <Spinner />;
-
     return (
-      <>
-        {allCategoriesQuery.data &&
-          allCategoriesQuery?.data.map((item: LinkCategory) => (
-            <HStack key={item.id}>
-              {location.pathname === `/links/${item.id}` ? (
-                <AiFillFolderOpen />
-              ) : (
-                <AiFillFolder />
-              )}
-              <Tooltip label={item.name} placement="right" openDelay={500}>
-                <Link as={RouterLink} to={`/links/${item.id}`}>
-                  {item.name.substring(0, 15)}
-                  {item.name.length > 15 && "..."}
-                </Link>
-              </Tooltip>
-              {item.items ? (
-                <Text color="gray.500" fontWeight="700">
-                  {item.items}
-                </Text>
-              ) : (
-                <Text color="gray.500" fontWeight="700">
-                  0
-                </Text>
-              )}
-            </HStack>
-          ))}
-        <AddLinkCategory />
-      </>
+      <CategoriesList
+        type="links"
+        isIdle={allCategoriesQuery.isIdle}
+        isError={allCategoriesQuery.isError}
+        isLoading={allCategoriesQuery.isLoading}
+        categories={allCategoriesQuery.data}
+      />
     );
   };
 
   return (
-    <Stack divider={<StackDivider borderColor="gray.500" />} pl="6" pr="5">
-      <Stack>
-        {/* MENU */}
-        <Box flex="1" textAlign="left">
-          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
-            <Link as={RouterLink} to="/">
-              Home
-            </Link>
-          </Text>
-        </Box>
-      </Stack>
+    <Accordion allowMultiple defaultIndex={[2, 5]}>
+      {/* MENU */}
+      <AccordionItem textAlign="left" as={RouterLink} to="/" borderTop="none">
+        <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+          <IoMdHome />
+          <Text ml={textMargin}>Home</Text>
+        </AccordionButton>
+      </AccordionItem>
+
+      <AccordionItem
+        textAlign="left"
+        as={RouterLink}
+        to="/dashboard"
+        borderTop="none"
+      >
+        <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+          <IoMdHome />
+          <Text ml={textMargin}>Dashboard</Text>
+        </AccordionButton>
+      </AccordionItem>
 
       {/* COMMANDS */}
-      <Stack>
-        <Box flex="1" textAlign="left">
-          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+      <AccordionItem>
+        <AccordionButton textAlign="left">
+          <BiCommand color="white" />
+          <Text
+            flex="1"
+            fontFamily="Lato"
+            fontWeight="700"
+            letterSpacing="1px"
+            ml={textMargin}
+          >
             Commands
           </Text>
-        </Box>
-
-        <Link as={RouterLink} to="/commands">
-          <HStack>
-            <AiFillWallet />
-            <Text>All commands</Text>
-          </HStack>
-        </Link>
-
-        <Link as={RouterLink} to="/commands">
-          <HStack>
-            <AiOutlineWallet color="gray.200" />
-            <Text>Unsorted</Text>
-          </HStack>
-        </Link>
-
-        <CommandCategoryLinks />
-      </Stack>
+          <AccordionIcon />
+        </AccordionButton>
+        <AccordionPanel>
+          <AccordionItem as={RouterLink} to="/commands">
+            <AccordionButton>
+              <HStack>
+                <AiFillWallet />
+                <Text fontWeight="500">All commands</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <AccordionItem as={RouterLink} to="/commands">
+            <AccordionButton>
+              <HStack>
+                <AiOutlineWallet color="gray.200" />
+                <Text fontWeight="500">Unsorted</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <CommandCategoryLinks />
+        </AccordionPanel>
+      </AccordionItem>
 
       {/* LINKS */}
-      <Stack mb="100px">
-        <Box flex="1" textAlign="left">
-          <Text fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+      <AccordionItem>
+        <AccordionButton textAlign="left">
+          <FaExternalLinkSquareAlt />
+
+          <Text
+            flex="1"
+            fontFamily="Lato"
+            fontWeight="700"
+            letterSpacing="1px"
+            ml={textMargin}
+          >
             Links
           </Text>
-        </Box>
+          <AccordionIcon />
+        </AccordionButton>
 
-        <Link as={RouterLink} to="/links">
-          <HStack>
-            <AiFillWallet />
-            <Text>All links</Text>
-          </HStack>
-        </Link>
-
-        <Link as={RouterLink} to="/links">
-          <HStack>
-            <AiOutlineWallet color="gray.200" />
-            <Text>Unsorted</Text>
-          </HStack>
-        </Link>
-
-        <LinkCategoryLinks />
-      </Stack>
-    </Stack>
+        <AccordionPanel>
+          <AccordionItem as={RouterLink} to="/links">
+            <AccordionButton>
+              <HStack>
+                <AiFillWallet />
+                <Text fontWeight="500">All links</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <AccordionItem as={RouterLink} to="/links">
+            <AccordionButton>
+              <HStack>
+                <AiOutlineWallet color="gray.200" />
+                <Text fontWeight="500">Unsorted</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <LinkCategoryLinks />
+        </AccordionPanel>
+      </AccordionItem>
+    </Accordion>
   );
 }
 

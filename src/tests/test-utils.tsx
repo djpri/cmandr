@@ -23,6 +23,7 @@ const AllProviders = ({ children }: { children?: React.ReactNode }) => (
         preloadedState: {
           layout: {
             isSidebarOpen: false,
+            categoriesOpen: {},
           },
         },
       })}

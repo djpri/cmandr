@@ -44,7 +44,7 @@ function AddLinkForm({ categoryId }: IProps) {
 
   const onSubmit = (values: LinkCreateDto) => {
     addLinkMutation.mutate(values);
-    reset();
+    reset({ url: "", title: "", categoryId: categoryId || -1 });
   };
 
   return (
@@ -89,9 +89,10 @@ function AddLinkForm({ categoryId }: IProps) {
 
           <Button
             type="submit"
-            colorScheme="green"
+            variant="add"
             size="sm"
             isFullWidth={false}
+            isLoading={addLinkMutation.isLoading}
           >
             Add link
           </Button>

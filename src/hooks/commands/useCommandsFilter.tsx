@@ -43,6 +43,7 @@ function useCommandsFilter(commands: CommandReadDto[]) {
   }, [filterCommands]);
 
   return {
+    hasData: commands?.length > 0,
     filteredCommands: searchResults,
     search,
     setSearch,
