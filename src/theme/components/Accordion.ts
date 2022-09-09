@@ -8,7 +8,8 @@ export const Accordion: ComponentStyleConfig = {
   baseStyle: (props) => ({
     button: {
       width: "100%",
-      transitionDuration: "0.05s",
+      transitionProperty: "background-color",
+      transitionDuration: "0ms",
       _hover: {
         backgroundColor: mode("whiteAlpha.600", "whiteAlpha.200")(props),
       },

@@ -1,7 +1,7 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { CommandReadDto } from "models/command";
-import { useRef } from "react";
+import { ForwardedRef, useRef } from "react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
 import CommandsTable from "./CommandsGrid/CommandsGrid";
 
@@ -35,7 +35,10 @@ function CommandsManager({ categoryId, commands }: IProps) {
             alignItems="center"
             mb="3"
           >
-            <AddCommandButton ref={ref} categoryId={categoryId} />
+            <AddCommandButton
+              ref={ref as ForwardedRef<HTMLDivElement>}
+              categoryId={categoryId}
+            />
           </Box>
           <Box ref={ref} />
         </Box>

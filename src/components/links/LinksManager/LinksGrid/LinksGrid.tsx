@@ -20,7 +20,7 @@ function LinksTable({
   setSortFunction,
 }: IProps) {
   return (
-    <Box p="1" display="flex" flexDirection="column" w="100%">
+    <Box p="1">
       <Grid
         templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
         gap={4}
@@ -50,9 +50,12 @@ function LinksTable({
       </Grid>
 
       <Grid
-        w="100%"
-        marginX="auto"
-        templateColumns={["repeat(auto-fill, 200px)", null, null, "1fr"]}
+        templateColumns={[
+          "repeat(auto-fit, minmax(200px, 100%))",
+          null,
+          null,
+          "1fr",
+        ]}
         gap={[4, null, null, 0]}
       >
         {links &&

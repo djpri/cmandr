@@ -36,9 +36,6 @@ function LinksManager({ categoryId, links }: IProps) {
   return (
     <ErrorBoundaryWrapper>
       <Box
-        minW="container.xl"
-        maxW="container.xl"
-        w={["100%", null, null, "container.xl"]}
         boxShadow="base"
         rounded="md"
         border={border}

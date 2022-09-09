@@ -76,7 +76,7 @@ function SideBar() {
   const ContextMenu = ({ anchorPoint, categoryId }) => (
     <Popover isOpen={show} onClose={close}>
       <PopoverContent
-        position="fixed"
+        position={isSmallerThan1280 ? "absolute" : "fixed"}
         top={anchorPoint.y}
         left={anchorPoint.x}
         className="sidebar-popover"
@@ -109,10 +109,10 @@ function SideBar() {
       userSelect="none"
     >
       {/* SIDE LINKS */}
-      <Stack mt="1">
+      <Stack mt="1" mb={24}>
         <StackItem>
           <SideBarLinks />
-          <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} />
+          {/* <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} /> */}
         </StackItem>
       </Stack>
     </Box>

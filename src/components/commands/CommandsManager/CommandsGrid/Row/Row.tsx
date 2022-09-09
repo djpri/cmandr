@@ -23,10 +23,9 @@ type Props = {
 function Row({ commandItem, showCategories }: Props) {
   const { id, description, line, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
+  const hoverColor = useColorModeValue("gray.200", "gray.600");
 
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
-  const linkButtonColor = useColorModeValue("#568c9b", "#1f5565");
-  const copyButtonColor = useColorModeValue("#71a9dd", "#244e79");
 
   const handleCopy = () => {
     setIsCopied(true);
@@ -67,7 +66,7 @@ function Row({ commandItem, showCategories }: Props) {
       {showCategories && (
         <GridItem>
           <HStack>
-            <AiFillFolder color={copyButtonColor} />
+            <AiFillFolder color={categoryTextColor} />
             <Text color={categoryTextColor}>{commandItem.category.name}</Text>
           </HStack>
         </GridItem>
@@ -78,10 +77,10 @@ function Row({ commandItem, showCategories }: Props) {
           <CopyToClipboard text={line} onCopy={() => handleCopy()}>
             <Button
               size="xs"
-              bgColor={isCopied ? "blue.400" : copyButtonColor}
-              color="white"
+              variant="settings"
               w="70px"
               display={["none", null, null, "block"]}
+              _hover={{ bgColor: hoverColor }}
             >
               {isCopied ? "Copied" : "Copy"}
             </Button>
@@ -90,7 +89,6 @@ function Row({ commandItem, showCategories }: Props) {
           {!reference ? (
             <Button
               size="xs"
-              bgColor={linkButtonColor}
               color="white"
               leftIcon={<GoLinkExternal />}
               isDisabled={!reference}
@@ -106,10 +104,10 @@ function Row({ commandItem, showCategories }: Props) {
             >
               <Button
                 size="xs"
-                bgColor={linkButtonColor}
-                color="white"
+                variant="settings"
                 leftIcon={<GoLinkExternal />}
                 isDisabled={!reference}
+                _hover={{ bgColor: hoverColor }}
               >
                 Link
               </Button>

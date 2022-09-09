@@ -9,6 +9,8 @@ export const Button: ComponentStyleConfig = {
     boxShadow: "none",
     textTransform: "uppercase",
     borderRadius: "sm", // <-- border radius is same for all variants and sizes
+    transitionProperty: "background-color",
+    transitionDuration: "0ms",
   }),
   // Two sizes: sm and md
   sizes: {
@@ -29,33 +31,34 @@ export const Button: ComponentStyleConfig = {
   },
   variants: {
     add: (props) => ({
-      bg: mode("green.100", "green.400")(props),
+      color: "white",
+      bg: mode("#4CB37C", "#4CB37C")(props),
       _hover: {
-        bg: mode("green.300", "green.300")(props),
+        bg: mode("#4CB37C", "#4CB37C")(props),
       },
     }),
     edit: (props) => ({
-      bg: props.colorMode === "dark" ? "orange.400" : "orange.200",
+      bg: props.colorMode === "dark" ? "gray.600" : "gray.200",
       _hover: {
-        bg: props.colorMode === "dark" ? "orange.300" : "orange.300",
+        bg: props.colorMode === "dark" ? "gray.500" : "gray.100",
       },
     }),
     delete: (props) => ({
-      bg: props.colorMode === "dark" ? "red.400" : "red.200",
+      bg: props.colorMode === "dark" ? "#F42A41" : "#F6B2AC",
       _hover: {
-        bg: props.colorMode === "dark" ? "red.300" : "red.300",
+        bg: props.colorMode === "dark" ? "#F42A41" : "#F6B2AC",
       },
     }),
     save: (props) => ({
-      bg: props.colorMode === "dark" ? "yellow.600" : "yellow.200",
+      bg: props.colorMode === "dark" ? "#5C7D74" : "#D4DFDC",
       _hover: {
-        bg: props.colorMode === "dark" ? "yellow.500" : "yellow.300",
+        bg: props.colorMode === "dark" ? "#5C7D74" : "#D4DFDC",
       },
     }),
     options: (props) => ({
-      bg: props.colorMode === "dark" ? "#2d6a6e" : "teal.100",
+      bg: props.colorMode === "dark" ? "gray.600" : "gray.200",
       _hover: {
-        bg: props.colorMode === "dark" ? "teal.300" : "teal.200",
+        bg: props.colorMode === "dark" ? "gray.500" : "gray.100",
       },
     }),
   },

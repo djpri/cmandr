@@ -3,8 +3,6 @@ import {
   Box,
   Button,
   Flex,
-  Grid,
-  GridItem,
   Heading,
   HStack,
   Link,
@@ -12,9 +10,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { apiConfig } from "auth/apiConfig";
+import { AiFillMacCommand } from "react-icons/ai";
+import { FaExternalLinkSquareAlt } from "react-icons/fa";
+import { RiCommandLine } from "react-icons/ri";
 import { Link as RouterLink } from "react-router-dom";
-
-const gradient = "linear-gradient(-90deg,#171923,#1c1f31,#171923)";
 
 function Home() {
   const { instance, accounts } = useMsal();
@@ -36,28 +35,31 @@ function Home() {
         mt="50px"
         mb="100px"
         w="100%"
+        maxW="container.xl"
         spacing="5"
         shadow="base"
         rounded="md"
         p="20px"
-        bgGradient={gradient}
       >
         <Box px="20px">
           <Heading
             as="h1"
-            fontSize="5rem"
+            fontSize="3rem"
             fontWeight="900"
             textShadow="outline"
           >
             Cmandr
           </Heading>
-          <Heading as="h2" fontSize="3rem" textShadow="outline" mb="30px">
-            🔧 Store and manage your command snippets
-          </Heading>
+          <HStack my={2}>
+            <RiCommandLine size="1.5rem" />
+            <Heading as="h2" fontSize="1.5rem" textShadow="outline" mb="30px">
+              Store and manage your command snippets
+            </Heading>
+          </HStack>
           <HStack>
             <Link as={RouterLink} to="/dashboard">
               <Button
-                size="lg"
+                size="md"
                 bgColor="blue.800"
                 color="white"
                 variant="solid"
@@ -72,14 +74,14 @@ function Home() {
               </Button>
             </Link>
             <Button
-              size="lg"
-              bgGradient={gradient}
+              size="md"
+              bgColor="yellow.400"
               color="white"
               variant="outline"
               textShadow="outline"
               textDecoration="cyan"
               _hover={{
-                bgGradient: "linear-gradient(-90deg,#2b2e41,#2f3453,#343950)",
+                bgColor: "yellow.300",
               }}
               onClick={() => {
                 loginRedirect();
@@ -91,32 +93,25 @@ function Home() {
           </HStack>
         </Box>
       </VStack>
-      <Grid
-        maxW="container.xl"
-        w="95%"
-        templateColumns="repeat(auto-fit, minmax(400px, 1fr))"
-        gap={6}
-      >
-        <GridItem
-          shadow=" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
-          textAlign="center"
-          p="20px"
-        >
-          <Text fontSize="1.3rem">
-            ⌨ Store and manage commands into categories
-          </Text>
-        </GridItem>
-        <GridItem
-          shadow=" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
-          textAlign="center"
-          p="20px"
-        >
-          <Text fontSize="1.3rem">
-            🔗 Also features a bookmark manager for documentation, blogs, or
-            other sites
-          </Text>
-        </GridItem>
-      </Grid>
+      <Flex gap={6} direction="column">
+        <Box shadow="base" p="20px">
+          <HStack>
+            <RiCommandLine size="1.5rem" />
+            <Text fontSize="1rem">
+              Store and manage commands into categories
+            </Text>
+          </HStack>
+        </Box>
+        <Box shadow="base" p="20px">
+          <HStack>
+            <FaExternalLinkSquareAlt size="1.5rem" />
+            <Text fontSize="1rem">
+              Also features a bookmark manager for documentation, blogs, or
+              other sites
+            </Text>
+          </HStack>
+        </Box>
+      </Flex>
     </Flex>
   );
 }

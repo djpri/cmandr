@@ -18,11 +18,11 @@ function UserLayout({ children }) {
       <SideBar />
       <AuthenticatedTemplate>
         <Container
-          maxW={isSidebarOpen ? "70%" : "97.5%"}
           mt="80px"
           mb="50px"
-          ml={isSidebarOpen ? "300px" : "2.5%"}
           position="relative"
+          maxW="container.xl"
+          w="100%"
         >
           {children}
         </Container>

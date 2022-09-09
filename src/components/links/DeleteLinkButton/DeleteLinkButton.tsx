@@ -8,8 +8,7 @@ function DeleteLinkButton({ linkId, onClose }) {
   return (
     <Button
       size="xs"
-      bgColor="red.500"
-      color="white"
+      variant="delete"
       onClick={() => {
         deleteLinkMutation.mutate(linkId);
         onClose();

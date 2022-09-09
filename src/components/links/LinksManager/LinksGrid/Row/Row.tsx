@@ -37,8 +37,9 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
   return (
     <Grid
       templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
-      p="4"
       gap={4}
+      py={2}
+      px={4}
       rounded="md"
       className="gridRow"
     >

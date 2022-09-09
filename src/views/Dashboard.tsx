@@ -38,7 +38,7 @@ function Dashboard() {
       textAlign="left"
       // bgColor={linkBgColor}
       bgImage={buttonBgGradient}
-      transition="all 1.6s cubic-bezier( 0.02, 0.43, 0.88, 0.76 )"
+      transition="all 0.3s cubic-bezier( 0.02, 0.43, 0.88, 0.76 )"
       bgPosition="75%"
       bgSize="300%"
       _hover={{
