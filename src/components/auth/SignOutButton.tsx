@@ -8,8 +8,9 @@ function SignOutButton() {
   const dispatch = useDispatch();
   return (
     <Button
-      colorScheme="blue"
-      // isDisabled={!isLoggedIn}
+      color="white"
+      bgColor="purple.300"
+      _hover={{ bgColor: "purple.200" }}
       onClick={() => {
         dispatch(setEndOfUserSession);
         instance.logoutRedirect();

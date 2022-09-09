@@ -38,7 +38,7 @@ function LinkCategory() {
 
   useEffect(() => {
     setCategory(
-      categoriesQuery.data.find((item) => item.id === parseInt(categoryId))
+      categoriesQuery.data?.find((item) => item.id === parseInt(categoryId))
     );
   }, [categoryId, categoriesQuery.data]);
 
@@ -61,7 +61,7 @@ function LinkCategory() {
                   <Button size="xs" onClick={editModalOpen}>
                     rename
                   </Button>
-                  <Button size="xs" onClick={onOpen}>
+                  <Button size="xs" onClick={onOpen} variant="delete">
                     delete
                   </Button>
                 </HStack>

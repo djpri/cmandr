@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { CommandReadDto } from "models/command";
-import React, { Key, useMemo, useState } from "react";
+import { Key, useMemo, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import {
   CgChevronDoubleLeft,
@@ -47,6 +47,7 @@ function GlobalFilter({
 
   return (
     <Input
+      mb={2}
       value={value || ""}
       maxW="sm"
       onChange={(e) => {
@@ -124,7 +125,13 @@ function CommandsTable({ commands, showCategories }: IProps) {
       w="100%"
       {...getTableProps()}
     >
-      <Flex pl="4" py="3" alignItems="center" justifyContent="space-between">
+      <Flex
+        pl="4"
+        py="3"
+        alignItems="center"
+        justifyContent="space-between"
+        wrap="wrap"
+      >
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={state.globalFilter}
@@ -165,26 +172,22 @@ function CommandsTable({ commands, showCategories }: IProps) {
           // Loop over the headers in each row
           headerGroups[0].headers.map((column, index) => (
             // Apply the header cell props
-            <>
-              <GridItem>
-                <HStack
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                >
-                  <Text as="b" userSelect={"none"}>
-                    {column.render("Header")}
-                  </Text>
-                  {column.isSorted ? (
-                    column.isSortedDesc ? (
-                      <AiFillCaretDown aria-label="sorted ascending" />
-                    ) : (
-                      <AiFillCaretUp aria-label="sorted descending" />
-                    )
+            <GridItem key={index}>
+              <HStack {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <Text as="b" userSelect={"none"}>
+                  {column.render("Header")}
+                </Text>
+                {column.isSorted ? (
+                  column.isSortedDesc ? (
+                    <AiFillCaretDown aria-label="sorted ascending" />
                   ) : (
-                    <TiArrowUnsorted />
-                  )}
-                </HStack>
-              </GridItem>
-            </>
+                    <AiFillCaretUp aria-label="sorted descending" />
+                  )
+                ) : (
+                  <TiArrowUnsorted />
+                )}
+              </HStack>
+            </GridItem>
           ))
         }
       </Grid>
@@ -195,7 +198,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
           return (
             <Row
               showCategories={showCategories}
-              commandItem={row.values}
+              commandItem={row.original}
               key={index}
               {...row.getRowProps()}
             />

@@ -1,10 +1,10 @@
-import { Accordion } from "./components/Accordion";
 import { extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 import { Dict } from "@chakra-ui/utils";
 import "@fontsource/lato/400.css";
 import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";
+import { Accordion } from "./components/Accordion";
 import { Button } from "./components/Button";
 
 const theme = extendTheme({
@@ -21,6 +21,8 @@ const theme = extendTheme({
         color: mode("gray.800", "whiteAlpha.900")(props),
         bg: mode("gray.100", "gray.900")(props),
         lineHeight: "base",
+        transitionProperty: "background-color",
+        transitionDuration: "0ms",
       },
       ".gridRow": {
         _hover: {
@@ -44,6 +46,8 @@ const theme = extendTheme({
       letterSpacing: "-0.015em",
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "3.5rem" },
+      transitionProperty: "background-color",
+      transitionDuration: "0ms",
     },
     "heading-2": {
       fontFamily: "heading",
@@ -52,6 +56,8 @@ const theme = extendTheme({
       letterSpacing: "-0.015em",
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "2.75rem" },
+      transitionProperty: "background-color",
+      transitionDuration: "0ms",
     },
     caps: {
       textTransform: "uppercase",
@@ -69,11 +75,11 @@ const theme = extendTheme({
       },
     },
     Link: {
-      baseStyle: {
+      baseStyle: (props) => ({
         _hover: {
-          color: "purple.500",
+          color: mode("purple.500", "purple.300")(props),
         },
-      },
+      }),
     },
     Popover: {
       baseStyle: {

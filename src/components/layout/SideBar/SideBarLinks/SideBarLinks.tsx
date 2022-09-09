@@ -72,7 +72,7 @@ function SideBarLinks() {
       {/* COMMANDS */}
       <AccordionItem>
         <AccordionButton textAlign="left">
-          <BiCommand color="white" />
+          <BiCommand />
           <Text
             flex="1"
             fontFamily="Lato"

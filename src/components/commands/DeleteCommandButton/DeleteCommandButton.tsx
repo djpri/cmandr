@@ -7,8 +7,7 @@ function DeleteCommandButton({ commandId, onClose }) {
   return (
     <Button
       size="xs"
-      bgColor="red.500"
-      color="white"
+      variant="delete"
       onClick={() => {
         deleteCommandMutation.mutate(commandId);
         onClose();

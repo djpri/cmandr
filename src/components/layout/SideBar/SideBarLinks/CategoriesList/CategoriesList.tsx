@@ -43,7 +43,12 @@ function CategoriesList({
   const dispatch = useDispatch();
 
   if (isIdle) return null;
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <AccordionItem p="8px 24px" borderTop="none">
+        <Spinner />
+      </AccordionItem>
+    );
   if (isError)
     return (
       <AccordionItem p="8px 24px" borderTop="none">
@@ -59,6 +64,7 @@ function CategoriesList({
   };
 
   const CategoryInfo = ({ item, isChild, depth, type }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const hasChildren = useMemo(() => getChildren(item).length > 0, [item]);
 
     const handleOpen = () => {
@@ -67,6 +73,22 @@ function CategoriesList({
     const handleClose = () => {
       dispatch(setCategoryClose(item.id));
     };
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const openCloseFolderButton = () => (
+      <Box
+        h="100%"
+        cursor="pointer"
+        aria-label={"open-folder"}
+        onClick={openCategories[item.id] ? handleClose : handleOpen}
+      >
+        {openCategories[item.id] ? (
+          <IoMdArrowDropdown style={{ marginLeft: "-4px" }} size="1.3rem" />
+        ) : (
+          <IoMdArrowDropright style={{ marginLeft: "-4px" }} size="1.3rem" />
+        )}
+      </Box>
+    );
 
     return (
       <AccordionItem border="none" _hover={{ cursor: "default" }}>
@@ -85,26 +107,6 @@ function CategoriesList({
             className={`sidebar-category category-${item.id}`}
           >
             {/* OPEN CLOSE FOLDER BUTTON */}
-            {hasChildren && (
-              <Box
-                h="100%"
-                cursor="pointer"
-                aria-label={"open-folder"}
-                onClick={openCategories[item.id] ? handleClose : handleOpen}
-              >
-                {openCategories[item.id] ? (
-                  <IoMdArrowDropdown
-                    style={{ marginLeft: "-4px" }}
-                    size="1.3rem"
-                  />
-                ) : (
-                  <IoMdArrowDropright
-                    style={{ marginLeft: "-4px" }}
-                    size="1.3rem"
-                  />
-                )}
-              </Box>
-            )}
             {location.pathname === `/${type}/${item.id}` ? (
               <AiFillFolderOpen color={isChild ? "gray" : folderColor} />
             ) : (

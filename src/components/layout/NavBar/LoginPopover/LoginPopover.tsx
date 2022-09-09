@@ -20,13 +20,19 @@ import SignOutButton from "../../../auth/SignOutButton";
 function LoginPopover() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formType] = useState("login");
-  const btnRef: React.Ref<any> = useRef();
+  const btnRef: React.Ref<HTMLButtonElement> = useRef();
   const { accounts } = useMsal();
 
   const PopoverButton = () => (
     <PopoverTrigger>
-      <Button ref={btnRef} colorScheme="twitter" onClick={onOpen} fontSize="xs">
-        <FaUser />
+      <Button
+        ref={btnRef}
+        bgColor="purple.300"
+        _hover={{ bgColor: "purple.200" }}
+        onClick={onOpen}
+        fontSize="xs"
+      >
+        <FaUser color="white" />
       </Button>
     </PopoverTrigger>
   );
