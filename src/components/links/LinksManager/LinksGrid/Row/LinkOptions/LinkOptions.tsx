@@ -26,7 +26,7 @@ function CommandOptions({ link }: IProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
-    <Box m="0" position="relative">
+    <Box m="0">
       <Popover
         isLazy
         lazyBehavior="unmount"

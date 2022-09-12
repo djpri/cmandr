@@ -19,7 +19,7 @@ const theme = extendTheme({
         fontFamily: "body",
         fontSize: { base: "0.875rem", md: "1rem" },
         color: mode("gray.800", "whiteAlpha.900")(props),
-        bg: mode("gray.100", "gray.900")(props),
+        bg: mode("gray.100", "#131316")(props),
         lineHeight: "base",
         transitionProperty: "background-color",
         transitionDuration: "0ms",
@@ -36,7 +36,7 @@ const theme = extendTheme({
   },
   fonts: {
     heading: "Lato",
-    // body: "Nunito Sans",
+    body: "Lato",
   },
   textStyles: {
     heading: {
@@ -71,7 +71,7 @@ const theme = extendTheme({
     Accordion,
     Input: {
       defaultProps: {
-        focusBorderColor: "hsla(220, 26%, 39%, 0.5)",
+        focusBorderColor: "hsla(220, 26%, 59%, 0.5)",
       },
     },
     Link: {
