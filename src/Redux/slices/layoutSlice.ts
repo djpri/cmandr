@@ -13,6 +13,9 @@ export const layoutSlice = createSlice({
     setSidebarToggle: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
+    setSidebarOpen: (state) => {
+      state.isSidebarOpen = true;
+    },
     setSidebarClosed: (state) => {
       state.isSidebarOpen = false;
     },
@@ -35,6 +38,7 @@ export const layoutSlice = createSlice({
 export const {
   setSidebarToggle,
   setSidebarClosed,
+  setSidebarOpen,
   setCategoryClose,
   setCategoryOpen,
 } = layoutSlice.actions;

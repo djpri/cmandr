@@ -18,8 +18,8 @@ function CommandsManager({ categoryId, commands }: IProps) {
   return (
     <ErrorBoundaryWrapper>
       <Box
-        maxW="container.xl"
-        w={["100%", null, null, null, "container.xl"]}
+        // maxW="container.xl"
+        // w={["100%", null, null, null, "container.xl"]}
         boxShadow="base"
         rounded="md"
         border={border}

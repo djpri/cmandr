@@ -50,7 +50,7 @@ function AddCommandForm({ categoryId }: IProps) {
           null,
           "repeat(4, 1fr)",
         ]}
-        gap={6}
+        gap={[2, 2, 3, 4]}
         alignItems="end"
       >
         <Box>

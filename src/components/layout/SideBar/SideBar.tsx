@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSidebarOpen,
   setSidebarClosed,
+  setSidebarOpen,
 } from "redux/slices/layoutSlice";
 import SideBarLinks from "./SideBarLinks/SideBarLinks";
 
@@ -52,7 +53,11 @@ function SideBar() {
 
   // sidebar is initially closed on smaller devices
   useEffect(() => {
-    if (isSmallerThan1280) dispatch(setSidebarClosed());
+    if (isSmallerThan1280) {
+      dispatch(setSidebarClosed());
+    } else {
+      dispatch(setSidebarOpen());
+    }
   }, [isSmallerThan1280, dispatch]);
 
   const [show, setShow] = useState(false);
@@ -93,15 +98,15 @@ function SideBar() {
     <Box
       id="sidebar"
       onContextMenu={handleContext}
-      pr="2"
-      h="100vh"
       bgColor={bgColor}
-      w="242px"
-      top="50"
-      position="fixed"
+      position={isSmallerThan1280 ? "fixed" : "fixed"}
+      w="15rem"
+      mt="50px"
+      left="0"
+      h="100vh"
       borderColor={borderColor}
       borderRightWidth="1px"
-      overflowY="auto"
+      overflowY="scroll"
       sx={scrollbarStyles}
       _hover={hoverStyle}
       zIndex="500"

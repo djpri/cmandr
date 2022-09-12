@@ -117,14 +117,8 @@ function CommandsTable({ commands, showCategories }: IProps) {
     usePagination
   );
 
-  return (
-    <Box
-      p="0"
-      display="flex"
-      flexDirection="column"
-      w="100%"
-      {...getTableProps()}
-    >
+  const SearchAndPagination = () => {
+    return (
       <Flex
         pl="4"
         py="3"
@@ -137,7 +131,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
-        <Box pr="16px">
+        <Box pr="2rem">
           <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
             <CgChevronDoubleLeft />
           </Button>{" "}
@@ -148,6 +142,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
             <CgChevronRight />
           </Button>{" "}
           <Button
+            mr="1rem"
             onClick={() => gotoPage(pageCount - 1)}
             disabled={!canNextPage}
           >
@@ -155,17 +150,23 @@ function CommandsTable({ commands, showCategories }: IProps) {
           </Button>{" "}
           <chakra.span justifySelf="flex-end">
             Page{" "}
-            <strong>
+            <b>
               {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
+            </b>{" "}
           </chakra.span>
         </Box>
       </Flex>
+    );
+  };
+
+  return (
+    <Box p="0" display="flex" flexDirection="column" {...getTableProps()}>
+      <SearchAndPagination />
 
       <Grid
         templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
         p="4"
-        gap={4}
+        gap={2}
         rounded="md"
       >
         {
@@ -192,7 +193,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
         }
       </Grid>
 
-      <Box w="100%" {...getTableBodyProps()}>
+      <Box {...getTableBodyProps()}>
         {page.map((row, index: Key) => {
           prepareRow(row);
           return (
