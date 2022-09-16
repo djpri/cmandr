@@ -8,6 +8,7 @@ import {
   PaginatedCommandsDto,
 } from "models/command";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
+import { UserSettings } from "models/user";
 
 /**
  * Custom axios instance for accessing api
@@ -92,4 +93,9 @@ export const LinkCategories = {
   update: (request: { id: number; body: CategoryUpdateDto }) =>
     put(`links/categories/${request.id}`, request.body),
   remove: (id: number) => remove(`links/categories/${id}`),
+};
+
+export const Settings = {
+  get: () => get("settings"),
+  update: (body: UserSettings) => put("settings", body),
 };

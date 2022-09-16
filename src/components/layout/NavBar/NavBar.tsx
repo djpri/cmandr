@@ -22,7 +22,8 @@ function NavBar() {
     <Box
       position="fixed"
       top="0"
-      w="100%"
+      w="100vw"
+      pr="1rem"
       bgColor={bgColor}
       h="50"
       shadow="base"

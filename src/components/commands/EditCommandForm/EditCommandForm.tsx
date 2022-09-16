@@ -36,7 +36,9 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
   return (
     <form aria-label="edit command form" onSubmit={handleSubmit(onSubmit)}>
       <Stack mb="10" mt="3">
-        <FormLabel htmlFor="description">Description</FormLabel>
+        <FormLabel htmlFor="description" m="0">
+          Description
+        </FormLabel>
         <Input
           {...register("description")}
           placeholder="Description of what command does"

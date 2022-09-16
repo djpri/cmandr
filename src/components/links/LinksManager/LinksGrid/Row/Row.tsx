@@ -16,7 +16,7 @@ interface IProps {
 }
 
 function TableRow({ linkItem, showCategories, isLoading }: IProps) {
-  const { title, url, category, faviconImageUrl, previewImageUrl } = linkItem;
+  const { title, url, category, faviconImageUrl } = linkItem;
 
   const getFaviconUrl = (link) => {
     if (faviconImageUrl !== null) return faviconImageUrl;
@@ -37,19 +37,16 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
   return (
     <Grid
       templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
-      p="4"
-      gap={4}
+      gap={[1, 1, 2, 4]}
+      py={2}
+      px={4}
       rounded="md"
       className="gridRow"
+      // overflow="hidden"
     >
       <Skeleton isLoaded={!isLoading}>
         <GridItem>
-          <ChakraLink
-            href={url}
-            isExternal
-            display="inline-flex"
-            alignItems="flex-start"
-          >
+          <ChakraLink href={url} isExternal>
             {getFaviconUrl(url) !== null && (
               <Image
                 display="inline-block"
