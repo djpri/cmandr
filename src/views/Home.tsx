@@ -2,9 +2,8 @@ import { useMsal } from "@azure/msal-react";
 import {
   Box,
   Button,
+  chakra,
   Flex,
-  Grid,
-  GridItem,
   Heading,
   HStack,
   Link,
@@ -12,12 +11,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { apiConfig } from "auth/apiConfig";
-import { Link as RouterLink } from "react-router-dom";
-
-const gradient = "linear-gradient(-90deg,#171923,#1c1f31,#171923)";
+import { useEffect } from "react";
+import { FaExternalLinkSquareAlt } from "react-icons/fa";
+import { RiCommandLine } from "react-icons/ri";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 function Home() {
   const { instance, accounts } = useMsal();
+  const navigate = useNavigate();
 
   const loginRedirect = async () => {
     try {
@@ -31,38 +32,50 @@ function Home() {
   };
 
   return (
-    <Flex height="100vh" flexDirection="column" alignItems="center">
+    <Flex
+      height="100%"
+      flexDirection="column"
+      alignItems="center"
+      background="radial-gradient(circle at top, hsl(256, 37%, 20%) 0%,  hsl(256, 37%, 15%) 50%, #131316 70%)"
+      backgroundSize="contain"
+      backgroundRepeat="no-repeat"
+    >
       <VStack
         mt="50px"
         mb="100px"
         w="100%"
+        maxW="container.xl"
         spacing="5"
-        shadow="base"
         rounded="md"
         p="20px"
-        bgGradient={gradient}
       >
         <Box px="20px">
           <Heading
             as="h1"
-            fontSize="5rem"
+            fontSize="3rem"
             fontWeight="900"
             textShadow="outline"
           >
             Cmandr
           </Heading>
-          <Heading as="h2" fontSize="3rem" textShadow="outline" mb="30px">
-            🔧 Store and manage your command snippets
-          </Heading>
+          <HStack my={3}>
+            <RiCommandLine size="1.5rem" />
+            <Heading as="h2" fontSize="1.5rem" textShadow="outline">
+              Store and manage your command snippets
+            </Heading>
+          </HStack>
           <HStack>
-            <Link as={RouterLink} to="/dashboard">
+            <Link
+              as={RouterLink}
+              to="/dashboard"
+              _hover={{ textDecoration: "none" }}
+            >
               <Button
-                size="lg"
-                bgColor="blue.800"
+                size="md"
+                bgColor="#2e89ad"
                 color="white"
                 variant="solid"
                 textShadow="outline"
-                textDecoration="cyan"
                 isDisabled={accounts[0] === undefined}
                 _hover={{
                   bgColor: "blue.600",
@@ -72,14 +85,14 @@ function Home() {
               </Button>
             </Link>
             <Button
-              size="lg"
-              bgGradient={gradient}
+              size="md"
+              bgColor="purple.400"
               color="white"
               variant="outline"
               textShadow="outline"
-              textDecoration="cyan"
               _hover={{
-                bgGradient: "linear-gradient(-90deg,#2b2e41,#2f3453,#343950)",
+                bgColor: "purple.300",
+                textDecoration: "none",
               }}
               onClick={() => {
                 loginRedirect();
@@ -91,32 +104,36 @@ function Home() {
           </HStack>
         </Box>
       </VStack>
-      <Grid
-        maxW="container.xl"
-        w="95%"
-        templateColumns="repeat(auto-fit, minmax(400px, 1fr))"
-        gap={6}
-      >
-        <GridItem
-          shadow=" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
-          textAlign="center"
-          p="20px"
-        >
-          <Text fontSize="1.3rem">
-            ⌨ Store and manage commands into categories
-          </Text>
-        </GridItem>
-        <GridItem
-          shadow=" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
-          textAlign="center"
-          p="20px"
-        >
-          <Text fontSize="1.3rem">
-            🔗 Also features a bookmark manager for documentation, blogs, or
-            other sites
-          </Text>
-        </GridItem>
-      </Grid>
+      <Flex gap={6} direction="column">
+        <Box shadow="base" p="20px">
+          <HStack my={5}>
+            <RiCommandLine size="1.5rem" />
+            <Text fontSize="1rem">
+              Store and manage commands into categories
+            </Text>
+          </HStack>
+          <chakra.img
+            src="/command-categories.png"
+            alt="command-categories"
+            width="min(80vw, 800px)"
+          />
+        </Box>
+        <Box shadow="base" p="20px">
+          <HStack my={5}>
+            <FaExternalLinkSquareAlt size="1.5rem" />
+            <Text fontSize="1rem">
+              Also features a bookmark manager for documentation, blogs, or
+              other sites
+            </Text>
+          </HStack>
+          <chakra.img
+            src="/links.png"
+            alt="links"
+            width="min(80vw, 800px)"
+            shadow="lg"
+          />
+        </Box>
+      </Flex>
     </Flex>
   );
 }

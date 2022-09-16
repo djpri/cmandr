@@ -28,7 +28,7 @@ function SideBarLinks() {
         isIdle={allCategoriesQuery.isIdle}
         isError={allCategoriesQuery.isError}
         isLoading={allCategoriesQuery.isLoading}
-        categories={allCategoriesQuery.data}
+        items={allCategoriesQuery.data}
       />
     );
   };
@@ -42,7 +42,7 @@ function SideBarLinks() {
         isIdle={allCategoriesQuery.isIdle}
         isError={allCategoriesQuery.isError}
         isLoading={allCategoriesQuery.isLoading}
-        categories={allCategoriesQuery.data}
+        items={allCategoriesQuery.data}
       />
     );
   };
@@ -72,7 +72,7 @@ function SideBarLinks() {
       {/* COMMANDS */}
       <AccordionItem>
         <AccordionButton textAlign="left">
-          <BiCommand color="white" />
+          <BiCommand />
           <Text
             flex="1"
             fontFamily="Lato"

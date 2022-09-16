@@ -23,10 +23,9 @@ type Props = {
 function Row({ commandItem, showCategories }: Props) {
   const { id, description, line, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
+  const hoverColor = useColorModeValue("gray.200", "gray.600");
 
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
-  const linkButtonColor = useColorModeValue("#568c9b", "#1f5565");
-  const copyButtonColor = useColorModeValue("#71a9dd", "#244e79");
 
   const handleCopy = () => {
     setIsCopied(true);
@@ -38,7 +37,9 @@ function Row({ commandItem, showCategories }: Props) {
   return (
     <Grid
       templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
-      p="4"
+      alignItems="center"
+      px={4}
+      py={2}
       gap={4}
       rounded="md"
       className="gridRow"
@@ -55,7 +56,7 @@ function Row({ commandItem, showCategories }: Props) {
             display="block"
             _hover={{
               cursor: "pointer",
-              backgroundColor: "gray.200",
+              backgroundColor: "gray.300",
               color: "black",
             }}
           >
@@ -67,64 +68,61 @@ function Row({ commandItem, showCategories }: Props) {
       {showCategories && (
         <GridItem>
           <HStack>
-            <AiFillFolder color={copyButtonColor} />
+            <AiFillFolder color={categoryTextColor} />
             <Text color={categoryTextColor}>{commandItem.category.name}</Text>
           </HStack>
         </GridItem>
       )}
 
-      <GridItem>
-        <HStack spacing="4">
-          <CopyToClipboard text={line} onCopy={() => handleCopy()}>
+      <GridItem display="flex" flexDirection="row" alignItems="center" gap="2">
+        <CopyToClipboard text={line} onCopy={() => handleCopy()}>
+          <Button
+            size="xs"
+            variant="settings"
+            w="4rem"
+            display={["none", null, null, "block"]}
+            _hover={{ bgColor: hoverColor }}
+          >
+            {isCopied ? "Copied" : "Copy"}
+          </Button>
+        </CopyToClipboard>
+        {/* BUTTONS */}
+        {!reference ? (
+          <Button
+            size="xs"
+            color="white"
+            leftIcon={<GoLinkExternal />}
+            isDisabled={!reference}
+          >
+            Link
+          </Button>
+        ) : (
+          <Link
+            target="_blank"
+            rel="noreferrer"
+            href={reference}
+            style={{ textDecoration: "none" }}
+          >
             <Button
               size="xs"
-              bgColor={isCopied ? "blue.400" : copyButtonColor}
-              color="white"
-              w="70px"
-              display={["none", null, null, "block"]}
-            >
-              {isCopied ? "Copied" : "Copy"}
-            </Button>
-          </CopyToClipboard>
-          {/* BUTTONS */}
-          {!reference ? (
-            <Button
-              size="xs"
-              bgColor={linkButtonColor}
-              color="white"
+              variant="settings"
               leftIcon={<GoLinkExternal />}
               isDisabled={!reference}
+              _hover={{ bgColor: hoverColor }}
             >
               Link
             </Button>
-          ) : (
-            <Link
-              target="_blank"
-              rel="noreferrer"
-              href={reference}
-              style={{ textDecoration: "none" }}
-            >
-              <Button
-                size="xs"
-                bgColor={linkButtonColor}
-                color="white"
-                leftIcon={<GoLinkExternal />}
-                isDisabled={!reference}
-              >
-                Link
-              </Button>
-            </Link>
-          )}
-          <CommandOptions
-            command={{
-              id,
-              description,
-              line,
-              reference,
-              category,
-            }}
-          />
-        </HStack>
+          </Link>
+        )}
+        <CommandOptions
+          command={{
+            id,
+            description,
+            line,
+            reference,
+            category,
+          }}
+        />
       </GridItem>
     </Grid>
   );

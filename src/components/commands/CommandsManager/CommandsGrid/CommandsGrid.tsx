@@ -1,26 +1,10 @@
-import {
-  Box,
-  Button,
-  chakra,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import SearchAndPagination from "components/other/SearchAndPagination";
 import { CommandReadDto } from "models/command";
-import React, { Key, useMemo, useState } from "react";
+import { Key, useMemo } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import {
-  CgChevronDoubleLeft,
-  CgChevronDoubleRight,
-  CgChevronLeft,
-  CgChevronRight,
-} from "react-icons/cg";
 import { TiArrowUnsorted } from "react-icons/ti";
 import {
-  useAsyncDebounce,
   useGlobalFilter,
   usePagination,
   useSortBy,
@@ -31,31 +15,6 @@ import Row from "./Row/Row";
 interface IProps {
   commands: CommandReadDto[];
   showCategories: boolean;
-}
-
-// Define a default UI for filtering
-function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce((value) => {
-    setGlobalFilter(value || undefined);
-  }, 400);
-
-  return (
-    <Input
-      value={value || ""}
-      maxW="sm"
-      onChange={(e) => {
-        setValue(e.target.value);
-        onChange(e.target.value);
-      }}
-      placeholder={`Search all ${count} items...`}
-    />
-  );
 }
 
 function CommandsTable({ commands, showCategories }: IProps) {
@@ -117,85 +76,58 @@ function CommandsTable({ commands, showCategories }: IProps) {
   );
 
   return (
-    <Box
-      p="0"
-      display="flex"
-      flexDirection="column"
-      w="100%"
-      {...getTableProps()}
-    >
-      <Flex pl="4" py="3" alignItems="center" justifyContent="space-between">
-        <GlobalFilter
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          globalFilter={state.globalFilter}
-          setGlobalFilter={setGlobalFilter}
-        />
-        <Box pr="16px">
-          <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            <CgChevronDoubleLeft />
-          </Button>{" "}
-          <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <CgChevronLeft />
-          </Button>{" "}
-          <Button onClick={() => nextPage()} disabled={!canNextPage}>
-            <CgChevronRight />
-          </Button>{" "}
-          <Button
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            <CgChevronDoubleRight />
-          </Button>{" "}
-          <chakra.span justifySelf="flex-end">
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
-          </chakra.span>
-        </Box>
-      </Flex>
+    <Box p="0" display="flex" flexDirection="column" {...getTableProps()}>
+      <SearchAndPagination
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        state={state}
+        gotoPage={gotoPage}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        setGlobalFilter={setGlobalFilter}
+        pageCount={pageCount}
+        pageIndex={pageIndex}
+        pageOptions={pageOptions}
+      />
 
       <Grid
         templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
         p="4"
-        gap={4}
+        gap={2}
         rounded="md"
       >
         {
           // Loop over the headers in each row
           headerGroups[0].headers.map((column, index) => (
             // Apply the header cell props
-            <>
-              <GridItem>
-                <HStack
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                >
-                  <Text as="b" userSelect={"none"}>
-                    {column.render("Header")}
-                  </Text>
-                  {column.isSorted ? (
-                    column.isSortedDesc ? (
-                      <AiFillCaretDown aria-label="sorted ascending" />
-                    ) : (
-                      <AiFillCaretUp aria-label="sorted descending" />
-                    )
+            <GridItem key={index}>
+              <HStack {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <Text as="b" userSelect={"none"}>
+                  {column.render("Header")}
+                </Text>
+                {column.isSorted ? (
+                  column.isSortedDesc ? (
+                    <AiFillCaretDown aria-label="sorted ascending" />
                   ) : (
-                    <TiArrowUnsorted />
-                  )}
-                </HStack>
-              </GridItem>
-            </>
+                    <AiFillCaretUp aria-label="sorted descending" />
+                  )
+                ) : (
+                  <TiArrowUnsorted />
+                )}
+              </HStack>
+            </GridItem>
           ))
         }
       </Grid>
 
-      <Box w="100%" {...getTableBodyProps()}>
+      <Box {...getTableBodyProps()}>
         {page.map((row, index: Key) => {
           prepareRow(row);
           return (
             <Row
               showCategories={showCategories}
-              commandItem={row.values}
+              commandItem={row.original}
               key={index}
               {...row.getRowProps()}
             />
