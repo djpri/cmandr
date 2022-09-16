@@ -11,12 +11,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { apiConfig } from "auth/apiConfig";
+import { useEffect } from "react";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { RiCommandLine } from "react-icons/ri";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 function Home() {
   const { instance, accounts } = useMsal();
+  const navigate = useNavigate();
 
   const loginRedirect = async () => {
     try {

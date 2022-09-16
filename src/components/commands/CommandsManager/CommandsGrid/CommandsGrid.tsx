@@ -1,26 +1,10 @@
-import {
-  Box,
-  Button,
-  chakra,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import SearchAndPagination from "components/other/SearchAndPagination";
 import { CommandReadDto } from "models/command";
-import { Key, useMemo, useState } from "react";
+import { Key, useMemo } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import {
-  CgChevronDoubleLeft,
-  CgChevronDoubleRight,
-  CgChevronLeft,
-  CgChevronRight,
-} from "react-icons/cg";
 import { TiArrowUnsorted } from "react-icons/ti";
 import {
-  useAsyncDebounce,
   useGlobalFilter,
   usePagination,
   useSortBy,
@@ -31,32 +15,6 @@ import Row from "./Row/Row";
 interface IProps {
   commands: CommandReadDto[];
   showCategories: boolean;
-}
-
-// Define a default UI for filtering
-function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce((value) => {
-    setGlobalFilter(value || undefined);
-  }, 400);
-
-  return (
-    <Input
-      mb={2}
-      value={value || ""}
-      maxW="sm"
-      onChange={(e) => {
-        setValue(e.target.value);
-        onChange(e.target.value);
-      }}
-      placeholder={`Search all ${count} items...`}
-    />
-  );
 }
 
 function CommandsTable({ commands, showCategories }: IProps) {
@@ -117,51 +75,21 @@ function CommandsTable({ commands, showCategories }: IProps) {
     usePagination
   );
 
-  const SearchAndPagination = () => {
-    return (
-      <Flex
-        pl="4"
-        py="3"
-        alignItems="center"
-        justifyContent="space-between"
-        wrap="wrap"
-      >
-        <GlobalFilter
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          globalFilter={state.globalFilter}
-          setGlobalFilter={setGlobalFilter}
-        />
-        <Box pr="2rem">
-          <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            <CgChevronDoubleLeft />
-          </Button>{" "}
-          <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <CgChevronLeft />
-          </Button>{" "}
-          <Button onClick={() => nextPage()} disabled={!canNextPage}>
-            <CgChevronRight />
-          </Button>{" "}
-          <Button
-            mr="1rem"
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            <CgChevronDoubleRight />
-          </Button>{" "}
-          <chakra.span justifySelf="flex-end">
-            Page{" "}
-            <b>
-              {pageIndex + 1} of {pageOptions.length}
-            </b>{" "}
-          </chakra.span>
-        </Box>
-      </Flex>
-    );
-  };
-
   return (
     <Box p="0" display="flex" flexDirection="column" {...getTableProps()}>
-      <SearchAndPagination />
+      <SearchAndPagination
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        state={state}
+        gotoPage={gotoPage}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        setGlobalFilter={setGlobalFilter}
+        pageCount={pageCount}
+        pageIndex={pageIndex}
+        pageOptions={pageOptions}
+      />
 
       <Grid
         templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}

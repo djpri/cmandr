@@ -1,27 +1,11 @@
-import {
-  Box,
-  Button,
-  chakra,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import SearchAndPagination from "components/other/SearchAndPagination";
 import { LinksSortFunction } from "helpers/linksSortFunctions";
 import { LinkReadDto } from "models/link";
-import { Key, useMemo, useState } from "react";
+import { Key, useMemo } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import {
-  CgChevronDoubleLeft,
-  CgChevronDoubleRight,
-  CgChevronLeft,
-  CgChevronRight,
-} from "react-icons/cg";
 import { TiArrowUnsorted } from "react-icons/ti";
 import {
-  useAsyncDebounce,
   useGlobalFilter,
   usePagination,
   useSortBy,
@@ -35,32 +19,6 @@ interface IProps {
   isLoading: boolean;
   sortFunction?: (a: LinkReadDto, b: LinkReadDto) => 1 | -1;
   setSortFunction?: React.Dispatch<React.SetStateAction<LinksSortFunction>>;
-}
-
-// Define a default UI for filtering
-function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce((value) => {
-    setGlobalFilter(value || undefined);
-  }, 400);
-
-  return (
-    <Input
-      mb={2}
-      value={value || ""}
-      maxW="sm"
-      onChange={(e) => {
-        setValue(e.target.value);
-        onChange(e.target.value);
-      }}
-      placeholder={`Search all ${count} items...`}
-    />
-  );
 }
 
 function LinksTable({ links, showCategories }: IProps) {
@@ -117,51 +75,8 @@ function LinksTable({ links, showCategories }: IProps) {
     usePagination
   );
 
-  const SearchAndPagination = () => {
+  const Headers = () => {
     return (
-      <Flex
-        pl="4"
-        py="3"
-        alignItems="center"
-        justifyContent="space-between"
-        wrap="wrap"
-      >
-        <GlobalFilter
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          globalFilter={state.globalFilter}
-          setGlobalFilter={setGlobalFilter}
-        />
-        <Box pr="2rem">
-          <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            <CgChevronDoubleLeft />
-          </Button>{" "}
-          <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <CgChevronLeft />
-          </Button>{" "}
-          <Button onClick={() => nextPage()} disabled={!canNextPage}>
-            <CgChevronRight />
-          </Button>{" "}
-          <Button
-            mr="1rem"
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            <CgChevronDoubleRight />
-          </Button>{" "}
-          <chakra.span justifySelf="flex-end">
-            Page{" "}
-            <b>
-              {pageIndex + 1} of {pageOptions.length}
-            </b>{" "}
-          </chakra.span>
-        </Box>
-      </Flex>
-    );
-  };
-
-  return (
-    <Box p="2" {...getTableProps()}>
-      <SearchAndPagination />
       <Grid templateColumns={["2fr 2fr 1fr 1fr"]} p="4">
         {
           // Loop over the headers in each row
@@ -186,7 +101,11 @@ function LinksTable({ links, showCategories }: IProps) {
           ))
         }
       </Grid>
+    );
+  };
 
+  const Rows = () => {
+    return (
       <Grid templateColumns={["1fr"]} gap={[1, null, null, 0]}>
         <Box {...getTableBodyProps()}>
           {page.map((row, index: Key) => {
@@ -202,6 +121,26 @@ function LinksTable({ links, showCategories }: IProps) {
           })}
         </Box>
       </Grid>
+    );
+  };
+
+  return (
+    <Box p="2" {...getTableProps()}>
+      <SearchAndPagination
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        state={state}
+        gotoPage={gotoPage}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        setGlobalFilter={setGlobalFilter}
+        pageCount={pageCount}
+        pageIndex={pageIndex}
+        pageOptions={pageOptions}
+      />
+      <Headers />
+      <Rows />
     </Box>
   );
 }
