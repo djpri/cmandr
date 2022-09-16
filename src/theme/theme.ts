@@ -14,7 +14,7 @@ const theme = extendTheme({
       "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;",
   },
   styles: {
-    global: (props: Dict<any>) => ({
+    global: (props: Dict<never>) => ({
       body: {
         fontFamily: "body",
         fontSize: { base: "0.875rem", md: "1rem" },

@@ -51,7 +51,7 @@ function LinksManager({ categoryId, links }: IProps) {
           <Box ref={addLinkref} />
           <Box ref={quickAddLinkref} />
         </Box>
-        {links && (
+        {links?.length > 0 && (
           <LinksTable
             isLoading={false}
             links={links}
