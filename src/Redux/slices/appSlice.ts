@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 
 const initialState = {
-  userHasReceivedToken: true,
+  userHasReceivedToken: false,
 };
 
 export const appSlice = createSlice({
