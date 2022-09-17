@@ -20,7 +20,15 @@ export const App = () => {
   const { instance, accounts } = useMsal();
   const dispatch = useDispatch();
 
-  const account = useAccount(accounts[0] || {});
+  const account = useAccount(accounts[0] || null);
+
+  useEffect(() => {
+    if (account) {
+      dispatch(setUserSession());
+    } else {
+      dispatch(setEndOfUserSession());
+    }
+  }, [account, dispatch]);
 
   useEffect(() => {
     const handleRedirect = async () => {

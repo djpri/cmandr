@@ -96,6 +96,6 @@ export const LinkCategories = {
 };
 
 export const Settings = {
-  get: () => get("settings"),
-  update: (body: UserSettings) => put("settings", body),
+  get: () => get("user/settings"),
+  update: (body: UserSettings) => put("user/settings", body),
 };
