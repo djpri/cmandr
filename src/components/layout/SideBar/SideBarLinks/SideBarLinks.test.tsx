@@ -16,10 +16,6 @@ test("Display names for default categories in sidebar", () => {
   expect(screen.getAllByText(/Unsorted/i)).toHaveLength(2);
 });
 
-test("Displays Loading spinners while data is loading", () => {
-  expect(screen.getAllByText("Loading...")).toHaveLength(2);
-});
-
 test("Displays command categories after data is loaded", async () => {
   testData.commandCategories.forEach(async (category) => {
     expect(await screen.findByText(category.name)).toBeInTheDocument();

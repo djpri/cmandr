@@ -31,7 +31,9 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack mb="10" mt="3">
-        <FormLabel htmlFor="description">Title</FormLabel>
+        <FormLabel htmlFor="description" m="0">
+          Title
+        </FormLabel>
         <Input {...register("title")} placeholder="Link Title" />
 
         <FormLabel htmlFor="Link">Url</FormLabel>

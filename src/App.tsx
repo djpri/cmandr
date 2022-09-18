@@ -71,9 +71,9 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/commands" element={<AllCommands />} />
+          {/* <Route path="/commands" element={<AllCommands />} /> */}
           <Route path="/commands/:id" element={<CommandCategory />} />
-          <Route path="/links" element={<Links />} />
+          {/* <Route path="/links" element={<Links />} /> */}
           <Route path="/links/:id" element={<LinkCategory />} />
           <Route path="/account/login" element={<Login />} />
         </Routes>

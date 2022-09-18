@@ -1,5 +1,7 @@
 import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
+import useCommands from "hooks/commands/useCommands";
 import { CommandReadDto } from "models/command";
 import { Key, useMemo } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
@@ -7,8 +9,10 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import {
   useGlobalFilter,
   usePagination,
+  useRowSelect,
   useSortBy,
   useTable,
+  useRowState,
 } from "react-table";
 import Row from "./Row/Row";
 
@@ -51,6 +55,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
     return commands;
   }, [commands]);
 
+  const { deleteMultipleCommandsMutation } = useCommands();
   const {
     getTableProps,
     getTableBodyProps,
@@ -67,29 +72,47 @@ function CommandsTable({ commands, showCategories }: IProps) {
     setGlobalFilter,
     nextPage,
     previousPage,
-    state: { pageIndex },
+    selectedFlatRows,
+    toggleRowSelected: toggleOtherRow,
+    toggleAllRowsSelected,
+    state: { pageIndex, selectedRowIds },
   } = useTable(
     { columns, data, initialState: { pageIndex: 0, pageSize: 50 } },
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
+    useRowSelect
   );
+
+  const handleBulkDelete = () => {
+    const commandIds = selectedFlatRows.map((rowData) => rowData.original.id);
+    deleteMultipleCommandsMutation.mutate(commandIds);
+  };
 
   return (
     <Box p="0" display="flex" flexDirection="column" {...getTableProps()}>
-      <SearchAndPagination
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        canPreviousPage={canPreviousPage}
-        canNextPage={canNextPage}
-        state={state}
-        gotoPage={gotoPage}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        setGlobalFilter={setGlobalFilter}
-        pageCount={pageCount}
-        pageIndex={pageIndex}
-        pageOptions={pageOptions}
-      />
+      {selectedFlatRows.length > 1 && (
+        <RowSelectionMenu
+          handleBulkDelete={handleBulkDelete}
+          selectedFlatRows={selectedFlatRows}
+          toggleAllRowsSelected={toggleAllRowsSelected}
+        />
+      )}
+      {selectedFlatRows.length <= 1 && (
+        <SearchAndPagination
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          canPreviousPage={canPreviousPage}
+          canNextPage={canNextPage}
+          state={state}
+          gotoPage={gotoPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          setGlobalFilter={setGlobalFilter}
+          pageCount={pageCount}
+          pageIndex={pageIndex}
+          pageOptions={pageOptions}
+        />
+      )}
 
       <Grid
         templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
@@ -122,14 +145,20 @@ function CommandsTable({ commands, showCategories }: IProps) {
       </Grid>
 
       <Box {...getTableBodyProps()}>
-        {page.map((row, index: Key) => {
+        {page.map((row) => {
           prepareRow(row);
           return (
             <Row
               showCategories={showCategories}
               commandItem={row.original}
-              key={index}
+              key={row.id}
+              rowId={row.id}
               {...row.getRowProps()}
+              isSelected={row.isSelected}
+              toggleOtherRow={toggleOtherRow}
+              toggleCurrentRow={row.toggleRowSelected}
+              toggleAllRowsSelected={toggleAllRowsSelected}
+              selectedRowIds={selectedRowIds}
             />
           );
         })}

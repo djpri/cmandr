@@ -5,7 +5,6 @@ import {
   CommandCreateDto,
   CommandReadDto,
   CommandUpdateDto,
-  PaginatedCommandsDto,
 } from "models/command";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
 import { UserSettings } from "models/user";
@@ -42,13 +41,15 @@ export const Commands = {
     put(`commands/${request.id}`, request.body),
 
   remove: (id: number) => remove<void>(`commands/${id}`),
+  bulkRemove: (ids: number[]) =>
+    remove<void>(`commands/multiple`, { data: ids }),
 };
 
 /**
  * Api endpoints for command categories
  */
 export const CommandCategories = {
-  getAll: () => get<PaginatedCommandsDto[]>("commands/categories"),
+  getAll: () => get<CommandReadDto[]>("commands/categories"),
   getById: (id: number) => get(`commands/categories/${id}`),
   create: (body: CategoryCreateDto) => post("commands/categories", body),
   update: (request: { id: number; body: CategoryUpdateDto }) =>
@@ -81,6 +82,7 @@ export const Links = {
   update: (request: { id: number; body: LinkUpdateDto }) =>
     put(`links/${request.id}`, request.body),
   remove: (id: number) => remove(`links/${id}`),
+  bulkRemove: (ids: number[]) => remove(`links/multiple`, { data: ids }),
 };
 
 /**
