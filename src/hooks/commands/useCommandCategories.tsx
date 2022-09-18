@@ -33,21 +33,21 @@ function useCommandCategories() {
   const addCategoryMutation = useMutation(CommandCategories.create, {
     onSuccess: () => {
       queryClient.invalidateQueries("commandCategories");
-      showSuccessToast("Command Added", "Command added successfully");
+      showSuccessToast("Category Added", "Category added successfully");
     },
     onError: showErrorToast,
   });
   const editCategoryMutation = useMutation(CommandCategories.update, {
     onSuccess: () => {
       queryClient.invalidateQueries("commandCategories");
-      showSuccessToast("Command Edited", "Command edited successfully");
+      showSuccessToast("Category Edited", "Category edited successfully");
     },
     onError: showErrorToast,
   });
   const deleteCategoryMutation = useMutation(CommandCategories.remove, {
     onSuccess: () => {
       queryClient.invalidateQueries("commandCategories");
-      showSuccessToast("Command Deleted", "Command deleted successfully");
+      showSuccessToast("Category Deleted", "Category deleted successfully");
     },
     onError: showErrorToast,
   });
