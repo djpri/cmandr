@@ -152,8 +152,8 @@ function CommandsTable({ commands, showCategories }: IProps) {
               showCategories={showCategories}
               commandItem={row.original}
               key={row.id}
-              rowId={row.id}
               {...row.getRowProps()}
+              rowId={row.id}
               isSelected={row.isSelected}
               toggleOtherRow={toggleOtherRow}
               toggleCurrentRow={row.toggleRowSelected}
