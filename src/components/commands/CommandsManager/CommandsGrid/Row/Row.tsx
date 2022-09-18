@@ -82,7 +82,7 @@ function Row({
       px={4}
       py={2}
       gap={4}
-      rounded="md"
+      rounded="none"
       className="gridRow clickToSelect"
       bgColor={isSelected && selectedRowColor}
       _hover={{

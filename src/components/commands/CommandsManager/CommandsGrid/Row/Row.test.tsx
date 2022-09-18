@@ -11,6 +11,9 @@ test("Displays correct data on screen", async () => {
         isSelected={false}
         toggleCurrentRow={() => true}
         toggleAllRowsSelected={() => true}
+        selectedRowIds={{ 0: true }}
+        toggleOtherRow={() => true}
+        rowId={0}
       />
     );
     expect(screen.getByText(command.line)).toBeInTheDocument();
