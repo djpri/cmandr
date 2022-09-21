@@ -1,4 +1,3 @@
-import { LinkReadDto } from "./../models/link";
 import axios, { AxiosInstance } from "axios";
 import { CategoryCreateDto, CategoryUpdateDto } from "models/category";
 import {
@@ -8,6 +7,7 @@ import {
 } from "models/command";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
 import { UserSettings } from "models/user";
+import { LinkReadDto } from "./../models/link";
 
 /**
  * Custom axios instance for accessing api
@@ -99,5 +99,5 @@ export const LinkCategories = {
 
 export const Settings = {
   get: () => get("user/settings"),
-  update: (body: UserSettings) => put("user/settings", body),
+  update: (body: UserSettings) => post("user/settings", body),
 };

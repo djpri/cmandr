@@ -51,7 +51,7 @@ function LinkCategory() {
         <Box m="0" p="0">
           <Popover placement="right">
             <PopoverTrigger>
-              <Button>
+              <Button boxShadow="outline">
                 <FaEdit />
               </Button>
             </PopoverTrigger>

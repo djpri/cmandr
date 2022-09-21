@@ -27,8 +27,9 @@ function LoginPopover() {
     <PopoverTrigger>
       <Button
         ref={btnRef}
-        bgColor="purple.300"
-        _hover={{ bgColor: "purple.200" }}
+        bgColor="purple.500"
+        _hover={{ bgColor: "purple.400" }}
+        _active={{ bgColor: "purple.300" }}
         onClick={onOpen}
         fontSize="xs"
       >

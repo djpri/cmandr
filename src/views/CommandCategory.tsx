@@ -52,7 +52,7 @@ function CommandCategoryPage() {
         <Box m="0" p="0">
           <Popover placement="right">
             <PopoverTrigger>
-              <Button>
+              <Button boxShadow="outline">
                 <FaEdit />
               </Button>
             </PopoverTrigger>
@@ -86,7 +86,7 @@ function CommandCategoryPage() {
         categoryId={parseInt(categoryId)}
       />
       {query.isLoading && <Spinner />}
-      {query.data && (
+      {query.data && category && !category?.isGroup && (
         <CommandsManager
           categoryId={category ? category.id : null}
           commands={query.data}

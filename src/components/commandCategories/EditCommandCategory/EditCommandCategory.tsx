@@ -43,13 +43,7 @@ function EditCommandCategory({ isOpen, onClose, categoryId }) {
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            bgColor="yellow.500"
-            color="white"
-            mr={3}
-            onClick={handleEdit}
-            isDisabled={categoryName === ""}
-          >
+          <Button mr={3} onClick={handleEdit} isDisabled={categoryName === ""}>
             Save
           </Button>
         </ModalFooter>

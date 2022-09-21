@@ -48,7 +48,6 @@ function CommandOptions({ link }: IProps) {
             <HStack>
               <Button
                 size="xs"
-                variant="edit"
                 onClick={() => setIsVisible((prevState) => !prevState)}
               >
                 Edit

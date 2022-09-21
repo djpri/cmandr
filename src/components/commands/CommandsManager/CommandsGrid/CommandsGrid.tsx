@@ -3,7 +3,7 @@ import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
 import useCommands from "hooks/commands/useCommands";
 import { CommandReadDto } from "models/command";
-import { Key, useMemo } from "react";
+import { useMemo } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { TiArrowUnsorted } from "react-icons/ti";
 import {
@@ -12,7 +12,6 @@ import {
   useRowSelect,
   useSortBy,
   useTable,
-  useRowState,
 } from "react-table";
 import Row from "./Row/Row";
 
