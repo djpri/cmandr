@@ -51,7 +51,7 @@ function AddLinkForm({ categoryId }: IProps) {
     <>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <Grid
-          mb="10"
+          mb={5}
           templateColumns={[
             "repeat(1, 1fr)",
             null,
@@ -69,7 +69,17 @@ function AddLinkForm({ categoryId }: IProps) {
 
           <Box>
             <FormLabel htmlFor="link">Link</FormLabel>
-            <Input {...register("url")} placeholder="Link URL" />
+            <Input
+              {...register("url", {
+                required: "Please enter a link",
+                pattern: {
+                  value:
+                    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+                  message: "Please enter a valid link",
+                },
+              })}
+              placeholder="URL for link"
+            />
           </Box>
 
           {showCategorySelect && (
@@ -101,6 +111,11 @@ function AddLinkForm({ categoryId }: IProps) {
       {errors.categoryId && (
         <Text display="block" color="red.500" fontWeight="bold">
           * Category is required
+        </Text>
+      )}
+      {errors.url && (
+        <Text display="block" color="red.500" fontWeight="bold">
+          * {errors.url.message}
         </Text>
       )}
     </>

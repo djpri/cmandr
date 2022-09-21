@@ -145,7 +145,7 @@ function LinksTable({ links, showCategories }: IProps) {
   };
 
   return (
-    <Box p="2" {...getTableProps()}>
+    <Box {...getTableProps()}>
       {selectedFlatRows.length > 1 && (
         <RowSelectionMenu
           handleBulkDelete={handleBulkDelete}

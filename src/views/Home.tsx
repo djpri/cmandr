@@ -55,12 +55,18 @@ function Home() {
             fontSize="3rem"
             fontWeight="900"
             textShadow="outline"
+            color="white"
           >
             Cmandr
           </Heading>
           <HStack my={3}>
-            <RiCommandLine size="1.5rem" />
-            <Heading as="h2" fontSize="1.5rem" textShadow="outline">
+            <RiCommandLine size="1.5rem" color="white" />
+            <Heading
+              as="h2"
+              fontSize="1.5rem"
+              textShadow="outline"
+              color="white"
+            >
               Store and manage your command snippets
             </Heading>
           </HStack>
@@ -108,7 +114,7 @@ function Home() {
         <Box shadow="base" p="20px">
           <HStack my={5}>
             <RiCommandLine size="1.5rem" />
-            <Text fontSize="1rem">
+            <Text fontSize="1rem" color="white">
               Store and manage commands into categories
             </Text>
           </HStack>
@@ -121,7 +127,7 @@ function Home() {
         <Box shadow="base" p="20px">
           <HStack my={5}>
             <FaExternalLinkSquareAlt size="1.5rem" />
-            <Text fontSize="1rem">
+            <Text fontSize="1rem" color="white">
               Also features a bookmark manager for documentation, blogs, or
               other sites
             </Text>

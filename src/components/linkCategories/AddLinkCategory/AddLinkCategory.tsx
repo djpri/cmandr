@@ -1,16 +1,27 @@
-import { Button, HStack, Input, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Input,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useState } from "react";
-import { AiFillFolderAdd } from "react-icons/ai";
+import { AiFillFolderAdd, AiOutlineUnorderedList } from "react-icons/ai";
 import useLinkCategories from "../../../hooks/links/useLinkCategories";
 
-function AddLinkCategory() {
+interface IProps {
+  isGroup?: boolean;
+}
+
+function AddLinkCategory({ isGroup }: IProps) {
   const [category, setCategory] = useState("");
   const { isOpen, onToggle } = useDisclosure();
   const { addCategoryMutation } = useLinkCategories();
+  const inputColor = useColorModeValue("#f2f6fa", "#1f2937");
 
-  const handleAddCategory = async () => {
+  const handleAddCategory = () => {
     try {
-      await addCategoryMutation.mutate({ name: category });
+      addCategoryMutation.mutate({ name: category, isGroup });
       onToggle();
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -23,20 +34,28 @@ function AddLinkCategory() {
       <Button
         size="xs"
         aria-label="add link category"
-        leftIcon={<AiFillFolderAdd />}
+        leftIcon={isGroup ? <AiFillFolderAdd /> : <AiOutlineUnorderedList />}
         onClick={onToggle}
+        boxShadow="outline"
       >
-        Add
+        {isGroup ? "New Group" : "New Category"}
       </Button>
       {isOpen && (
-        <HStack mt="10px">
+        <HStack my={2}>
           <Input
             size="sm"
             display="block"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            bgColor={inputColor}
+            _hover={{ bgColor: inputColor }}
+            _focus={{ bgColor: inputColor }}
           />
-          <Button size="sm" variant="save" onClick={handleAddCategory}>
+          <Button
+            size="sm"
+            onClick={handleAddCategory}
+            disabled={category.length < 1}
+          >
             Save
           </Button>
         </HStack>

@@ -1,15 +1,26 @@
-import { Button, HStack, Input, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Input,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import { useState } from "react";
-import { AiFillFolderAdd } from "react-icons/ai";
+import { AiFillFolderAdd, AiOutlineUnorderedList } from "react-icons/ai";
 
-function AddCommandCategory() {
+interface IProps {
+  isGroup?: boolean;
+}
+
+function AddCommandCategory({ isGroup }: IProps) {
   const { addCategoryMutation } = useCommandCategories();
-  const [category, setCategory] = useState<string>(null);
+  const [category, setCategory] = useState<string>("");
   const { isOpen, onToggle } = useDisclosure();
+  const inputColor = useColorModeValue("#f2f6fa", "#1f2937");
 
   const handleAddCategory = () => {
-    addCategoryMutation.mutate({ name: category });
+    addCategoryMutation.mutate({ name: category, isGroup });
   };
 
   return (
@@ -17,10 +28,11 @@ function AddCommandCategory() {
       <Button
         size="xs"
         aria-label="add command category"
-        leftIcon={<AiFillFolderAdd />}
+        leftIcon={isGroup ? <AiFillFolderAdd /> : <AiOutlineUnorderedList />}
         onClick={onToggle}
+        boxShadow="outline"
       >
-        Add category
+        {isGroup ? "New Group" : "New Category"}
       </Button>
       {isOpen && (
         <HStack>
@@ -28,8 +40,16 @@ function AddCommandCategory() {
             size="sm"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            variant="filled"
+            bgColor={inputColor}
+            _hover={{ bgColor: inputColor }}
+            _focus={{ bgColor: inputColor }}
           />
-          <Button size="sm" variant="save" onClick={handleAddCategory}>
+          <Button
+            size="sm"
+            onClick={handleAddCategory}
+            disabled={category.length < 1}
+          >
             Save
           </Button>
         </HStack>

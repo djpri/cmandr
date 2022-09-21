@@ -126,13 +126,25 @@ function Dashboard() {
 
     return (
       <Wrap my={4}>
-        <Button variant="options" onClick={sortCategoriesAscending}>
+        <Button
+          variant="options"
+          onClick={sortCategoriesAscending}
+          disabled={!commandCategoryQuery.data || !linkCategoryQuery.data}
+        >
           Sort A-Z
         </Button>
-        <Button variant="options" onClick={sortCategoriesDescending}>
+        <Button
+          variant="options"
+          onClick={sortCategoriesDescending}
+          disabled={!commandCategoryQuery.data || !linkCategoryQuery.data}
+        >
           Sort Z-A
         </Button>
-        <Button variant="options" onClick={sortCategoriesByItemCount}>
+        <Button
+          variant="options"
+          onClick={sortCategoriesByItemCount}
+          disabled={!commandCategoryQuery.data || !linkCategoryQuery.data}
+        >
           Sort by size
         </Button>
       </Wrap>

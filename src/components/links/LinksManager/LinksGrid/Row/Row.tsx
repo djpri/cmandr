@@ -1,7 +1,6 @@
 import {
   Grid,
   GridItem,
-  HStack,
   Image,
   Link as ChakraLink,
   useColorModeValue,
