@@ -39,12 +39,7 @@ function EditLinkCategory({ isOpen, onClose, categoryId }) {
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            variant="save"
-            mr={3}
-            onClick={handleEdit}
-            isDisabled={categoryName === ""}
-          >
+          <Button mr={3} onClick={handleEdit} isDisabled={categoryName === ""}>
             Save
           </Button>
         </ModalFooter>

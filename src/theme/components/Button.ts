@@ -31,10 +31,13 @@ export const Button: ComponentStyleConfig = {
   },
   variants: {
     add: (props) => ({
-      color: "white",
-      bg: mode("#4CB37C", "#4CB37C")(props),
+      color: mode("white", "white")(props),
+      bg: mode("hsl(152, 56%, 60%)", "hsl(152, 56%, 50%)")(props),
       _hover: {
-        bg: mode("#4CB37C", "#4CB37C")(props),
+        bg: mode("hsl(152, 56%, 55%)", "hsl(152, 56%, 55%)")(props),
+      },
+      _active: {
+        bg: mode("hsl(152, 56%, 50%)", "hsl(152, 56%, 60%)")(props),
       },
     }),
     edit: (props) => ({
@@ -42,23 +45,37 @@ export const Button: ComponentStyleConfig = {
       _hover: {
         bg: props.colorMode === "dark" ? "gray.500" : "gray.100",
       },
+      _active: {
+        bg: props.colorMode === "dark" ? "gray.500" : "gray.100",
+      },
     }),
     delete: (props) => ({
-      bg: props.colorMode === "dark" ? "#F42A41" : "#F6B2AC",
+      color: mode("white", "black")(props),
+
+      bg: mode("hsl(353, 56%, 60%)", "hsl(353, 56%, 50%)")(props),
       _hover: {
-        bg: props.colorMode === "dark" ? "#F42A41" : "#F6B2AC",
+        bg: mode("hsl(353, 56%, 55%)", "hsl(353, 56%, 55%)")(props),
+      },
+      _active: {
+        bg: mode("hsl(353, 56%, 50%)", "hsl(353, 56%, 60%)")(props),
       },
     }),
     save: (props) => ({
-      bg: props.colorMode === "dark" ? "#5C7D74" : "#D4DFDC",
+      bg: mode("hsl(353, 0%, 90%)", "hsl(353, 0%, 50%)")(props),
       _hover: {
-        bg: props.colorMode === "dark" ? "#5C7D74" : "#D4DFDC",
+        bg: mode("hsl(353, 0%, 55%)", "hsl(353, 0%, 55%)")(props),
+      },
+      _active: {
+        bg: mode("hsl(353, 0%, 50%)", "hsl(353, 0%, 60%)")(props),
       },
     }),
     options: (props) => ({
-      bg: props.colorMode === "dark" ? "gray.600" : "gray.200",
+      bg: mode("hsl(353, 0%, 90%)", "hsl(353, 0%, 30%)")(props),
       _hover: {
-        bg: props.colorMode === "dark" ? "gray.500" : "gray.100",
+        bg: mode("hsl(353, 0%, 95%)", "hsl(353, 0%, 25%)")(props),
+      },
+      _active: {
+        bg: mode("hsl(353, 0%, 95%)", "hsl(353, 0%, 20%)")(props),
       },
     }),
   },

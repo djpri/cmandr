@@ -20,7 +20,15 @@ export const App = () => {
   const { instance, accounts } = useMsal();
   const dispatch = useDispatch();
 
-  const account = useAccount(accounts[0] || {});
+  const account = useAccount(accounts[0] || null);
+
+  useEffect(() => {
+    if (account) {
+      dispatch(setUserSession());
+    } else {
+      dispatch(setEndOfUserSession());
+    }
+  }, [account, dispatch]);
 
   useEffect(() => {
     const handleRedirect = async () => {
@@ -63,9 +71,9 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/commands" element={<AllCommands />} />
+          {/* <Route path="/commands" element={<AllCommands />} /> */}
           <Route path="/commands/:id" element={<CommandCategory />} />
-          <Route path="/links" element={<Links />} />
+          {/* <Route path="/links" element={<Links />} /> */}
           <Route path="/links/:id" element={<LinkCategory />} />
           <Route path="/account/login" element={<Login />} />
         </Routes>

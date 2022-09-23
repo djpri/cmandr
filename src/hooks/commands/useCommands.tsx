@@ -88,6 +88,14 @@ function useCommands() {
     },
     onError: showErrorToast,
   });
+  const deleteMultipleCommandsMutation = useMutation(Commands.bulkRemove, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("commands");
+      queryClient.invalidateQueries("commandCategories");
+      showSuccessToast("Commands Deleted", "Commands deleted successfully");
+    },
+    onError: showErrorToast,
+  });
 
   return {
     query,
@@ -97,6 +105,7 @@ function useCommands() {
     addCommandMutation,
     editCommandMutation,
     deleteCommandMutation,
+    deleteMultipleCommandsMutation,
   };
 }
 

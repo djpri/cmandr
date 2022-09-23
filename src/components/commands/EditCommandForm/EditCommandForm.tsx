@@ -61,9 +61,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         <FormLabel htmlFor="reference">Reference</FormLabel>
         <Input {...register("reference")} placeholder="Reference" />
 
-        <Button type="submit" variant="save">
-          Save
-        </Button>
+        <Button type="submit">Save</Button>
       </Stack>
     </form>
   );

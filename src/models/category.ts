@@ -4,6 +4,7 @@ export interface CategoryReadDto {
   name: string;
   parentId?: number;
   items?: number;
+  isGroup?: boolean;
 }
 
 /** Object that is sent as request body to api when adding a new category */
@@ -11,6 +12,7 @@ export interface CategoryCreateDto {
   name: string;
   parentId?: number;
   items?: number;
+  isGroup?: boolean;
 }
 
 /** Object that is sent as request body to api when editing an existing category */

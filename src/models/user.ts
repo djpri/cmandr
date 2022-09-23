@@ -1,5 +1,5 @@
 export type UserSettings = {
   id: number;
-  commandCategoriesSort: string;
-  linkCategoriesSort: string;
+  commandCategoriesSort: "ascending" | "descending" | "size";
+  linkCategoriesSort: "ascending" | "descending" | "size";
 };
