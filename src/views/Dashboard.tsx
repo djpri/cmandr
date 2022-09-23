@@ -97,7 +97,7 @@ function Dashboard() {
         ...settingsQuery.data,
         [settingToUpdate]: "ascending",
       };
-      editSettingsMutation.mutate(newSettings);
+      settingsQuery.data && editSettingsMutation.mutate(newSettings);
 
       queryClient.setQueryData(queryKey, sortedCategories);
     };
@@ -109,7 +109,7 @@ function Dashboard() {
         ...settingsQuery.data,
         [settingToUpdate]: "descending",
       };
-      editSettingsMutation.mutate(newSettings);
+      settingsQuery.data && editSettingsMutation.mutate(newSettings);
       queryClient.setQueryData(queryKey, sortedCategories);
     };
     const sortCategoriesByItemCount = () => {
@@ -120,7 +120,7 @@ function Dashboard() {
         ...settingsQuery.data,
         [settingToUpdate]: "size",
       };
-      editSettingsMutation.mutate(newSettings);
+      settingsQuery.data && editSettingsMutation.mutate(newSettings);
       queryClient.setQueryData(queryKey, sortedCategories);
     };
 
