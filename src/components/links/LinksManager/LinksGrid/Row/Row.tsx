@@ -1,22 +1,38 @@
 import {
   Grid,
   GridItem,
-  HStack,
   Image,
   Link as ChakraLink,
-  Skeleton,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { LinkReadDto } from "models/link";
+import { Key } from "react";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
 interface IProps {
   linkItem: LinkReadDto;
   showCategories: boolean;
   isLoading: boolean;
+  isSelected: boolean;
+  toggleCurrentRow: (set?: boolean) => void;
+  toggleAllRowsSelected: (set?: boolean) => void;
+  selectedRowIds: Record<Key, boolean>;
+  toggleOtherRow: (key: Key, set?: boolean) => void;
+  rowId: Key;
 }
 
-function TableRow({ linkItem, showCategories, isLoading }: IProps) {
+function TableRow({
+  linkItem,
+  showCategories,
+  isSelected,
+  toggleCurrentRow,
+  toggleAllRowsSelected,
+  selectedRowIds,
+  toggleOtherRow,
+  rowId,
+}: IProps) {
   const { title, url, category, faviconImageUrl } = linkItem;
+  const selectedRowColor = useColorModeValue("gray.300", "blue.600");
 
   const getFaviconUrl = (link) => {
     if (faviconImageUrl !== null) return faviconImageUrl;
@@ -29,6 +45,32 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
     }
   };
 
+  const handleClick = (event: React.MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (!target.classList.contains("clickToSelect")) {
+      return;
+    }
+    const wasSelected = isSelected;
+
+    if (event.ctrlKey) {
+      toggleCurrentRow();
+    } else {
+      toggleAllRowsSelected(false);
+      toggleCurrentRow(!wasSelected);
+    }
+
+    if (event.shiftKey) {
+      const keys = Object.keys(selectedRowIds).map((k) => parseInt(k));
+      keys.push(rowId as number);
+      const min = Math.min(...keys);
+      const max = Math.max(...keys);
+      for (let i = min; i <= max; i++) {
+        toggleOtherRow(i.toString(), true);
+      }
+      document.getSelection().removeAllRanges();
+    }
+  };
+
   const formattedTitleString = new DOMParser().parseFromString(
     title.charAt(0).toUpperCase() + title.slice(1),
     "text/html"
@@ -36,54 +78,46 @@ function TableRow({ linkItem, showCategories, isLoading }: IProps) {
 
   return (
     <Grid
-      templateColumns={["1fr", null, null, "2fr 2fr 1fr 1fr"]}
+      templateColumns={["1fr", null, null, "4fr 6fr 2fr"]}
       gap={[1, 1, 2, 4]}
       py={2}
       px={4}
-      rounded="md"
-      className="gridRow"
-      // overflow="hidden"
+      rounded="none"
+      className="gridRow clickToSelect"
+      bgColor={isSelected && selectedRowColor}
+      _hover={{
+        bgColor: isSelected && selectedRowColor,
+      }}
+      onMouseDown={handleClick}
     >
-      <Skeleton isLoaded={!isLoading}>
-        <GridItem>
-          <ChakraLink href={url} isExternal>
-            {getFaviconUrl(url) !== null && (
-              <Image
-                display="inline-block"
-                height="16px"
-                width="16px"
-                mt="4px"
-                mr="5px"
-                src={getFaviconUrl(url)}
-              />
-            )}
+      <GridItem className="clickToSelect">
+        <ChakraLink href={url} isExternal>
+          {getFaviconUrl(url) !== null && (
+            <Image
+              display="inline-block"
+              height="16px"
+              width="16px"
+              mt="4px"
+              mr="5px"
+              src={getFaviconUrl(url)}
+            />
+          )}
 
-            {formattedTitleString}
-          </ChakraLink>
-        </GridItem>
-      </Skeleton>
+          {formattedTitleString}
+        </ChakraLink>
+      </GridItem>
 
-      <Skeleton isLoaded={!isLoading}>
-        <GridItem>
-          <ChakraLink href={url} isExternal title={url}>
-            {`${url.substring(0, 30)}${url.length >= 30 ? "..." : ""}`}
-          </ChakraLink>
-        </GridItem>
-      </Skeleton>
+      <GridItem className="clickToSelect">
+        <ChakraLink href={url} isExternal title={url} textOverflow="ellipsis">
+          {url}
+        </ChakraLink>
+      </GridItem>
 
-      {showCategories && (
-        <Skeleton isLoaded={!isLoading}>
-          <GridItem>{category?.name}</GridItem>
-        </Skeleton>
-      )}
+      {showCategories && <GridItem>{category?.name}</GridItem>}
 
-      <Skeleton isLoaded={!isLoading}>
-        <GridItem>
-          <HStack spacing="4">
-            <LinkOptions link={linkItem} />
-          </HStack>
-        </GridItem>
-      </Skeleton>
+      <GridItem className="clickToSelect">
+        <LinkOptions link={linkItem} />
+      </GridItem>
     </Grid>
   );
 }

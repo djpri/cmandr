@@ -36,17 +36,17 @@ function DeleteCategoryModal({
         <ModalBody>WARNING! This action cannot be undone.</ModalBody>
 
         <ModalFooter>
-          <Button bgColor="blue.500" mr={3} onClick={onClose}>
+          <Button mr={3} onClick={onClose}>
             Cancel
           </Button>
 
           <Button
-            bgColor="red.500"
             onClick={() => {
               onClose();
-              navigate("/commands");
+              navigate("/dashboard");
               deleteCategoryMutation.mutate(categoryId);
             }}
+            variant="delete"
           >
             Delete
           </Button>

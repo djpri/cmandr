@@ -65,6 +65,14 @@ function useLinks() {
     },
     onError: showErrorToast,
   });
+  const deleteMultipleLinksMutation = useMutation(Links.bulkRemove, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("links");
+      queryClient.invalidateQueries("linkCategories");
+      showSuccessToast("Links Deleted", "Links deleted successfully");
+    },
+    onError: showErrorToast,
+  });
 
   return {
     query,
@@ -72,6 +80,7 @@ function useLinks() {
     quickAddLinkMutation,
     editLinkMutation,
     deleteLinkMutation,
+    deleteMultipleLinksMutation,
   };
 }
 

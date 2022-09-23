@@ -48,7 +48,7 @@ function SideBarLinks() {
   };
 
   return (
-    <Accordion allowMultiple defaultIndex={[2, 5]}>
+    <Accordion allowMultiple defaultIndex={[2, 3]}>
       {/* MENU */}
       <AccordionItem textAlign="left" as={RouterLink} to="/" borderTop="none">
         <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
@@ -85,7 +85,7 @@ function SideBarLinks() {
           <AccordionIcon />
         </AccordionButton>
         <AccordionPanel>
-          <AccordionItem as={RouterLink} to="/commands">
+          {/* <AccordionItem as={RouterLink} to="/commands">
             <AccordionButton>
               <HStack>
                 <AiFillWallet />
@@ -100,7 +100,7 @@ function SideBarLinks() {
                 <Text fontWeight="500">Unsorted</Text>
               </HStack>
             </AccordionButton>
-          </AccordionItem>
+          </AccordionItem> */}
           <CommandCategoryLinks />
         </AccordionPanel>
       </AccordionItem>
@@ -123,7 +123,7 @@ function SideBarLinks() {
         </AccordionButton>
 
         <AccordionPanel>
-          <AccordionItem as={RouterLink} to="/links">
+          {/* <AccordionItem as={RouterLink} to="/links">
             <AccordionButton>
               <HStack>
                 <AiFillWallet />
@@ -138,7 +138,7 @@ function SideBarLinks() {
                 <Text fontWeight="500">Unsorted</Text>
               </HStack>
             </AccordionButton>
-          </AccordionItem>
+          </AccordionItem> */}
           <LinkCategoryLinks />
         </AccordionPanel>
       </AccordionItem>

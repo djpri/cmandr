@@ -35,21 +35,21 @@ function useLinkCategories() {
   const addCategoryMutation = useMutation(LinkCategories.create, {
     onSuccess: () => {
       queryClient.invalidateQueries("linkCategories");
-      showSuccessToast("Command Added", "Command added successfully");
+      showSuccessToast("Category Added", "Category added successfully");
     },
     onError: showErrorToast,
   });
   const editCategoryMutation = useMutation(LinkCategories.update, {
     onSuccess: () => {
       queryClient.invalidateQueries("linkCategories");
-      showSuccessToast("Command Edited", "Command edited successfully");
+      showSuccessToast("Category Edited", "Category edited successfully");
     },
     onError: showErrorToast,
   });
   const deleteCategoryMutation = useMutation(LinkCategories.remove, {
     onSuccess: () => {
       queryClient.invalidateQueries("linkCategories");
-      showSuccessToast("Command Deleted", "Command deleted successfully");
+      showSuccessToast("Category Deleted", "Category deleted successfully");
     },
     onError: showErrorToast,
   });

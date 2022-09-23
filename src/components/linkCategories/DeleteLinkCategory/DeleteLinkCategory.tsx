@@ -8,7 +8,6 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import useLinkCategories from "../../../hooks/links/useLinkCategories";
 
@@ -31,22 +30,22 @@ function DeleteLinkCategory({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Delete "{categoryName}" commands</ModalHeader>
+        <ModalHeader>Delete "{categoryName}" links</ModalHeader>
         <ModalCloseButton />
         <ModalBody>WARNING! This action cannot be undone.</ModalBody>
 
         <ModalFooter>
-          <Button bgColor="blue.500" mr={3} onClick={onClose}>
+          <Button mr={3} onClick={onClose}>
             Cancel
           </Button>
 
           <Button
-            bgColor="red.500"
             onClick={() => {
               onClose();
-              navigate("/links");
+              navigate("/dashboard");
               deleteCategoryMutation.mutate(categoryId);
             }}
+            variant="delete"
           >
             Delete
           </Button>

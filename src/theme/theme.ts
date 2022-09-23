@@ -73,6 +73,13 @@ const theme = extendTheme({
       defaultProps: {
         focusBorderColor: "hsla(220, 26%, 59%, 0.5)",
       },
+      baseStyle: {
+        field: {
+          _focus: {
+            boxShadow: "outline",
+          },
+        },
+      },
     },
     Link: {
       baseStyle: (props) => ({
