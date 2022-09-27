@@ -1,5 +1,9 @@
 import axios, { AxiosInstance } from "axios";
-import { CategoryCreateDto, CategoryUpdateDto } from "models/category";
+import {
+  CategoryCreateDto,
+  CategoryDisplayIndexDto,
+  CategoryUpdateDto,
+} from "models/category";
 import {
   CommandCreateDto,
   CommandReadDto,
@@ -55,6 +59,8 @@ export const CommandCategories = {
   update: (request: { id: number; body: CategoryUpdateDto }) =>
     put(`commands/categories/${request.id}`, request.body),
   remove: (id: number) => remove(`commands/categories/${id}`),
+  manualSort: (body: CategoryDisplayIndexDto[]) =>
+    put("commands/categories/manualsort", body),
 };
 
 /**
@@ -95,6 +101,8 @@ export const LinkCategories = {
   update: (request: { id: number; body: CategoryUpdateDto }) =>
     put(`links/categories/${request.id}`, request.body),
   remove: (id: number) => remove(`links/categories/${id}`),
+  manualSort: (body: CategoryDisplayIndexDto[]) =>
+    put("links/categories/manualsort", body),
 };
 
 export const Settings = {

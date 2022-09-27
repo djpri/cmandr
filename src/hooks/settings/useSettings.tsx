@@ -29,7 +29,15 @@ function useSettings() {
   );
 
   const editSettingsMutation = useMutation(Settings.update, {
-    onSuccess: () => {
+    onMutate: async (newSettings: UserSettings) => {
+      await queryClient.cancelQueries("settings");
+      const previousSettings = queryClient.getQueryData("settings");
+      queryClient.setQueryData("settings", newSettings);
+      return { previousSettings };
+    },
+    onError: async (err, newSettings, context) =>
+      queryClient.setQueryData("settings", context.previousSettings),
+    onSettled: () => {
       queryClient.invalidateQueries("settings");
     },
   });

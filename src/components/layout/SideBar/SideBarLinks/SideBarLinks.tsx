@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useLinkCategories from "hooks/links/useLinkCategories";
-import { AiFillWallet, AiOutlineWallet } from "react-icons/ai";
+import { AiFillWallet } from "react-icons/ai";
 import { BiCommand } from "react-icons/bi";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
@@ -20,35 +20,29 @@ function SideBarLinks() {
   const textMargin = "8px";
 
   const CommandCategoryLinks = () => {
-    const { query: allCategoriesQuery } = useCommandCategories();
-
+    const { query, manualSortMutation } = useCommandCategories();
     return (
       <CategoriesList
         type="commands"
-        isIdle={allCategoriesQuery.isIdle}
-        isError={allCategoriesQuery.isError}
-        isLoading={allCategoriesQuery.isLoading}
-        items={allCategoriesQuery.data}
+        query={query}
+        manualSortMutation={manualSortMutation}
       />
     );
   };
 
   const LinkCategoryLinks = () => {
-    const { query: allCategoriesQuery } = useLinkCategories();
-
+    const { query, manualSortMutation } = useLinkCategories();
     return (
       <CategoriesList
         type="links"
-        isIdle={allCategoriesQuery.isIdle}
-        isError={allCategoriesQuery.isError}
-        isLoading={allCategoriesQuery.isLoading}
-        items={allCategoriesQuery.data}
+        query={query}
+        manualSortMutation={manualSortMutation}
       />
     );
   };
 
   return (
-    <Accordion allowMultiple defaultIndex={[2, 3]}>
+    <Accordion allowMultiple defaultIndex={[2, 4]}>
       {/* MENU */}
       <AccordionItem textAlign="left" as={RouterLink} to="/" borderTop="none">
         <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
@@ -85,7 +79,7 @@ function SideBarLinks() {
           <AccordionIcon />
         </AccordionButton>
         <AccordionPanel>
-          {/* <AccordionItem as={RouterLink} to="/commands">
+          <AccordionItem as={RouterLink} to="/commands">
             <AccordionButton>
               <HStack>
                 <AiFillWallet />
@@ -93,7 +87,7 @@ function SideBarLinks() {
               </HStack>
             </AccordionButton>
           </AccordionItem>
-          <AccordionItem as={RouterLink} to="/commands">
+          {/* <AccordionItem as={RouterLink} to="/commands">
             <AccordionButton>
               <HStack>
                 <AiOutlineWallet color="gray.200" />
@@ -123,7 +117,7 @@ function SideBarLinks() {
         </AccordionButton>
 
         <AccordionPanel>
-          {/* <AccordionItem as={RouterLink} to="/links">
+          <AccordionItem as={RouterLink} to="/links">
             <AccordionButton>
               <HStack>
                 <AiFillWallet />
@@ -131,7 +125,7 @@ function SideBarLinks() {
               </HStack>
             </AccordionButton>
           </AccordionItem>
-          <AccordionItem as={RouterLink} to="/links">
+          {/* <AccordionItem as={RouterLink} to="/links">
             <AccordionButton>
               <HStack>
                 <AiOutlineWallet color="gray.200" />

@@ -7,6 +7,7 @@ export interface CommandReadDto {
   line: string;
   reference: string;
   category: CategoryReadDto;
+  starred?: boolean;
 }
 
 /** Object that is sent as request body to api when adding a new command */

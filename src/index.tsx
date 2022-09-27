@@ -30,16 +30,16 @@ ReactDOM.render(
   <React.StrictMode>
     <ColorModeScript />
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <MsalProvider instance={msalInstance}>
-          <Provider store={store}>
-            <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={HTML5Backend}>
+        <QueryClientProvider client={queryClient}>
+          <MsalProvider instance={msalInstance}>
+            <Provider store={store}>
               <App />
-            </DndProvider>
-            <ReactQueryDevtools initialIsOpen={true} />
-          </Provider>
-        </MsalProvider>
-      </QueryClientProvider>
+              <ReactQueryDevtools initialIsOpen={true} />
+            </Provider>
+          </MsalProvider>
+        </QueryClientProvider>
+      </DndProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

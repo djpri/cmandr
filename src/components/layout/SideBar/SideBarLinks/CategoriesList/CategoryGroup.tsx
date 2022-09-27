@@ -59,6 +59,7 @@ const CategoryGroup: FC<IProps> = ({
     [childCategories]
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const OpenCloseFolderButton: FC = () => (
     <Center
       h="100%"

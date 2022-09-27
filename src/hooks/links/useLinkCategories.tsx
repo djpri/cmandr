@@ -53,12 +53,20 @@ function useLinkCategories() {
     },
     onError: showErrorToast,
   });
+  const manualSortMutation = useMutation(LinkCategories.manualSort, {
+    onSuccess: () => {
+      queryClient.refetchQueries("settings");
+      queryClient.invalidateQueries("linkCategories");
+    },
+    onError: showErrorToast,
+  });
 
   return {
     query,
     addCategoryMutation,
     editCategoryMutation,
     deleteCategoryMutation,
+    manualSortMutation,
   };
 }
 

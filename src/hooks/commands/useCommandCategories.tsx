@@ -51,12 +51,20 @@ function useCommandCategories() {
     },
     onError: showErrorToast,
   });
+  const manualSortMutation = useMutation(CommandCategories.manualSort, {
+    onSuccess: () => {
+      queryClient.refetchQueries("settings");
+      queryClient.invalidateQueries("commandCategories");
+    },
+    onError: showErrorToast,
+  });
 
   return {
     query,
     addCategoryMutation,
     editCategoryMutation,
     deleteCategoryMutation,
+    manualSortMutation,
   };
 }
 

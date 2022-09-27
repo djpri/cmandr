@@ -18,6 +18,7 @@ export interface LinkReadDto {
   category: CategoryReadDto;
   faviconImageUrl?: string;
   previewImageUrl?: string;
+  starred?: boolean;
 }
 
 /** Object that is sent as request body to api when adding a new link */

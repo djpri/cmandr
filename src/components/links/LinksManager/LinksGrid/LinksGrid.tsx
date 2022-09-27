@@ -91,7 +91,12 @@ function LinksTable({ links, showCategories }: IProps) {
 
   const Headers = () => {
     return (
-      <Grid templateColumns={["2fr 4fr"]} p="4">
+      <Grid
+        templateColumns={
+          showCategories ? ["1fr", null, null, "4fr 6fr 2fr 2fr"] : ["2fr 4fr"]
+        }
+        p="4"
+      >
         {
           // Loop over the headers in each row
           headerGroups[0].headers.map((column, index) => (
