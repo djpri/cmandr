@@ -4,7 +4,7 @@ import SearchAndPagination from "components/other/SearchAndPagination";
 import { LinksSortFunction } from "helpers/linksSortFunctions";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto } from "models/link";
-import { Key, useMemo } from "react";
+import { Dispatch, Key, SetStateAction, useMemo} from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { TiArrowUnsorted } from "react-icons/ti";
 import {
@@ -21,7 +21,7 @@ interface IProps {
   showCategories: boolean;
   isLoading: boolean;
   sortFunction?: (a: LinkReadDto, b: LinkReadDto) => 1 | -1;
-  setSortFunction?: React.Dispatch<React.SetStateAction<LinksSortFunction>>;
+  setSortFunction?: Dispatch<SetStateAction<LinksSortFunction>>;
 }
 
 function LinksTable({ links, showCategories }: IProps) {

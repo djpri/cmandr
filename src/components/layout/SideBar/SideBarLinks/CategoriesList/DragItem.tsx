@@ -1,102 +1,153 @@
 import { chakra } from "@chakra-ui/react";
-import type { Identifier } from "dnd-core";
-import { FC } from "react";
-import { useRef } from "react";
-import { useDrag, useDrop, XYCoord } from "react-dnd";
+import { CategoryReadDto } from "models/category";
+import React, { FC, useRef } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import CategoryGroup from "./CategoryGroup";
+import CategoryInfo from "./CategoryInfo";
 
 export interface CardProps {
   id: number;
-  index: number;
+  sortIndex: number;
   type: string;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
-  handleDrop: () => void;
+  selectedIndex: Record<string, boolean>;
+  setSelectedIndex: React.Dispatch<
+    React.SetStateAction<Record<string, boolean>>
+  >;
+  handleAddCategoryToGroup: (
+    categoryIdToAdd: number,
+    targetGroupId: number
+  ) => void;
+  isGroup: boolean;
+  item: CategoryReadDto;
+  isChild: boolean;
+  depth: number;
+  categories: CategoryReadDto[];
 }
 
 interface DragItemType {
   index: number;
-  id: string;
+  id: number;
   type: string;
+  dropType: "sort" | "addToGroup" | "none";
 }
 
-export const DragItem: FC<CardProps> = ({
+const DragItem: FC<CardProps> = ({
   id,
-  index,
+  sortIndex,
   type,
   moveCard,
-  handleDrop,
-  children,
+  handleAddCategoryToGroup,
+  isGroup,
+  item: categoryItem,
+  isChild,
+  depth,
+  categories,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [{ handlerId }, drop] = useDrop<
+  const categoryItemProps = {
+    item: categoryItem,
+    isChild,
+    depth,
+    type,
+    categories,
+    dragDropRef: ref,
+  };
+
+  const [{ isOver, canDrop }, addToCategorydropRef] = useDrop<
     DragItemType,
     void,
-    { handlerId: Identifier | null }
+    { isOver: boolean; canDrop: boolean }
   >({
     accept: type,
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
-    drop() {
-      handleDrop();
-    },
-    hover(item: DragItemType, monitor) {
+    collect: (monitor) => ({
+      isOver: monitor.isOver({ shallow: true }),
+      canDrop: monitor.canDrop(),
+    }),
+    drop(item) {
+      const droppedOntoSelf = item.id === id;
+      if (droppedOntoSelf) return;
+      if (isGroup && !droppedOntoSelf) handleAddCategoryToGroup(item.id, id);
       if (!ref.current) return;
-
-      const dragIndex = item.index;
-      const hoverIndex = index;
-
-      const isHoveringOverSelf = dragIndex === hoverIndex;
-
-      if (isHoveringOverSelf) return;
-
-      const isDraggingDown = dragIndex < hoverIndex;
-      const isDraggingUp = dragIndex > hoverIndex;
-
-      const { top, height } = ref.current.getBoundingClientRect();
-
-      const hoverUpperBound = height / 4;
-      const hoverLowerBound = (height * 3) / 4;
-
-      const clientOffset = monitor.getClientOffset();
-      const pixelsFromTop: number = (clientOffset as XYCoord).y - top;
-
-      // const inMiddleRange =
-      //   pixelsFromTop > hoverLowerBound && pixelsFromTop < hoverLowerBound;
-
-      // Only perform the move when the mouse has crossed half of the items height
-      if (isDraggingDown && pixelsFromTop < hoverLowerBound) return;
-      if (isDraggingUp && pixelsFromTop > hoverUpperBound) return;
-
-      moveCard(dragIndex, hoverIndex);
-
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
-      item.index = hoverIndex;
+    },
+    canDrop: (item) => isGroup && item.id !== id,
+    hover(item: DragItemType) {
+      if (!ref.current) return;
+      item.dropType = isGroup ? "addToGroup" : "sort";
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ item, isDragging }, drag] = useDrag({
     type,
-    item: () => ({ id, index }),
+    item: () => ({ id, index: sortIndex, isGroup, dropType: "none" }),
+    isDragging(monitor) {
+      return monitor.getItem().id === id;
+    },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
+      item: monitor.getItem(),
     }),
   });
 
-  const opacity = isDragging ? 0 : 1;
+  const [{ isOver_2, canDrop_2 }, sortDropRef] = useDrop<
+    DragItemType,
+    void,
+    { isOver_2: boolean; canDrop_2: boolean }
+  >({
+    accept: type,
+    collect: (monitor) => ({
+      isOver_2: monitor.isOver({ shallow: true }),
+      canDrop_2: monitor.canDrop(),
+    }),
+    drop(item) {
+      if (!ref.current) return;
+      const droppedOntoSelf = item.id === id;
+      if (droppedOntoSelf) return;
 
-  drag(drop(ref));
+      if (isGroup && !droppedOntoSelf) handleAddCategoryToGroup(item.id, id);
+
+      if (item.dropType === "sort") {
+        const dragIndex = item.index;
+        moveCard(dragIndex, sortIndex);
+      }
+    },
+    canDrop: (item) => item.id !== id,
+    hover(item: DragItemType) {
+      if (!ref.current) return;
+      item.dropType = "sort";
+    },
+  });
+
+  const opacity = isDragging ? 0.3 : 1;
+  const isAddToGroupDropActive = canDrop && isOver;
+  const isSortDropActive = canDrop_2 && isOver_2;
+
+  drag(addToCategorydropRef(ref));
+
   return (
-    <chakra.div
-      ref={ref}
-      data-handler-id={handlerId}
-      border={isDragging && "2px solid green"}
-    >
-      <chakra.div opacity={opacity}>{children}</chakra.div>
+    <chakra.div borderRadius={isGroup && "md"}>
+      <chakra.div
+        opacity={isSortDropActive ? 0.2 : opacity}
+        border={
+          item?.dropType === "addToGroup" &&
+          isAddToGroupDropActive &&
+          "2px solid red"
+        }
+      >
+        {isGroup ? (
+          <CategoryGroup {...categoryItemProps} />
+        ) : (
+          <CategoryInfo {...categoryItemProps} />
+        )}
+      </chakra.div>
+      <chakra.div
+        pt={2}
+        ref={sortDropRef}
+        bgColor={isSortDropActive ? "green" : "transparent"}
+        boxSizing="border-box"
+      ></chakra.div>
     </chakra.div>
   );
 };
+
+export default DragItem;

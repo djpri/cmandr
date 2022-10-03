@@ -19,7 +19,7 @@ function useCommandCategories() {
   const queryClient = useQueryClient();
   const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
-  const { showSuccessToast, showErrorToast } = useChakraToast();
+  const { showErrorToast } = useChakraToast();
 
   // Queries
   const query = useQuery(
@@ -33,21 +33,18 @@ function useCommandCategories() {
   const addCategoryMutation = useMutation(CommandCategories.create, {
     onSuccess: () => {
       queryClient.invalidateQueries("commandCategories");
-      showSuccessToast("Category Added", "Category added successfully");
     },
     onError: showErrorToast,
   });
   const editCategoryMutation = useMutation(CommandCategories.update, {
     onSuccess: () => {
       queryClient.invalidateQueries("commandCategories");
-      showSuccessToast("Category Edited", "Category edited successfully");
     },
     onError: showErrorToast,
   });
   const deleteCategoryMutation = useMutation(CommandCategories.remove, {
     onSuccess: () => {
       queryClient.invalidateQueries("commandCategories");
-      showSuccessToast("Category Deleted", "Category deleted successfully");
     },
     onError: showErrorToast,
   });

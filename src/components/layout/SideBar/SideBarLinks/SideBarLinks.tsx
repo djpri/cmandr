@@ -20,23 +20,27 @@ function SideBarLinks() {
   const textMargin = "8px";
 
   const CommandCategoryLinks = () => {
-    const { query, manualSortMutation } = useCommandCategories();
+    const { query, manualSortMutation, editCategoryMutation } =
+      useCommandCategories();
     return (
       <CategoriesList
         type="commands"
         query={query}
         manualSortMutation={manualSortMutation}
+        editCategoryMutation={editCategoryMutation}
       />
     );
   };
 
   const LinkCategoryLinks = () => {
-    const { query, manualSortMutation } = useLinkCategories();
+    const { query, manualSortMutation, editCategoryMutation } =
+      useLinkCategories();
     return (
       <CategoriesList
         type="links"
         query={query}
         manualSortMutation={manualSortMutation}
+        editCategoryMutation={editCategoryMutation}
       />
     );
   };

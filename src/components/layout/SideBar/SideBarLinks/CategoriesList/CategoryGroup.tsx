@@ -13,7 +13,7 @@ import { FC, useMemo } from "react";
 import { AiFillFolder } from "react-icons/ai";
 import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import {
   selectOpenCategories,
   setCategoryClose,
@@ -27,6 +27,7 @@ interface IProps {
   depth: number;
   type: string;
   categories: CategoryReadDto[];
+  dragDropRef: React.MutableRefObject<HTMLDivElement>;
 }
 
 const CategoryGroup: FC<IProps> = ({
@@ -35,6 +36,7 @@ const CategoryGroup: FC<IProps> = ({
   depth,
   type,
   categories,
+  dragDropRef,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -43,10 +45,12 @@ const CategoryGroup: FC<IProps> = ({
 
   const openCategories = useSelector(selectOpenCategories);
 
-  const handleOpen = () => {
+  const handleOpen = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
     dispatch(setCategoryOpen(item.id));
   };
-  const handleClose = () => {
+  const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
     dispatch(setCategoryClose(item.id));
   };
 
@@ -59,19 +63,19 @@ const CategoryGroup: FC<IProps> = ({
     [childCategories]
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const OpenCloseFolderButton: FC = () => (
     <Center
       h="100%"
       cursor="pointer"
-      position="absolute"
+      // position="absolute"
       left="-1rem"
       aria-label="open-folder"
-      onClick={openCategories[item.id] ? handleClose : handleOpen}
-      visibility={hasChildren ? "visible" : "hidden"}
-      _hover={{ bgColor: "blue.500" }}
+      onClick={
+        openCategories[item.id] ? (e) => handleClose(e) : (e) => handleOpen(e)
+      }
+      visibility={"visible"}
+      _hover={{ bgColor: "hsl(0, 70%, 55%)" }}
       rounded="sm"
-      pr="1rem"
     >
       {openCategories[item.id] ? (
         <IoMdArrowDropdown style={{ marginLeft: "-4px" }} size="1.3rem" />
@@ -83,9 +87,13 @@ const CategoryGroup: FC<IProps> = ({
 
   const Folder: FC = () => {
     if (location.pathname === `/${type}/${item.id}`) {
-      return <AiFillFolder color={isChild ? "gray" : folderColor} />;
+      return (
+        <AiFillFolder color={isChild ? "hsl(0, 70%, 55%)" : folderColor} />
+      );
     } else {
-      return <AiFillFolder color={isChild ? "gray" : folderColor} />;
+      return (
+        <AiFillFolder color={isChild ? "hsl(0, 70%, 55%)" : folderColor} />
+      );
     }
   };
 
@@ -106,30 +114,18 @@ const CategoryGroup: FC<IProps> = ({
   );
 
   const Count: FC = () => (
-    <Text
-      color={`hsl(180, ${(item.items / categories.length) * 100 + 40}%, 35%)`}
-      fontWeight="700"
-    >
-      {item.items}
+    <Text color={`hsl(0, 70%, 55%)`} fontWeight="700">
+      {childCategories?.length}
     </Text>
   );
 
   return (
-    <Link
-      _hover={{ textDecoration: "none" }}
-      as={RouterLink}
-      to={`/${type}/${item.id}`}
-    >
+    <Box _hover={{ textDecoration: "none" }}>
       <AccordionItem
         border="none"
         _hover={{ cursor: "default", backgroundColor: bgColor }}
       >
-        <Box
-          p="8px 24px"
-          mr="5px"
-          position="relative"
-          _hover={{ cursor: "pointer" }}
-        >
+        <Box p="8px 24px" mr="5px" position="relative" ref={dragDropRef}>
           <HStack
             position="relative"
             key={item.id}
@@ -138,26 +134,28 @@ const CategoryGroup: FC<IProps> = ({
             pl={isChild && 2 + depth}
             className={`sidebar-category category-${item.id}`}
           >
+            <OpenCloseFolderButton />
             <Folder />
             <Name />
-            {item.items && <Count />}
+            <Count />
           </HStack>
         </Box>
-        {hasChildren &&
-          openCategories[item.id] &&
-          depth < 4 &&
-          childCategories.map((child) => (
-            <CategoryInfo
-              key={item.id.toString()}
-              item={child}
-              type={type}
-              isChild={true}
-              depth={depth + 1}
-              categories={categories}
-            />
-          ))}
       </AccordionItem>
-    </Link>
+      {hasChildren &&
+        openCategories[item.id] &&
+        depth < 4 &&
+        childCategories.map((child) => (
+          <CategoryInfo
+            key={item.id.toString()}
+            item={child}
+            type={type}
+            isChild={true}
+            depth={depth + 1}
+            categories={categories}
+            dragDropRef={null}
+          />
+        ))}
+    </Box>
   );
 };
 

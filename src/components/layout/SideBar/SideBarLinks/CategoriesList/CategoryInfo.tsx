@@ -10,7 +10,7 @@ import {
 import { CategoryReadDto } from "models/category";
 import { FC } from "react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface IProps {
   item: CategoryReadDto;
@@ -18,6 +18,7 @@ interface IProps {
   depth: number;
   type: string;
   categories: CategoryReadDto[];
+  dragDropRef: React.MutableRefObject<HTMLDivElement>;
 }
 
 const CategoryInfo: FC<IProps> = ({
@@ -26,8 +27,10 @@ const CategoryInfo: FC<IProps> = ({
   depth,
   type,
   categories,
+  dragDropRef,
 }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const folderColor = useColorModeValue("gray.900", "gray.300");
   const bgColor = useColorModeValue("whiteAlpha.600", "whiteAlpha.200");
   const isCurrentCategory = location.pathname === `/${type}/${item.id}`;
@@ -65,22 +68,22 @@ const CategoryInfo: FC<IProps> = ({
 
   return (
     <Tooltip label={item.name} openDelay={500}>
-      <Link
+      <Box
         _hover={{ textDecoration: "none" }}
-        as={RouterLink}
-        to={`/${type}/${item.id}`}
+        onClick={() => navigate(`/${type}/${item.id}`)}
       >
         <AccordionItem
           border="none"
           _hover={{ cursor: "pointer", backgroundColor: bgColor }}
           p="8px 24px"
+          ref={dragDropRef}
         >
           <HStack
             position="relative"
             key={item.id}
             id={`category-${item.id}`}
             width="100%"
-            pl={isChild && 2 + depth}
+            pl={isChild && 5 + depth}
             className={`sidebar-category category-${item.id}`}
           >
             <Folder />
@@ -88,7 +91,7 @@ const CategoryInfo: FC<IProps> = ({
             {item.items && <Count />}
           </HStack>
         </AccordionItem>
-      </Link>
+      </Box>
     </Tooltip>
   );
 };

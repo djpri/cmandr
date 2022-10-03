@@ -6,7 +6,7 @@ import NavBar from "./NavBar/NavBar";
 import SideBar from "./SideBar/SideBar";
 
 /**
- * Layout for logged in users
+ * Layout for logged-in users
  * @see https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-react/docs/getting-started.md#determining-whether-a-user-is-authenticated
  */
 function UserLayout({ children }) {
