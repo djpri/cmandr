@@ -1,4 +1,4 @@
-import { useColorModeValue, GridItem, HStack, Text } from "@chakra-ui/react";
+import { GridItem, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { AiFillFolder, AiOutlineUnorderedList } from "react-icons/ai";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -38,13 +38,11 @@ function CategoryLinkButton({ item, type, hue }) {
         {item?.isGroup ? <AiFillFolder /> : <AiOutlineUnorderedList />}
         <Text>{item.name}</Text>
       </HStack>
-      {!item.isGroup && (
-        <Text fontSize="sm">
-          <Text as="span" color={itemCountColor} fontWeight="700">
-            {item?.items} items
-          </Text>
+      <Text fontSize="sm">
+        <Text as="span" color={itemCountColor} fontWeight="700">
+          {item?.items} {item.isGroup ? " categories" : " items"}
         </Text>
-      )}
+      </Text>
     </GridItem>
   );
 }

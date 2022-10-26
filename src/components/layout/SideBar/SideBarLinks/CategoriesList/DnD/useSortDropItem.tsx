@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrop } from "react-dnd";
 
 interface DragItemType {
   index: number;
@@ -8,8 +7,7 @@ interface DragItemType {
   dropType: "sort" | "addToGroup" | "none";
 }
 
-function useSortDropItem({ moveCard, id, sortIndex, type, isGroup }) {
-  const ref = useRef<HTMLDivElement>(null);
+function useSortDropItem({ moveCard, id, sortIndex, type }) {
   const [{ isOver_2, canDrop_2 }, sortDropRef] = useDrop<
     DragItemType,
     void,
@@ -21,10 +19,8 @@ function useSortDropItem({ moveCard, id, sortIndex, type, isGroup }) {
       canDrop_2: monitor.canDrop(),
     }),
     drop(item) {
-      if (!ref.current) return;
       const droppedOntoSelf = item.id === id;
       if (droppedOntoSelf) return;
-
       if (item.dropType === "sort") {
         const dragIndex = item.index;
         moveCard(dragIndex, sortIndex);
@@ -32,35 +28,13 @@ function useSortDropItem({ moveCard, id, sortIndex, type, isGroup }) {
     },
     canDrop: (item) => item.id !== id,
     hover(item: DragItemType) {
-      if (!ref.current) return;
       item.dropType = "sort";
     },
   });
 
-  const [{ item, isDragging }, drag] = useDrag({
-    type,
-    item: () => ({ id, index: sortIndex, isGroup, dropType: "none" }),
-    isDragging(monitor) {
-      return monitor.getItem().id === id;
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      item: monitor.getItem(),
-    }),
-  });
-
   const isSortDropActive = canDrop_2 && isOver_2;
   return {
-    sortDrop: {
-      ref: sortDropRef,
-      isOver: isOver_2,
-      canDrop: canDrop_2,
-    },
-    drag: {
-      item,
-      isDragging,
-      ref: drag,
-    },
+    sortRef: sortDropRef,
     isSortDropActive,
   };
 }

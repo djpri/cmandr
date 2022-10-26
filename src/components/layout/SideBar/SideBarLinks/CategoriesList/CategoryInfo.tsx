@@ -2,7 +2,6 @@ import {
   AccordionItem,
   Box,
   HStack,
-  Link,
   Text,
   Tooltip,
   useColorModeValue,
@@ -45,13 +44,14 @@ const CategoryInfo: FC<IProps> = ({
 
   const Name: FC = () => (
     <Box
-      fontWeight="500"
+      fontWeight="600"
       textAlign="left"
-      maxWidth="60%"
+      maxWidth="90%"
       overflow="hidden"
       textOverflow="ellipsis"
       display="inline"
       whiteSpace="nowrap"
+      fontSize="sm"
     >
       {item.name}
     </Box>
@@ -75,7 +75,7 @@ const CategoryInfo: FC<IProps> = ({
         <AccordionItem
           border="none"
           _hover={{ cursor: "pointer", backgroundColor: bgColor }}
-          p="8px 24px"
+          p="4px 24px"
           ref={dragDropRef}
         >
           <HStack

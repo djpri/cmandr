@@ -2,24 +2,14 @@ import { AccordionItem, Flex, Spinner } from "@chakra-ui/react";
 import { AxiosResponse } from "axios";
 import AddCommandCategory from "components/commandCategories/AddCommandCategory/AddCommandCategory";
 import AddLinkCategory from "components/linkCategories/AddLinkCategory/AddLinkCategory";
-import update from "immutability-helper";
-import {
-  CategoryDisplayIndexDto,
-  CategoryReadDto,
-  CategoryUpdateDto,
-} from "models/category";
-import { useCallback, useMemo, useState } from "react";
+import { CategoryReadDto, CategoryUpdateDto } from "models/category";
+import { useCallback, useMemo } from "react";
 import { UseMutationResult, UseQueryResult } from "react-query";
-import DragItem from "./DragItem";
+import DragItem from "./DnD/DragItem";
 
 interface IProps {
   query: UseQueryResult<CategoryReadDto[]>;
   type: "commands" | "links";
-  manualSortMutation: UseMutationResult<
-    AxiosResponse<unknown, unknown>,
-    unknown,
-    CategoryDisplayIndexDto[]
-  >;
   editCategoryMutation: UseMutationResult<
     AxiosResponse<unknown, unknown>,
     unknown,
@@ -30,45 +20,16 @@ interface IProps {
   >;
 }
 
-function CategoriesList({
-  query,
-  type,
-  manualSortMutation,
-  editCategoryMutation,
-}: IProps) {
-  const [selectedIndex, setSelectedIndex] = useState({});
-
+function CategoriesList({ query, type, editCategoryMutation }: IProps) {
   const categories = useMemo(() => {
     if (!query.data) return [];
     return query.data;
   }, [query]);
 
-  const [topLevelCategories, setTopLevelCategories] = useState(
-    categories.filter((item: CategoryReadDto) => item?.parentId === 0) || []
-  );
-
-  const moveCard = useCallback(
-    async (dragIndex: number, hoverIndex: number) => {
-      setTopLevelCategories((prevCards: CategoryReadDto[]) =>
-        update(prevCards, {
-          $splice: [
-            [dragIndex, 1],
-            [hoverIndex, 0, prevCards[dragIndex] as CategoryReadDto],
-          ],
-        })
-      );
-      const newCategories = update(topLevelCategories, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, topLevelCategories[dragIndex] as CategoryReadDto],
-        ],
-      });
-      const categorySortDtos = newCategories?.map((category, index) => {
-        return { id: category.id, displayIndex: index };
-      });
-      await manualSortMutation.mutateAsync(categorySortDtos);
-    },
-    [manualSortMutation, topLevelCategories]
+  const topLevelCategories = useMemo(
+    () =>
+      categories.filter((item: CategoryReadDto) => item?.parentId === 0) || [],
+    [categories]
   );
 
   const handleAddCategoryToGroup = useCallback(
@@ -86,7 +47,7 @@ function CategoriesList({
   );
 
   const renderCategoryItem = useCallback(
-    (item, index) => {
+    (item: CategoryReadDto, index: number) => {
       const categoryItemProps = {
         item,
         isChild: false,
@@ -96,20 +57,16 @@ function CategoriesList({
       };
       return (
         <DragItem
-          moveCard={moveCard}
           sortIndex={index}
-          id={item.id}
           key={item.id}
-          handleAddCategoryToGroup={handleAddCategoryToGroup}
           type={type}
-          selectedIndex={selectedIndex}
-          setSelectedIndex={setSelectedIndex}
+          handleAddCategoryToGroup={handleAddCategoryToGroup}
           isGroup={item.isGroup}
           {...categoryItemProps}
         />
       );
     },
-    [moveCard, handleAddCategoryToGroup, type, selectedIndex, categories]
+    [type, categories, handleAddCategoryToGroup]
   );
 
   if (query.isIdle) return null;

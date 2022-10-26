@@ -3,7 +3,6 @@ import {
   Box,
   Center,
   HStack,
-  Link,
   Text,
   Tooltip,
   useColorModeValue,
@@ -13,13 +12,13 @@ import { FC, useMemo } from "react";
 import { AiFillFolder } from "react-icons/ai";
 import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   selectOpenCategories,
   setCategoryClose,
   setCategoryOpen,
 } from "redux/slices/layoutSlice";
-import CategoryInfo from "./CategoryInfo";
+import DragItem from "./DnD/DragItem";
 
 interface IProps {
   item: CategoryReadDto;
@@ -28,6 +27,10 @@ interface IProps {
   type: string;
   categories: CategoryReadDto[];
   dragDropRef: React.MutableRefObject<HTMLDivElement>;
+  handleAddCategoryToGroup: (
+    categoryIdToAdd: number,
+    targetGroupId: number
+  ) => void;
 }
 
 const CategoryGroup: FC<IProps> = ({
@@ -37,6 +40,7 @@ const CategoryGroup: FC<IProps> = ({
   type,
   categories,
   dragDropRef,
+  handleAddCategoryToGroup,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -67,7 +71,6 @@ const CategoryGroup: FC<IProps> = ({
     <Center
       h="100%"
       cursor="pointer"
-      // position="absolute"
       left="-1rem"
       aria-label="open-folder"
       onClick={
@@ -100,13 +103,14 @@ const CategoryGroup: FC<IProps> = ({
   const Name: FC = () => (
     <Tooltip label={item.name} placement="right" openDelay={500}>
       <Text
-        fontWeight="500"
+        fontWeight="600"
         textAlign="left"
-        maxWidth="60%"
+        maxWidth="90%"
         overflow="hidden"
         textOverflow="ellipsis"
         display="inline"
         whiteSpace="nowrap"
+        fontSize="sm"
       >
         {item.name}
       </Text>
@@ -123,9 +127,10 @@ const CategoryGroup: FC<IProps> = ({
     <Box _hover={{ textDecoration: "none" }}>
       <AccordionItem
         border="none"
-        _hover={{ cursor: "default", backgroundColor: bgColor }}
+        _hover={{ backgroundColor: bgColor }}
+        mb={openCategories[item.id] && 2}
       >
-        <Box p="8px 24px" mr="5px" position="relative" ref={dragDropRef}>
+        <Box p="4px 24px" mr="5px" position="relative" ref={dragDropRef}>
           <HStack
             position="relative"
             key={item.id}
@@ -144,15 +149,16 @@ const CategoryGroup: FC<IProps> = ({
       {hasChildren &&
         openCategories[item.id] &&
         depth < 4 &&
-        childCategories.map((child) => (
-          <CategoryInfo
-            key={item.id.toString()}
+        childCategories.map((child: CategoryReadDto, index: number) => (
+          <DragItem
+            key={child.id}
             item={child}
-            type={type}
             isChild={true}
             depth={depth + 1}
+            type={type}
             categories={categories}
-            dragDropRef={null}
+            sortIndex={index}
+            handleAddCategoryToGroup={handleAddCategoryToGroup}
           />
         ))}
     </Box>

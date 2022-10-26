@@ -15,39 +15,99 @@ import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { Link as RouterLink } from "react-router-dom";
 import CategoriesList from "./CategoriesList/CategoriesList";
+import useRemoveFromGroupDropItem from "./CategoriesList/DnD/useRemoveFromGroupDropItem";
 
 function SideBarLinks() {
   const textMargin = "8px";
 
-  const CommandCategoryLinks = () => {
-    const { query, manualSortMutation, editCategoryMutation } =
-      useCommandCategories();
+  const CommandCategorySection = () => {
+    const { query, editCategoryMutation } = useCommandCategories();
+    const { addToCategoryDropRef, isAddToGroupDropActive } =
+      useRemoveFromGroupDropItem("commands", editCategoryMutation, query.data);
     return (
-      <CategoriesList
-        type="commands"
-        query={query}
-        manualSortMutation={manualSortMutation}
-        editCategoryMutation={editCategoryMutation}
-      />
+      <AccordionItem>
+        <AccordionButton
+          textAlign="left"
+          ref={addToCategoryDropRef}
+          border={isAddToGroupDropActive && "2px solid red"}
+        >
+          <BiCommand />
+          <Text
+            flex="1"
+            fontFamily="Lato"
+            fontWeight="700"
+            letterSpacing="1px"
+            ml={textMargin}
+          >
+            Commands
+          </Text>
+          <AccordionIcon />
+        </AccordionButton>
+        <AccordionPanel>
+          <AccordionItem as={RouterLink} to="/commands">
+            <AccordionButton>
+              <HStack>
+                <AiFillWallet />
+                <Text fontWeight="600">All commands</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <CategoriesList
+            type="commands"
+            query={query}
+            editCategoryMutation={editCategoryMutation}
+          />
+        </AccordionPanel>
+      </AccordionItem>
     );
   };
 
-  const LinkCategoryLinks = () => {
-    const { query, manualSortMutation, editCategoryMutation } =
-      useLinkCategories();
+  const LinkCategorySection = () => {
+    const { query, editCategoryMutation } = useLinkCategories();
+    const { addToCategoryDropRef, isAddToGroupDropActive } =
+      useRemoveFromGroupDropItem("links", editCategoryMutation, query.data);
+
     return (
-      <CategoriesList
-        type="links"
-        query={query}
-        manualSortMutation={manualSortMutation}
-        editCategoryMutation={editCategoryMutation}
-      />
+      <AccordionItem>
+        <AccordionButton
+          textAlign="left"
+          ref={addToCategoryDropRef}
+          border={isAddToGroupDropActive && "2px solid red"}
+        >
+          <FaExternalLinkSquareAlt />
+          <Text
+            flex="1"
+            fontFamily="Lato"
+            fontWeight="700"
+            letterSpacing="1px"
+            ml={textMargin}
+          >
+            Links
+          </Text>
+          <AccordionIcon />
+        </AccordionButton>
+
+        <AccordionPanel>
+          <AccordionItem as={RouterLink} to="/links">
+            <AccordionButton>
+              <HStack>
+                <AiFillWallet />
+                <Text fontWeight="600">All links</Text>
+              </HStack>
+            </AccordionButton>
+          </AccordionItem>
+          <CategoriesList
+            type="links"
+            query={query}
+            editCategoryMutation={editCategoryMutation}
+          />
+        </AccordionPanel>
+      </AccordionItem>
     );
   };
 
   return (
-    <Accordion allowMultiple defaultIndex={[2, 4]}>
-      {/* MENU */}
+    <Accordion allowMultiple defaultIndex={[2, 4]} fontSize="sm">
       <AccordionItem textAlign="left" as={RouterLink} to="/" borderTop="none">
         <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
           <IoMdHome />
@@ -67,79 +127,8 @@ function SideBarLinks() {
         </AccordionButton>
       </AccordionItem>
 
-      {/* COMMANDS */}
-      <AccordionItem>
-        <AccordionButton textAlign="left">
-          <BiCommand />
-          <Text
-            flex="1"
-            fontFamily="Lato"
-            fontWeight="700"
-            letterSpacing="1px"
-            ml={textMargin}
-          >
-            Commands
-          </Text>
-          <AccordionIcon />
-        </AccordionButton>
-        <AccordionPanel>
-          <AccordionItem as={RouterLink} to="/commands">
-            <AccordionButton>
-              <HStack>
-                <AiFillWallet />
-                <Text fontWeight="500">All commands</Text>
-              </HStack>
-            </AccordionButton>
-          </AccordionItem>
-          {/* <AccordionItem as={RouterLink} to="/commands">
-            <AccordionButton>
-              <HStack>
-                <AiOutlineWallet color="gray.200" />
-                <Text fontWeight="500">Unsorted</Text>
-              </HStack>
-            </AccordionButton>
-          </AccordionItem> */}
-          <CommandCategoryLinks />
-        </AccordionPanel>
-      </AccordionItem>
-
-      {/* LINKS */}
-      <AccordionItem>
-        <AccordionButton textAlign="left">
-          <FaExternalLinkSquareAlt />
-
-          <Text
-            flex="1"
-            fontFamily="Lato"
-            fontWeight="700"
-            letterSpacing="1px"
-            ml={textMargin}
-          >
-            Links
-          </Text>
-          <AccordionIcon />
-        </AccordionButton>
-
-        <AccordionPanel>
-          <AccordionItem as={RouterLink} to="/links">
-            <AccordionButton>
-              <HStack>
-                <AiFillWallet />
-                <Text fontWeight="500">All links</Text>
-              </HStack>
-            </AccordionButton>
-          </AccordionItem>
-          {/* <AccordionItem as={RouterLink} to="/links">
-            <AccordionButton>
-              <HStack>
-                <AiOutlineWallet color="gray.200" />
-                <Text fontWeight="500">Unsorted</Text>
-              </HStack>
-            </AccordionButton>
-          </AccordionItem> */}
-          <LinkCategoryLinks />
-        </AccordionPanel>
-      </AccordionItem>
+      <CommandCategorySection />
+      <LinkCategorySection />
     </Accordion>
   );
 }

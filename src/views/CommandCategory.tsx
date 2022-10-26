@@ -54,8 +54,7 @@ function CommandCategoryPage() {
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
-        <Heading as="h2" fontWeight="900">
-          {/* {query.data && query.data[0]?.category.name} */}
+        <Heading as="h2" fontWeight="900" fontSize="3xl">
           {category ? category.name : ""}
         </Heading>
         <Box m="0" p="0">

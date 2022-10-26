@@ -36,8 +36,8 @@ const theme = extendTheme({
     }),
   },
   fonts: {
-    heading: "Lato",
-    body: "Lato",
+    heading: "Lato, Segoe UI",
+    body: "Lato, Segoe UI",
   },
   textStyles: {
     heading: {

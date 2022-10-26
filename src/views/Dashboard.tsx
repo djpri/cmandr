@@ -13,7 +13,7 @@ import useLinkCategories from "hooks/links/useLinkCategories";
 import useSettings from "hooks/settings/useSettings";
 import { CategoryReadDto } from "models/category";
 import { UserSettings } from "models/user";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import UserLayout from "../components/layout/UserLayout";
 
 type SortButtonProps = {
@@ -33,7 +33,6 @@ function Dashboard() {
       sortCategoriesAscending,
       sortCategoriesDescending,
       sortCategoriesByItemCount,
-      sortCategoriesByDisplayIndex,
     } = useSortCategories(type);
     const selectedSortBgColor = useColorModeValue("gray.100", "teal.600");
     const sortSetting =
@@ -46,14 +45,6 @@ function Dashboard() {
 
     return (
       <Wrap my={4}>
-        <Button
-          variant="options"
-          bgColor={sortSetting === "manual" && selectedSortBgColor}
-          onClick={sortCategoriesByDisplayIndex}
-          disabled={noCategoryData || sortSetting === "manual"}
-        >
-          Manual Sort
-        </Button>
         <Button
           variant="options"
           bgColor={sortSetting === "ascending" && selectedSortBgColor}
@@ -82,6 +73,16 @@ function Dashboard() {
     );
   };
 
+  const commandCategories = useMemo(() => {
+    if (commandCategoryQuery.data?.length <= 0) return [];
+    return commandCategoryQuery.data?.filter((c) => c.parentId >= 0);
+  }, [commandCategoryQuery]);
+
+  const linkCategories = useMemo(() => {
+    if (linkCategoryQuery.data?.length <= 0) return [];
+    return linkCategoryQuery.data?.filter((c) => c.parentId >= 0);
+  }, [linkCategoryQuery]);
+
   return (
     <UserLayout>
       <Box fontSize="xl">
@@ -90,34 +91,28 @@ function Dashboard() {
           <SortButtons type="command" settings={settingsQuery.data} />
         )}
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
-          {commandCategoryQuery?.data?.length >= 1 &&
-            commandCategoryQuery.data.map(
-              (item: CategoryReadDto, index: number) => (
-                <CategoryLinkButton
-                  type="commands"
-                  key={item.id}
-                  item={item}
-                  hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
-                />
-              )
-            )}
+          {commandCategories?.map((item: CategoryReadDto, index: number) => (
+            <CategoryLinkButton
+              type="commands"
+              key={item.id}
+              item={item}
+              hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
+            />
+          ))}
         </Grid>
         <Heading as="h1">Links</Heading>
         {settingsQuery.data && (
           <SortButtons type="link" settings={settingsQuery.data} />
         )}
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
-          {linkCategoryQuery?.data?.length >= 1 &&
-            linkCategoryQuery.data.map(
-              (item: CategoryReadDto, index: number) => (
-                <CategoryLinkButton
-                  type="links"
-                  key={item.id}
-                  item={item}
-                  hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
-                />
-              )
-            )}
+          {linkCategories?.map((item: CategoryReadDto, index: number) => (
+            <CategoryLinkButton
+              type="links"
+              key={item.id}
+              item={item}
+              hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
+            />
+          ))}
         </Grid>
       </Box>
     </UserLayout>
