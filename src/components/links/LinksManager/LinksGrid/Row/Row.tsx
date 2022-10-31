@@ -78,7 +78,11 @@ function TableRow({
 
   return (
     <Grid
-      templateColumns={["1fr", null, null, "4fr 6fr 2fr"]}
+      templateColumns={
+        showCategories
+          ? ["1fr", null, null, "4fr 6fr 2fr 2fr"]
+          : ["1fr", null, null, "4fr 6fr 2fr"]
+      }
       gap={[1, 1, 2, 4]}
       py={2}
       px={4}

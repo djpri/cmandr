@@ -7,6 +7,7 @@ export interface CommandReadDto {
   line: string;
   reference: string;
   category: CategoryReadDto;
+  starred?: boolean;
 }
 
 /** Object that is sent as request body to api when adding a new command */
@@ -19,11 +20,3 @@ export interface CommandCreateDto {
 
 /** Object that is sent as request body to api when editing an existing command */
 export interface CommandUpdateDto extends CommandCreateDto {}
-
-export interface PaginatedCommandsDto {
-  totalItems: number;
-  pageSize: number;
-  currentPage: number;
-  nextPage: string | null;
-  commands: CommandReadDto[];
-}

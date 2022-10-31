@@ -8,7 +8,7 @@ function Links() {
 
   return (
     <UserLayout>
-      <Heading as="h2" mb="30px" fontWeight="900">
+      <Heading as="h2" mb="30px" fontWeight="900" fontSize="3xl">
         All Links
       </Heading>
       <Stack w="100%">

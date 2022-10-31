@@ -35,21 +35,25 @@ function useLinkCategories() {
   const addCategoryMutation = useMutation(LinkCategories.create, {
     onSuccess: () => {
       queryClient.invalidateQueries("linkCategories");
-      showSuccessToast("Category Added", "Category added successfully");
     },
     onError: showErrorToast,
   });
   const editCategoryMutation = useMutation(LinkCategories.update, {
     onSuccess: () => {
       queryClient.invalidateQueries("linkCategories");
-      showSuccessToast("Category Edited", "Category edited successfully");
     },
     onError: showErrorToast,
   });
   const deleteCategoryMutation = useMutation(LinkCategories.remove, {
     onSuccess: () => {
       queryClient.invalidateQueries("linkCategories");
-      showSuccessToast("Category Deleted", "Category deleted successfully");
+    },
+    onError: showErrorToast,
+  });
+  const manualSortMutation = useMutation(LinkCategories.manualSort, {
+    onSuccess: () => {
+      queryClient.refetchQueries("settings");
+      queryClient.invalidateQueries("linkCategories");
     },
     onError: showErrorToast,
   });
@@ -59,6 +63,7 @@ function useLinkCategories() {
     addCategoryMutation,
     editCategoryMutation,
     deleteCategoryMutation,
+    manualSortMutation,
   };
 }
 
