@@ -8,7 +8,7 @@ function AllCommandsPage() {
 
   return (
     <UserLayout>
-      <Heading as="h2" mb="5px" fontWeight="900">
+      <Heading as="h2" mb="5px" fontWeight="900" fontSize="3xl">
         All Commands
       </Heading>
 

@@ -1,19 +1,17 @@
-import { AxiosResponse } from "axios";
+import {AxiosResponse} from "axios";
 
 /**
  * Transforms axios api call into a function to be used with useQuery
  */
 export const asReactQueryFunction = (
-  apiCall: (params) => Promise<AxiosResponse<any, any>>
+  apiCall: (params) => Promise<AxiosResponse>
 ) => {
-  const transformedFunction = async (params) => {
+  return async (params) => {
     try {
-      const { data } = await apiCall(params);
+      const {data} = await apiCall(params);
       return data;
     } catch (error) {
       throw new Error("Could not fetch data");
     }
   };
-
-  return transformedFunction;
 };

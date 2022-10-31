@@ -11,7 +11,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { apiConfig } from "auth/apiConfig";
-import { useEffect } from "react";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { RiCommandLine } from "react-icons/ri";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -25,6 +24,7 @@ function Home() {
       await instance.loginRedirect({
         scopes: apiConfig.b2cScopes,
       });
+      navigate("/dashboard");
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

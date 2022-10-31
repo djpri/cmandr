@@ -12,6 +12,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useCommandsFromSingleCategory from "hooks/commands/useCommandsFromSingleCategory";
 import { useEffect, useState } from "react";
@@ -42,11 +43,18 @@ function CommandCategoryPage() {
     }
   }, [categoryId, categoriesQuery.data]);
 
+  if (!query.data || !category) {
+    return (
+      <UserLayout>
+        <Spinner />
+      </UserLayout>
+    );
+  }
+
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
-        <Heading as="h2" fontWeight="900">
-          {/* {query.data && query.data[0]?.category.name} */}
+        <Heading as="h2" fontWeight="900" fontSize="3xl">
           {category ? category.name : ""}
         </Heading>
         <Box m="0" p="0">
@@ -86,7 +94,7 @@ function CommandCategoryPage() {
         categoryId={parseInt(categoryId)}
       />
       {query.isLoading && <Spinner />}
-      {query.data && category && !category?.isGroup && (
+      {!category?.isGroup && (
         <CommandsManager
           categoryId={category ? category.id : null}
           commands={query.data}

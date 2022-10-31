@@ -4,7 +4,7 @@ import SearchAndPagination from "components/other/SearchAndPagination";
 import { LinksSortFunction } from "helpers/linksSortFunctions";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto } from "models/link";
-import { Key, useMemo } from "react";
+import { Dispatch, Key, SetStateAction, useMemo} from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { TiArrowUnsorted } from "react-icons/ti";
 import {
@@ -21,7 +21,7 @@ interface IProps {
   showCategories: boolean;
   isLoading: boolean;
   sortFunction?: (a: LinkReadDto, b: LinkReadDto) => 1 | -1;
-  setSortFunction?: React.Dispatch<React.SetStateAction<LinksSortFunction>>;
+  setSortFunction?: Dispatch<SetStateAction<LinksSortFunction>>;
 }
 
 function LinksTable({ links, showCategories }: IProps) {
@@ -91,7 +91,12 @@ function LinksTable({ links, showCategories }: IProps) {
 
   const Headers = () => {
     return (
-      <Grid templateColumns={["2fr 4fr"]} p="4">
+      <Grid
+        templateColumns={
+          showCategories ? ["1fr", null, null, "4fr 6fr 2fr 2fr"] : ["2fr 4fr"]
+        }
+        p="4"
+      >
         {
           // Loop over the headers in each row
           headerGroups[0].headers.map((column, index) => (

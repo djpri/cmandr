@@ -58,7 +58,7 @@ function NavBar() {
           </Link>
         </HStack>
         <HStack>
-          <ColorModeSwitcher />
+          {/* <ColorModeSwitcher /> */}
           <LoginPopover />
         </HStack>
       </HStack>

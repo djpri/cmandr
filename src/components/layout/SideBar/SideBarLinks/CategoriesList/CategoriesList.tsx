@@ -1,78 +1,107 @@
 import { AccordionItem, Flex, Spinner } from "@chakra-ui/react";
+import { AxiosResponse } from "axios";
 import AddCommandCategory from "components/commandCategories/AddCommandCategory/AddCommandCategory";
 import AddLinkCategory from "components/linkCategories/AddLinkCategory/AddLinkCategory";
-import { CategoryReadDto } from "models/category";
-import { useState } from "react";
-import CategoryGroup from "./CategoryGroup";
-import CategoryInfo from "./CategoryInfo";
+import { CategoryReadDto, CategoryUpdateDto } from "models/category";
+import { useCallback, useMemo } from "react";
+import { UseMutationResult, UseQueryResult } from "react-query";
+import DragItem from "./DnD/DragItem";
 
 interface IProps {
-  items: CategoryReadDto[];
-  isIdle: boolean;
-  isLoading: boolean;
-  isError: boolean;
+  query: UseQueryResult<CategoryReadDto[]>;
   type: "commands" | "links";
+  editCategoryMutation: UseMutationResult<
+    AxiosResponse<unknown, unknown>,
+    unknown,
+    {
+      id: number;
+      body: CategoryUpdateDto;
+    }
+  >;
 }
 
-function CategoriesList({ items, isIdle, isLoading, isError, type }: IProps) {
-  const [categories] = useState(items);
-  if (isIdle) return null;
-  if (isLoading)
+function CategoriesList({ query, type, editCategoryMutation }: IProps) {
+  const categories = useMemo(() => {
+    if (!query.data) return [];
+    return query.data;
+  }, [query]);
+
+  const topLevelCategories = useMemo(
+    () =>
+      categories.filter((item: CategoryReadDto) => item?.parentId === 0) || [],
+    [categories]
+  );
+
+  const handleAddCategoryToGroup = useCallback(
+    async (categoryIdToAdd: number, targetGroupId: number) => {
+      const categoryToUpdate = categories?.find(
+        (cat) => cat.id === categoryIdToAdd
+      );
+      categoryToUpdate.parentId = targetGroupId;
+      await editCategoryMutation.mutateAsync({
+        id: categoryToUpdate.id,
+        body: categoryToUpdate,
+      });
+    },
+    [categories, editCategoryMutation]
+  );
+
+  const renderCategoryItem = useCallback(
+    (item: CategoryReadDto, index: number) => {
+      const categoryItemProps = {
+        item,
+        isChild: false,
+        depth: 0,
+        type,
+        categories,
+      };
+      return (
+        <DragItem
+          sortIndex={index}
+          key={item.id}
+          type={type}
+          handleAddCategoryToGroup={handleAddCategoryToGroup}
+          isGroup={item.isGroup}
+          {...categoryItemProps}
+        />
+      );
+    },
+    [type, categories, handleAddCategoryToGroup]
+  );
+
+  if (query.isIdle) return null;
+
+  if (query.isLoading)
     return (
       <AccordionItem p="8px 24px" borderTop="none">
         <Spinner />
       </AccordionItem>
     );
-  if (isError)
+  if (query.isError)
     return (
       <AccordionItem p="8px 24px" borderTop="none">
         Error: Could not load categories
       </AccordionItem>
     );
-  if (!categories) return null;
-
-  const topLevelCategories = categories.filter(
-    (item: CategoryReadDto) => item?.parentId === 0
-  );
+  if (!query.data) return null;
 
   return (
     <>
-      {topLevelCategories.map((item: CategoryReadDto) => {
-        if (item.isGroup) {
-          return (
-            <CategoryGroup
-              item={item}
-              key={item.id}
-              isChild={false}
-              depth={0}
-              type={type}
-              categories={categories}
-            />
-          );
-        } else {
-          return (
-            <CategoryInfo
-              item={item}
-              key={item.id}
-              isChild={false}
-              depth={0}
-              type={type}
-              categories={categories}
-            />
-          );
-        }
-      })}
+      {topLevelCategories.map((item: CategoryReadDto, index: number) =>
+        renderCategoryItem(item, index)
+      )}
+
       <AccordionItem borderTop="none">
         <Flex pt="2" py="4" px="6" flexDirection="column" gap={2}>
           {type === "links" && (
             <>
-              {/* <AddLinkCategory isGroup /> */}
+              <AddLinkCategory isGroup />
               <AddLinkCategory />
             </>
           )}
           {type === "commands" && (
             <>
-              {/* <AddCommandCategory isGroup /> */}
+              <AddCommandCategory isGroup />
               <AddCommandCategory />
             </>
           )}

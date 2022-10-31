@@ -7,6 +7,7 @@ const randomTestCommand =
 
 test("Renders with correct command passed in as prop", async () => {
   render(
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
     <EditCommandForm commandItem={randomTestCommand} onClose={() => {}} />
   );
 });

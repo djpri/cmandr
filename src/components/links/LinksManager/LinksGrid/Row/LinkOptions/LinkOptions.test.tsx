@@ -1,12 +1,13 @@
-import { Link } from "models/link";
+import { LinkReadDto } from "models/link";
 import { fireEvent, render, screen } from "tests/test-utils";
 import LinkOptions from "./LinkOptions";
 
-const testLink: Link = {
+const testLink: LinkReadDto = {
   title: "Laravel",
   url: "https://laravel.com/docs/8.x#getting-started-on-windows",
   category: { id: 1, name: "general" },
   id: 10,
+  starred: false,
 };
 
 test("Shows edit and delete buttons when clicked", async () => {

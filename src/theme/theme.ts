@@ -9,6 +9,7 @@ import { Button } from "./components/Button";
 
 const theme = extendTheme({
   // remove outline on focus
+  initialColorMode: "dark",
   shadows: {
     outline:
       "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;",
@@ -35,8 +36,8 @@ const theme = extendTheme({
     }),
   },
   fonts: {
-    heading: "Lato",
-    body: "Lato",
+    heading: "Lato, Segoe UI",
+    body: "Lato, Segoe UI",
   },
   textStyles: {
     heading: {
