@@ -8,7 +8,7 @@
     "@chakra-ui/react": "^1.0.0",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
-    "@fontsource/lato": "^4.5.0",
+    "@fontsource/roboto": "^4.5.8",
     "@reduxjs/toolkit": "^1.6.2",
     "@types/jest": "^25.0.0",
     "@types/node": "^12.0.0",
@@ -46,8 +46,7 @@
     "eslint-plugin-react": "^7.29.4",
     "msw": "^0.39.2",
     "plop": "^2.7.6",
-    "prettier": "^2.6.1",
-    "react-error-overlay": "6.0.10"
+    "prettier": "^2.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

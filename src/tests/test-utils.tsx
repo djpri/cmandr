@@ -1,6 +1,8 @@
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { render, RenderOptions } from "@testing-library/react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -17,6 +19,7 @@ const queryClient = new QueryClient({
 
 const AllProviders = ({ children }: { children?: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>
+    <DndProvider backend={HTML5Backend}>
     <Provider
       store={configureStore({
         reducer: rootReducer,
@@ -31,7 +34,7 @@ const AllProviders = ({ children }: { children?: React.ReactNode }) => (
       <ChakraProvider theme={theme}>
         <BrowserRouter>{children}</BrowserRouter>
       </ChakraProvider>
-    </Provider>
+    </Provider></DndProvider>
   </QueryClientProvider>
 );
 

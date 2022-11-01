@@ -1,6 +1,6 @@
 import { AccordionItem, Flex, Spinner } from "@chakra-ui/react";
 import { AxiosResponse } from "axios";
-import AddCommandCategory from "components/commandCategories/AddCommandCategory/AddCommandCategory";
+import AddCommandCategory from "components/commandCategories/AddCommandCategory";
 import AddLinkCategory from "components/linkCategories/AddLinkCategory/AddLinkCategory";
 import { CategoryReadDto, CategoryUpdateDto } from "models/category";
 import { useCallback, useMemo } from "react";

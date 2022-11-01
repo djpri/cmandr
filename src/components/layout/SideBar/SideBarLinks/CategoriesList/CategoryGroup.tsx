@@ -103,7 +103,6 @@ const CategoryGroup: FC<IProps> = ({
   const Name: FC = () => (
     <Tooltip label={item.name} placement="right" openDelay={500}>
       <Text
-        fontWeight="600"
         textAlign="left"
         maxWidth="90%"
         overflow="hidden"

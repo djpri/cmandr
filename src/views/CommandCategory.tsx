@@ -18,8 +18,8 @@ import useCommandsFromSingleCategory from "hooks/commands/useCommandsFromSingleC
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import DeleteCategoryModal from "../components/commandCategories/DeleteCommandCategory/DeleteCategoryModal";
-import EditCommandCategory from "../components/commandCategories/EditCommandCategory/EditCommandCategory";
+import DeleteCategoryModal from "../components/commandCategories/DeleteCategoryModal";
+import EditCommandCategory from "../components/commandCategories/EditCommandCategory";
 import CommandsManager from "../components/commands/CommandsManager/CommandsManager";
 import UserLayout from "../components/layout/UserLayout";
 

@@ -30,7 +30,6 @@ function CategoryLinkButton({ item, type, hue }) {
         bgImage: buttonBgGradientHover,
         bgPosition: "0%",
       }}
-      fontFamily="Lato"
       fontSize="lg"
       fontWeight="bold"
     >

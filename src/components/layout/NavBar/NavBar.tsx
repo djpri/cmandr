@@ -6,16 +6,15 @@ import {
   Link,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link as RouterLink } from "react-router-dom";
 import { setSidebarToggle } from "redux/slices/layoutSlice";
 import { useAppDispatch } from "redux/store";
-import { ColorModeSwitcher } from "../../other/ColorModeSwitcher";
-import LoginPopover from "./LoginPopover/LoginPopover";
+import LoginPopover from "./LoginPopover";
 
 function NavBar() {
   const dispatch = useAppDispatch();
-  const bgColor = useColorModeValue("gray.200", "gray.800");
+  const bgColor = useColorModeValue("gray.200", "gray.900");
   const iconColor = useColorModeValue("black", "white");
 
   return (

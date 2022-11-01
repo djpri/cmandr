@@ -11,7 +11,7 @@ import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LinkCreateDto } from "../../../models/link";
+import { LinkCreateDto } from "../../models/link";
 
 interface IProps {
   categoryId?: number;

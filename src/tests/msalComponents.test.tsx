@@ -12,9 +12,9 @@ import { App } from "App";
 import LoginButton from "components/auth/LoginButton";
 import SignOutButton from "components/auth/SignOutButton";
 
-import LoginPopover from "components/layout/NavBar/LoginPopover/LoginPopover";
-import { act, fireEvent, render, screen } from "./test-utils";
+import LoginPopover from "components/layout/NavBar/LoginPopover";
 import { testAccount, TEST_CONFIG } from "./msalTestConstants";
+import { act, fireEvent, render, screen } from "./test-utils";
 
 const msalConfig: Configuration = TEST_CONFIG;
 

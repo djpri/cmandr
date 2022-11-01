@@ -3,14 +3,14 @@ import { mode } from "@chakra-ui/theme-tools";
 
 export const Button: ComponentStyleConfig = {
   baseStyle: (props) => ({
-    fontFamily: "Lato",
     color: props.colorMode === "dark" ? "gray.50" : "gray.900",
-    fontWeight: "bold",
+    fontWeight: "600",
     boxShadow: "none",
-    textTransform: "uppercase",
+    textTransform: "Capitalize",
     borderRadius: "sm", // <-- border radius is same for all variants and sizes
     transitionProperty: "background-color",
     transitionDuration: "0ms",
+    letterSpacing: "0.05rem"
   }),
   // Two sizes: sm and md
   sizes: {
@@ -50,7 +50,7 @@ export const Button: ComponentStyleConfig = {
       },
     }),
     delete: (props) => ({
-      color: mode("white", "black")(props),
+      color: mode("white", "white")(props),
 
       bg: mode("hsl(353, 56%, 60%)", "hsl(353, 56%, 50%)")(props),
       _hover: {

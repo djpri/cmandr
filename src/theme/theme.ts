@@ -1,11 +1,9 @@
 import { extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 import { Dict } from "@chakra-ui/utils";
-import "@fontsource/lato/400.css";
-import "@fontsource/lato/700.css";
-import "@fontsource/lato/900.css";
 import { Accordion } from "./components/Accordion";
 import { Button } from "./components/Button";
+import "@fontsource/roboto"
 
 const theme = extendTheme({
   // remove outline on focus
@@ -20,7 +18,7 @@ const theme = extendTheme({
         fontFamily: "body",
         fontSize: { base: "0.875rem", md: "1rem" },
         color: mode("gray.800", "whiteAlpha.900")(props),
-        bg: mode("gray.100", "#131316")(props),
+        bg: mode("gray.100", "#0f0f0f")(props),
         lineHeight: "base",
         transitionProperty: "background-color",
         transitionDuration: "0ms",
@@ -36,15 +34,15 @@ const theme = extendTheme({
     }),
   },
   fonts: {
-    heading: "Lato, Segoe UI",
-    body: "Lato, Segoe UI",
+    heading: "Roboto, Segoe UI",
+    body: "Roboto, Segoe UI",
   },
   textStyles: {
     heading: {
       fontFamily: "heading",
       textAlign: "center",
-      fontWeight: "900",
-      letterSpacing: "-0.015em",
+      fontWeight: "600",
+      letterSpacing: "0.15em",
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "3.5rem" },
       transitionProperty: "background-color",
@@ -72,7 +70,7 @@ const theme = extendTheme({
     Accordion,
     Input: {
       defaultProps: {
-        focusBorderColor: "hsla(220, 26%, 59%, 0.5)",
+        focusBorderColor: "hsla(270, 26%, 59%, 0.5)",
       },
       baseStyle: {
         field: {

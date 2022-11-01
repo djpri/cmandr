@@ -44,7 +44,6 @@ const CategoryInfo: FC<IProps> = ({
 
   const Name: FC = () => (
     <Box
-      fontWeight="600"
       textAlign="left"
       maxWidth="90%"
       overflow="hidden"
