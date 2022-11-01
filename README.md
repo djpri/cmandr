@@ -9,24 +9,30 @@ Also includes a bookmark manager for storing links related to development work.
 - Backend: ASP.NET Core 6.0 Web API
 - Database: Azure SQL server
 
-## Frontend Folder Structure
+## Features
+
+- Drag and drop categories into groups
+- Search, sort and pagination of items
+- Bulk delete items
+
+## Frontend Directory
 
 📦src  
- ┣ 📂api - _contains axios instance and all of the api endpoints_  
- ┣ 📂auth - _contains Azure Active Directory B2C policies and msal config_  
+ ┣ 📂api - contains axios instance and all of the api endpoints  
+ ┣ 📂auth - contains Azure Active Directory B2C policies and msal config 
  ┣ 📂components  
- ┃ ┣ 📂auth  
- ┃ ┣ 📂commands  
- ┃ ┣ 📂layout  
- ┃ ┣ 📂links  
- ┃ ┗ 📂other  
- ┣ 📂helpers - _helper functions_  
- ┣ 📂hooks - _custom react hooks, mainly for react query logic_  
- ┣ 📂models - _view models based on the web api DTOs (data transfer objects)_  
- ┣ 📂redux - _contains redux store and all slices_  
- ┣ 📂test - _contains test data and test utils (component tests are colocated)_  
- ┣ 📂theme - _theme configuration for chakra ui_  
- ┣ 📂views - _individual components for each page of the site_
+ ┃ ┣ 📁auth  
+ ┃ ┣ 📁commands  
+ ┃ ┣ 📁layout  
+ ┃ ┣ 📁links  
+ ┃ ┗ 📁other  
+ ┣ 📂helpers - helper functions  
+ ┣ 📂hooks - custom react hooks, mainly for react query logic  
+ ┣ 📂models - view models based on the web api DTOs (data transfer objects)  
+ ┣ 📂redux - contains redux store and all slices
+ ┣ 📂test - contains test data and test utils (component tests are colocated)  
+ ┣ 📂theme - theme configuration for chakra ui
+ ┣ 📂views - individual components for each page of the site
 
 ## Local Development Setup ( Frontend )
 
@@ -36,6 +42,19 @@ Then in the project directory, run
 
 ```sh
 $ yarn
+```
+
+## Environment Variables
+
+Add to .env.local file for use in development.
+
+**REACT_APP_BASE_URL** - The base URL for the backend api
+**REACT_APP_CLIENT_ID** - The client id for Azure B2C
+
+#### Example
+```
+REACT_APP_BASE_URL="https://localhost:44310/api/"
+REACT_APP_CLIENT_ID=aaaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
 ```
 
 ## Scripts

@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
   useDisclosure,
 } from "@chakra-ui/react";
-import DeleteLinkButton from "components/links/DeleteLinkButton/DeleteLinkButton";
+import DeleteLinkButton from "components/links/DeleteLinkButton";
 import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
 import { LinkReadDto } from "models/link";
 import { useState } from "react";

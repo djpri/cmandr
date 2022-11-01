@@ -34,7 +34,6 @@ function SideBarLinks() {
           <BiCommand />
           <Text
             flex="1"
-            fontFamily="Lato"
             fontWeight="700"
             letterSpacing="1px"
             ml={textMargin}
@@ -48,7 +47,7 @@ function SideBarLinks() {
             <AccordionButton>
               <HStack>
                 <AiFillWallet />
-                <Text fontWeight="600">All commands</Text>
+                <Text >All commands</Text>
               </HStack>
             </AccordionButton>
           </AccordionItem>
@@ -77,7 +76,6 @@ function SideBarLinks() {
           <FaExternalLinkSquareAlt />
           <Text
             flex="1"
-            fontFamily="Lato"
             fontWeight="700"
             letterSpacing="1px"
             ml={textMargin}
@@ -92,7 +90,7 @@ function SideBarLinks() {
             <AccordionButton>
               <HStack>
                 <AiFillWallet />
-                <Text fontWeight="600">All links</Text>
+                <Text >All links</Text>
               </HStack>
             </AccordionButton>
           </AccordionItem>
@@ -109,7 +107,7 @@ function SideBarLinks() {
   return (
     <Accordion allowMultiple defaultIndex={[2, 4]} fontSize="sm">
       <AccordionItem textAlign="left" as={RouterLink} to="/" borderTop="none">
-        <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+        <AccordionButton fontWeight="700" letterSpacing="1px">
           <IoMdHome />
           <Text ml={textMargin}>Home</Text>
         </AccordionButton>
@@ -121,7 +119,7 @@ function SideBarLinks() {
         to="/dashboard"
         borderTop="none"
       >
-        <AccordionButton fontFamily="Lato" fontWeight="700" letterSpacing="1px">
+        <AccordionButton fontWeight="700" letterSpacing="1px">
           <IoMdHome />
           <Text ml={textMargin}>Dashboard</Text>
         </AccordionButton>

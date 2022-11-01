@@ -1,7 +1,7 @@
 import { Button, Portal, SlideFade, useDisclosure } from "@chakra-ui/react";
 import { ForwardedRef, forwardRef, RefObject, useEffect } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import AddLinkForm from "../../AddLinkForm/AddLinkForm";
+import AddLinkForm from "../../AddLinkForm";
 
 interface IProps {
   categoryId?: number;

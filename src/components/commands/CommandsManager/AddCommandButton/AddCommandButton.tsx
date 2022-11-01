@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { ForwardedRef, RefObject } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import AddCommandForm from "../../AddCommandForm/AddCommandForm";
+import AddCommandForm from "../../AddCommandForm";
 
 const AddCommandButton = forwardRef(
   (props, ref: ForwardedRef<HTMLDivElement | null>) => {
