@@ -52,6 +52,14 @@ function LinkCategory() {
     );
   }, [categoriesQuery.data, categoryId]);
 
+  if (!query.data || !category) {
+    return (
+      <UserLayout>
+        <Spinner />
+      </UserLayout>
+    );
+  }
+
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
@@ -94,8 +102,7 @@ function LinkCategory() {
         onClose={editModalClose}
         categoryId={parseInt(categoryId)}
       />
-      {query.isLoading && <Spinner />}
-
+      {query.isLoading && <Spinner mb={5} />}
       {!category?.isGroup && (
         <LinksManager
           categoryId={category ? category.id : null}

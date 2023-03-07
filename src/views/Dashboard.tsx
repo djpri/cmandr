@@ -86,7 +86,7 @@ function Dashboard() {
   return (
     <UserLayout>
       <Box fontSize="xl">
-        <Heading as="h1">Commands</Heading>
+        <Heading as="h1" fontSize="3xl">Commands</Heading>
         {settingsQuery.data && (
           <SortButtons type="command" settings={settingsQuery.data} />
         )}
@@ -100,7 +100,7 @@ function Dashboard() {
             />
           ))}
         </Grid>
-        <Heading as="h1">Links</Heading>
+        <Heading as="h1" fontSize="3xl">Links</Heading>
         {settingsQuery.data && (
           <SortButtons type="link" settings={settingsQuery.data} />
         )}
