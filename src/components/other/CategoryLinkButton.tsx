@@ -39,7 +39,7 @@ function CategoryLinkButton({ item, type, hue }) {
       </HStack>
       <Text fontSize="sm">
         <Text as="span" color={itemCountColor} fontWeight="700">
-          {item?.items} {item.isGroup ? " categories" : " items"}
+          {item?.items} {item.isGroup ? ` categor${item.items === 1 ? "y" : "ies"}` : " items"}
         </Text>
       </Text>
     </GridItem>

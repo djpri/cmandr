@@ -8,14 +8,16 @@ import {
 import {
   Box,
   Button,
+  Grid,
   HStack,
   Spinner,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinksFromSingleCategory from "hooks/links/useLinksFromSingleCategory";
-import React, { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import UserLayout from "../components/layout/UserLayout";
@@ -34,13 +36,21 @@ function LinkCategory() {
     onClose: editModalClose,
   } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [category, setCategory] = useState(null);
 
-  useEffect(() => {
-    setCategory(
-      categoriesQuery.data?.find((item) => item.id === parseInt(categoryId))
-    );
+  const category = useMemo(() => {
+    if (categoriesQuery.data) {
+      return categoriesQuery.data?.find(
+        (item) => item.id === parseInt(categoryId)
+      );
+    }
   }, [categoryId, categoriesQuery.data]);
+
+  const subCategories = useMemo(() => {
+    if (!categoriesQuery.data) return null;
+    return categoriesQuery.data.filter(
+      (item) => item.parentId === parseInt(categoryId)
+    );
+  }, [categoriesQuery.data, categoryId]);
 
   return (
     <UserLayout>
@@ -86,11 +96,23 @@ function LinkCategory() {
       />
       {query.isLoading && <Spinner />}
 
-      {query.data && (
+      {!category.isGroup && (
         <LinksManager
           categoryId={category ? category.id : null}
           links={query.data}
         />
+      )}
+      {subCategories && (
+        <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
+          {subCategories.map((item) => (
+            <CategoryLinkButton
+              item={item}
+              type="links"
+              key={item.id}
+              hue="201"
+            />
+          ))}
+        </Grid>
       )}
     </UserLayout>
   );
