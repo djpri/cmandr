@@ -6,6 +6,7 @@ import {
   Link,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { ColorModeSwitcher } from "components/other/ColorModeSwitcher";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link as RouterLink } from "react-router-dom";
 import { setSidebarToggle } from "redux/slices/layoutSlice";
@@ -57,7 +58,7 @@ function NavBar() {
           </Link>
         </HStack>
         <HStack>
-          {/* <ColorModeSwitcher /> */}
+          <ColorModeSwitcher />
           <LoginPopover />
         </HStack>
       </HStack>

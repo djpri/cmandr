@@ -57,7 +57,7 @@ function CommandCategoryPage() {
       </UserLayout>
     );
   }
-
+  
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
@@ -100,7 +100,7 @@ function CommandCategoryPage() {
         onClose={editModalClose}
         categoryId={parseInt(categoryId)}
       />
-      {query.isLoading && <Spinner />}
+      {query.isLoading && <Spinner mb={5} />}
       {!category?.isGroup && (
         <CommandsManager
           categoryId={category ? category.id : null}
