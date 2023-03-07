@@ -96,7 +96,7 @@ function LinkCategory() {
       />
       {query.isLoading && <Spinner />}
 
-      {!category.isGroup && (
+      {!category?.isGroup && (
         <LinksManager
           categoryId={category ? category.id : null}
           links={query.data}
