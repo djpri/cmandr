@@ -3,7 +3,7 @@ import { b2cPolicies } from "./policies";
 export const msalConfig = {
   auth: {
     clientId: process.env.REACT_APP_CLIENT_ID,
-    authority: b2cPolicies.authorities.signUpSignIn.authority,
+    authority: b2cPolicies.authorities.signIn.authority,
     knownAuthorities: [b2cPolicies.authorityDomain],
   },
   cache: {

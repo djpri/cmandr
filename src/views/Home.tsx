@@ -33,7 +33,7 @@ function Home() {
 
   return (
     <Flex
-      height="100%"
+      height="100vh"
       flexDirection="column"
       alignItems="center"
       background="radial-gradient(circle at top, hsl(256, 37%, 20%) 0%,  hsl(256, 37%, 15%) 50%, #131316 70%)"
@@ -118,11 +118,11 @@ function Home() {
               Store and manage commands into categories
             </Text>
           </HStack>
-          <chakra.img
+          {/* <chakra.img
             src="/command-categories.png"
             alt="command-categories"
             width="min(80vw, 800px)"
-          />
+          /> */}
         </Box>
         <Box shadow="base" p="20px">
           <HStack my={5}>
@@ -132,12 +132,12 @@ function Home() {
               other sites
             </Text>
           </HStack>
-          <chakra.img
+          {/* <chakra.img
             src="/links.png"
             alt="links"
             width="min(80vw, 800px)"
             shadow="lg"
-          />
+          /> */}
         </Box>
       </Flex>
     </Flex>

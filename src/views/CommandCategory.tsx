@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Grid,
   Heading,
   HStack,
   Popover,
@@ -15,7 +16,7 @@ import {
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useCommandsFromSingleCategory from "hooks/commands/useCommandsFromSingleCategory";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import DeleteCategoryModal from "../components/commandCategories/DeleteCategoryModal";
@@ -33,15 +34,21 @@ function CommandCategoryPage() {
   const { id: categoryId } = useParams();
   const { query } = useCommandsFromSingleCategory(parseInt(categoryId));
   const { query: categoriesQuery } = useCommandCategories();
-  const [category, setCategory] = useState(null);
 
-  useEffect(() => {
+  const category = useMemo(() => {
     if (categoriesQuery.data) {
-      setCategory(
-        categoriesQuery.data?.find((item) => item.id === parseInt(categoryId))
+      return categoriesQuery.data?.find(
+        (item) => item.id === parseInt(categoryId)
       );
     }
   }, [categoryId, categoriesQuery.data]);
+
+  const subCategories = useMemo(() => {
+    if (!categoriesQuery.data) return null;
+    return categoriesQuery.data.filter(
+      (item) => item.parentId === parseInt(categoryId)
+    );
+  }, [categoriesQuery.data, categoryId]);
 
   if (!query.data || !category) {
     return (
@@ -99,6 +106,18 @@ function CommandCategoryPage() {
           categoryId={category ? category.id : null}
           commands={query.data}
         />
+      )}
+      {subCategories && (
+        <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
+          {subCategories.map((item) => (
+            <CategoryLinkButton
+              item={item}
+              type="commands"
+              key={item.id}
+              hue="201"
+            />
+          ))}
+        </Grid>
       )}
     </UserLayout>
   );

@@ -19,7 +19,7 @@ import { LinkReadDto } from "../models/link";
  */
 export const CmandrApi: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
-  timeout: 10000,
+  timeout: 15000,
 });
 
 const { get, post, put, delete: remove } = CmandrApi;
