@@ -100,7 +100,6 @@ function QuickAddLinkForm({ categoryId }: IProps) {
           type="submit"
           variant="add"
           size="sm"
-          isFullWidth={false}
           isLoading={quickAddLinkMutation.isLoading}
         >
           Add link
