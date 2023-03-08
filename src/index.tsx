@@ -1,17 +1,17 @@
 import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
-import { ColorModeScript } from "@chakra-ui/react";
+import { ColorModeScript, theme } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { msalConfig } from "auth/authConfig";
 import * as React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import ReactDOM from "react-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { App } from "./App";
 import { store } from "redux/store";
+import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const queryClient = new QueryClient({
@@ -34,6 +34,9 @@ ReactDOM.render(
         <QueryClientProvider client={queryClient}>
           <MsalProvider instance={msalInstance}>
             <Provider store={store}>
+              <ColorModeScript
+                initialColorMode={theme.config.initialColorMode}
+              />
               <App />
               <ReactQueryDevtools initialIsOpen={true} />
             </Provider>

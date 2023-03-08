@@ -3,11 +3,12 @@ import { mode } from "@chakra-ui/theme-tools";
 import { Dict } from "@chakra-ui/utils";
 import { Accordion } from "./components/Accordion";
 import { Button } from "./components/Button";
-import "@fontsource/roboto"
+import "@fontsource/roboto";
 
 const theme = extendTheme({
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
   // remove outline on focus
-  initialColorMode: "dark",
   shadows: {
     outline:
       "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;",

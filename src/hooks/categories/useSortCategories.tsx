@@ -4,7 +4,7 @@ import useSettings from "hooks/settings/useSettings";
 import { CategoryReadDto } from "models/category";
 import { UserSettings } from "models/user";
 import { useMemo } from "react";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 type SortType = "manual" | "ascending" | "descending" | "size";
 
@@ -44,7 +44,7 @@ function useSortCategories(type: "command" | "link") {
       [settingToUpdate]: sortType,
     };
     settingsQuery.data && editSettingsMutation.mutate(newSettings);
-    queryClient.setQueryData(queryKey, sortedCategories);
+    queryClient.setQueryData([queryKey], sortedCategories);
   };
 
   const sortCategoriesByDisplayIndex = () => {
@@ -59,7 +59,7 @@ function useSortCategories(type: "command" | "link") {
       [settingToUpdate]: "manual",
     };
     settingsQuery.data && editSettingsMutation.mutate(newSettings);
-    queryClient.setQueryData(queryKey, sortedCategories);
+    queryClient.setQueryData([queryKey], sortedCategories);
   };
 
   const sortCategoriesAscending = () => {

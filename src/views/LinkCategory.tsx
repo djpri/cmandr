@@ -21,8 +21,8 @@ import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import UserLayout from "../components/layout/UserLayout";
-import DeleteLinkCategory from "../components/linkCategories/DeleteLinkCategory/DeleteLinkCategory";
-import EditLinkCategory from "../components/linkCategories/EditLinkCategory/EditLinkCategory";
+import DeleteLinkCategory from "../components/linkCategories/DeleteLinkCategory";
+import EditLinkCategory from "../components/linkCategories/EditLinkCategory";
 import LinksManager from "../components/links/LinksManager/LinksManager";
 
 function LinkCategory() {
@@ -51,6 +51,14 @@ function LinkCategory() {
       (item) => item.parentId === parseInt(categoryId)
     );
   }, [categoriesQuery.data, categoryId]);
+
+  if (!query.data || !category) {
+    return (
+      <UserLayout>
+        <Spinner />
+      </UserLayout>
+    );
+  }
 
   return (
     <UserLayout>
@@ -94,9 +102,8 @@ function LinkCategory() {
         onClose={editModalClose}
         categoryId={parseInt(categoryId)}
       />
-      {query.isLoading && <Spinner />}
-
-      {!category.isGroup && (
+      {query.isLoading && <Spinner mb={5} />}
+      {!category?.isGroup && (
         <LinksManager
           categoryId={category ? category.id : null}
           links={query.data}

@@ -3,7 +3,7 @@ import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
 import { CategoryReadDto } from "models/category";
 import { CommandReadDto } from "models/command";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
@@ -27,7 +27,7 @@ function useCommands() {
 
   // Queries
   const query = useQuery<CommandReadDto[]>(
-    "commands",
+    ['commands'],
     asReactQueryFunction(({ pageParams }) => Commands.getAll()),
     {
       enabled: isAppInitalized,
@@ -38,17 +38,17 @@ function useCommands() {
   // Note: mutation functions can only take ONE parameter
   const addCommandMutation = useMutation(Commands.create, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commands");
+      queryClient.invalidateQueries(['commands']);
       // queryClient.invalidateQueries("commandCategories");
       showSuccessToast("Command Added", "Command added successfully");
     },
     onMutate: async (newCommand): Promise<CategoryReadDto[]> => {
       // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-      await queryClient.cancelQueries("todos");
+      await queryClient.cancelQueries(['todos']);
 
       // Snapshot the previous value
       const previousCategories: CategoryReadDto[] =
-        queryClient.getQueryData("commandCategories") || [];
+        queryClient.getQueryData(['commandCategories']) || [];
 
       const newCategories: CategoryReadDto[] = previousCategories.map(
         (category) => {
@@ -61,37 +61,37 @@ function useCommands() {
       );
 
       // Optimistically update to the new value
-      queryClient.setQueryData("commandCategories", newCategories);
+      queryClient.setQueryData(['commandCategories'], newCategories);
 
       // Return a context object with the snapshotted value
       return previousCategories;
     },
 
     onError: () => {
-      queryClient.invalidateQueries("commandCategories");
+      queryClient.invalidateQueries(['commandCategories']);
       showErrorToast();
     },
   });
   const editCommandMutation = useMutation(Commands.update, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commands");
-      queryClient.invalidateQueries("commandCategories");
+      queryClient.invalidateQueries(['commands']);
+      queryClient.invalidateQueries(['commandCategories']);
       showSuccessToast("Command Edited", "Command edited successfully");
     },
     onError: showErrorToast,
   });
   const deleteCommandMutation = useMutation(Commands.remove, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commands");
-      queryClient.invalidateQueries("commandCategories");
+      queryClient.invalidateQueries(['commands']);
+      queryClient.invalidateQueries(['commandCategories']);
       showSuccessToast("Command Deleted", "Command deleted successfully");
     },
     onError: showErrorToast,
   });
   const deleteMultipleCommandsMutation = useMutation(Commands.bulkRemove, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commands");
-      queryClient.invalidateQueries("commandCategories");
+      queryClient.invalidateQueries(['commands']);
+      queryClient.invalidateQueries(['commandCategories']);
       showSuccessToast("Commands Deleted", "Commands deleted successfully");
     },
     onError: showErrorToast,

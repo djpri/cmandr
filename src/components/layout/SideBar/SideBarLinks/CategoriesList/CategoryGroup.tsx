@@ -12,7 +12,7 @@ import { FC, useMemo } from "react";
 import { AiFillFolder } from "react-icons/ai";
 import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   selectOpenCategories,
   setCategoryClose,
@@ -43,6 +43,7 @@ const CategoryGroup: FC<IProps> = ({
   handleAddCategoryToGroup,
 }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const folderColor = useColorModeValue("gray.900", "gray.300");
   const bgColor = useColorModeValue("whiteAlpha.600", "whiteAlpha.200");
@@ -123,10 +124,10 @@ const CategoryGroup: FC<IProps> = ({
   );
 
   return (
-    <Box _hover={{ textDecoration: "none" }}>
+    <Box _hover={{ textDecoration: "none" }} onClick={() => navigate(`/${type}/${item.id}`)}>
       <AccordionItem
         border="none"
-        _hover={{ backgroundColor: bgColor }}
+        _hover={{ backgroundColor: bgColor, cursor: "pointer" }}
         mb={openCategories[item.id] && 2}
       >
         <Box p="4px 24px" mr="5px" position="relative" ref={dragDropRef}>

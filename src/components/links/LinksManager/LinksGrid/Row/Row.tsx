@@ -111,8 +111,14 @@ function TableRow({
         </ChakraLink>
       </GridItem>
 
-      <GridItem className="clickToSelect" overflow="hidden" maxWidth="90%" textOverflow="ellipsis" whiteSpace="nowrap">
-        <ChakraLink href={url} isExternal title={url} >
+      <GridItem
+        className="clickToSelect"
+        overflow="hidden"
+        maxWidth="90%"
+        textOverflow="ellipsis"
+        whiteSpace="nowrap"
+      >
+        <ChakraLink href={url} isExternal title={url}>
           {url}
         </ChakraLink>
       </GridItem>
