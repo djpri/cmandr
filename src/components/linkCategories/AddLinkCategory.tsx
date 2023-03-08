@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillFolderAdd, AiOutlineUnorderedList } from "react-icons/ai";
-import useLinkCategories from "../../../hooks/links/useLinkCategories";
+import useLinkCategories from "../../hooks/links/useLinkCategories";
 
 interface IProps {
   isGroup?: boolean;

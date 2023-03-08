@@ -21,8 +21,8 @@ import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import UserLayout from "../components/layout/UserLayout";
-import DeleteLinkCategory from "../components/linkCategories/DeleteLinkCategory/DeleteLinkCategory";
-import EditLinkCategory from "../components/linkCategories/EditLinkCategory/EditLinkCategory";
+import DeleteLinkCategory from "../components/linkCategories/DeleteLinkCategory";
+import EditLinkCategory from "../components/linkCategories/EditLinkCategory";
 import LinksManager from "../components/links/LinksManager/LinksManager";
 
 function LinkCategory() {

@@ -9,7 +9,7 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import useLinkCategories from "../../../hooks/links/useLinkCategories";
+import useLinkCategories from "../../hooks/links/useLinkCategories";
 
 interface IProps {
   isOpen: boolean;

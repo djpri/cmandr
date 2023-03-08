@@ -8,7 +8,7 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import AddCommandCategory from "components/commandCategories/AddCommandCategory";
-import AddLinkCategory from "components/linkCategories/AddLinkCategory/AddLinkCategory";
+import AddLinkCategory from "components/linkCategories/AddLinkCategory";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useSortCategories from "hooks/categories/useSortCategories";
 import useCommandCategories from "hooks/commands/useCommandCategories";
