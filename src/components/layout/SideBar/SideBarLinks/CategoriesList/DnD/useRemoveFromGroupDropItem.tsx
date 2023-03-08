@@ -6,7 +6,7 @@ import {
 } from "models/category";
 import { useCallback } from "react";
 import { useDrop } from "react-dnd";
-import { UseMutationResult } from "react-query";
+import { UseMutationResult } from "@tanstack/react-query";
 
 interface DragItemType {
   index: number;

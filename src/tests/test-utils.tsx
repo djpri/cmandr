@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { render, RenderOptions } from "@testing-library/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { rootReducer } from "redux/store";
@@ -20,21 +20,22 @@ const queryClient = new QueryClient({
 const AllProviders = ({ children }: { children?: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>
     <DndProvider backend={HTML5Backend}>
-    <Provider
-      store={configureStore({
-        reducer: rootReducer,
-        preloadedState: {
-          layout: {
-            isSidebarOpen: false,
-            categoriesOpen: {},
+      <Provider
+        store={configureStore({
+          reducer: rootReducer,
+          preloadedState: {
+            layout: {
+              isSidebarOpen: false,
+              categoriesOpen: {},
+            },
           },
-        },
-      })}
-    >
-      <ChakraProvider theme={theme}>
-        <BrowserRouter>{children}</BrowserRouter>
-      </ChakraProvider>
-    </Provider></DndProvider>
+        })}
+      >
+        <ChakraProvider theme={theme}>
+          <BrowserRouter>{children}</BrowserRouter>
+        </ChakraProvider>
+      </Provider>
+    </DndProvider>
   </QueryClientProvider>
 );
 

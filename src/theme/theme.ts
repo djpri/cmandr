@@ -3,7 +3,7 @@ import { mode } from "@chakra-ui/theme-tools";
 import { Dict } from "@chakra-ui/utils";
 import { Accordion } from "./components/Accordion";
 import { Button } from "./components/Button";
-import "@fontsource/roboto"
+import "@fontsource/roboto";
 
 const theme = extendTheme({
   initialColorMode: "dark",
