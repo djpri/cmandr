@@ -2,9 +2,9 @@ import { Box, HStack, useColorModeValue, Wrap } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { ForwardedRef, useRef, useState } from "react";
 import { LinkReadDto } from "../../../models/link";
-import AddLinkButton from "./AddLinkButton/AddLinkButton";
+import AddLinkButton from "./AddLinkButton";
 import LinksTable from "./LinksGrid/LinksGrid";
-import AddQuickLink from "./QuickAddLinkButton/QuickAddLinkButton";
+import AddQuickLink from "./QuickAddLinkButton";
 
 interface IProps {
   categoryId?: number;

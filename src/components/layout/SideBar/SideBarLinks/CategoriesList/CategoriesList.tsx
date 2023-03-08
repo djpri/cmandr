@@ -1,10 +1,10 @@
 import { AccordionItem, Flex, Spinner } from "@chakra-ui/react";
+import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import AddCommandCategory from "components/commandCategories/AddCommandCategory";
-import AddLinkCategory from "components/linkCategories/AddLinkCategory/AddLinkCategory";
+import AddLinkCategory from "components/linkCategories/AddLinkCategory";
 import { CategoryReadDto, CategoryUpdateDto } from "models/category";
 import { useCallback, useMemo } from "react";
-import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import DragItem from "./DnD/DragItem";
 
 interface IProps {
