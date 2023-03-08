@@ -2,7 +2,6 @@ import { useMsal } from "@azure/msal-react";
 import {
   Box,
   Button,
-  chakra,
   Flex,
   Heading,
   HStack,
@@ -113,7 +112,7 @@ function Home() {
       <Flex gap={6} direction="column">
         <Box shadow="base" p="20px">
           <HStack my={5}>
-            <RiCommandLine size="1.5rem" />
+            <RiCommandLine size="1.5rem" color="white" />
             <Text fontSize="1rem" color="white">
               Store and manage commands into categories
             </Text>
@@ -126,7 +125,7 @@ function Home() {
         </Box>
         <Box shadow="base" p="20px">
           <HStack my={5}>
-            <FaExternalLinkSquareAlt size="1.5rem" />
+            <FaExternalLinkSquareAlt size="1.5rem" color="white" />
             <Text fontSize="1rem" color="white">
               Also features a bookmark manager for documentation, blogs, or
               other sites

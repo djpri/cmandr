@@ -10,7 +10,7 @@ export const Button: ComponentStyleConfig = {
     borderRadius: "sm", // <-- border radius is same for all variants and sizes
     transitionProperty: "background-color",
     transitionDuration: "0ms",
-    letterSpacing: "0.05rem"
+    letterSpacing: "0.05rem",
   }),
   // Two sizes: sm and md
   sizes: {

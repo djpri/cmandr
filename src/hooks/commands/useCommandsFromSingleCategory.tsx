@@ -1,7 +1,7 @@
 import { CommandCategories, Commands } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
@@ -20,7 +20,7 @@ function useCommandsFromSingleCategory(categoryId: number) {
 
   const addCategoryMutation = useMutation(CommandCategories.create, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commands");
+      queryClient.invalidateQueries(['commands']);
       queryClient.invalidateQueries(["commands", categoryId]);
       showSuccessToast("Command Added", "Command added successfully");
     },
@@ -28,7 +28,7 @@ function useCommandsFromSingleCategory(categoryId: number) {
   });
   const editCategoryMutation = useMutation(CommandCategories.update, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commands");
+      queryClient.invalidateQueries(['commands']);
       queryClient.invalidateQueries(["commands", categoryId]);
       showSuccessToast("Command Edited", "Command edited successfully");
     },
@@ -36,7 +36,7 @@ function useCommandsFromSingleCategory(categoryId: number) {
   });
   const deleteCategoryMutation = useMutation(CommandCategories.remove, {
     onSuccess: () => {
-      queryClient.invalidateQueries("commands");
+      queryClient.invalidateQueries(['commands']);
       queryClient.invalidateQueries(["commands", categoryId]);
       showSuccessToast("Command Deleted", "Command deleted successfully");
     },

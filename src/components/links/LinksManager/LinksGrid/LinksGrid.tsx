@@ -4,7 +4,7 @@ import SearchAndPagination from "components/other/SearchAndPagination";
 import { LinksSortFunction } from "helpers/linksSortFunctions";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto } from "models/link";
-import { Dispatch, Key, SetStateAction, useMemo} from "react";
+import { Dispatch, Key, SetStateAction, useMemo } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { TiArrowUnsorted } from "react-icons/ti";
 import {
@@ -91,7 +91,7 @@ function LinksTable({ links, showCategories }: IProps) {
 
   const Headers = () => {
     return (
-      <Grid
+      (<Grid
         templateColumns={
           showCategories ? ["1fr", null, null, "4fr 6fr 2fr 2fr"] : ["2fr 4fr"]
         }
@@ -101,7 +101,7 @@ function LinksTable({ links, showCategories }: IProps) {
           // Loop over the headers in each row
           headerGroups[0].headers.map((column, index) => (
             // Apply the header cell props
-            <GridItem key={index}>
+            (<GridItem key={index}>
               <HStack {...column.getHeaderProps(column.getSortByToggleProps())}>
                 <Text as="b" userSelect="none">
                   {column.render("Header")}
@@ -116,10 +116,10 @@ function LinksTable({ links, showCategories }: IProps) {
                   <TiArrowUnsorted />
                 )}
               </HStack>
-            </GridItem>
+            </GridItem>)
           ))
         }
-      </Grid>
+      </Grid>)
     );
   };
 

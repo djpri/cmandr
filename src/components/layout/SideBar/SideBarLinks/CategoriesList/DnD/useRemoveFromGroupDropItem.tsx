@@ -6,7 +6,7 @@ import {
 } from "models/category";
 import { useCallback } from "react";
 import { useDrop } from "react-dnd";
-import { UseMutationResult } from "react-query";
+import { UseMutationResult } from "@tanstack/react-query";
 
 interface DragItemType {
   index: number;
@@ -19,7 +19,7 @@ interface DragItemType {
 function useRemoveFromGroupDropItem(
   type: "commands" | "links",
   editCategoryMutation: UseMutationResult<
-    AxiosResponse<any, any>,
+    AxiosResponse<unknown, unknown>,
     unknown,
     {
       id: number;

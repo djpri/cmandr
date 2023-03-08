@@ -1,7 +1,7 @@
 import { Links } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useChakraToast from "hooks/other/useChakraToast";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 
@@ -29,7 +29,7 @@ function useLinksFromSingleCategory(linkId: number) {
 
   const addLinkMutation = useMutation(Links.create, {
     onSuccess: () => {
-      queryClient.invalidateQueries("links");
+      queryClient.invalidateQueries(['links']);
       queryClient.invalidateQueries(["links", linkId]);
       showSuccessToast("Link Added", "Link added successfully");
     },
@@ -37,7 +37,7 @@ function useLinksFromSingleCategory(linkId: number) {
   });
   const editLinkMutation = useMutation(Links.update, {
     onSuccess: () => {
-      queryClient.invalidateQueries("links");
+      queryClient.invalidateQueries(['links']);
       queryClient.invalidateQueries(["links", linkId]);
       showSuccessToast("Link Edited", "Link edited successfully");
     },
@@ -45,7 +45,7 @@ function useLinksFromSingleCategory(linkId: number) {
   });
   const deleteLinkMutation = useMutation(Links.remove, {
     onSuccess: () => {
-      queryClient.invalidateQueries("links");
+      queryClient.invalidateQueries(['links']);
       queryClient.invalidateQueries(["links", linkId]);
       showSuccessToast("Link Deleted", "Link deleted successfully");
     },

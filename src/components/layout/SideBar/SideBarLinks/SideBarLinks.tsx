@@ -32,12 +32,7 @@ function SideBarLinks() {
           border={isAddToGroupDropActive && "2px solid red"}
         >
           <BiCommand />
-          <Text
-            flex="1"
-            fontWeight="700"
-            letterSpacing="1px"
-            ml={textMargin}
-          >
+          <Text flex="1" fontWeight="700" letterSpacing="1px" ml={textMargin}>
             Commands
           </Text>
           <AccordionIcon />
@@ -47,7 +42,7 @@ function SideBarLinks() {
             <AccordionButton>
               <HStack>
                 <AiFillWallet />
-                <Text >All commands</Text>
+                <Text>All commands</Text>
               </HStack>
             </AccordionButton>
           </AccordionItem>
@@ -74,12 +69,7 @@ function SideBarLinks() {
           border={isAddToGroupDropActive && "2px solid red"}
         >
           <FaExternalLinkSquareAlt />
-          <Text
-            flex="1"
-            fontWeight="700"
-            letterSpacing="1px"
-            ml={textMargin}
-          >
+          <Text flex="1" fontWeight="700" letterSpacing="1px" ml={textMargin}>
             Links
           </Text>
           <AccordionIcon />
@@ -90,7 +80,7 @@ function SideBarLinks() {
             <AccordionButton>
               <HStack>
                 <AiFillWallet />
-                <Text >All links</Text>
+                <Text>All links</Text>
               </HStack>
             </AccordionButton>
           </AccordionItem>
