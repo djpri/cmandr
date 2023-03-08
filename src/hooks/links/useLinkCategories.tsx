@@ -19,7 +19,7 @@ function useLinkCategories() {
   const queryClient = useQueryClient();
   const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
-  const { showSuccessToast, showErrorToast } = useChakraToast();
+  const { showErrorToast } = useChakraToast();
 
   // Queries
   const query = useQuery(['linkCategories'], asReactQueryFunction(LinkCategories.getAll), {
