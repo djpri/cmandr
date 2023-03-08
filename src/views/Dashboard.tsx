@@ -4,8 +4,11 @@ import {
   Grid,
   Heading,
   useColorModeValue,
+  VStack,
   Wrap,
 } from "@chakra-ui/react";
+import AddCommandCategory from "components/commandCategories/AddCommandCategory";
+import AddLinkCategory from "components/linkCategories/AddLinkCategory/AddLinkCategory";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useSortCategories from "hooks/categories/useSortCategories";
 import useCommandCategories from "hooks/commands/useCommandCategories";
@@ -102,6 +105,11 @@ function Dashboard() {
             />
           ))}
         </Grid>
+        <VStack spacing={2} my={5} align="flex-start">
+          <AddCommandCategory isGroup />
+          <AddCommandCategory />
+        </VStack>
+
         <Heading as="h1" fontSize="3xl">
           Links
         </Heading>
@@ -119,6 +127,10 @@ function Dashboard() {
           ))}
         </Grid>
       </Box>
+      <VStack spacing={2} my={5} align="flex-start">
+        <AddLinkCategory isGroup />
+        <AddLinkCategory />
+      </VStack>
     </UserLayout>
   );
 }

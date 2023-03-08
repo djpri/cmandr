@@ -19,7 +19,7 @@ interface DragItemType {
 function useRemoveFromGroupDropItem(
   type: "commands" | "links",
   editCategoryMutation: UseMutationResult<
-    AxiosResponse<any, any>,
+    AxiosResponse<unknown, unknown>,
     unknown,
     {
       id: number;

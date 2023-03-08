@@ -6,7 +6,7 @@ import { Button } from "./components/Button";
 import "@fontsource/roboto";
 
 const theme = extendTheme({
-  initialColorMode: "dark",
+  initialColorMode: 'dark',
   useSystemColorMode: false,
   // remove outline on focus
   shadows: {
