@@ -69,7 +69,10 @@ const CategoryInfo: FC<IProps> = ({
     <Tooltip label={item.name} openDelay={500}>
       <Box
         _hover={{ textDecoration: "none" }}
-        onClick={() => navigate(`/${type}/${item.id}`)}
+        onClick={(e) => {
+          e.stopPropagation();
+          navigate(`/${type}/${item.id}`);
+        }}
       >
         <AccordionItem
           border="none"
