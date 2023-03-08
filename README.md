@@ -18,24 +18,24 @@ Also includes a bookmark manager for storing links related to development work.
 ## Frontend Directory
 
 ```
-📦src  
- ┣ 📂api         - contains axios instance and all of the api endpoints  
- ┣ 📂auth        - contains Azure Active Directory B2C policies and msal config 
- ┣ 📂components  
- ┃ ┣ 📁auth  
- ┃ ┣ 📁commands  
- ┃ ┣ 📁layout  
- ┃ ┣ 📁links  
- ┃ ┗ 📁other  
- ┣ 📂helpers     - helper functions  
- ┣ 📂hooks       - custom react hooks, mainly for react query logic  
- ┣ 📂models      - view models based on the web api DTOs (data transfer objects)  
+📦src
+ ┣ 📂api         - contains axios instance and all of the api endpoints
+ ┣ 📂auth        - contains Azure Active Directory B2C policies and msal config
+ ┣ 📂components
+ ┃ ┣ 📁auth
+ ┃ ┣ 📁commands
+ ┃ ┣ 📁layout
+ ┃ ┣ 📁links
+ ┃ ┗ 📁other
+ ┣ 📂helpers     - helper functions
+ ┣ 📂hooks       - custom react hooks, mainly for react query logic
+ ┣ 📂models      - view models based on the web api DTOs (data transfer objects)
  ┣ 📂redux       - contains redux store and all slices
- ┣ 📂test        - contains test data and test utils (component tests are colocated)  
+ ┣ 📂test        - contains test data and test utils (component tests are colocated)
  ┣ 📂theme       - theme configuration for chakra ui
  ┣ 📂views       - individual components for each page of the site
 
- ```
+```
 
 ## Local Development Setup ( Frontend )
 
@@ -55,6 +55,7 @@ Add to .env.local file for use in development.
 **REACT_APP_CLIENT_ID** - The client id for Azure B2C
 
 #### Example
+
 ```
 REACT_APP_BASE_URL="https://localhost:44310/api/"
 REACT_APP_CLIENT_ID=aaaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa

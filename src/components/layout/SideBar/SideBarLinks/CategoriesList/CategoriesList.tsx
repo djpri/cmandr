@@ -4,7 +4,7 @@ import AddCommandCategory from "components/commandCategories/AddCommandCategory"
 import AddLinkCategory from "components/linkCategories/AddLinkCategory/AddLinkCategory";
 import { CategoryReadDto, CategoryUpdateDto } from "models/category";
 import { useCallback, useMemo } from "react";
-import { UseMutationResult, UseQueryResult } from "react-query";
+import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import DragItem from "./DnD/DragItem";
 
 interface IProps {
@@ -68,8 +68,6 @@ function CategoriesList({ query, type, editCategoryMutation }: IProps) {
     },
     [type, categories, handleAddCategoryToGroup]
   );
-
-  if (query.isIdle) return null;
 
   if (query.isLoading)
     return (

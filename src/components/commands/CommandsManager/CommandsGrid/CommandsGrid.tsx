@@ -89,7 +89,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
   };
 
   return (
-    <Box p="0" display="flex" flexDirection="column" {...getTableProps()}>
+    (<Box p="0" display="flex" flexDirection="column" {...getTableProps()}>
       {selectedFlatRows.length > 1 && (
         <RowSelectionMenu
           handleBulkDelete={handleBulkDelete}
@@ -112,7 +112,6 @@ function CommandsTable({ commands, showCategories }: IProps) {
           pageOptions={pageOptions}
         />
       )}
-
       <Grid
         templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
         p="4"
@@ -123,7 +122,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
           // Loop over the headers in each row
           headerGroups[0].headers.map((column, index) => (
             // Apply the header cell props
-            <GridItem key={index}>
+            (<GridItem key={index}>
               <HStack {...column.getHeaderProps(column.getSortByToggleProps())}>
                 <Text as="b" userSelect={"none"}>
                   {column.render("Header")}
@@ -138,11 +137,10 @@ function CommandsTable({ commands, showCategories }: IProps) {
                   <TiArrowUnsorted />
                 )}
               </HStack>
-            </GridItem>
+            </GridItem>)
           ))
         }
       </Grid>
-
       <Box {...getTableBodyProps()}>
         {page.map((row) => {
           prepareRow(row);
@@ -162,7 +160,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
           );
         })}
       </Box>
-    </Box>
+    </Box>)
   );
 }
 

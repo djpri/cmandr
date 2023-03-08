@@ -57,7 +57,7 @@ function CommandCategoryPage() {
       </UserLayout>
     );
   }
-  
+
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
