@@ -51,14 +51,14 @@ $ yarn
 
 Add to .env.local file for use in development.
 
-**REACT_APP_BASE_URL** - The base URL for the backend api
-**REACT_APP_CLIENT_ID** - The client id for Azure B2C
+**VITE_BASE_URL** - The base URL for the backend api
+**VITE_CLIENT_ID** - The client id for Azure B2C
 
 #### Example
 
 ```
-REACT_APP_BASE_URL="https://localhost:44310/api/"
-REACT_APP_CLIENT_ID=aaaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+VITE_BASE_URL="https://localhost:44310/api/"
+VITE_CLIENT_ID=aaaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
 ```
 
 ## Scripts
