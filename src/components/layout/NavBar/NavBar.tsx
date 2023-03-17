@@ -4,6 +4,7 @@ import {
   Heading,
   HStack,
   Link,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "components/other/ColorModeSwitcher";
@@ -15,8 +16,7 @@ import LoginPopover from "./LoginPopover";
 
 function NavBar() {
   const dispatch = useAppDispatch();
-  const bgColor = useColorModeValue("gray.200", "gray.900");
-  const iconColor = useColorModeValue("black", "white");
+  const bgColor = useColorModeValue("purple.600", "purple.800");
 
   return (
     <Box
@@ -24,7 +24,8 @@ function NavBar() {
       top="0"
       w="100vw"
       pr="1rem"
-      bgColor={bgColor}
+      bgColor={import.meta.env.DEV ? "yellow.500" : bgColor}
+      color="white"
       h="50"
       shadow="base"
       zIndex={200}
@@ -48,7 +49,7 @@ function NavBar() {
               border="0px"
               onClick={() => dispatch(setSidebarToggle())}
             >
-              <GiHamburgerMenu size="1.2rem" color={iconColor} />
+              <GiHamburgerMenu size="1.2rem" color="white" />
             </Button>
           </Box>
           <Link as={RouterLink} to="/">
@@ -56,6 +57,9 @@ function NavBar() {
               Cmandr
             </Heading>
           </Link>
+          {import.meta.env.DEV && (
+            <Text>DEVELOPMENT MODE</Text>
+          )}
         </HStack>
         <HStack>
           <ColorModeSwitcher />

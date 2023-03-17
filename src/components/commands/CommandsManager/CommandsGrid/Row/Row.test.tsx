@@ -1,11 +1,11 @@
-import Row from "components/commands/CommandsManager/CommandsGrid/Row/Row";
+import CommandRow from "components/commands/CommandsManager/CommandsGrid/Row/Row";
 import { render, screen } from "tests/test-utils";
 import { testData } from "tests/testData";
 
 test("Displays correct data on screen", async () => {
   testData.commands.forEach((command) => {
     render(
-      <Row
+      <CommandRow
         commandItem={command}
         showCategories
         isSelected={false}

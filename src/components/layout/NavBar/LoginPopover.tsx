@@ -10,6 +10,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Text,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import LoginButton from "components/auth/LoginButton";
@@ -21,6 +22,7 @@ function LoginPopover() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formType] = useState("login");
   const btnRef: React.Ref<HTMLButtonElement> = useRef();
+  const textColor = useColorModeValue("black", "white");
   const { accounts } = useMsal();
 
   const PopoverButton = () => (
@@ -40,7 +42,7 @@ function LoginPopover() {
 
   if (accounts[0])
     return (
-      <Box position="relative" m="0">
+      <Box position="relative" m="0" color={textColor}>
         <Popover isOpen={isOpen} placement="bottom" onClose={onClose}>
           <PopoverButton />
           <PopoverContent top="-5px" right="30px" border="hidden">

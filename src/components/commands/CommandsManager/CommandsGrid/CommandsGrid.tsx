@@ -1,19 +1,20 @@
 import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
 import useCommands from "hooks/commands/useCommands";
 import { CommandReadDto } from "models/command";
-import { useMemo } from "react";
-import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import { TiArrowUnsorted } from "react-icons/ti";
-import {
-  useGlobalFilter,
-  usePagination,
-  useRowSelect,
-  useSortBy,
-  useTable,
-} from "react-table";
-import Row from "./Row/Row";
+import { useEffect, useMemo, useState } from "react";
+import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
+import CommandRow from "./Row/Row";
 
 interface IProps {
   commands: CommandReadDto[];
@@ -21,96 +22,72 @@ interface IProps {
 }
 
 function CommandsTable({ commands, showCategories }: IProps) {
-  const columns = useMemo(() => {
+  const columns = useMemo<ColumnDef<CommandReadDto>[]>(() => {
     if (showCategories) {
       return [
         {
-          Header: "Description",
-          accessor: "description",
+          header: () => "Description",
+          accessorKey: "description",
         },
         {
-          Header: "Command",
-          accessor: "line",
+          header: () => "Command",
+          accessorKey: "line",
         },
         {
-          Header: "Category",
-          accessor: "category",
+          header: () => "Category",
+          accessorKey: "category",
         },
       ];
     }
     return [
       {
-        Header: "Description",
-        accessor: "description",
+        header: () => "Description",
+        accessorKey: "description",
       },
       {
-        Header: "Command",
-        accessor: "line",
+        header: () => "Command",
+        accessorKey: "line",
       },
     ];
   }, [showCategories]);
-
+  const [globalFilter, setGlobalFilter] = useState("");
   const data = useMemo(() => {
     return commands;
   }, [commands]);
 
   const { deleteMultipleCommandsMutation } = useCommands();
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    gotoPage,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-    nextPage,
-    previousPage,
-    selectedFlatRows,
-    toggleRowSelected: toggleOtherRow,
-    toggleAllRowsSelected,
-    state: { pageIndex, selectedRowIds },
-  } = useTable(
-    { columns, data, initialState: { pageIndex: 0, pageSize: 50 } },
-    useGlobalFilter,
-    useSortBy,
-    usePagination,
-    useRowSelect
-  );
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+
+  useEffect(() => {
+    table.setPageSize(25)
+  }, []);
 
   const handleBulkDelete = () => {
-    const commandIds = selectedFlatRows.map((rowData) => rowData.original.id);
+    const commandIds = table
+      .getSelectedRowModel()
+      .flatRows.map((rowData) => rowData.original.id);
     deleteMultipleCommandsMutation.mutate(commandIds);
   };
 
   return (
-    (<Box p="0" display="flex" flexDirection="column" {...getTableProps()}>
-      {selectedFlatRows.length > 1 && (
-        <RowSelectionMenu
-          handleBulkDelete={handleBulkDelete}
-          selectedFlatRows={selectedFlatRows}
-          toggleAllRowsSelected={toggleAllRowsSelected}
-        />
+    <Box p="0" display="flex" flexDirection="column">
+      {table.getSelectedRowModel().flatRows.length > 1 && (
+        <RowSelectionMenu handleBulkDelete={handleBulkDelete} table={table} />
       )}
-      {selectedFlatRows.length <= 1 && (
-        <SearchAndPagination
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          canPreviousPage={canPreviousPage}
-          canNextPage={canNextPage}
-          state={state}
-          gotoPage={gotoPage}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          setGlobalFilter={setGlobalFilter}
-          pageCount={pageCount}
-          pageIndex={pageIndex}
-          pageOptions={pageOptions}
-        />
+      {table.getSelectedRowModel().flatRows.length <= 1 && (
+        <SearchAndPagination table={table} value={globalFilter ?? ''}
+        onChange={value => setGlobalFilter(String(value))} />
       )}
       <Grid
         templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
@@ -118,49 +95,44 @@ function CommandsTable({ commands, showCategories }: IProps) {
         gap={2}
         rounded="md"
       >
-        {
-          // Loop over the headers in each row
-          headerGroups[0].headers.map((column, index) => (
-            // Apply the header cell props
-            (<GridItem key={index}>
-              <HStack {...column.getHeaderProps(column.getSortByToggleProps())}>
+        {table.getHeaderGroups().map((headerGroup) =>
+          headerGroup.headers.map((header) => (
+            <GridItem key={header.id}>
+              <HStack>
                 <Text as="b" userSelect={"none"}>
-                  {column.render("Header")}
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
                 </Text>
-                {column.isSorted ? (
-                  column.isSortedDesc ? (
-                    <AiFillCaretDown aria-label="sorted ascending" />
-                  ) : (
-                    <AiFillCaretUp aria-label="sorted descending" />
-                  )
-                ) : (
-                  <TiArrowUnsorted />
-                )}
+                {{
+                  asc: <AiFillCaretUp aria-label="sorted descending" />,
+                  desc: <AiFillCaretDown aria-label="sorted ascending" />,
+                }[header.column.getIsSorted() as string] ?? null}
               </HStack>
-            </GridItem>)
+            </GridItem>
           ))
-        }
+        )}
       </Grid>
-      <Box {...getTableBodyProps()}>
-        {page.map((row) => {
-          prepareRow(row);
-          return (
-            <Row
-              showCategories={showCategories}
-              commandItem={row.original}
-              key={row.id}
-              {...row.getRowProps()}
-              rowId={row.id}
-              isSelected={row.isSelected}
-              toggleOtherRow={toggleOtherRow}
-              toggleCurrentRow={row.toggleRowSelected}
-              toggleAllRowsSelected={toggleAllRowsSelected}
-              selectedRowIds={selectedRowIds}
-            />
-          );
-        })}
+      <Box>
+        {table
+          .getRowModel()
+          .rows.slice(0, table.getState().pagination.pageSize)
+          .map((row) => {
+            return (
+              <>
+                <CommandRow
+                  row={row}
+                  showCategories={showCategories}
+                  commandItem={row.original}
+                  key={row.id}
+                  table={table}
+                />
+              </>
+            );
+          })}
       </Box>
-    </Box>)
+    </Box>
   );
 }
 

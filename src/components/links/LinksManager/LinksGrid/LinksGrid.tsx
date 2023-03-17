@@ -1,19 +1,21 @@
 import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getFacetedRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
 import { LinksSortFunction } from "helpers/linksSortFunctions";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto } from "models/link";
-import { Dispatch, Key, SetStateAction, useMemo } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import { TiArrowUnsorted } from "react-icons/ti";
-import {
-  useGlobalFilter,
-  usePagination,
-  useRowSelect,
-  useSortBy,
-  useTable,
-} from "react-table";
 import Row from "./Row/Row";
 
 interface IProps {
@@ -24,154 +26,127 @@ interface IProps {
   setSortFunction?: Dispatch<SetStateAction<LinksSortFunction>>;
 }
 
-function LinksTable({ links, showCategories }: IProps) {
-  const columns = useMemo(() => {
+function LinksTable({ links, showCategories, isLoading }: IProps) {
+  const columns = useMemo<ColumnDef<LinkReadDto>[]>(() => {
     if (showCategories) {
       return [
         {
-          Header: "Title",
-          accessor: "title",
+          header: () => "Title",
+          accessorKey: "title",
         },
         {
-          Header: "Url",
-          accessor: "url",
+          header: () => "Url",
+          accessorKey: "url",
         },
         {
-          Header: "Category",
-          accessor: "category",
+          header: () => "Category",
+          accessorKey: "category",
         },
       ];
     }
     return [
       {
-        Header: "Title",
-        accessor: "title",
+        header: () => "Title",
+        accessorKey: "title",
       },
       {
-        Header: "Url",
-        accessor: "url",
+        header: () => "Url",
+        accessorKey: "url",
       },
     ];
   }, [showCategories]);
+  const [globalFilter, setGlobalFilter] = useState("");
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    gotoPage,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-    nextPage,
-    previousPage,
-    selectedFlatRows,
-    toggleRowSelected: toggleOtherRow,
-    toggleAllRowsSelected,
-    state: { pageIndex, selectedRowIds },
-  } = useTable(
-    { columns, data: links, initialState: { pageIndex: 0, pageSize: 50 } },
-    useGlobalFilter,
-    useSortBy,
-    usePagination,
-    useRowSelect
-  );
+  const table = useReactTable({
+    data: links,
+    columns,
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
 
+  useEffect(() => {
+    table.setPageSize(25)
+  }, []);
+  
   const { deleteMultipleLinksMutation } = useLinks();
 
   const handleBulkDelete = () => {
-    const linkIds = selectedFlatRows.map((rowData) => rowData.original.id);
+    const linkIds = table
+      .getSelectedRowModel()
+      .flatRows.map((rowData) => rowData.original.id);
     deleteMultipleLinksMutation.mutate(linkIds);
   };
 
   const Headers = () => {
     return (
-      (<Grid
+      <Grid
         templateColumns={
           showCategories ? ["1fr", null, null, "4fr 6fr 2fr 2fr"] : ["2fr 4fr"]
         }
         p="4"
       >
-        {
-          // Loop over the headers in each row
-          headerGroups[0].headers.map((column, index) => (
-            // Apply the header cell props
-            (<GridItem key={index}>
-              <HStack {...column.getHeaderProps(column.getSortByToggleProps())}>
+        {table.getHeaderGroups().map((headerGroup) =>
+          headerGroup.headers.map((header) => (
+            <GridItem key={header.id}>
+              <HStack onClick={header.column.getToggleSortingHandler()} cursor={header.column.getCanSort() ? "pointer" : "none"}>
                 <Text as="b" userSelect="none">
-                  {column.render("Header")}
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
                 </Text>
-                {column.isSorted ? (
-                  column.isSortedDesc ? (
-                    <AiFillCaretDown aria-label="sorted ascending" />
-                  ) : (
-                    <AiFillCaretUp aria-label="sorted descending" />
-                  )
-                ) : (
-                  <TiArrowUnsorted />
-                )}
+                {{
+                  asc: <AiFillCaretUp aria-label="sorted descending" />,
+                  desc: <AiFillCaretDown aria-label="sorted ascending" />,
+                }[header.column.getIsSorted() as string] ?? null}
               </HStack>
-            </GridItem>)
+            </GridItem>
           ))
-        }
-      </Grid>)
+        )}
+      </Grid>
     );
   };
 
   const Rows = () => {
+    const pageSize = table.getState().pagination.pageSize;
+
     return (
       <Grid templateColumns={["1fr"]} gap={[1, null, null, 0]}>
-        <Box {...getTableBodyProps()}>
-          {page.map((row, index: Key) => {
-            prepareRow(row);
-            return (
-              <Row
-                showCategories={showCategories}
-                linkItem={row.original}
-                key={row.id}
-                {...row.getRowProps()}
-                rowId={row.id}
-                isSelected={row.isSelected}
-                toggleOtherRow={toggleOtherRow}
-                toggleCurrentRow={row.toggleRowSelected}
-                toggleAllRowsSelected={toggleAllRowsSelected}
-                selectedRowIds={selectedRowIds}
-              />
-            );
-          })}
+        <Box>
+          {table
+            .getRowModel()
+            .rows.slice(0, pageSize)
+            .map((row) => {
+              return (
+                <Row
+                  showCategories={showCategories}
+                  linkItem={row.original}
+                  row={row}
+                  isLoading={isLoading}
+                  table={table}
+                  key={row.id}
+                />
+              );
+            })}
         </Box>
       </Grid>
     );
   };
 
   return (
-    <Box {...getTableProps()}>
-      {selectedFlatRows.length > 1 && (
-        <RowSelectionMenu
-          handleBulkDelete={handleBulkDelete}
-          selectedFlatRows={selectedFlatRows}
-          toggleAllRowsSelected={toggleAllRowsSelected}
-        />
+    <Box>
+      {table.getSelectedRowModel().flatRows.length > 1 && (
+        <RowSelectionMenu handleBulkDelete={handleBulkDelete} table={table} />
       )}
-      {selectedFlatRows.length <= 1 && (
-        <SearchAndPagination
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          canPreviousPage={canPreviousPage}
-          canNextPage={canNextPage}
-          state={state}
-          gotoPage={gotoPage}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          setGlobalFilter={setGlobalFilter}
-          pageCount={pageCount}
-          pageIndex={pageIndex}
-          pageOptions={pageOptions}
-        />
+      {table.getPreFilteredRowModel().flatRows.length > 1 && (
+        <SearchAndPagination table={table} value={globalFilter ?? ''}
+        onChange={value => setGlobalFilter(String(value))} />
       )}
       <Headers />
       <Rows />
