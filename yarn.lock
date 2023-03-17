@@ -2472,6 +2472,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-table@npm:^8.7.9":
+  version: 8.7.9
+  resolution: "@tanstack/react-table@npm:8.7.9"
+  dependencies:
+    "@tanstack/table-core": 8.7.9
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 3c704ac903405972641c9857e1466025bcdac04ee4890d64b018386cad5a778aca3a8d3f78542ae7a0ed609841d32ef3a7e563b079e87fa93b9ae8570a310499
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.7.9":
+  version: 8.7.9
+  resolution: "@tanstack/table-core@npm:8.7.9"
+  checksum: 78d2314928c29559088e4bada0248cc7f94e93756e1a2c1f37a651db30276e9ae960d647bd3a61b67b3f0f9f7e4dec5dd58eb49b8adb80ee5952ef417b6e581f
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:^9.0.0":
   version: 9.0.0
   resolution: "@testing-library/dom@npm:9.0.0"
@@ -3635,6 +3654,7 @@ __metadata:
     "@reduxjs/toolkit": ^1.9.3
     "@tanstack/react-query": ^4.26.1
     "@tanstack/react-query-devtools": ^4.26.1
+    "@tanstack/react-table": ^8.7.9
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^14.0.0
     "@testing-library/user-event": 14.4.3
@@ -3663,7 +3683,6 @@ __metadata:
     react-icons: ^4.8.0
     react-redux: ^8.0.5
     react-router-dom: 6.8.2
-    react-table: ^7.8.0
     react-window: ^1.8.8
     typescript: ^4.9.5
     vite: ^4.2.0
@@ -6873,15 +6892,6 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 7ee8ef3aab74c7ae1d70ff34a27643d11ba1a8d62d072c767827d9ff9a520905223e567002e0bf6c772929d8ea1c781a3ba0cc4a563e92b1e3dc2eaa817ecbe8
-  languageName: node
-  linkType: hard
-
-"react-table@npm:^7.8.0":
-  version: 7.8.0
-  resolution: "react-table@npm:7.8.0"
-  peerDependencies:
-    react: ^16.8.3 || ^17.0.0-0 || ^18.0.0
-  checksum: 44ca0fb848c6869cd793cede8dc33072b38ebb8f8d2833565afe7cf3eac5d1fa455ac5fb9d06838b16fab0523d5d03e3e82f7645032f71245096e67b892313b9
   languageName: node
   linkType: hard
 
