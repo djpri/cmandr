@@ -51,7 +51,7 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         <Select {...register("categoryId")}>
           <option value={-1}>Select Category</option>
           {categories &&
-            categories.map((category) => (
+            categories.filter(category => category.isGroup === false).map((category) => (
               <option value={category.id} key={category.id}>
                 {category.name}
               </option>
