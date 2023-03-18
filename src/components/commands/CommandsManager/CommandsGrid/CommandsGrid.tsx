@@ -120,7 +120,6 @@ function CommandsTable({ commands, showCategories }: IProps) {
           .rows.slice(0, table.getState().pagination.pageSize)
           .map((row) => {
             return (
-              <>
                 <CommandRow
                   row={row}
                   showCategories={showCategories}
@@ -128,7 +127,6 @@ function CommandsTable({ commands, showCategories }: IProps) {
                   key={row.id}
                   table={table}
                 />
-              </>
             );
           })}
       </Box>

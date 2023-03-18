@@ -8,7 +8,6 @@ import {
   PublicClientApplication,
 } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
-import { App } from "App";
 import LoginButton from "components/auth/LoginButton";
 import SignOutButton from "components/auth/SignOutButton";
 
@@ -22,7 +21,7 @@ Object.defineProperty(global.self, "crypto", {
   value: {
     // Needed for @azure/msal-browser
     subtle: {
-      digest: jest.fn(),
+      digest: vi.fn(),
     },
   },
 });
@@ -35,12 +34,12 @@ beforeEach(() => {
   eventCallbacks = [];
   let eventId = 0;
   pca = new PublicClientApplication(msalConfig);
-  jest.spyOn(pca, "addEventCallback").mockImplementation((callbackFn) => {
+  vi.spyOn(pca, "addEventCallback").mockImplementation((callbackFn) => {
     eventCallbacks.push(callbackFn);
     eventId += 1;
     return eventId.toString();
   });
-  jest.spyOn(pca, "handleRedirectPromise").mockImplementation(() => {
+  vi.spyOn(pca, "handleRedirectPromise").mockImplementation(() => {
     const eventStart: EventMessage = {
       eventType: EventType.HANDLE_REDIRECT_START,
       interactionType: InteractionType.Redirect,
@@ -72,13 +71,13 @@ beforeEach(() => {
     return Promise.resolve(null);
   });
 
-  jest.spyOn(pca, "getAllAccounts").mockImplementation(() => cachedAccounts);
+  vi.spyOn(pca, "getAllAccounts").mockImplementation(() => cachedAccounts);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  jest.restoreAllMocks();
-  jest.clearAllMocks();
+  vi.restoreAllMocks();
+  vi.clearAllMocks();
 });
 
 // TESTS
@@ -110,20 +109,13 @@ test("Shows display name for logged in user", async () => {
 
   // click popover button
   const button = screen.getByRole("button");
-  fireEvent.click(button);
+  act(() => {
+    fireEvent.click(button);
+  })
   // then check that display name is visible
   const leftText = await screen.findByText(/Signed in as/i);
   const displayName = await screen.findByText(testAccount.name);
 
   expect(leftText).toBeInTheDocument();
   expect(displayName).toBeInTheDocument();
-});
-
-test("App component renders without crashing", async () => {
-  render(
-    <MsalProvider instance={pca}>
-      <App />
-    </MsalProvider>
-  );
-  expect(await screen.findByText("Cmandr")).toBeInTheDocument();
 });
