@@ -29,18 +29,19 @@ const SearchAndPagination = ({
     >
       <GlobalFilter table={table} value={value} onChange={onChange}/>
       <Box pr="2rem">
-        <Button onClick={() => table.setPageIndex(0)} isDisabled={!table.getCanPreviousPage()}>
+        <Button aria-label="goToFirstPage" onClick={() => table.setPageIndex(0)} isDisabled={!table.getCanPreviousPage()}>
           <CgChevronDoubleLeft />
         </Button>{" "}
-        <Button onClick={() => table.previousPage()} isDisabled={!table.getCanPreviousPage()}>
+        <Button aria-label="goToPreviousPage" onClick={() => table.previousPage()} isDisabled={!table.getCanPreviousPage()}>
           <CgChevronLeft />
         </Button>{" "}
-        <Button onClick={() => {
+        <Button aria-label="goToNextPage" onClick={() => {
           table.nextPage()
         }} isDisabled={!table.getCanNextPage()}>
           <CgChevronRight />
         </Button>{" "}
         <Button
+          aria-label="goToLastPage"
           mr="1rem"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           isDisabled={!table.getCanNextPage()}

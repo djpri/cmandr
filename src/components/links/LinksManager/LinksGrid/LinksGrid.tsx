@@ -3,7 +3,6 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getFacetedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -11,10 +10,9 @@ import {
 } from "@tanstack/react-table";
 import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
-import { LinksSortFunction } from "helpers/linksSortFunctions";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto } from "models/link";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import Row from "./Row/Row";
 
@@ -22,11 +20,9 @@ interface IProps {
   links: LinkReadDto[];
   showCategories: boolean;
   isLoading: boolean;
-  sortFunction?: (a: LinkReadDto, b: LinkReadDto) => 1 | -1;
-  setSortFunction?: Dispatch<SetStateAction<LinksSortFunction>>;
 }
 
-function LinksTable({ links, showCategories, isLoading }: IProps) {
+function LinksGrid({ links, showCategories, isLoading }: IProps) {
   const columns = useMemo<ColumnDef<LinkReadDto>[]>(() => {
     if (showCategories) {
       return [
@@ -71,9 +67,9 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
   });
 
   useEffect(() => {
-    table.setPageSize(25)
+    table.setPageSize(25);
   }, []);
-  
+
   const { deleteMultipleLinksMutation } = useLinks();
 
   const handleBulkDelete = () => {
@@ -94,7 +90,10 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
         {table.getHeaderGroups().map((headerGroup) =>
           headerGroup.headers.map((header) => (
             <GridItem key={header.id}>
-              <HStack onClick={header.column.getToggleSortingHandler()} cursor={header.column.getCanSort() ? "pointer" : "none"}>
+              <HStack
+                onClick={header.column.getToggleSortingHandler()}
+                cursor={header.column.getCanSort() ? "pointer" : "none"}
+              >
                 <Text as="b" userSelect="none">
                   {flexRender(
                     header.column.columnDef.header,
@@ -145,8 +144,11 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
         <RowSelectionMenu handleBulkDelete={handleBulkDelete} table={table} />
       )}
       {table.getPreFilteredRowModel().flatRows.length > 1 && (
-        <SearchAndPagination table={table} value={globalFilter ?? ''}
-        onChange={value => setGlobalFilter(String(value))} />
+        <SearchAndPagination
+          table={table}
+          value={globalFilter ?? ""}
+          onChange={(value) => setGlobalFilter(String(value))}
+        />
       )}
       <Headers />
       <Rows />
@@ -154,4 +156,4 @@ function LinksTable({ links, showCategories, isLoading }: IProps) {
   );
 }
 
-export default LinksTable;
+export default LinksGrid;

@@ -3,7 +3,12 @@ import { testData } from "tests/testData";
 import SideBarLinks from "./SideBarLinks";
 
 beforeEach(() => {
+  vi.stubGlobal('scrollTo', vi.fn());
   render(<SideBarLinks />);
+});
+
+afterEach(() => {
+  vi.clearAllMocks();
 });
 
 test("Display names for default categories in sidebar", () => {

@@ -3,7 +3,7 @@ import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { ForwardedRef, useRef, useState } from "react";
 import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton";
-import LinksTable from "./LinksGrid/LinksGrid";
+import LinksGrid from "./LinksGrid/LinksGrid";
 import AddQuickLink from "./QuickAddLinkButton";
 
 interface IProps {
@@ -52,7 +52,7 @@ function LinksManager({ categoryId, links }: IProps) {
           <Box ref={quickAddLinkref} />
         </Box>
         {links?.length > 0 && (
-          <LinksTable
+          <LinksGrid
             isLoading={false}
             links={links}
             showCategories={!categoryId}

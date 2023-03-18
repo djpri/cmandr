@@ -109,9 +109,7 @@ test("Shows display name for logged in user", async () => {
 
   // click popover button
   const button = screen.getByRole("button");
-  act(() => {
-    fireEvent.click(button);
-  })
+  fireEvent.click(button);
   // then check that display name is visible
   const leftText = await screen.findByText(/Signed in as/i);
   const displayName = await screen.findByText(testAccount.name);
