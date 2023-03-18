@@ -7,6 +7,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { rootReducer } from "redux/store";
+import { expect } from "vitest";
+import matchers from "@testing-library/jest-dom/matchers";
+
+// extends Vitest's expect method with methods from react-testing-library
+expect.extend(matchers);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,3 +49,4 @@ const customRender = (ui: React.ReactElement, options?: RenderOptions) =>
 
 export * from "@testing-library/react";
 export { customRender as render };
+export { expect as viExpect };

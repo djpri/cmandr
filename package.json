@@ -13,7 +13,6 @@
     "@tanstack/react-query": "^4.26.1",
     "@tanstack/react-query-devtools": "^4.26.1",
     "@tanstack/react-table": "^8.7.9",
-    "@types/jest": "^29.4.0",
     "@types/node": "^18.14.6",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
@@ -45,18 +44,20 @@
     "@vitejs/plugin-react": "^3.1.0",
     "eslint": "^8.35.0",
     "eslint-plugin-react": "^7.32.2",
+    "jsdom": "^21.1.1",
     "msw": "^1.1.0",
     "prettier": "^2.8.4",
     "vite": "^4.2.0",
     "vite-plugin-svgr": "^2.4.0",
-    "vite-tsconfig-paths": "^4.0.7"
+    "vite-tsconfig-paths": "^4.0.7",
+    "vitest": "^0.29.3"
   },
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "serve": "vite preview",
-    "test": "react-scripts test -env=jsdom --transformIgnorePatterns \"node_modules/(?!(react-redux))/\"",
-    "test:coverage": "react-scripts test --coverage",
+    "serve": "vite preview --port 3000",
+    "test": "vitest watch",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint --ignore-path .gitignore .",
     "prettier": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
     "plop": "plop"
