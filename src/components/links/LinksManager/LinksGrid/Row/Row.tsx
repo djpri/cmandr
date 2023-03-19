@@ -5,6 +5,7 @@ import {
   Link as ChakraLink,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Row, Table } from "@tanstack/react-table";
 import { LinkReadDto } from "models/link";
 import { Key } from "react";
 import LinkOptions from "./LinkOptions/LinkOptions";
@@ -13,23 +14,15 @@ interface IProps {
   linkItem: LinkReadDto;
   showCategories: boolean;
   isLoading: boolean;
-  isSelected: boolean;
-  toggleCurrentRow: (set?: boolean) => void;
-  toggleAllRowsSelected: (set?: boolean) => void;
-  selectedRowIds: Record<Key, boolean>;
-  toggleOtherRow: (key: Key, set?: boolean) => void;
-  rowId: Key;
+  row: Row<LinkReadDto>;
+  table: Table<LinkReadDto>;
 }
 
 function TableRow({
   linkItem,
+  row,
+  table,
   showCategories,
-  isSelected,
-  toggleCurrentRow,
-  toggleAllRowsSelected,
-  selectedRowIds,
-  toggleOtherRow,
-  rowId,
 }: IProps) {
   const { title, url, category, faviconImageUrl } = linkItem;
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
@@ -50,23 +43,31 @@ function TableRow({
     if (!target.classList.contains("clickToSelect")) {
       return;
     }
-    const wasSelected = isSelected;
+    const wasSelected = row.getIsSelected();
 
     if (event.ctrlKey) {
-      toggleCurrentRow();
+      row.toggleSelected();
     } else {
-      toggleAllRowsSelected(false);
-      toggleCurrentRow(!wasSelected);
+      table.toggleAllRowsSelected(false);
+      row.toggleSelected(!wasSelected)
     }
 
     if (event.shiftKey) {
-      const keys = Object.keys(selectedRowIds).map((k) => parseInt(k));
-      keys.push(rowId as number);
+      const keys = table
+        .getSelectedRowModel()
+        .flatRows.map((k) => parseInt(k.id));
+      keys.push(parseInt(row.id));
       const min = Math.min(...keys);
       const max = Math.max(...keys);
-      for (let i = min; i <= max; i++) {
-        toggleOtherRow(i.toString(), true);
-      }
+      const allRowsToSelect = table
+        .getRowModel()
+        .flatRows.slice(min, max + 1)
+        .map((k) => parseInt(k.id));
+      const rowSelection = allRowsToSelect.reduce((m, v) => {
+        m[v] = true;
+        return m;
+      }, {});
+      table.setRowSelection(rowSelection);
       document.getSelection().removeAllRanges();
     }
   };
@@ -88,9 +89,9 @@ function TableRow({
       px={4}
       rounded="none"
       className="gridRow clickToSelect"
-      bgColor={isSelected && selectedRowColor}
+      bgColor={row.getIsSelected() && selectedRowColor}
       _hover={{
-        bgColor: isSelected && selectedRowColor,
+        bgColor: row.getIsSelected() && selectedRowColor,
       }}
       onMouseDown={handleClick}
     >

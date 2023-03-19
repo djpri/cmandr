@@ -5,18 +5,19 @@ import {
   useColorModeValue,
   Text,
 } from "@chakra-ui/react";
+import { Table } from "@tanstack/react-table";
+import { CommandReadDto } from "models/command";
+import { LinkReadDto } from "models/link";
 import { FC } from "react";
 
 interface IProps {
-  selectedFlatRows: never[];
   handleBulkDelete: () => void;
-  toggleAllRowsSelected: (set?: boolean) => void;
+  table: Table<any>;
 }
 
 const RowSelectionMenu: FC<IProps> = ({
-  selectedFlatRows,
   handleBulkDelete,
-  toggleAllRowsSelected,
+  table
 }) => {
   const selectedRowsInfoColor = useColorModeValue("gray.400", "blue.600");
 
@@ -30,9 +31,9 @@ const RowSelectionMenu: FC<IProps> = ({
       justify="space-between"
       align="center"
     >
-      <Text>{selectedFlatRows.length} items selected</Text>
+      <Text>{table.getSelectedRowModel().flatRows.length} items selected</Text>
       <HStack>
-        <Button onClick={() => toggleAllRowsSelected(false)}>
+        <Button onClick={() => table.toggleAllRowsSelected(false)}>
           Clear Selection
         </Button>
         <Button onClick={handleBulkDelete}>Delete</Button>
