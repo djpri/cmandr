@@ -1,11 +1,12 @@
 import { useAccount, useMsal } from "@azure/msal-react";
-import { ChakraProvider, CSSReset } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset, Spinner } from "@chakra-ui/react";
 import { CmandrApi } from "api";
 import { apiConfig } from "auth/apiConfig";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { setEndOfUserSession, setUserSession } from "redux/slices/appSlice";
+import Dashboard from "views/Dashboard";
 import Home from "views/Home";
 import theme from "./theme/theme";
 
@@ -13,7 +14,6 @@ const AllCommands = lazy(() => import("views/AllCommands"));
 const CommandCategory = lazy(() => import("views/CommandCategory"));
 const Links = lazy(() => import("views/AllLinks"));
 const LinkCategory = lazy(() => import("views/LinkCategory"));
-const Dashboard = lazy(() => import("views/Dashboard"));
 const UserLayout = lazy(() => import("components/layout/UserLayout"));
 
 export const App = () => {
@@ -67,7 +67,7 @@ export const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <Suspense fallback={<UserLayout>{/* <Spinner /> */}</UserLayout>}>
+      <Suspense fallback={<UserLayout><Spinner /></UserLayout>}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
