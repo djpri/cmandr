@@ -12,7 +12,6 @@ type ColorModeSwitcherProps = Omit<IconButtonProps, "aria-label">;
 export const ColorModeSwitcher: FC<ColorModeSwitcherProps> = (props) => {
   const { toggleColorMode } = useColorMode();
   const text = useColorModeValue("dark", "light");
-  const iconColor = useColorModeValue("black", "white");
   const SwitchIcon = useColorModeValue(FaMoon, FaSun);
 
   return (
@@ -23,7 +22,7 @@ export const ColorModeSwitcher: FC<ColorModeSwitcherProps> = (props) => {
       color="current"
       boxShadow="outline"
       onClick={toggleColorMode}
-      icon={<SwitchIcon color={iconColor} />}
+      icon={<SwitchIcon color="white" />}
       aria-label={`Switch to ${text} mode`}
       {...props}
     />

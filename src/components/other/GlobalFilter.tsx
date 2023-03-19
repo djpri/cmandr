@@ -1,27 +1,41 @@
 import { Input } from "@chakra-ui/react";
-import { useState } from "react";
-import { useAsyncDebounce } from "react-table";
+import { Table } from "@tanstack/table-core";
+import { InputHTMLAttributes, useEffect, useState } from "react";
+
+type PropTypes = {
+  value: string | number;
+  onChange: (value: string | number) => void;
+  table: Table<any>;
+  debounce?: number;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">
 
 function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce((value) => {
-    setGlobalFilter(value || undefined);
-  }, 400);
+  value: initialValue,
+  onChange,
+  debounce = 500,
+  table,
+}: PropTypes) {
+  const count = table.getPreFilteredRowModel().rows.length;
+  const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      onChange(value);
+    }, debounce);
+
+    return () => clearTimeout(timeout);
+  }, [value]);
 
   return (
     <Input
       mb={2}
       value={value || ""}
       maxW="sm"
-      onChange={(e) => {
-        setValue(e.target.value);
-        onChange(e.target.value);
-      }}
+      onChange={(e) => setValue(e.target.value)}
       placeholder={count > 1 ? `Search all ${count} items...` : "Search"}
       disabled={count <= 1}
     />

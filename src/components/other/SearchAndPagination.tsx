@@ -1,4 +1,5 @@
 import { Box, Button, chakra, Flex } from "@chakra-ui/react";
+import { Table } from "@tanstack/react-table";
 import {
   CgChevronDoubleLeft,
   CgChevronDoubleRight,
@@ -7,19 +8,17 @@ import {
 } from "react-icons/cg";
 import GlobalFilter from "./GlobalFilter";
 
+interface IProps {
+  table: Table<any>;
+  value: string | number;
+  onChange: (value: string | number) => void;
+}
+
 const SearchAndPagination = ({
-  preGlobalFilteredRows,
-  canPreviousPage,
-  canNextPage,
-  state,
-  gotoPage,
-  previousPage,
-  nextPage,
-  setGlobalFilter,
-  pageCount,
-  pageIndex,
-  pageOptions,
-}) => {
+  table,
+  value,
+  onChange
+}: IProps) => {
   return (
     <Flex
       pl="4"
@@ -28,32 +27,31 @@ const SearchAndPagination = ({
       justifyContent="space-between"
       wrap="wrap"
     >
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
+      <GlobalFilter table={table} value={value} onChange={onChange}/>
       <Box pr="2rem">
-        <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <Button aria-label="goToFirstPage" onClick={() => table.setPageIndex(0)} isDisabled={!table.getCanPreviousPage()}>
           <CgChevronDoubleLeft />
         </Button>{" "}
-        <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <Button aria-label="goToPreviousPage" onClick={() => table.previousPage()} isDisabled={!table.getCanPreviousPage()}>
           <CgChevronLeft />
         </Button>{" "}
-        <Button onClick={() => nextPage()} disabled={!canNextPage}>
+        <Button aria-label="goToNextPage" onClick={() => {
+          table.nextPage()
+        }} isDisabled={!table.getCanNextPage()}>
           <CgChevronRight />
         </Button>{" "}
         <Button
+          aria-label="goToLastPage"
           mr="1rem"
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}
+          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          isDisabled={!table.getCanNextPage()}
         >
           <CgChevronDoubleRight />
         </Button>{" "}
         <chakra.span justifySelf="flex-end">
           Page{" "}
           <b>
-            {pageIndex + 1} of {pageOptions.length}
+            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
           </b>{" "}
         </chakra.span>
       </Box>

@@ -18,7 +18,7 @@ import { LinkReadDto } from "../models/link";
  * @see https://axios-http.com/docs/req_config
  */
 export const CmandrApi: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 15000,
 });
 

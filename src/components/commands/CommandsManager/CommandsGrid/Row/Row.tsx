@@ -8,8 +8,9 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Row, Table } from "@tanstack/table-core";
 import { CommandReadDto } from "models/command";
-import { Key, useState } from "react";
+import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiFillFolder } from "react-icons/ai";
 import { GoLinkExternal } from "react-icons/go";
@@ -18,24 +19,11 @@ import CommandOptions from "./CommandOptions/CommandOptions";
 type Props = {
   commandItem: CommandReadDto;
   showCategories: boolean;
-  isSelected: boolean;
-  toggleCurrentRow: (set?: boolean) => void;
-  toggleAllRowsSelected: (set?: boolean) => void;
-  selectedRowIds: Record<Key, boolean>;
-  toggleOtherRow: (key: Key, set?: boolean) => void;
-  rowId: Key;
+  table: Table<CommandReadDto>;
+  row: Row<CommandReadDto>;
 };
 
-function Row({
-  commandItem,
-  showCategories,
-  isSelected,
-  toggleCurrentRow,
-  toggleAllRowsSelected,
-  toggleOtherRow,
-  selectedRowIds,
-  rowId,
-}: Props) {
+function CommandRow({ row, table, showCategories, commandItem }: Props) {
   const { id, description, line, reference, category } = commandItem;
   const [isCopied, setIsCopied] = useState(false);
   const hoverColor = useColorModeValue("gray.200", "gray.600");
@@ -54,23 +42,31 @@ function Row({
     if (!target.classList.contains("clickToSelect")) {
       return;
     }
-    const wasSelected = isSelected;
+    const wasSelected = row.getIsSelected();
 
     if (event.ctrlKey) {
-      toggleCurrentRow();
+      row.toggleSelected();
     } else {
-      toggleAllRowsSelected(false);
-      toggleCurrentRow(!wasSelected);
+      table.toggleAllRowsSelected(false);
+      row.toggleSelected(!wasSelected);
     }
 
     if (event.shiftKey) {
-      const keys = Object.keys(selectedRowIds).map((k) => parseInt(k));
-      keys.push(rowId as number);
+      const keys = table
+        .getSelectedRowModel()
+        .flatRows.map((k) => parseInt(k.id));
+      keys.push(parseInt(row.id));
       const min = Math.min(...keys);
       const max = Math.max(...keys);
-      for (let i = min; i <= max; i++) {
-        toggleOtherRow(i.toString(), true);
-      }
+      const allRowsToSelect = table
+        .getRowModel()
+        .flatRows.slice(min, max + 1)
+        .map((k) => parseInt(k.id));
+      const rowSelection = allRowsToSelect.reduce((m, v) => {
+        m[v] = true;
+        return m;
+      }, {});
+      table.setRowSelection(rowSelection);
       document.getSelection().removeAllRanges();
     }
   };
@@ -84,9 +80,9 @@ function Row({
       gap={4}
       rounded="none"
       className="gridRow clickToSelect"
-      bgColor={isSelected && selectedRowColor}
+      bgColor={row.getIsSelected() && selectedRowColor}
       _hover={{
-        bgColor: isSelected && selectedRowColor,
+        bgColor: row.getIsSelected() && selectedRowColor,
       }}
       onMouseDown={handleClick}
     >
@@ -176,4 +172,4 @@ function Row({
   );
 }
 
-export default Row;
+export default CommandRow;

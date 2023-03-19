@@ -43,7 +43,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
         <Select {...register("categoryId")}>
           <option value="">Select Category</option>
           {allCategoriesQuery.data &&
-            allCategoriesQuery.data.map((category) => (
+            allCategoriesQuery.data.filter(category => category.isGroup === false).map((category) => (
               <option value={category.id} key={category.id}>
                 {category.name}
               </option>
