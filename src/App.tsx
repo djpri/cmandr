@@ -2,20 +2,19 @@ import { useAccount, useMsal } from "@azure/msal-react";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import { CmandrApi } from "api";
 import { apiConfig } from "auth/apiConfig";
-import UserLayout from "components/layout/UserLayout";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { setEndOfUserSession, setUserSession } from "redux/slices/appSlice";
 import Home from "views/Home";
 import theme from "./theme/theme";
-import Dashboard from "./views/Dashboard";
 
 const AllCommands = lazy(() => import("views/AllCommands"));
 const CommandCategory = lazy(() => import("views/CommandCategory"));
 const Links = lazy(() => import("views/AllLinks"));
 const LinkCategory = lazy(() => import("views/LinkCategory"));
-const Login = lazy(() => import("views/Login"));
+const Dashboard = lazy(() => import("views/Dashboard"));
+const UserLayout = lazy(() => import("components/layout/UserLayout"));
 
 export const App = () => {
   const { instance, accounts } = useMsal();
@@ -76,7 +75,6 @@ export const App = () => {
           <Route path="/commands/:id" element={<CommandCategory />} />
           <Route path="/links" element={<Links />} />
           <Route path="/links/:id" element={<LinkCategory />} />
-          <Route path="/account/login" element={<Login />} />
         </Routes>
       </Suspense>
     </ChakraProvider>
