@@ -9,7 +9,6 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 import { store } from "redux/store";
 import { App } from "./App";
 
@@ -26,10 +25,10 @@ const queryClient = new QueryClient({
 const msalInstance = new PublicClientApplication(msalConfig);
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
+
 root.render(
   <React.StrictMode>
     <ColorModeScript />
-    <BrowserRouter>
       <DndProvider backend={HTML5Backend}>
         <QueryClientProvider client={queryClient}>
           <MsalProvider instance={msalInstance}>
@@ -43,6 +42,5 @@ root.render(
           </MsalProvider>
         </QueryClientProvider>
       </DndProvider>
-    </BrowserRouter>
   </React.StrictMode>,
 );
