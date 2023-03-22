@@ -13,7 +13,9 @@ import {
   Spinner,
   Text,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
+import AddLinkCategory from "components/linkCategories/AddLinkCategory";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinksFromSingleCategory from "hooks/links/useLinksFromSingleCategory";
@@ -89,7 +91,7 @@ function LinkCategory() {
         </Box>
       </Stack>
       <Text mb="30px" color="gray.500" fontWeight="700">
-        {category && category.items} items
+        {category ? category.items : "0"} item{category?.items !== 1 && "s"}
       </Text>
       <DeleteLinkCategory
         isOpen={isOpen}
@@ -100,7 +102,7 @@ function LinkCategory() {
       <EditLinkCategory
         isOpen={isEditModalOpen}
         onClose={editModalClose}
-        categoryId={parseInt(categoryId)}
+        category={category}
       />
       {query.isLoading && <Spinner mb={5} />}
       {!category?.isGroup && (
@@ -120,6 +122,11 @@ function LinkCategory() {
             />
           ))}
         </Grid>
+      )}
+      {category.isGroup && (
+        <VStack spacing={2} my={5} align="flex-start">
+          <AddLinkCategory parentId={category.id} />
+        </VStack>
       )}
     </UserLayout>
   );

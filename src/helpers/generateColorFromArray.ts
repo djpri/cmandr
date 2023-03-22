@@ -4,5 +4,5 @@ export const generateColorFromArray = (
   array: unknown[],
   hue = 210
 ) => {
-  return `hsl(210, ${(item.items / array.length) * 100 + 40}%, 35%)`;
+  return `hsl(${hue}, ${(item.items / array.length) * 100 + 40}%, 35%)`;
 };

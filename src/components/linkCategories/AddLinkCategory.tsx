@@ -11,9 +11,10 @@ import useLinkCategories from "../../hooks/links/useLinkCategories";
 
 interface IProps {
   isGroup?: boolean;
+  parentId?: number;
 }
 
-function AddLinkCategory({ isGroup }: IProps) {
+function AddLinkCategory({ isGroup, parentId }: IProps) {
   const [category, setCategory] = useState("");
   const { isOpen, onToggle } = useDisclosure();
   const { addCategoryMutation } = useLinkCategories();
@@ -21,7 +22,8 @@ function AddLinkCategory({ isGroup }: IProps) {
 
   const handleAddCategory = () => {
     try {
-      addCategoryMutation.mutate({ name: category, isGroup });
+      addCategoryMutation.mutate({ name: category, isGroup, parentId: parentId ?? null });
+      setCategory("");
       onToggle();
     } catch (error) {
       // eslint-disable-next-line no-console

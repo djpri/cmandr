@@ -10,17 +10,23 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import useLinkCategories from "hooks/links/useLinkCategories";
-import { useState } from "react";
+import { CategoryUpdateDto } from "models/category";
+import { useMemo, useState } from "react";
 
-function EditLinkCategory({ isOpen, onClose, categoryId }) {
+function EditLinkCategory({ isOpen, onClose, category }) {
   const [categoryName, setCategoryName] = useState("");
   const { editCategoryMutation } = useLinkCategories();
 
+  const categoryUpdateDto: CategoryUpdateDto = useMemo(() => {
+    return {
+      name: category.name,
+      parentId: category.parentId,
+      isGroup: category.isGroup,
+    }
+  }, [category]);
+
   const handleEdit = () => {
-    editCategoryMutation.mutate({
-      id: categoryId,
-      body: { name: categoryName },
-    });
+    editCategoryMutation.mutate({ id: category.id, body: categoryUpdateDto });
     setCategoryName("");
     onClose();
   };

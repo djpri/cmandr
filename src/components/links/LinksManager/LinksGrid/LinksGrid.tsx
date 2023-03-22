@@ -141,7 +141,7 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
   return (
     <Box>
       {table.getSelectedRowModel().flatRows.length > 1 && (
-        <RowSelectionMenu handleBulkDelete={handleBulkDelete} table={table} />
+        <RowSelectionMenu handleBulkDelete={handleBulkDelete} table={table} type="link" />
       )}
       {table.getPreFilteredRowModel().flatRows.length > 1 && (
         <SearchAndPagination

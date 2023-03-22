@@ -7,6 +7,7 @@ import {
   Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { isInDevelopment } from "helpers/environment";
 import { CategoryReadDto } from "models/category";
 import { FC, useMemo } from "react";
 import { AiFillFolder } from "react-icons/ai";
@@ -112,7 +113,7 @@ const CategoryGroup: FC<IProps> = ({
         whiteSpace="nowrap"
         fontSize="sm"
       >
-        {item.name}
+        {isInDevelopment && `(${item.id})`} {item.name}
       </Text>
     </Tooltip>
   );

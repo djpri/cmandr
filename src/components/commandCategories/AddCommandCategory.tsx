@@ -11,16 +11,19 @@ import { AiFillFolderAdd, AiOutlineUnorderedList } from "react-icons/ai";
 
 interface IProps {
   isGroup?: boolean;
+  parentId?: number;
 }
 
-function AddCommandCategory({ isGroup }: IProps) {
+function AddCommandCategory({ isGroup, parentId }: IProps) {
   const { addCategoryMutation } = useCommandCategories();
   const [category, setCategory] = useState<string>("");
   const { isOpen, onToggle } = useDisclosure();
   const inputColor = useColorModeValue("#f2f6fa", "#1f2937");
 
   const handleAddCategory = () => {
-    addCategoryMutation.mutate({ name: category, isGroup });
+    addCategoryMutation.mutate({ name: category, isGroup, parentId: parentId ?? null });
+    setCategory("");
+    onToggle();
   };
 
   return (

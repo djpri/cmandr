@@ -12,6 +12,7 @@ import useLinks from "hooks/links/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LinkCreateDto } from "../../models/link";
+import { isWebUri } from "valid-url";
 
 interface IProps {
   categoryId?: number;
@@ -71,11 +72,7 @@ function QuickAddLinkForm({ categoryId }: IProps) {
           <Input
             {...register("url", {
               required: "Please enter a link",
-              pattern: {
-                value:
-                  /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
-                message: "Please enter a valid link",
-              },
+              validate: (value) => (isWebUri(value) !== undefined) || "Please enter a valid link",
             })}
             placeholder="Link URL"
           />

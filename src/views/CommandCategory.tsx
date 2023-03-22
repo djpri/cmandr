@@ -12,7 +12,9 @@ import {
   Stack,
   Text,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
+import AddCommandCategory from "components/commandCategories/AddCommandCategory";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useCommandsFromSingleCategory from "hooks/commands/useCommandsFromSingleCategory";
@@ -87,7 +89,7 @@ function CommandCategoryPage() {
         </Box>
       </Stack>
       <Text mb="30px" color="gray.500" fontWeight="700">
-        {category && category.items} items
+        {category ? category.items : "0"} item{category?.items !== 1 && "s"}
       </Text>
       <DeleteCategoryModal
         isOpen={isOpen}
@@ -98,6 +100,7 @@ function CommandCategoryPage() {
       <EditCommandCategory
         isOpen={isEditModalOpen}
         onClose={editModalClose}
+        category={category}
         categoryId={parseInt(categoryId)}
       />
       {query.isLoading && <Spinner mb={5} />}
@@ -118,6 +121,11 @@ function CommandCategoryPage() {
             />
           ))}
         </Grid>
+      )}
+      {category.isGroup && (
+        <VStack spacing={2} my={5} align="flex-start">
+          <AddCommandCategory parentId={category.id} />
+        </VStack>
       )}
     </UserLayout>
   );
