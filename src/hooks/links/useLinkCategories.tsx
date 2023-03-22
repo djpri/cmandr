@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 import useChakraToast from "../other/useChakraToast";
+import { CategoryReadDto } from "models/category";
 
 /**
  * Custom hook that contains react query logic for link categories
@@ -41,10 +42,18 @@ function useLinkCategories() {
     onError: showErrorToast,
   });
   const deleteCategoryMutation = useMutation(LinkCategories.remove, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['linkCategories']);
+    onMutate: (id) => {
+      queryClient.cancelQueries(['linkCategories']);
+      const previousCategories = queryClient.getQueryData(['linkCategories']);
+      queryClient.setQueryData(['linkCategories'], (old: CategoryReadDto[]) => {
+        return old.filter((category: CategoryReadDto) => category.id !== id);
+      });
+      return () => queryClient.setQueryData(['linkCategories'], previousCategories);
     },
-    onError: showErrorToast,
+    onError: () => {
+      queryClient.invalidateQueries(['linkCategories']);
+      showErrorToast();
+    },
   });
   const manualSortMutation = useMutation(LinkCategories.manualSort, {
     onSuccess: () => {

@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 import useChakraToast from "../other/useChakraToast";
+import { CategoryReadDto } from "models/category";
 
 /**
  * Custom hook that contains react query logic for command categories
@@ -43,10 +44,18 @@ function useCommandCategories() {
     onError: showErrorToast,
   });
   const deleteCategoryMutation = useMutation(CommandCategories.remove, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['commandCategories']);
+    onMutate: (id) => {
+      queryClient.cancelQueries(['commandCategories']);
+      const previousCategories = queryClient.getQueryData(['commandCategories']);
+      queryClient.setQueryData(['commandCategories'], (old: CategoryReadDto[]) => {
+        return old.filter((category: CategoryReadDto) => category.id !== id);
+      });
+      return () => queryClient.setQueryData(['commandCategories'], previousCategories);
     },
-    onError: showErrorToast,
+    onError: () => {
+      queryClient.invalidateQueries(['commandCategories']);
+      showErrorToast();
+    },
   });
   const manualSortMutation = useMutation(CommandCategories.manualSort, {
     onSuccess: () => {

@@ -61,6 +61,13 @@ function useLinks() {
     },
     onError: showErrorToast,
   });
+  const editMultipleLinksMutation = useMutation(Links.bulkUpdate, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['links']);
+      queryClient.invalidateQueries(['linkCategories']);
+    },
+    onError: showErrorToast,
+  });
   const deleteMultipleLinksMutation = useMutation(Links.bulkRemove, {
     onSuccess: () => {
       queryClient.invalidateQueries(['links']);
@@ -76,6 +83,7 @@ function useLinks() {
     quickAddLinkMutation,
     editLinkMutation,
     deleteLinkMutation,
+    editMultipleLinksMutation,
     deleteMultipleLinksMutation,
   };
 }

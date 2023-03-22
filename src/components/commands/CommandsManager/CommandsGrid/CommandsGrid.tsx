@@ -83,7 +83,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
   return (
     <Box p="0" display="flex" flexDirection="column">
       {table.getSelectedRowModel().flatRows.length > 1 && (
-        <RowSelectionMenu handleBulkDelete={handleBulkDelete} table={table} />
+        <RowSelectionMenu handleBulkDelete={handleBulkDelete} table={table} type="command" />
       )}
       {table.getSelectedRowModel().flatRows.length <= 1 && (
         <SearchAndPagination table={table} value={globalFilter ?? ''}

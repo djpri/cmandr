@@ -8,6 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "components/other/ColorModeSwitcher";
+import { isInDevelopment } from "helpers/environment";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link as RouterLink } from "react-router-dom";
 import { setSidebarToggle } from "redux/slices/layoutSlice";
@@ -24,7 +25,7 @@ function NavBar() {
       top="0"
       w="100vw"
       pr="1rem"
-      bgColor={import.meta.env.DEV ? "yellow.500" : bgColor}
+      bgColor={isInDevelopment ? "yellow.500" : bgColor}
       color="white"
       h="50"
       shadow="base"
@@ -57,7 +58,7 @@ function NavBar() {
               Cmandr
             </Heading>
           </Link>
-          {import.meta.env.DEV && (
+          {isInDevelopment && (
             <Text>DEVELOPMENT MODE</Text>
           )}
         </HStack>

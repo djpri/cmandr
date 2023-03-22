@@ -28,7 +28,7 @@ function useCommands() {
   // Queries
   const query = useQuery<CommandReadDto[]>(
     ['commands'],
-    asReactQueryFunction(({ pageParams }) => Commands.getAll()),
+    asReactQueryFunction(() => Commands.getAll()),
     {
       enabled: isAppInitalized,
     }
@@ -88,6 +88,13 @@ function useCommands() {
     },
     onError: showErrorToast,
   });
+  const editMultipleCommandsMutation = useMutation(Commands.bulkUpdate, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['commands']);
+      queryClient.invalidateQueries(['commandCategories']);
+    },
+    onError: showErrorToast,
+  });
   const deleteMultipleCommandsMutation = useMutation(Commands.bulkRemove, {
     onSuccess: () => {
       queryClient.invalidateQueries(['commands']);
@@ -105,6 +112,7 @@ function useCommands() {
     addCommandMutation,
     editCommandMutation,
     deleteCommandMutation,
+    editMultipleCommandsMutation,
     deleteMultipleCommandsMutation,
   };
 }

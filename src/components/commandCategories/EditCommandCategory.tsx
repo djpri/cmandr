@@ -10,21 +10,23 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import useCommandCategories from "hooks/commands/useCommandCategories";
-import { useState } from "react";
+import { CategoryUpdateDto } from "models/category";
+import { useMemo, useState } from "react";
 
-function EditCommandCategory({ isOpen, onClose, categoryId }) {
+function EditCommandCategory({ isOpen, onClose, categoryId, category }) {
   const [categoryName, setCategoryName] = useState("");
   const { editCategoryMutation } = useCommandCategories();
 
-  const editCommandRequest = {
-    id: categoryId,
-    body: {
-      name: categoryName,
-    },
-  };
+  const categoryUpdateDto: CategoryUpdateDto = useMemo(() => {
+    return {
+      name: category.name,
+      parentId: category.parentId,
+      isGroup: category.isGroup,
+    }
+  }, [category]);
 
   const handleEdit = () => {
-    editCategoryMutation.mutate(editCommandRequest);
+    editCategoryMutation.mutate({ id: categoryId, body: categoryUpdateDto });
     setCategoryName("");
     onClose();
   };

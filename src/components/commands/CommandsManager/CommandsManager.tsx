@@ -42,7 +42,7 @@ function CommandsManager({ categoryId, commands }: IProps) {
           </Box>
           <Box ref={ref} />
         </Box>
-        {commands && (
+        {commands?.length > 0 && (
           <CommandsTable commands={commands} showCategories={!categoryId} />
         )}
       </Box>

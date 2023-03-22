@@ -3719,6 +3719,7 @@ __metadata:
     react-redux: ^8.0.5
     react-router-dom: ^6.9.0
     typescript: ^5.0.2
+    valid-url: ^1.0.9
     vite: ^4.2.0
     vite-plugin-svgr: ^2.4.0
     vite-tsconfig-paths: ^4.0.7
@@ -8648,6 +8649,13 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
+"valid-url@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "valid-url@npm:1.0.9"
+  checksum: 3ecb030559404441c2cf104cbabab8770efb0f36d117db03d1081052ef133015a68806148ce954bb4dd0b5c42c14b709a88783c93d66b0916cb67ba771c98702
   languageName: node
   linkType: hard
 

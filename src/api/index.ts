@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import { BASE_URL } from "helpers/environment";
 import {
   CategoryCreateDto,
   CategoryDisplayIndexDto,
@@ -18,7 +19,7 @@ import { LinkReadDto } from "../models/link";
  * @see https://axios-http.com/docs/req_config
  */
 export const CmandrApi: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: BASE_URL,
   timeout: 15000,
 });
 
@@ -33,6 +34,8 @@ export const Commands = {
   update: (request: { id: number; body: CommandUpdateDto }) =>
     put(`commands/${request.id}`, request.body),
   remove: (id: number) => remove<void>(`commands/${id}`),
+  bulkUpdate: (request: { body: number[][] }) =>
+    put<void>(`commands/multiple`, request.body),
   bulkRemove: (ids: number[]) =>
     remove<void>(`commands/multiple`, { data: ids }),
 };
@@ -58,6 +61,8 @@ export const Links = {
   update: (request: { id: number; body: LinkUpdateDto }) =>
     put(`links/${request.id}`, request.body),
   remove: (id: number) => remove(`links/${id}`),
+  bulkUpdate: (request: { body: number[][] }) =>
+    put(`links/multiple`, request.body),
   bulkRemove: (ids: number[]) => remove(`links/multiple`, { data: ids }),
 };
 
