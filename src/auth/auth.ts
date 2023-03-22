@@ -1,4 +1,12 @@
-export const b2cPolicies = {
+import { PublicClientApplication } from "@azure/msal-browser";
+import { CLIENT_ID } from "helpers/environment";
+
+export const apiConfig = {
+  b2cScopes: ["https://CmandrApp.onmicrosoft.com/CmandrApi/access_as_user"],
+  webApi: "http://localhost:44310",
+};
+
+const b2cPolicies = {
   names: {
     signIn: "B2C_1_sign_in",
     signUpSignIn: "B2C_1_signup_signin",
@@ -25,3 +33,17 @@ export const b2cPolicies = {
   },
   authorityDomain: "CmandrApp.b2clogin.com",
 };
+
+export const msalConfig = {
+  auth: {
+    clientId: CLIENT_ID,
+    authority: b2cPolicies.authorities.signIn.authority,
+    knownAuthorities: [b2cPolicies.authorityDomain],
+  },
+  cache: {
+    cacheLocation: "localStorage",
+    storeAuthStateInCookie: true,
+  },
+};
+
+export const msalInstance = new PublicClientApplication(msalConfig);
