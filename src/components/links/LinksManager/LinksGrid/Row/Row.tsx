@@ -8,7 +8,6 @@ import {
 import { Row, Table } from "@tanstack/react-table";
 import { isInDevelopment } from "helpers/environment";
 import { LinkReadDto } from "models/link";
-import { Key } from "react";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
 interface IProps {
@@ -25,7 +24,7 @@ function TableRow({
   table,
   showCategories,
 }: IProps) {
-  const { id, title, url, category, faviconImageUrl } = linkItem;
+  const { title, url, category, faviconImageUrl } = linkItem;
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
 
   const getFaviconUrl = (link) => {
