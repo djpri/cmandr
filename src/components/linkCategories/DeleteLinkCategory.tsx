@@ -30,7 +30,7 @@ function DeleteLinkCategory({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Delete "{categoryName}" links</ModalHeader>
+        <ModalHeader>Delete {`"${categoryName}"`} links</ModalHeader>
         <ModalCloseButton />
         <ModalBody>WARNING! This action cannot be undone.</ModalBody>
 

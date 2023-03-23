@@ -47,6 +47,6 @@ const AllProviders = ({ children }: { children?: React.ReactNode }) => (
 const customRender = (ui: React.ReactElement, options?: RenderOptions) =>
   render(ui, { wrapper: AllProviders, ...options });
 
-export * from "@testing-library/react";
+// export * from "@testing-library/react";
 export { customRender as render };
 export { expect as viExpect };

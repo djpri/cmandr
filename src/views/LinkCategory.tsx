@@ -69,7 +69,7 @@ function LinkCategory() {
           {category ? category.name : ""}
         </Heading>
         <Box m="0" p="0">
-          <Popover placement="right">
+          <Popover placement="right" isLazy>
             <PopoverTrigger>
               <Button boxShadow="outline">
                 <FaEdit />

@@ -14,6 +14,7 @@ import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { RiCommandLine } from "react-icons/ri";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
+
 function Home() {
   const { instance, accounts } = useMsal();
   const navigate = useNavigate();

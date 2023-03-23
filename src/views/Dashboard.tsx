@@ -16,8 +16,9 @@ import useLinkCategories from "hooks/links/useLinkCategories";
 import useSettings from "hooks/settings/useSettings";
 import { CategoryReadDto } from "models/category";
 import { UserSettings } from "models/user";
-import { FC, useMemo } from "react";
-import UserLayout from "../components/layout/UserLayout";
+import { FC, lazy, useMemo } from "react";
+
+const UserLayout = lazy(() => import("../components/layout/UserLayout"));
 
 type SortButtonProps = {
   type: "command" | "link";
