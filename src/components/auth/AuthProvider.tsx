@@ -17,13 +17,13 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const getToken = async () => {
+    const getToken = async ({ fromCache = true }: { fromCache: boolean }) => {
       if (!accounts[0]) return null;
 
       const silentRequest: SilentRequest = {
         scopes: apiConfig.b2cScopes,
         account: accounts[0],
-        cacheLookupPolicy: CacheLookupPolicy.Default,
+        cacheLookupPolicy: fromCache ? CacheLookupPolicy.Default : CacheLookupPolicy.RefreshToken,
       };
 
       try {
@@ -42,12 +42,12 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       }
     };
 
-    getToken();
+    getToken({ fromCache: true });
     dispatch(setUserSession());
 
-    CmandrApi.interceptors.request.use(
+    const interceptor = CmandrApi.interceptors.request.use(
       async function (config) {
-        const token = await getToken();
+        const token = await getToken({ fromCache: false });
         config.headers.Authorization = `bearer ${token}`;
         return config;
       },
@@ -55,6 +55,9 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         return Promise.reject(error);
       }
     );
+    return () => {
+      CmandrApi.interceptors.request.eject(interceptor);
+    };
   }, [instance, accounts, dispatch]);
 
   return <>{children}</>;

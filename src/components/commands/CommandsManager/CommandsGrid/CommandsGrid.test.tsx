@@ -1,5 +1,5 @@
 import { testData } from "tests/testData";
-import { customRender } from "../../../../tests/test-utils";
+import { customRender } from "tests/test-utils";
 import CommandsTable from "./CommandsGrid";
 
 test("Displays all headers correctly", async () => {
