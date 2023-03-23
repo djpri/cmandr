@@ -1,5 +1,5 @@
 import { Button, Portal, SlideFade, useDisclosure } from "@chakra-ui/react";
-import QuickAddLinkForm from "components/links/QuickAddLinkForm";
+import QuickAddLinkForm from "components/links/QuickAddLinkForm/QuickAddLinkForm";
 import { ForwardedRef, forwardRef, RefObject, useEffect } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 

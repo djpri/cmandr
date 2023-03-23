@@ -1,18 +1,10 @@
-import {
-  Box,
-  Button,
-  FormLabel,
-  Grid,
-  Input,
-  Select,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LinkCreateDto } from "../../models/link";
-import { isWebUri } from "valid-url";
+import { LinkCreateDto } from "../../../models/link";
+import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
 
 interface IProps {
   categoryId?: number;
@@ -71,12 +63,8 @@ function QuickAddLinkForm({ categoryId }: IProps) {
           <Box>
             <FormLabel htmlFor="link">Link</FormLabel>
             <Input
-              {...register("url", {
-                required: "Please enter a link",
-                validate: (value) =>
-                  isWebUri(value) !== undefined || "Please enter a valid link",
-              })}
-              placeholder="Link URL"
+              {...register("url", urlRegisterOptions)}
+              placeholder="URL for link"
             />
           </Box>
 
@@ -106,15 +94,9 @@ function QuickAddLinkForm({ categoryId }: IProps) {
         </Grid>
       </form>
       {errors.categoryId && (
-        <Text display="block" color="red.500" fontWeight="bold">
-          * Category is required
-        </Text>
+        <ValidationError message="* Category is required" />
       )}
-      {errors.url && (
-        <Text display="block" color="red.500" fontWeight="bold">
-          * {errors.url.message}
-        </Text>
-      )}
+      {errors.url && <ValidationError message={errors.url.message} />}
     </>
   );
 }

@@ -22,7 +22,8 @@ import useLinks from "hooks/links/useLinks";
 import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
 import { FC, useCallback, useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
+import { BiMove } from "react-icons/bi";
 
 interface IProps {
   handleBulkDelete: () => void;
@@ -122,11 +123,10 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
         <Button onClick={() => table.toggleAllRowsSelected(false)}>
           Clear Selection
         </Button>
-        <Button onClick={onOpen}>
+        <Button onClick={onOpen} aria-label="move items" rightIcon={<BiMove />}>
           Move
-          <FaArrowRight />
         </Button>
-        <Button onClick={handleBulkDelete}>Delete</Button>
+        <Button onClick={handleBulkDelete} rightIcon={<AiFillDelete/> }>Delete</Button>
       </HStack>
       <MoveItemsModal
         isOpen={isOpen}

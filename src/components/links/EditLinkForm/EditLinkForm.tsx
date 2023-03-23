@@ -3,6 +3,7 @@ import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto, LinkUpdateDto } from "models/link";
 import { useForm } from "react-hook-form";
+import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
 
 type IProps = {
   linkItem: LinkReadDto;
@@ -14,7 +15,11 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   const { query: allCategoriesQuery } = useLinkCategories();
   const { editLinkMutation } = useLinks();
 
-  const { handleSubmit, register } = useForm<LinkUpdateDto>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<LinkUpdateDto>({
     defaultValues: {
       title,
       url,
@@ -37,7 +42,10 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
         <Input {...register("title")} placeholder="Link Title" />
 
         <FormLabel htmlFor="Link">Url</FormLabel>
-        <Input {...register("url")} placeholder="URL for link" />
+        <Input
+          {...register("url", urlRegisterOptions)}
+          placeholder="URL for link"
+        />
 
         <FormLabel htmlFor="category">Category</FormLabel>
         <Select {...register("categoryId")}>
@@ -53,6 +61,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
         </Select>
 
         <Button type="submit">Save</Button>
+        {errors.url && <ValidationError message={errors.url.message} />}
       </Stack>
     </form>
   );
