@@ -43,7 +43,7 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
   onClose,
   type,
   items,
-  clearSelection
+  clearSelection,
 }) => {
   const useCategories =
     type === "command" ? useCommandCategories() : useLinkCategories();
@@ -66,7 +66,7 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
     mutation.mutate({ body: changesArray(newCategoryId) });
     clearSelection();
     onClose();
-  }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -80,7 +80,6 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
           <Select
             onChange={(e) => {
               setNewCategoryId(Number(e.target.value));
-              
             }}
             value={newCategoryId}
           >
@@ -95,7 +94,9 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
                   </option>
                 ))}
           </Select>
-          <Button my={4} onClick={onSubmit}>Move</Button>
+          <Button my={4} onClick={onSubmit}>
+            Move
+          </Button>
         </ModalBody>
       </ModalContent>
     </Modal>
@@ -132,9 +133,7 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
         onClose={onClose}
         clearSelection={() => table.toggleAllRowsSelected(false)}
         type={type}
-        items={table
-          .getSelectedRowModel()
-          .flatRows.map(row => row.original)}
+        items={table.getSelectedRowModel().flatRows.map((row) => row.original)}
       />
     </Flex>
   );

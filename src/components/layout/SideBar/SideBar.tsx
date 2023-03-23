@@ -112,7 +112,7 @@ function SideBar() {
       {/* SIDE LINKS */}
       <Stack mt="1" mb={24}>
         <StackItem>
-          <Suspense fallback={<Spinner/>}>
+          <Suspense fallback={<Spinner />}>
             <SideBarLinks />
           </Suspense>
           {/* <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} /> */}

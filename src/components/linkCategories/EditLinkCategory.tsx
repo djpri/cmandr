@@ -20,7 +20,11 @@ interface EditLinkCategoryProps {
   category: CategoryReadDto;
 }
 
-function EditLinkCategory({ isOpen, onClose, category }: EditLinkCategoryProps) {
+function EditLinkCategory({
+  isOpen,
+  onClose,
+  category,
+}: EditLinkCategoryProps) {
   const [categoryName, setCategoryName] = useState("");
   const { editCategoryMutation } = useLinkCategories();
 
@@ -29,7 +33,7 @@ function EditLinkCategory({ isOpen, onClose, category }: EditLinkCategoryProps) 
       name: category.name,
       parentId: category.parentId,
       isGroup: category.isGroup,
-    }
+    };
   }, [category]);
 
   const handleEdit = () => {

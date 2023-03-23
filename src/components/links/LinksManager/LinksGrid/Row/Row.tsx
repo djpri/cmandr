@@ -18,12 +18,7 @@ interface IProps {
   table: Table<LinkReadDto>;
 }
 
-function TableRow({
-  linkItem,
-  row,
-  table,
-  showCategories,
-}: IProps) {
+function TableRow({ linkItem, row, table, showCategories }: IProps) {
   const { title, url, category, faviconImageUrl } = linkItem;
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
 
@@ -49,7 +44,7 @@ function TableRow({
       row.toggleSelected();
     } else {
       table.toggleAllRowsSelected(false);
-      row.toggleSelected(!wasSelected)
+      row.toggleSelected(!wasSelected);
     }
 
     if (event.shiftKey) {
@@ -107,7 +102,6 @@ function TableRow({
               src={getFaviconUrl(url)}
             />
           )}
-
           {isInDevelopment && `(${linkItem.id})`} {formattedTitleString}
         </ChakraLink>
       </GridItem>

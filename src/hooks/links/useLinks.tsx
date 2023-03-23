@@ -23,55 +23,59 @@ function useLinks() {
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
   // Queries
-  const query = useQuery<LinkReadDto[]>(['links'], asReactQueryFunction(Links.getAll), {
-    enabled: isAppInitalized,
-  });
+  const query = useQuery<LinkReadDto[]>(
+    ["links"],
+    asReactQueryFunction(Links.getAll),
+    {
+      enabled: isAppInitalized,
+    }
+  );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
   const addLinkMutation = useMutation(Links.create, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['links']);
-      queryClient.invalidateQueries(['linkCategories']);
+      queryClient.invalidateQueries(["links"]);
+      queryClient.invalidateQueries(["linkCategories"]);
       showSuccessToast("Link Added", "Link added successfully");
     },
     onError: showErrorToast,
   });
   const quickAddLinkMutation = useMutation(Links.quickAdd, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['links']);
-      queryClient.invalidateQueries(['linkCategories']);
+      queryClient.invalidateQueries(["links"]);
+      queryClient.invalidateQueries(["linkCategories"]);
       showSuccessToast("Link Added", "Link added successfully");
     },
     onError: showErrorToast,
   });
   const editLinkMutation = useMutation(Links.update, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['links']);
-      queryClient.invalidateQueries(['linkCategories']);
+      queryClient.invalidateQueries(["links"]);
+      queryClient.invalidateQueries(["linkCategories"]);
       showSuccessToast("Link Edited", "Link edited successfully");
     },
     onError: showErrorToast,
   });
   const deleteLinkMutation = useMutation(Links.remove, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['links']);
-      queryClient.invalidateQueries(['linkCategories']);
+      queryClient.invalidateQueries(["links"]);
+      queryClient.invalidateQueries(["linkCategories"]);
       showSuccessToast("Link Deleted", "Link deleted successfully");
     },
     onError: showErrorToast,
   });
   const editMultipleLinksMutation = useMutation(Links.bulkUpdate, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['links']);
-      queryClient.invalidateQueries(['linkCategories']);
+      queryClient.invalidateQueries(["links"]);
+      queryClient.invalidateQueries(["linkCategories"]);
     },
     onError: showErrorToast,
   });
   const deleteMultipleLinksMutation = useMutation(Links.bulkRemove, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['links']);
-      queryClient.invalidateQueries(['linkCategories']);
+      queryClient.invalidateQueries(["links"]);
+      queryClient.invalidateQueries(["linkCategories"]);
       showSuccessToast("Links Deleted", "Links deleted successfully");
     },
     onError: showErrorToast,
