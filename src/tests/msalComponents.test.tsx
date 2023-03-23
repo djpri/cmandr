@@ -117,3 +117,4 @@ test("Shows display name for logged in user", async () => {
   expect(leftText).toBeInTheDocument();
   expect(displayName).toBeInTheDocument();
 });
+

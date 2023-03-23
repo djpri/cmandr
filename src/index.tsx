@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { msalInstance } from "auth/auth";
 import CustomMsalProvider from "components/auth/AuthProvider";
-import * as React from "react";
+import { StrictMode } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import ReactDOM from "react-dom/client";
@@ -26,7 +26,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <ColorModeScript />
     <DndProvider backend={HTML5Backend}>
       <QueryClientProvider client={queryClient}>
@@ -39,5 +39,5 @@ root.render(
         </ReduxProvider>
       </QueryClientProvider>
     </DndProvider>
-  </React.StrictMode>
+  </StrictMode>
 );

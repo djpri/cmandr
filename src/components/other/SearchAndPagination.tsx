@@ -1,5 +1,7 @@
 import { Box, Button, chakra, Flex } from "@chakra-ui/react";
 import { Table } from "@tanstack/react-table";
+import { CommandReadDto } from "models/command";
+import { LinkReadDto } from "models/link";
 import {
   CgChevronDoubleLeft,
   CgChevronDoubleRight,
@@ -9,7 +11,7 @@ import {
 import GlobalFilter from "./GlobalFilter";
 
 interface IProps {
-  table: Table<any>;
+  table: Table<CommandReadDto> | Table<LinkReadDto>;
   value: string | number;
   onChange: (value: string | number) => void;
 }

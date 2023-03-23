@@ -54,4 +54,6 @@ const AddQuickLink = forwardRef(
   }
 );
 
+AddQuickLink.displayName = "AddQuickLink";
+
 export default AddQuickLink;

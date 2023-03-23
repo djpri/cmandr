@@ -1,4 +1,4 @@
-import { PublicClientApplication } from "@azure/msal-browser";
+import { PublicClientApplication } from "@azure/msal-browser/dist/app/PublicClientApplication";
 import { CLIENT_ID } from "helpers/environment";
 
 export const apiConfig = {

@@ -54,4 +54,6 @@ const AddLinkButton = forwardRef(
   }
 );
 
+AddLinkButton.displayName = "AddLinkButton";
+
 export default AddLinkButton;
