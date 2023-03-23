@@ -70,7 +70,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
   });
 
   useEffect(() => {
-    table.setPageSize(25)
+    table.setPageSize(25);
   }, []);
 
   const handleBulkDelete = () => {
@@ -83,11 +83,18 @@ function CommandsTable({ commands, showCategories }: IProps) {
   return (
     <Box p="0" display="flex" flexDirection="column">
       {table.getSelectedRowModel().flatRows.length > 1 && (
-        <RowSelectionMenu handleBulkDelete={handleBulkDelete} table={table} type="command" />
+        <RowSelectionMenu
+          handleBulkDelete={handleBulkDelete}
+          table={table}
+          type="command"
+        />
       )}
       {table.getSelectedRowModel().flatRows.length <= 1 && (
-        <SearchAndPagination table={table} value={globalFilter ?? ''}
-        onChange={value => setGlobalFilter(String(value))} />
+        <SearchAndPagination
+          table={table}
+          value={globalFilter ?? ""}
+          onChange={(value) => setGlobalFilter(String(value))}
+        />
       )}
       <Grid
         templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
@@ -120,13 +127,13 @@ function CommandsTable({ commands, showCategories }: IProps) {
           .rows.slice(0, table.getState().pagination.pageSize)
           .map((row) => {
             return (
-                <CommandRow
-                  row={row}
-                  showCategories={showCategories}
-                  commandItem={row.original}
-                  key={row.id}
-                  table={table}
-                />
+              <CommandRow
+                row={row}
+                showCategories={showCategories}
+                commandItem={row.original}
+                key={row.id}
+                table={table}
+              />
             );
           })}
       </Box>

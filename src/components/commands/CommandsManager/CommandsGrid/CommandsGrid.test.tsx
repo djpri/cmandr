@@ -1,9 +1,9 @@
 import { testData } from "tests/testData";
-import { render } from "../../../../tests/test-utils";
+import { customRender } from "../../../../tests/test-utils";
 import CommandsTable from "./CommandsGrid";
 
 test("Displays all headers correctly", async () => {
-  const { getByText } = render(
+  const { getByText } = customRender(
     <CommandsTable commands={testData.commands} showCategories />
   );
   expect(getByText("Description")).toBeInTheDocument();
@@ -12,7 +12,7 @@ test("Displays all headers correctly", async () => {
 });
 
 test("Displays all headers correctly for no categories", async () => {
-  const { getByText, queryByText } = render(
+  const { getByText, queryByText } = customRender(
     <CommandsTable commands={testData.commands} showCategories={false} />
   );
   expect(getByText("Description")).toBeInTheDocument();
@@ -21,7 +21,7 @@ test("Displays all headers correctly for no categories", async () => {
 });
 
 test("Displays pagination information correctly", () => {
-  const { getByText } = render(
+  const { getByText } = customRender(
     <CommandsTable commands={testData.commands} showCategories />
   );
   expect(getByText("Page")).toBeInTheDocument();
@@ -29,14 +29,14 @@ test("Displays pagination information correctly", () => {
 });
 
 test("Displays correct placeholder information in search bar", () => {
-  const { getByPlaceholderText } = render(
+  const { getByPlaceholderText } = customRender(
     <CommandsTable commands={testData.commands} showCategories />
   );
   expect(getByPlaceholderText("Search all 17 items...")).toBeInTheDocument();
 });
 
 test("Pagination buttons are enabled or disabled when expected", () => {
-  const { getByRole } = render(
+  const { getByRole } = customRender(
     <CommandsTable commands={testData.commands} showCategories />
   );
   const goToFirstPageButton = getByRole("button", {

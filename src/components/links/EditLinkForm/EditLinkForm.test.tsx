@@ -1,5 +1,5 @@
 import { Link } from "models/link";
-import { render } from "../../../tests/test-utils";
+import { customRender } from "../../../tests/test-utils";
 import EditLinkForm from "./EditLinkForm";
 
 const testLink: Link = {
@@ -11,5 +11,5 @@ const testLink: Link = {
 
 test("Renders EditLinkForm with correct link item passed in as prop", async () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  render(<EditLinkForm linkItem={testLink} onClose={() => {}} />);
+  customRender(<EditLinkForm linkItem={testLink} onClose={() => {}} />);
 });

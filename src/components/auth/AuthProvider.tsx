@@ -12,7 +12,7 @@ import { FC, PropsWithChildren, useEffect } from "react";
 import { setEndOfUserSession, setUserSession } from "redux/slices/appSlice";
 import { useAppDispatch } from "redux/store";
 
-const AuthProvider: FC<PropsWithChildren> = (children) => {
+const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const { instance, accounts } = useMsal();
   const dispatch = useAppDispatch();
 
@@ -29,7 +29,7 @@ const AuthProvider: FC<PropsWithChildren> = (children) => {
       try {
         const response: AuthenticationResult =
           await instance.acquireTokenSilent(silentRequest);
-        
+
         if (response?.accessToken === null) dispatch(setEndOfUserSession);
 
         dispatch(setUserSession());
@@ -44,7 +44,7 @@ const AuthProvider: FC<PropsWithChildren> = (children) => {
 
     getToken();
     dispatch(setUserSession());
-    
+
     CmandrApi.interceptors.request.use(
       async function (config) {
         const token = await getToken();
@@ -55,7 +55,6 @@ const AuthProvider: FC<PropsWithChildren> = (children) => {
         return Promise.reject(error);
       }
     );
-
   }, [instance, accounts, dispatch]);
 
   return <>{children}</>;
@@ -71,7 +70,9 @@ interface CustomMsalProviderProps {
   instance: PublicClientApplication;
 }
 
-const CustomMsalProvider: FC<PropsWithChildren<CustomMsalProviderProps>> = ({ instance }, children) => {
+const CustomMsalProvider: FC<PropsWithChildren<CustomMsalProviderProps>> = (
+  { instance, children },
+) => {
   return (
     <MsalProvider instance={instance}>
       <AuthProvider>{children}</AuthProvider>

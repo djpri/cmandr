@@ -58,9 +58,7 @@ function NavBar() {
               Cmandr
             </Heading>
           </Link>
-          {isInDevelopment && (
-            <Text>DEVELOPMENT MODE</Text>
-          )}
+          {isInDevelopment && <Text>DEVELOPMENT MODE</Text>}
         </HStack>
         <HStack>
           <ColorModeSwitcher />

@@ -1,10 +1,10 @@
-import { render, screen } from "tests/test-utils";
+import { customRender, screen } from "tests/test-utils";
 import { testData } from "tests/testData";
 import SideBarLinks from "./SideBarLinks";
 
 beforeEach(() => {
-  vi.stubGlobal('scrollTo', vi.fn());
-  render(<SideBarLinks />);
+  vi.stubGlobal("scrollTo", vi.fn());
+  customRender(<SideBarLinks />);
 });
 
 afterEach(() => {

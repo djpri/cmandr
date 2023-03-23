@@ -24,7 +24,7 @@ function useCommandCategories() {
 
   // Queries
   const query = useQuery(
-    ['commandCategories'],
+    ["commandCategories"],
     asReactQueryFunction(CommandCategories.getAll),
     { enabled: isAppInitalized }
   );
@@ -33,34 +33,40 @@ function useCommandCategories() {
   // Note: mutation functions can only take ONE parameter
   const addCategoryMutation = useMutation(CommandCategories.create, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['commandCategories']);
+      queryClient.invalidateQueries(["commandCategories"]);
     },
     onError: showErrorToast,
   });
   const editCategoryMutation = useMutation(CommandCategories.update, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['commandCategories']);
+      queryClient.invalidateQueries(["commandCategories"]);
     },
     onError: showErrorToast,
   });
   const deleteCategoryMutation = useMutation(CommandCategories.remove, {
     onMutate: (id) => {
-      queryClient.cancelQueries(['commandCategories']);
-      const previousCategories = queryClient.getQueryData(['commandCategories']);
-      queryClient.setQueryData(['commandCategories'], (old: CategoryReadDto[]) => {
-        return old.filter((category: CategoryReadDto) => category.id !== id);
-      });
-      return () => queryClient.setQueryData(['commandCategories'], previousCategories);
+      queryClient.cancelQueries(["commandCategories"]);
+      const previousCategories = queryClient.getQueryData([
+        "commandCategories",
+      ]);
+      queryClient.setQueryData(
+        ["commandCategories"],
+        (old: CategoryReadDto[]) => {
+          return old.filter((category: CategoryReadDto) => category.id !== id);
+        }
+      );
+      return () =>
+        queryClient.setQueryData(["commandCategories"], previousCategories);
     },
     onError: () => {
-      queryClient.invalidateQueries(['commandCategories']);
+      queryClient.invalidateQueries(["commandCategories"]);
       showErrorToast();
     },
   });
   const manualSortMutation = useMutation(CommandCategories.manualSort, {
     onSuccess: () => {
-      queryClient.refetchQueries(['settings']);
-      queryClient.invalidateQueries(['commandCategories']);
+      queryClient.refetchQueries(["settings"]);
+      queryClient.invalidateQueries(["commandCategories"]);
     },
     onError: showErrorToast,
   });

@@ -29,9 +29,11 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  // off, warn or error
   "rules": {
     "testing-library/no-render-in-setup": "off",
     "@typescript-eslint/no-empty-interface": "off",
+    "react/no-unused-state": "error",
     "react/react-in-jsx-scope": "off",
     "no-explicit-any": "off",
     "import/named": "off",

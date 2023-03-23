@@ -20,7 +20,12 @@ interface EditCommandCategoryProps {
   category: CategoryUpdateDto;
 }
 
-function EditCommandCategory({ isOpen, onClose, categoryId, category }: EditCommandCategoryProps) {
+function EditCommandCategory({
+  isOpen,
+  onClose,
+  categoryId,
+  category,
+}: EditCommandCategoryProps) {
   const [categoryName, setCategoryName] = useState("");
   const { editCategoryMutation } = useCommandCategories();
 
@@ -29,7 +34,7 @@ function EditCommandCategory({ isOpen, onClose, categoryId, category }: EditComm
       name: category.name,
       parentId: category.parentId,
       isGroup: category.isGroup,
-    }
+    };
   }, [category]);
 
   const handleEdit = () => {

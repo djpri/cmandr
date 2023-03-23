@@ -1,10 +1,10 @@
 import { act } from "react-dom/test-utils";
-import { render } from "tests/test-utils";
+import { customRender } from "tests/test-utils";
 import { testData } from "tests/testData";
 import LinksGrid from "./LinksGrid";
 
 test("Displays all headers correctly", () => {
-  const { getByText } = render(
+  const { getByText } = customRender(
     <LinksGrid links={testData.links} showCategories isLoading={false} />
   );
   expect(getByText("Title")).toBeInTheDocument();
@@ -13,8 +13,12 @@ test("Displays all headers correctly", () => {
 });
 
 test("Displays all headers correctly for no categories", () => {
-  const { getByText, queryByText } = render(
-    <LinksGrid links={testData.links} showCategories={false} isLoading={false} />
+  const { getByText, queryByText } = customRender(
+    <LinksGrid
+      links={testData.links}
+      showCategories={false}
+      isLoading={false}
+    />
   );
   expect(getByText("Title")).toBeInTheDocument();
   expect(getByText("Url")).toBeInTheDocument();
@@ -22,7 +26,7 @@ test("Displays all headers correctly for no categories", () => {
 });
 
 test("Displays pagination information correctly", () => {
-  const { getByText } = render(
+  const { getByText } = customRender(
     <LinksGrid links={testData.links} showCategories isLoading={false} />
   );
   expect(getByText("Page")).toBeInTheDocument();
@@ -30,14 +34,14 @@ test("Displays pagination information correctly", () => {
 });
 
 test("Displays correct placeholder information in search bar", () => {
-  const { getByPlaceholderText } = render(
+  const { getByPlaceholderText } = customRender(
     <LinksGrid links={testData.links} showCategories isLoading={false} />
   );
   expect(getByPlaceholderText("Search all 44 items...")).toBeInTheDocument();
 });
 
 test("Pagination buttons are enabled or disabled when expected", () => {
-  const { getByRole } = render(
+  const { getByRole } = customRender(
     <LinksGrid links={testData.links} showCategories isLoading={false} />
   );
   const goToFirstPageButton = getByRole("button", {

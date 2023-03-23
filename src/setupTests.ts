@@ -5,8 +5,8 @@
 import "regenerator-runtime/runtime";
 import { setupServer } from "msw/node";
 import { handlers } from "tests/mockhandlers";
-import matchers from '@testing-library/jest-dom/matchers';
-import { beforeAll, afterEach, afterAll, expect } from 'vitest'
+import matchers from "@testing-library/jest-dom/matchers";
+import { beforeAll, afterEach, afterAll, expect } from "vitest";
 
 const server = setupServer(...handlers);
 

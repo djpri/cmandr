@@ -22,7 +22,11 @@ function AddLinkCategory({ isGroup, parentId }: IProps) {
 
   const handleAddCategory = () => {
     try {
-      addCategoryMutation.mutate({ name: category, isGroup, parentId: parentId ?? null });
+      addCategoryMutation.mutate({
+        name: category,
+        isGroup,
+        parentId: parentId ?? null,
+      });
       setCategory("");
       onToggle();
     } catch (error) {

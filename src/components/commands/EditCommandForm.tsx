@@ -51,11 +51,13 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
         <Select {...register("categoryId")}>
           <option value={-1}>Select Category</option>
           {categories &&
-            categories.filter(category => category.isGroup === false).map((category) => (
-              <option value={category.id} key={category.id}>
-                {category.name}
-              </option>
-            ))}
+            categories
+              .filter((category) => category.isGroup === false)
+              .map((category) => (
+                <option value={category.id} key={category.id}>
+                  {category.name}
+                </option>
+              ))}
         </Select>
 
         <FormLabel htmlFor="reference">Reference</FormLabel>

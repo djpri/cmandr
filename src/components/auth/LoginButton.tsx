@@ -2,7 +2,6 @@ import { useMsal } from "@azure/msal-react";
 import { Button, Stack } from "@chakra-ui/react";
 import { apiConfig } from "auth/auth";
 
-
 function LoginButton() {
   const { instance } = useMsal();
 
