@@ -60,7 +60,7 @@ test("Submitting new link works correctly", async () => {
   await waitFor(() => {
     expect(linkInput).toHaveValue("");
     expect(titleInput).toHaveValue("");
-    expect(categorySelect).toHaveValue(-1);
+    expect(categorySelect).toHaveValue("-1");
   });
 
 });

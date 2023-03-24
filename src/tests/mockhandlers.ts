@@ -13,6 +13,9 @@ const postHandlers = [
   post(`${baseUrl}links`, (req, res, ctx) => {
     return res(ctx.json({}));
   }),
+  post(`${baseUrl}links/quickAdd`, (req, res, ctx) => {
+    return res(ctx.json({}));
+  }),
   post(`${baseUrl}commands/categories`, (req, res, ctx) => {
     return res(ctx.json({}));
   }),
