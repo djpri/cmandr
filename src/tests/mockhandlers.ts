@@ -50,31 +50,31 @@ const getHandlers = [
 
 const editHandlers = [
   put(`${baseUrl}commands/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+    return res(ctx.status(200));
   }),
   put(`${baseUrl}links/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+    return res(ctx.status(200));
   }),
   put(`${baseUrl}commands/categories/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+    return res(ctx.status(200));
   }),
   put(`${baseUrl}links/categories/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+    return res(ctx.status(200));
   }),
 ];
 
 const deleteHandlers = [
   del(`${baseUrl}commands/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+    return res(ctx.status(200));
   }),
   del(`${baseUrl}links/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+    return res(ctx.status(200));
   }),
   del(`${baseUrl}commands/categories/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+    return res(ctx.status(200));
   }),
   del(`${baseUrl}links/categories/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+    return res(ctx.status(200));
   }),
 ];
 

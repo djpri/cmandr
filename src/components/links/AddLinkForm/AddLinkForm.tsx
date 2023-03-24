@@ -73,12 +73,11 @@ function AddLinkForm({ categoryId }: IProps) {
               <FormLabel htmlFor="category">Category</FormLabel>
               <Select {...register("categoryId", { min: 1 })}>
                 <option value={-1}>Select Category</option>
-                {query.data &&
-                  query.data.map((category, index) => (
-                    <option value={category.id} key={index}>
-                      {category.name}
-                    </option>
-                  ))}
+                {query?.data?.map((category, index) => (
+                  <option value={category.id} key={index}>
+                    {category.name}
+                  </option>
+                ))}
               </Select>
             </Box>
           )}
