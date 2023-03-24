@@ -5,7 +5,7 @@ import matchers from "@testing-library/jest-dom/matchers";
 import { render, RenderOptions } from "@testing-library/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { rootReducer } from "redux/store";
 import { expect } from "vitest";
@@ -18,31 +18,43 @@ const queryClient = new QueryClient({
     queries: {
       // turns retries off
       retry: false,
+      cacheTime: Infinity,
     },
   },
 });
 
 const AllProviders = ({ children }: { children?: React.ReactNode }) => (
-  <QueryClientProvider client={queryClient}>
-    <DndProvider backend={HTML5Backend}>
-      <Provider
-        store={configureStore({
-          reducer: rootReducer,
-          preloadedState: {
-            layout: {
-              isSidebarOpen: false,
-              categoriesOpen: {},
-            },
-          },
-        })}
-      >
+  <ReduxProvider
+    store={configureStore({
+      reducer: rootReducer,
+      preloadedState: {
+        app: {
+          userHasReceivedToken: true,
+        },
+        layout: {
+          isSidebarOpen: false,
+          categoriesOpen: {},
+        },
+      },
+    })}
+  >
+    <QueryClientProvider client={queryClient}>
+      <DndProvider backend={HTML5Backend}>
         <ChakraProvider theme={theme}>
           <BrowserRouter>{children}</BrowserRouter>
         </ChakraProvider>
-      </Provider>
-    </DndProvider>
-  </QueryClientProvider>
+      </DndProvider>
+    </QueryClientProvider>
+  </ReduxProvider>
 );
+
+export function renderWithClient(ui: React.ReactElement) {
+  const { rerender, ...result } = customRender(ui);
+  return {
+    ...result,
+    rerender: (rerenderUi: React.ReactElement) => rerender(rerenderUi),
+  };
+}
 
 const customRender = (ui: React.ReactElement, options?: RenderOptions) =>
   render(ui, { wrapper: AllProviders, ...options });

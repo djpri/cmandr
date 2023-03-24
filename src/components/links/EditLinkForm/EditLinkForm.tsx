@@ -18,6 +18,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<LinkUpdateDto>({
     defaultValues: {
@@ -29,6 +30,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
 
   const onSubmit = (values: LinkUpdateDto) => {
     editLinkMutation.mutate({ id, body: values });
+    reset({ url: "", title: "", categoryId: -1 });
     // closes popover if using form from popover only
     if (onClose) onClose();
   };

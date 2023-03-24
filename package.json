@@ -59,10 +59,8 @@
     "serve": "vite preview --port 3000",
     "test": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "cypress": "cypress open",
     "lint": "eslint --ignore-path .gitignore .",
-    "prettier": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-    "plop": "plop"
+    "prettier": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
   },
   "browserslist": {
     "production": [
