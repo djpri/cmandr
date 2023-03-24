@@ -3,7 +3,6 @@ import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LinkCreateDto } from "../../../models/link";
 import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
 
 interface IProps {
@@ -14,6 +13,11 @@ interface IProps {
  * Form for adding new links created with react-hook-form
  * @see https://react-hook-form.com/get-started
  */
+interface FormValues {
+  url: string;
+  categoryId: number;
+}
+
 function QuickAddLinkForm({ categoryId }: IProps) {
   const { quickAddLinkMutation } = useLinks();
   const { query } = useLinkCategories();
@@ -24,7 +28,7 @@ function QuickAddLinkForm({ categoryId }: IProps) {
     reset,
     setValue,
     formState: { errors },
-  } = useForm<LinkCreateDto>({
+  } = useForm<FormValues>({
     defaultValues: {
       url: "",
       categoryId: categoryId || -1,
@@ -40,9 +44,10 @@ function QuickAddLinkForm({ categoryId }: IProps) {
     }
   }, [categoryId, setValue]);
 
-  const onSubmit = (values: { categoryId: number; url: string }) => {
-    quickAddLinkMutation.mutate(values);
+  const onSubmit = (values: FormValues) => {
     reset({ url: "", categoryId: categoryId || -1 });
+    quickAddLinkMutation.mutate(values);
+
   };
 
   return (
@@ -94,7 +99,7 @@ function QuickAddLinkForm({ categoryId }: IProps) {
         </Grid>
       </form>
       {errors.categoryId && (
-        <ValidationError message="* Category is required" />
+        <ValidationError message="Category is required" />
       )}
       {errors.url && <ValidationError message={errors.url.message} />}
     </>
