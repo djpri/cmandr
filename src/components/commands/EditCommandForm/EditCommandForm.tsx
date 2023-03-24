@@ -1,9 +1,9 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
 import { CategoryReadDto } from "models/category";
 import { useForm } from "react-hook-form";
-import useCommandCategories from "../../hooks/commands/useCommandCategories";
-import useCommands from "../../hooks/commands/useCommands";
-import { CommandReadDto, CommandUpdateDto } from "../../models/command";
+import useCommandCategories from "../../../hooks/commands/useCommandCategories";
+import useCommands from "../../../hooks/commands/useCommands";
+import { CommandReadDto, CommandUpdateDto } from "../../../models/command";
 
 type IProps = {
   commandItem: CommandReadDto;
@@ -28,7 +28,6 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
 
   const onSubmit = (values: CommandUpdateDto) => {
     editCommandMutation.mutate({ id: commandItem.id, body: { ...values } });
-    // alert(JSON.stringify(values, null, 2));
     // closes popover if using the form inside a popover
     if (onClose) onClose();
   };

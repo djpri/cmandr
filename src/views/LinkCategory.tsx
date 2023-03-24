@@ -118,7 +118,7 @@ function LinkCategory() {
               item={item}
               type="links"
               key={item.id}
-              hue="201"
+              hue={201}
             />
           ))}
         </Grid>
