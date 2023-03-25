@@ -1,6 +1,7 @@
+import { PropsWithChildren } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-function ErrorFallback({ error }) {
+function ErrorFallback({ error }: { error: Error }) {
   return (
     <div>
       <div>Oops! 😥 Something went wrong. Try reloading the page.</div>
@@ -10,7 +11,7 @@ function ErrorFallback({ error }) {
   );
 }
 
-function ErrorBoundaryWrapper({ children }) {
+function ErrorBoundaryWrapper({ children }: PropsWithChildren) {
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}

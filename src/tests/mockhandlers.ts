@@ -4,57 +4,86 @@ import { testData } from "./testData";
 
 const baseUrl = CmandrApi.defaults.baseURL;
 
-export const handlers = [
-  // post handlers
-  rest.post(`${baseUrl}commands`, (req, res, ctx) => {
+const { get, post, put, delete: del } = rest;
+
+const postHandlers = [
+  post(`${baseUrl}commands`, (req, res, ctx) => {
     return res(ctx.json({}));
   }),
-  rest.post(`${baseUrl}links`, (req, res, ctx) => {
+  post(`${baseUrl}links`, (req, res, ctx) => {
     return res(ctx.json({}));
   }),
-  rest.post(`${baseUrl}commands/categories`, (req, res, ctx) => {
+  post(`${baseUrl}links/quickAdd`, (req, res, ctx) => {
     return res(ctx.json({}));
   }),
-  rest.post(`${baseUrl}links/categories`, (req, res, ctx) => {
+  post(`${baseUrl}commands/categories`, (req, res, ctx) => {
     return res(ctx.json({}));
   }),
-  // get handlers
-  rest.get(`${baseUrl}commands`, (req, res, ctx) => {
+  post(`${baseUrl}links/categories`, (req, res, ctx) => {
+    return res(ctx.json({}));
+  }),
+];
+
+const getHandlers = [
+  get(`${baseUrl}commands`, (req, res, ctx) => {
     return res(ctx.json(testData.commands));
   }),
-  rest.get(`${baseUrl}links`, (req, res, ctx) => {
+  get(`${baseUrl}links`, (req, res, ctx) => {
     return res(ctx.json(testData.links));
   }),
-  rest.get(`${baseUrl}commands/categories`, (req, res, ctx) => {
+  get(`${baseUrl}commands/categories`, (req, res, ctx) => {
     return res(ctx.json(testData.commandCategories));
   }),
-  rest.get(`${baseUrl}links/categories`, (req, res, ctx) => {
+  get(`${baseUrl}links/categories`, (req, res, ctx) => {
     return res(ctx.json(testData.linkCategories));
   }),
-  // update handlers
-  rest.put(`${baseUrl}commands/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+  get(
+    "https://login.microsoftonline.com/common/discovery/instance",
+    (req, res, ctx) => {
+      return res(ctx.json({}));
+    }
+  ),
+  get(
+    "https://undefined/common/v2.0/.well-known/openid-configuration",
+    (req, res, ctx) => {
+      return res(ctx.json({}));
+    }
+  ),
+];
+
+const editHandlers = [
+  put(`${baseUrl}commands/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
-  rest.put(`${baseUrl}links/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+  put(`${baseUrl}links/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
-  rest.put(`${baseUrl}commands/categories/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+  put(`${baseUrl}commands/categories/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
-  rest.put(`${baseUrl}links/categories/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+  put(`${baseUrl}links/categories/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
-  // delete handlers
-  rest.delete(`${baseUrl}commands/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+];
+
+const deleteHandlers = [
+  del(`${baseUrl}commands/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
-  rest.delete(`${baseUrl}links/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+  del(`${baseUrl}links/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
-  rest.delete(`${baseUrl}commands/categories/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+  del(`${baseUrl}commands/categories/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
-  rest.delete(`${baseUrl}links/categories/:id`, (req, res, ctx) => {
-    return res(ctx.json({}));
+  del(`${baseUrl}links/categories/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
+];
+
+export const handlers = [
+  ...postHandlers,
+  ...getHandlers,
+  ...editHandlers,
+  ...deleteHandlers,
 ];

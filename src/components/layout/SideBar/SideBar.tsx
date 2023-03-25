@@ -1,18 +1,20 @@
 import {
   Box,
+  Spinner,
   Stack,
   StackItem,
   useColorModeValue,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSidebarOpen,
   setSidebarClosed,
   setSidebarOpen,
 } from "redux/slices/layoutSlice";
-import SideBarLinks from "./SideBarLinks/SideBarLinks";
+
+const SideBarLinks = lazy(() => import("./SideBarLinks/SideBarLinks"));
 
 const scrollbarStyles = {
   "::-webkit-scrollbar": {
@@ -110,7 +112,9 @@ function SideBar() {
       {/* SIDE LINKS */}
       <Stack mt="1" mb={24}>
         <StackItem>
-          <SideBarLinks />
+          <Suspense fallback={<Spinner />}>
+            <SideBarLinks />
+          </Suspense>
           {/* <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} /> */}
         </StackItem>
       </Stack>

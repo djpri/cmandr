@@ -43,7 +43,7 @@ function LoginPopover() {
   if (accounts[0])
     return (
       <Box position="relative" m="0" color={textColor}>
-        <Popover isOpen={isOpen} placement="bottom" onClose={onClose}>
+        <Popover isOpen={isOpen} placement="bottom" onClose={onClose} isLazy>
           <PopoverButton />
           <PopoverContent top="-5px" right="30px" border="hidden">
             <PopoverArrow ml="30px" />
@@ -66,7 +66,7 @@ function LoginPopover() {
 
   return (
     <Box p="0" m="0">
-      <Popover isOpen={isOpen} placement="bottom" onClose={onClose}>
+      <Popover isOpen={isOpen} placement="bottom" onClose={onClose} isLazy>
         <PopoverButton />
         <PopoverContent top="-5px" right="30px">
           <PopoverCloseButton />

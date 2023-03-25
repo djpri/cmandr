@@ -1,5 +1,6 @@
 import { AuthenticatedTemplate } from "@azure/msal-react";
 import { Box, useMediaQuery } from "@chakra-ui/react";
+import { PropsWithChildren } from "react";
 import { useSelector } from "react-redux";
 import { selectIsSidebarOpen } from "redux/slices/layoutSlice";
 import NavBar from "./NavBar/NavBar";
@@ -9,7 +10,7 @@ import SideBar from "./SideBar/SideBar";
  * Layout for logged-in users
  * @see https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-react/docs/getting-started.md#determining-whether-a-user-is-authenticated
  */
-function UserLayout({ children }) {
+function UserLayout({ children }: PropsWithChildren) {
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
   const isSidebarOpen = useSelector(selectIsSidebarOpen);
 

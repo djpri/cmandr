@@ -15,6 +15,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import AddCommandCategory from "components/commandCategories/AddCommandCategory";
+import UserLayout from "components/layout/UserLayout";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCommandCategories from "hooks/commands/useCommandCategories";
 import useCommandsFromSingleCategory from "hooks/commands/useCommandsFromSingleCategory";
@@ -24,7 +25,6 @@ import { useParams } from "react-router-dom";
 import DeleteCategoryModal from "../components/commandCategories/DeleteCategoryModal";
 import EditCommandCategory from "../components/commandCategories/EditCommandCategory";
 import CommandsManager from "../components/commands/CommandsManager/CommandsManager";
-import UserLayout from "../components/layout/UserLayout";
 
 function CommandCategoryPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -67,7 +67,7 @@ function CommandCategoryPage() {
           {category ? category.name : ""}
         </Heading>
         <Box m="0" p="0">
-          <Popover placement="right">
+          <Popover placement="right" isLazy>
             <PopoverTrigger>
               <Button boxShadow="outline">
                 <FaEdit />

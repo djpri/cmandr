@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { apiConfig } from "auth/apiConfig";
+import { apiConfig } from "auth/auth";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { RiCommandLine } from "react-icons/ri";
 import { Link as RouterLink, useNavigate } from "react-router-dom";

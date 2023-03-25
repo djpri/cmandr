@@ -13,7 +13,19 @@ import useCommandCategories from "hooks/commands/useCommandCategories";
 import { CategoryUpdateDto } from "models/category";
 import { useMemo, useState } from "react";
 
-function EditCommandCategory({ isOpen, onClose, categoryId, category }) {
+interface EditCommandCategoryProps {
+  isOpen: boolean;
+  onClose: () => void;
+  categoryId: number;
+  category: CategoryUpdateDto;
+}
+
+function EditCommandCategory({
+  isOpen,
+  onClose,
+  categoryId,
+  category,
+}: EditCommandCategoryProps) {
   const [categoryName, setCategoryName] = useState("");
   const { editCategoryMutation } = useCommandCategories();
 
@@ -22,7 +34,7 @@ function EditCommandCategory({ isOpen, onClose, categoryId, category }) {
       name: category.name,
       parentId: category.parentId,
       isGroup: category.isGroup,
-    }
+    };
   }, [category]);
 
   const handleEdit = () => {
