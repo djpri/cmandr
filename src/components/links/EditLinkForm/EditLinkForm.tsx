@@ -3,6 +3,7 @@ import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto, LinkUpdateDto } from "models/link";
 import { useForm } from "react-hook-form";
+import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
 
 type IProps = {
   linkItem: LinkReadDto;
@@ -14,7 +15,12 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   const { query: allCategoriesQuery } = useLinkCategories();
   const { editLinkMutation } = useLinks();
 
-  const { handleSubmit, register } = useForm<LinkUpdateDto>({
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<LinkUpdateDto>({
     defaultValues: {
       title,
       url,
@@ -24,6 +30,7 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
 
   const onSubmit = (values: LinkUpdateDto) => {
     editLinkMutation.mutate({ id, body: values });
+    reset({ url: "", title: "", categoryId: -1 });
     // closes popover if using form from popover only
     if (onClose) onClose();
   };
@@ -37,20 +44,26 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
         <Input {...register("title")} placeholder="Link Title" />
 
         <FormLabel htmlFor="Link">Url</FormLabel>
-        <Input {...register("url")} placeholder="URL for link" />
+        <Input
+          {...register("url", urlRegisterOptions)}
+          placeholder="URL for link"
+        />
 
         <FormLabel htmlFor="category">Category</FormLabel>
         <Select {...register("categoryId")}>
           <option value="">Select Category</option>
           {allCategoriesQuery.data &&
-            allCategoriesQuery.data.filter(category => category.isGroup === false).map((category) => (
-              <option value={category.id} key={category.id}>
-                {category.name}
-              </option>
-            ))}
+            allCategoriesQuery.data
+              .filter((category) => category.isGroup === false)
+              .map((category) => (
+                <option value={category.id} key={category.id}>
+                  {category.name}
+                </option>
+              ))}
         </Select>
 
         <Button type="submit">Save</Button>
+        {errors.url && <ValidationError message={errors.url.message} />}
       </Stack>
     </form>
   );

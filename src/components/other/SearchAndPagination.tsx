@@ -1,5 +1,7 @@
 import { Box, Button, chakra, Flex } from "@chakra-ui/react";
 import { Table } from "@tanstack/react-table";
+import { CommandReadDto } from "models/command";
+import { LinkReadDto } from "models/link";
 import {
   CgChevronDoubleLeft,
   CgChevronDoubleRight,
@@ -9,16 +11,12 @@ import {
 import GlobalFilter from "./GlobalFilter";
 
 interface IProps {
-  table: Table<any>;
+  table: Table<CommandReadDto> | Table<LinkReadDto>;
   value: string | number;
   onChange: (value: string | number) => void;
 }
 
-const SearchAndPagination = ({
-  table,
-  value,
-  onChange
-}: IProps) => {
+const SearchAndPagination = ({ table, value, onChange }: IProps) => {
   return (
     <Flex
       pl="4"
@@ -27,17 +25,29 @@ const SearchAndPagination = ({
       justifyContent="space-between"
       wrap="wrap"
     >
-      <GlobalFilter table={table} value={value} onChange={onChange}/>
+      <GlobalFilter table={table} value={value} onChange={onChange} />
       <Box pr="2rem">
-        <Button aria-label="goToFirstPage" onClick={() => table.setPageIndex(0)} isDisabled={!table.getCanPreviousPage()}>
+        <Button
+          aria-label="goToFirstPage"
+          onClick={() => table.setPageIndex(0)}
+          isDisabled={!table.getCanPreviousPage()}
+        >
           <CgChevronDoubleLeft />
         </Button>{" "}
-        <Button aria-label="goToPreviousPage" onClick={() => table.previousPage()} isDisabled={!table.getCanPreviousPage()}>
+        <Button
+          aria-label="goToPreviousPage"
+          onClick={() => table.previousPage()}
+          isDisabled={!table.getCanPreviousPage()}
+        >
           <CgChevronLeft />
         </Button>{" "}
-        <Button aria-label="goToNextPage" onClick={() => {
-          table.nextPage()
-        }} isDisabled={!table.getCanNextPage()}>
+        <Button
+          aria-label="goToNextPage"
+          onClick={() => {
+            table.nextPage();
+          }}
+          isDisabled={!table.getCanNextPage()}
+        >
           <CgChevronRight />
         </Button>{" "}
         <Button
@@ -51,7 +61,8 @@ const SearchAndPagination = ({
         <chakra.span justifySelf="flex-end">
           Page{" "}
           <b>
-            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+            {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
           </b>{" "}
         </chakra.span>
       </Box>

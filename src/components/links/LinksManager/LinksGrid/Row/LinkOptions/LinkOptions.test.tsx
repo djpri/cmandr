@@ -1,5 +1,5 @@
 import { LinkReadDto } from "models/link";
-import { fireEvent, render, screen } from "tests/test-utils";
+import { customRender, fireEvent, screen } from "tests/test-utils";
 import LinkOptions from "./LinkOptions";
 
 const testLink: LinkReadDto = {
@@ -11,7 +11,7 @@ const testLink: LinkReadDto = {
 };
 
 test("Shows edit and delete buttons when clicked", async () => {
-  render(<LinkOptions link={testLink} />);
+  customRender(<LinkOptions link={testLink} />);
   const button = screen.getByRole("button");
   fireEvent.click(button);
   const heading = screen.getByText("Options");
@@ -23,7 +23,7 @@ test("Shows edit and delete buttons when clicked", async () => {
 });
 
 test("Shows edit form with correct default information when edit button is clicked", async () => {
-  render(<LinkOptions link={testLink} />);
+  customRender(<LinkOptions link={testLink} />);
   // click button
   const button = screen.getByRole("button");
   fireEvent.click(button);

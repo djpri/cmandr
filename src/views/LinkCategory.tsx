@@ -69,7 +69,7 @@ function LinkCategory() {
           {category ? category.name : ""}
         </Heading>
         <Box m="0" p="0">
-          <Popover placement="right">
+          <Popover placement="right" isLazy>
             <PopoverTrigger>
               <Button boxShadow="outline">
                 <FaEdit />
@@ -118,7 +118,7 @@ function LinkCategory() {
               item={item}
               type="links"
               key={item.id}
-              hue="201"
+              hue={201}
             />
           ))}
         </Grid>

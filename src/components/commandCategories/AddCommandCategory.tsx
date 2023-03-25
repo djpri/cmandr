@@ -21,7 +21,11 @@ function AddCommandCategory({ isGroup, parentId }: IProps) {
   const inputColor = useColorModeValue("#f2f6fa", "#1f2937");
 
   const handleAddCategory = () => {
-    addCategoryMutation.mutate({ name: category, isGroup, parentId: parentId ?? null });
+    addCategoryMutation.mutate({
+      name: category,
+      isGroup,
+      parentId: parentId ?? null,
+    });
     setCategory("");
     onToggle();
   };

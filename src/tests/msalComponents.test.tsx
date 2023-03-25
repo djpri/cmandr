@@ -7,13 +7,13 @@ import {
   InteractionType,
   PublicClientApplication,
 } from "@azure/msal-browser";
-import { MsalProvider } from "@azure/msal-react";
+import CustomMsalProvider from "components/auth/AuthProvider";
 import LoginButton from "components/auth/LoginButton";
 import SignOutButton from "components/auth/SignOutButton";
 
 import LoginPopover from "components/layout/NavBar/LoginPopover";
 import { testAccount, TEST_CONFIG } from "./msalTestConstants";
-import { act, fireEvent, render, screen } from "./test-utils";
+import { act, customRender, fireEvent, screen } from "./test-utils";
 
 const msalConfig: Configuration = TEST_CONFIG;
 
@@ -82,29 +82,29 @@ afterEach(() => {
 
 // TESTS
 test("SignOutButton renders without crashing", async () => {
-  render(
-    <MsalProvider instance={pca}>
+  customRender(
+    <CustomMsalProvider instance={pca}>
       <SignOutButton />
-    </MsalProvider>
+    </CustomMsalProvider>
   );
   expect(await screen.findByText(/Sign Out/i)).toBeInTheDocument();
 });
 
 test("Login button shows correct text", async () => {
-  render(
-    <MsalProvider instance={pca}>
+  customRender(
+    <CustomMsalProvider instance={pca}>
       <LoginButton />
-    </MsalProvider>
+    </CustomMsalProvider>
   );
   const linkElement = await screen.findByText(/Log In/i);
   expect(linkElement).toBeInTheDocument();
 });
 
 test("Shows display name for logged in user", async () => {
-  render(
-    <MsalProvider instance={pca}>
+  customRender(
+    <CustomMsalProvider instance={pca}>
       <LoginPopover />
-    </MsalProvider>
+    </CustomMsalProvider>
   );
 
   // click popover button

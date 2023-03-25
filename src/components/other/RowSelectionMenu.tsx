@@ -22,7 +22,8 @@ import useLinks from "hooks/links/useLinks";
 import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
 import { FC, useCallback, useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
+import { BiMove } from "react-icons/bi";
 
 interface IProps {
   handleBulkDelete: () => void;
@@ -43,7 +44,7 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
   onClose,
   type,
   items,
-  clearSelection
+  clearSelection,
 }) => {
   const useCategories =
     type === "command" ? useCommandCategories() : useLinkCategories();
@@ -66,7 +67,7 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
     mutation.mutate({ body: changesArray(newCategoryId) });
     clearSelection();
     onClose();
-  }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -80,7 +81,6 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
           <Select
             onChange={(e) => {
               setNewCategoryId(Number(e.target.value));
-              
             }}
             value={newCategoryId}
           >
@@ -95,7 +95,9 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
                   </option>
                 ))}
           </Select>
-          <Button my={4} onClick={onSubmit}>Move</Button>
+          <Button my={4} onClick={onSubmit}>
+            Move
+          </Button>
         </ModalBody>
       </ModalContent>
     </Modal>
@@ -121,20 +123,17 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
         <Button onClick={() => table.toggleAllRowsSelected(false)}>
           Clear Selection
         </Button>
-        <Button onClick={onOpen}>
+        <Button onClick={onOpen} aria-label="move items" rightIcon={<BiMove />}>
           Move
-          <FaArrowRight />
         </Button>
-        <Button onClick={handleBulkDelete}>Delete</Button>
+        <Button onClick={handleBulkDelete} rightIcon={<AiFillDelete/> }>Delete</Button>
       </HStack>
       <MoveItemsModal
         isOpen={isOpen}
         onClose={onClose}
         clearSelection={() => table.toggleAllRowsSelected(false)}
         type={type}
-        items={table
-          .getSelectedRowModel()
-          .flatRows.map(row => row.original)}
+        items={table.getSelectedRowModel().flatRows.map((row) => row.original)}
       />
     </Flex>
   );

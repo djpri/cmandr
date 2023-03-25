@@ -1,13 +1,15 @@
 import { Input } from "@chakra-ui/react";
 import { Table } from "@tanstack/table-core";
+import { CommandReadDto } from "models/command";
+import { LinkReadDto } from "models/link";
 import { InputHTMLAttributes, useEffect, useState } from "react";
 
 type PropTypes = {
   value: string | number;
   onChange: (value: string | number) => void;
-  table: Table<any>;
+  table: Table<CommandReadDto> | Table<LinkReadDto>;
   debounce?: number;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">;
 
 function GlobalFilter({
   value: initialValue,

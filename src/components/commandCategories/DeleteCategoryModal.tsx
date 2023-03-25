@@ -31,7 +31,7 @@ function DeleteCategoryModal({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Delete "{categoryName}" commands</ModalHeader>
+        <ModalHeader>Delete {`"${categoryName}"`} commands</ModalHeader>
         <ModalCloseButton />
         <ModalBody>WARNING! This action cannot be undone.</ModalBody>
 

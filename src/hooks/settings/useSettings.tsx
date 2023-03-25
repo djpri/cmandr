@@ -20,21 +20,25 @@ function useSettings() {
   const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
   // Queries
-  const query = useQuery<UserSettings>(['settings'], asReactQueryFunction(Settings.get), {
-    enabled: isAppInitalized,
-  });
+  const query = useQuery<UserSettings>(
+    ["settings"],
+    asReactQueryFunction(Settings.get),
+    {
+      enabled: isAppInitalized,
+    }
+  );
 
   const editSettingsMutation = useMutation(Settings.update, {
     onMutate: async (newSettings: UserSettings) => {
-      await queryClient.cancelQueries(['settings']);
-      const previousSettings = queryClient.getQueryData(['settings']);
-      queryClient.setQueryData(['settings'], newSettings);
+      await queryClient.cancelQueries(["settings"]);
+      const previousSettings = queryClient.getQueryData(["settings"]);
+      queryClient.setQueryData(["settings"], newSettings);
       return { previousSettings };
     },
     onError: async (err, newSettings, context) =>
-      queryClient.setQueryData(['settings'], context.previousSettings),
+      queryClient.setQueryData(["settings"], context.previousSettings),
     onSettled: () => {
-      queryClient.invalidateQueries(['settings']);
+      queryClient.invalidateQueries(["settings"]);
     },
   });
 

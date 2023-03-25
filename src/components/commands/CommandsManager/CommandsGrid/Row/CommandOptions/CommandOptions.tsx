@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import DeleteCommandButton from "components/commands/DeleteCommandButton";
-import EditCommandForm from "components/commands/EditCommandForm";
+import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
 import { CommandReadDto } from "models/command";
 import { useState } from "react";
 import { AiFillSetting } from "react-icons/ai";

@@ -8,7 +8,6 @@ import {
 import { Row, Table } from "@tanstack/react-table";
 import { isInDevelopment } from "helpers/environment";
 import { LinkReadDto } from "models/link";
-import { Key } from "react";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
 interface IProps {
@@ -19,13 +18,8 @@ interface IProps {
   table: Table<LinkReadDto>;
 }
 
-function TableRow({
-  linkItem,
-  row,
-  table,
-  showCategories,
-}: IProps) {
-  const { id, title, url, category, faviconImageUrl } = linkItem;
+function TableRow({ linkItem, row, table, showCategories }: IProps) {
+  const { title, url, category, faviconImageUrl } = linkItem;
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
 
   const getFaviconUrl = (link) => {
@@ -50,7 +44,7 @@ function TableRow({
       row.toggleSelected();
     } else {
       table.toggleAllRowsSelected(false);
-      row.toggleSelected(!wasSelected)
+      row.toggleSelected(!wasSelected);
     }
 
     if (event.shiftKey) {
@@ -108,7 +102,6 @@ function TableRow({
               src={getFaviconUrl(url)}
             />
           )}
-
           {isInDevelopment && `(${linkItem.id})`} {formattedTitleString}
         </ChakraLink>
       </GridItem>

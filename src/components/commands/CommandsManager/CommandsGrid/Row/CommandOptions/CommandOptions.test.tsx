@@ -1,5 +1,9 @@
 import { CommandReadDto } from "models/command";
-import { fireEvent, render, screen } from "../../../../../../tests/test-utils";
+import {
+  customRender,
+  fireEvent,
+  screen,
+} from "../../../../../../tests/test-utils";
 import CommandOptions from "./CommandOptions";
 
 const testCommand: CommandReadDto = {
@@ -11,7 +15,7 @@ const testCommand: CommandReadDto = {
 };
 
 test("Shows edit and delete buttons when clicked", async () => {
-  render(<CommandOptions command={testCommand} />);
+  customRender(<CommandOptions command={testCommand} />);
   const button = screen.getByRole("button");
   fireEvent.click(button);
 
@@ -21,7 +25,7 @@ test("Shows edit and delete buttons when clicked", async () => {
 });
 
 test("Shows edit form with correct default information when edit button is clicked", async () => {
-  render(<CommandOptions command={testCommand} />);
+  customRender(<CommandOptions command={testCommand} />);
 
   // click button
   const button = screen.getByRole("button");

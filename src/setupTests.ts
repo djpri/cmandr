@@ -5,18 +5,18 @@
 import "regenerator-runtime/runtime";
 import { setupServer } from "msw/node";
 import { handlers } from "tests/mockhandlers";
-import matchers from '@testing-library/jest-dom/matchers';
-import { beforeAll, afterEach, afterAll, expect } from 'vitest'
+import matchers from "@testing-library/jest-dom/matchers";
+import { beforeAll, afterEach, afterAll, expect } from "vitest";
 
-const server = setupServer(...handlers);
+export const mockserver = setupServer(...handlers);
 
 // extends Vitest's expect method with methods from react-testing-library
 expect.extend(matchers);
 
 // Establish API mocking before all tests.
-beforeAll(() => server.listen());
+beforeAll(() => mockserver.listen());
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
-afterEach(() => server.resetHandlers());
+afterEach(() => mockserver.resetHandlers());
 // Clean up after the tests are finished.
-afterAll(() => server.close());
+afterAll(() => mockserver.close());

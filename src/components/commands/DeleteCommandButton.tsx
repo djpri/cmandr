@@ -1,7 +1,12 @@
 import { Button } from "@chakra-ui/react";
 import useCommands from "hooks/commands/useCommands";
 
-function DeleteCommandButton({ commandId, onClose }) {
+interface DeleteCommandButtonProps {
+  commandId: number;
+  onClose: () => void;
+}
+
+function DeleteCommandButton({ commandId, onClose }: DeleteCommandButtonProps) {
   const { deleteCommandMutation } = useCommands();
 
   return (
