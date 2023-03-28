@@ -1,6 +1,14 @@
-import { Box, HStack, useColorModeValue, Wrap } from "@chakra-ui/react";
+import {
+  Box,
+  Checkbox,
+  HStack,
+  useColorModeValue,
+  Wrap,
+} from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { ForwardedRef, useRef, useState } from "react";
+import { selectShowImagePreviews, toggleShowImagePreviews } from "redux/slices/linksSlice";
+import { useAppDispatch, useAppSelector } from "redux/store";
 import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton";
 import LinksGrid from "./LinksGrid/LinksGrid";
@@ -13,6 +21,8 @@ interface IProps {
 
 function LinksManager({ categoryId, links }: IProps) {
   const addLinkref = useRef<HTMLDivElement | null>(null);
+  const showImagePreviews = useAppSelector(selectShowImagePreviews);
+  const dispatch = useAppDispatch();
   const quickAddLinkref = useRef<HTMLDivElement | null>(null);
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
@@ -46,6 +56,7 @@ function LinksManager({ categoryId, links }: IProps) {
                 setCurrentButtonOpen={setCurrentButtonOpen}
               />
             </HStack>
+            <Checkbox isChecked={showImagePreviews} colorScheme={"purple"} onChange={() => dispatch(toggleShowImagePreviews())}>Show image previews</Checkbox>
           </Wrap>
           <Box ref={addLinkref} />
           <Box ref={quickAddLinkref} />

@@ -7,10 +7,12 @@ import {
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import appReducer from "./slices/appSlice";
 import layoutReducer from "./slices/layoutSlice";
+import linksReducer from "./slices/linksSlice";
 
 export const rootReducer = combineReducers({
   app: appReducer,
   layout: layoutReducer,
+  links: linksReducer,
 });
 
 export const store = configureStore({
