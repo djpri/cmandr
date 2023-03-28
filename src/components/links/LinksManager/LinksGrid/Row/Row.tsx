@@ -1,4 +1,5 @@
 import {
+  chakra,
   Grid,
   GridItem,
   Image,
@@ -8,6 +9,8 @@ import {
 import { Row, Table } from "@tanstack/react-table";
 import { isInDevelopment } from "helpers/environment";
 import { LinkReadDto } from "models/link";
+import { selectShowImagePreviews } from "redux/slices/linksSlice";
+import { useAppSelector } from "redux/store";
 import LinkOptions from "./LinkOptions/LinkOptions";
 
 interface IProps {
@@ -20,6 +23,7 @@ interface IProps {
 
 function TableRow({ linkItem, row, table, showCategories }: IProps) {
   const { title, url, category, faviconImageUrl } = linkItem;
+  const showImagePreviews = useAppSelector(selectShowImagePreviews);
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
 
   const getFaviconUrl = (link) => {
@@ -104,6 +108,13 @@ function TableRow({ linkItem, row, table, showCategories }: IProps) {
           )}
           {isInDevelopment && `(${linkItem.id})`} {formattedTitleString}
         </ChakraLink>
+        {linkItem.previewImageUrl && showImagePreviews && (
+          <chakra.img
+            maxH="70px"
+            src={linkItem?.previewImageUrl}
+            alt="preview-url"
+          />
+        )}
       </GridItem>
 
       <GridItem

@@ -22,7 +22,7 @@ interface IProps {
   isLoading: boolean;
 }
 
-function LinksGrid({ links, showCategories, isLoading }: IProps) {
+function LinksGrid({ links, showCategories, isLoading }: IProps) {  
   const columns = useMemo<ColumnDef<LinkReadDto>[]>(() => {
     if (showCategories) {
       return [

@@ -31,11 +31,11 @@ const AddQuickLink = forwardRef(
       <>
         {isOpen ? (
           <Button onClick={handleClose} rightIcon={<AiFillCaretUp />}>
-            Quick Add
+            Add (With Metadata)
           </Button>
         ) : (
           <Button onClick={handleOpen} rightIcon={<AiFillCaretDown />}>
-            Quick Add
+            Add (With Metadata)
           </Button>
         )}
         {ref && props.currentButtonOpen === "quickAddLink" && (
