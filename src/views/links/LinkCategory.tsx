@@ -1,4 +1,3 @@
-import { Heading, Stack } from "@chakra-ui/layout";
 import {
   Popover,
   PopoverBody,
@@ -11,33 +10,76 @@ import {
   Grid,
   HStack,
   Spinner,
-  Text,
-  useDisclosure,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
+import UserLayout from "components/layout/UserLayout";
 import AddLinkCategory from "components/linkCategories/AddLinkCategory";
+import DeleteLinkCategory from "components/linkCategories/DeleteLinkCategory";
+import EditLinkCategory from "components/linkCategories/EditLinkCategory";
+import LinksManager from "components/links/LinksManager/LinksManager";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinksFromSingleCategory from "hooks/links/useLinksFromSingleCategory";
+import { CategoryReadDto } from "models/category";
 import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import UserLayout from "../components/layout/UserLayout";
-import DeleteLinkCategory from "../components/linkCategories/DeleteLinkCategory";
-import EditLinkCategory from "../components/linkCategories/EditLinkCategory";
-import LinksManager from "../components/links/LinksManager/LinksManager";
+import EntityPage from "views/EntityPage";
 
-function LinkCategory() {
-  const { id: categoryId } = useParams();
-  const { query } = useLinksFromSingleCategory(parseInt(categoryId));
-  const { query: categoriesQuery } = useLinkCategories();
-
+const HeaderOptions = ({
+  category,
+  categoryId,
+}: {
+  category: CategoryReadDto;
+  categoryId: string;
+}) => {
   const {
     isOpen: isEditModalOpen,
     onOpen: editModalOpen,
     onClose: editModalClose,
   } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <Box m="0" p="0">
+      <Popover placement="right" isLazy>
+        <PopoverTrigger>
+          <Button boxShadow="outline">
+            <FaEdit />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverBody>
+            <HStack>
+              <Button size="xs" onClick={editModalOpen}>
+                rename
+              </Button>
+              <Button size="xs" onClick={onOpen} variant="delete">
+                delete
+              </Button>
+            </HStack>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
+      <DeleteLinkCategory
+        isOpen={isOpen}
+        onClose={onClose}
+        categoryName={category ? category.name : null}
+        categoryId={parseInt(categoryId)}
+      />
+      <EditLinkCategory
+        isOpen={isEditModalOpen}
+        onClose={editModalClose}
+        category={category}
+      />
+    </Box>
+  );
+};
+
+function LinkCategory() {
+  const { id: categoryId } = useParams();
+  const { query } = useLinksFromSingleCategory(parseInt(categoryId));
+  const { query: categoriesQuery } = useLinkCategories();
 
   const category = useMemo(() => {
     if (categoriesQuery.data) {
@@ -63,47 +105,13 @@ function LinkCategory() {
   }
 
   return (
-    <UserLayout>
-      <Stack mb="5px" display="flex" alignItems="center" direction="row">
-        <Heading as="h2" fontWeight="900" fontSize="3xl">
-          {category ? category.name : ""}
-        </Heading>
-        <Box m="0" p="0">
-          <Popover placement="right" isLazy>
-            <PopoverTrigger>
-              <Button boxShadow="outline">
-                <FaEdit />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent>
-              <PopoverBody>
-                <HStack>
-                  <Button size="xs" onClick={editModalOpen}>
-                    rename
-                  </Button>
-                  <Button size="xs" onClick={onOpen} variant="delete">
-                    delete
-                  </Button>
-                </HStack>
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
-        </Box>
-      </Stack>
-      <Text mb="30px" color="gray.500" fontWeight="700">
-        {category ? category.items : "0"} item{category?.items !== 1 && "s"}
-      </Text>
-      <DeleteLinkCategory
-        isOpen={isOpen}
-        onClose={onClose}
-        categoryName={category ? category.name : null}
-        categoryId={parseInt(categoryId)}
-      />
-      <EditLinkCategory
-        isOpen={isEditModalOpen}
-        onClose={editModalClose}
-        category={category}
-      />
+    <EntityPage
+      title={category?.name}
+      numItems={category?.items}
+      headerOptions={
+        <HeaderOptions category={category} categoryId={categoryId} />
+      }
+    >
       {query.isLoading && <Spinner mb={5} />}
       {!category?.isGroup && (
         <LinksManager
@@ -128,7 +136,7 @@ function LinkCategory() {
           <AddLinkCategory parentId={category.id} />
         </VStack>
       )}
-    </UserLayout>
+    </EntityPage>
   );
 }
 

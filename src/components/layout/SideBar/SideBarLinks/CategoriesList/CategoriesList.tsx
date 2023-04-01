@@ -9,7 +9,7 @@ import DragItem from "./DnD/DragItem";
 
 interface IProps {
   query: UseQueryResult<CategoryReadDto[]>;
-  type: "commands" | "links";
+  type: "commands" | "links" | "snippets";
   editCategoryMutation: UseMutationResult<
     AxiosResponse<unknown, unknown>,
     unknown,

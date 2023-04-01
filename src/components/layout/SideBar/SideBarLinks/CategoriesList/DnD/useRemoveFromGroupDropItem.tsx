@@ -11,13 +11,13 @@ import { UseMutationResult } from "@tanstack/react-query";
 interface DragItemType {
   index: number;
   id: number;
-  type: "commands" | "links";
+  type: "commands" | "links" | "snippets";
   dropType: "sort" | "addToGroup" | "none";
   isGroup: boolean;
 }
 
 function useRemoveFromGroupDropItem(
-  type: "commands" | "links",
+  type: "commands" | "links" | "snippets",
   editCategoryMutation: UseMutationResult<
     AxiosResponse<unknown, unknown>,
     unknown,

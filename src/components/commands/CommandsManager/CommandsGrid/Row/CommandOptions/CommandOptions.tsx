@@ -1,66 +1,54 @@
 import {
-  Box,
-  Button,
-  HStack,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
+  IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import DeleteCommandButton from "components/commands/DeleteCommandButton";
 import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
+import EntityOptions from "components/shared/EntityOptions";
+import useCommands from "hooks/commands/useCommands";
 import { CommandReadDto } from "models/command";
-import { useState } from "react";
-import { AiFillSetting } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 
 type IProps = {
   command: CommandReadDto;
 };
 
-function CommandOptions({ command }: IProps) {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const [isVisible, setIsVisible] = useState(false);
+interface DeleteCommandButtonProps {
+  commandId: number;
+  onClose: () => void;
+}
+
+function DeleteCommandButton({ commandId, onClose }: DeleteCommandButtonProps) {
+  const { deleteCommandMutation } = useCommands();
 
   return (
-    <Box m="0">
-      <Popover
-        isLazy
-        lazyBehavior="unmount"
-        placement="right"
-        isOpen={isOpen}
-        onOpen={onOpen}
-        onClose={onClose}
-      >
-        <PopoverTrigger>
-          <Button size="xs" variant="options">
-            <AiFillSetting />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverHeader fontWeight="semibold">Options</PopoverHeader>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverBody>
-            <HStack>
-              <Button
-                size="xs"
-                onClick={() => setIsVisible((prevState) => !prevState)}
-              >
-                Edit
-              </Button>
-              <DeleteCommandButton commandId={command.id} onClose={onClose} />
-            </HStack>
-            <Box display={isVisible ? "block" : "none"}>
-              <EditCommandForm commandItem={command} onClose={onClose} />
-            </Box>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-    </Box>
+    <IconButton
+      size="xs"
+      aria-label="Delete command"
+      variant="delete"
+      icon={<AiFillDelete />}
+      onClick={() => {
+        deleteCommandMutation.mutate(commandId);
+        onClose();
+      }}
+    >
+      Delete
+    </IconButton>
+  );
+}
+
+function CommandOptions({ command }: IProps) {
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  return (
+    <EntityOptions
+      isOpen={isOpen}
+      onClose={onClose}
+      onOpen={onOpen}
+      entityType="command"
+      deleteButton={
+        <DeleteCommandButton commandId={command.id} onClose={onClose} />
+      }
+      editForm={<EditCommandForm commandItem={command} onClose={onClose} />}
+    ></EntityOptions>
   );
 }
 

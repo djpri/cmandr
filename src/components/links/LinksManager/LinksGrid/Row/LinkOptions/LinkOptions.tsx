@@ -1,67 +1,54 @@
 import {
-  Box,
-  Button,
-  HStack,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
+  IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import DeleteLinkButton from "components/links/DeleteLinkButton";
 import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
+import EntityOptions from "components/shared/EntityOptions";
+import useLinks from "hooks/links/useLinks";
 import { LinkReadDto } from "models/link";
-import { useState } from "react";
-import { AiFillSetting } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 
 type IProps = {
   link: LinkReadDto;
 };
 
-function CommandOptions({ link }: IProps) {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const [isVisible, setIsVisible] = useState(false);
+interface DeleteLinkButtonProps {
+  linkId: number;
+  onClose: () => void;
+}
+
+function DeleteLinkButton({ linkId, onClose }: DeleteLinkButtonProps) {
+  const { deleteLinkMutation } = useLinks();
 
   return (
-    <Box m="0">
-      <Popover
-        isLazy
-        lazyBehavior="unmount"
-        placement="right"
-        isOpen={isOpen}
-        onOpen={onOpen}
-        onClose={onClose}
-      >
-        <PopoverTrigger>
-          <Button size="xs" variant="options">
-            <AiFillSetting />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverHeader fontWeight="semibold">Options</PopoverHeader>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverBody>
-            <HStack>
-              <Button
-                size="xs"
-                onClick={() => setIsVisible((prevState) => !prevState)}
-              >
-                Edit
-              </Button>
-              <DeleteLinkButton linkId={link.id} onClose={onClose} />
-            </HStack>
-            <Box display={isVisible ? "block" : "none"}>
-              <EditLinkForm linkItem={link} onClose={onClose} />
-            </Box>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-    </Box>
+    <IconButton
+      size="xs"
+      aria-label="Delete link"
+      variant="delete"
+      icon={<AiFillDelete />}
+      onClick={() => {
+        deleteLinkMutation.mutate(linkId);
+        onClose();
+      }}
+    >
+      Delete
+    </IconButton>
   );
 }
 
-export default CommandOptions;
+function LinkOptions({ link }: IProps) {
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  return (
+    <EntityOptions
+      isOpen={isOpen}
+      onClose={onClose}
+      onOpen={onOpen}
+      entityType="link"
+      deleteButton={<DeleteLinkButton linkId={link.id} onClose={onClose} />}
+      editForm={<EditLinkForm linkItem={link} onClose={onClose} />}
+    />
+  );
+}
+
+export default LinkOptions;
