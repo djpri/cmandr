@@ -3,6 +3,7 @@ import {
   Button,
   Grid,
   Heading,
+  Spinner,
   useColorModeValue,
   VStack,
   Wrap,
@@ -79,12 +80,12 @@ function Dashboard() {
 
   const commandCategories = useMemo(() => {
     if (commandCategoryQuery.data?.length <= 0) return [];
-    return commandCategoryQuery.data?.filter((c) => c.parentId >= 0);
+    return commandCategoryQuery.data?.filter((c) => c.parentId <= 0);
   }, [commandCategoryQuery]);
 
   const linkCategories = useMemo(() => {
     if (linkCategoryQuery.data?.length <= 0) return [];
-    return linkCategoryQuery.data?.filter((c) => c.parentId >= 0);
+    return linkCategoryQuery.data?.filter((c) => c.parentId <= 0);
   }, [linkCategoryQuery]);
 
   return (
@@ -105,6 +106,7 @@ function Dashboard() {
               hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
             />
           ))}
+          {commandCategoryQuery.isLoading && (<Spinner />)}
         </Grid>
         <VStack spacing={2} my={5} align="flex-start">
           <AddCommandCategory isGroup />
@@ -126,6 +128,7 @@ function Dashboard() {
               hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
             />
           ))}
+          {linkCategoryQuery.isLoading && (<Spinner />)}
         </Grid>
       </Box>
       <VStack spacing={2} my={5} align="flex-start">

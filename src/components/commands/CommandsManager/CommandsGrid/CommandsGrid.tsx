@@ -13,7 +13,7 @@ import SearchAndPagination from "components/other/SearchAndPagination";
 import useCommands from "hooks/commands/useCommands";
 import { CommandReadDto } from "models/command";
 import { useEffect, useMemo, useState } from "react";
-import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import CommandRow from "./Row/Row";
 
 interface IProps {
@@ -105,7 +105,10 @@ function CommandsTable({ commands, showCategories }: IProps) {
         {table.getHeaderGroups().map((headerGroup) =>
           headerGroup.headers.map((header) => (
             <GridItem key={header.id}>
-              <HStack>
+              <HStack
+                onClick={header.column.getToggleSortingHandler()}
+                cursor={header.column.getCanSort() ? "pointer" : "none"}
+              >
                 <Text as="b" userSelect={"none"}>
                   {flexRender(
                     header.column.columnDef.header,

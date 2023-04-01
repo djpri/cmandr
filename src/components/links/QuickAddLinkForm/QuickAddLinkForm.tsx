@@ -64,6 +64,7 @@ function QuickAddLinkForm({ categoryId }: IProps) {
           ]}
           gap={6}
           alignItems="end"
+          justifyContent={"center"}
         >
           <Box>
             <FormLabel htmlFor="link">Link</FormLabel>

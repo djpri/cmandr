@@ -77,6 +77,20 @@ export const LinkCategories = {
     put("links/categories/manualsort", body),
 };
 
+export const Snippets = {
+  getAll: () => get("snippets"),
+  getById: (id: number) => get(`snippets/${id}`),
+  getAllByCategoryId: (id: number) => get(`snippets/list/${id}`),
+  create: (body: { title: string; content: string; categoryId: number }) =>
+    post("snippets", body),
+  update: (request: { id: number; body: { title: string; content: string } }) =>
+    put(`snippets/${request.id}`, request.body),
+  remove: (id: number) => remove(`snippets/${id}`),
+  bulkUpdate: (request: { body: number[][] }) =>
+    put(`snippets/multiple`, request.body),
+  bulkRemove: (ids: number[]) => remove(`snippets/multiple`, { data: ids }),
+};
+
 export const Settings = {
   get: () => get("user/settings"),
   update: (body: UserSettings) => post("user/settings", body),

@@ -72,7 +72,7 @@ function TableRow({ linkItem, row, table, showCategories }: IProps) {
   };
 
   const formattedTitleString = new DOMParser().parseFromString(
-    title.charAt(0).toUpperCase() + title.slice(1),
+    title?.charAt(0).toUpperCase() + title?.slice(1),
     "text/html"
   ).body.textContent;
 

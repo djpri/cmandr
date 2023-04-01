@@ -6,10 +6,10 @@ import Home from "views/Home";
 import Loading from "views/Loading";
 
 const Dashboard = lazy(() => import("./views/Dashboard"));
-const AllCommands = lazy(() => import("./views/AllCommands"));
-const CommandCategory = lazy(() => import("./views/CommandCategory"));
-const AllLinks = lazy(() => import("./views/AllLinks"));
-const LinkCategory = lazy(() => import("./views/LinkCategory"));
+const AllCommands = lazy(() => import("./views/commands/AllCommands"));
+const CommandCategory = lazy(() => import("./views/commands/CommandCategory"));
+const AllLinks = lazy(() => import("./views/links/AllLinks"));
+const LinkCategory = lazy(() => import("./views/links/LinkCategory"));
 
 const SpinnerFallback: FC = () => (
   <UserLayout>
