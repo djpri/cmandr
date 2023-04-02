@@ -9,6 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Row, Table } from "@tanstack/table-core";
+import useTableSelectors from "hooks/table/useTableSelectors";
 import { CommandReadDto } from "models/command";
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -29,6 +30,10 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
   const hoverColor = useColorModeValue("gray.200", "gray.600");
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
+  const { multiSelectRow } = useTableSelectors<CommandReadDto>(
+    table,
+    row
+  );
 
   const handleCopy = () => {
     setIsCopied(true);
@@ -37,44 +42,9 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
     }, 1500);
   };
 
-  const handleClick = (event: React.MouseEvent) => {
-    const target = event.target as HTMLElement;
-    if (!target.classList.contains("clickToSelect")) {
-      return;
-    }
-    const wasSelected = row.getIsSelected();
-
-    if (event.ctrlKey) {
-      row.toggleSelected();
-    } else {
-      table.toggleAllRowsSelected(false);
-      row.toggleSelected(!wasSelected);
-    }
-
-    if (event.shiftKey) {
-      const keys = table
-        .getSelectedRowModel()
-        .flatRows.map((k) => parseInt(k.id));
-      keys.push(parseInt(row.id));
-      const min = Math.min(...keys);
-      const max = Math.max(...keys);
-      const allRowsToSelect = table
-        .getRowModel()
-        .flatRows.slice(min, max + 1)
-        .map((k) => parseInt(k.id));
-      const rowSelection = allRowsToSelect.reduce((m, v) => {
-        m[v] = true;
-        return m;
-      }, {});
-      table.setRowSelection(rowSelection);
-      document.getSelection().removeAllRanges();
-    }
-  };
-
   return (
     <Grid
       templateColumns={["1fr", null, null, "1.7fr 2fr 1fr 1fr"]}
-      alignItems="center"
       px={4}
       py={2}
       gap={4}
@@ -84,7 +54,7 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
       _hover={{
         bgColor: row.getIsSelected() && selectedRowColor,
       }}
-      onMouseDown={handleClick}
+      onMouseDown={multiSelectRow}
     >
       <GridItem className="clickToSelect">
         {description.charAt(0).toUpperCase() + description.slice(1)}
@@ -107,16 +77,22 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
         </CopyToClipboard>
       </GridItem>
 
-      {showCategories && (
-        <GridItem>
+      <GridItem className="clickToSelect">
+        {showCategories && (
           <HStack>
             <AiFillFolder color={categoryTextColor} />
             <Text color={categoryTextColor}>{commandItem.category.name}</Text>
           </HStack>
-        </GridItem>
-      )}
+        )}
+      </GridItem>
 
-      <GridItem display="flex" flexDirection="row" alignItems="center" gap="2">
+      <GridItem
+        className="clickToSelect"
+        gap="2"
+        display="flex"
+        alignItems="flex-start"
+        justifyContent="flex-end"
+      >
         <CopyToClipboard text={line} onCopy={() => handleCopy()}>
           <Button
             size="xs"
@@ -156,17 +132,15 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
             </Button>
           </Link>
         )}
-        <div>
-          <CommandOptions
-            command={{
-              id,
-              description,
-              line,
-              reference,
-              category,
-            }}
-          />
-        </div>
+        <CommandOptions
+          command={{
+            id,
+            description,
+            line,
+            reference,
+            category,
+          }}
+        />
       </GridItem>
     </Grid>
   );

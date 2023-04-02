@@ -100,13 +100,13 @@ function Dashboard() {
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
           {commandCategories?.map((item: CategoryReadDto, index: number) => (
             <CategoryLinkButton
-              type="commands"
+              routeType="commands"
               key={item.id}
               item={item}
               hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
             />
           ))}
-          {commandCategoryQuery.isLoading && (<Spinner />)}
+          {commandCategoryQuery.isLoading && <Spinner />}
         </Grid>
         <VStack spacing={2} my={5} align="flex-start">
           <AddCommandCategory isGroup />
@@ -122,13 +122,13 @@ function Dashboard() {
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
           {linkCategories?.map((item: CategoryReadDto, index: number) => (
             <CategoryLinkButton
-              type="links"
+              routeType="links"
               key={item.id}
               item={item}
               hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
             />
           ))}
-          {linkCategoryQuery.isLoading && (<Spinner />)}
+          {linkCategoryQuery.isLoading && <Spinner />}
         </Grid>
       </Box>
       <VStack spacing={2} my={5} align="flex-start">

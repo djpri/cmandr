@@ -18,6 +18,8 @@ import useRemoveFromGroupDropItem from "./CategoriesList/DnD/useRemoveFromGroupD
 import { UseQueryResult } from "@tanstack/react-query";
 import { ConnectDropTarget } from "react-dnd/dist/types";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "redux/store";
+import { selectSidebarAccordionIndex, setSidebarAccordionIndex } from "redux/slices/layoutSlice";
 
 const textMargin = "8px";
 
@@ -29,6 +31,7 @@ type CategoryAccordionProps = {
   query: UseQueryResult<any, unknown>;
   editCategoryMutation: any;
   icon: JSX.Element;
+  sidebarIndex: number;
 };
 
 const CategoryAccordion = ({
@@ -38,13 +41,22 @@ const CategoryAccordion = ({
   route,
   query,
   editCategoryMutation,
-  icon
-}: CategoryAccordionProps) => (
-  <AccordionItem>
+  icon,
+  sidebarIndex
+}: CategoryAccordionProps) => {
+  const dispatch = useAppDispatch();
+
+  const setIndex = () => {
+    dispatch(setSidebarAccordionIndex(sidebarIndex));
+  }
+
+  return (
+  <AccordionItem >
     <AccordionButton
       textAlign="left"
       ref={addToCategoryDropRef}
-      border={isAddToGroupDropActive && "2px solid red"}
+        border={isAddToGroupDropActive && "2px solid red"}
+        onClick={setIndex}
     >
       {icon}
       <Text flex="1" fontWeight="700" letterSpacing="1px" ml={textMargin} textTransform="capitalize">
@@ -68,7 +80,7 @@ const CategoryAccordion = ({
       />
     </AccordionPanel>
   </AccordionItem>
-);
+)};
 
 const CommandCategorySection = () => {
   const { query, editCategoryMutation } = useCommandCategories();
@@ -83,6 +95,7 @@ const CommandCategorySection = () => {
       query={query}
       editCategoryMutation={editCategoryMutation}
       icon={<BiCommand />}
+      sidebarIndex={2}
      />
   );
 };
@@ -101,6 +114,7 @@ const LinkCategorySection = () => {
       query={query}
       editCategoryMutation={editCategoryMutation}
       icon={<FaExternalLinkSquareAlt />}
+      sidebarIndex={4}
     />
   );
 };
@@ -114,17 +128,20 @@ const SnippetCategorySection = () => {
       addToCategoryDropRef={addToCategoryDropRef}
       isAddToGroupDropActive={isAddToGroupDropActive}
       type="snippets"
-      route="/spinnets"
+      route="/snippets"
       query={query}
       editCategoryMutation={editCategoryMutation}
-      icon={<AiFillCode/>}
+      icon={<AiFillCode />}
+      sidebarIndex={6}
     />
   )
 };
 
 function SideBarLinks() {
+  const defaultIndex = useAppSelector(selectSidebarAccordionIndex);
+
   return (
-    <Accordion allowMultiple defaultIndex={[2, 4]} fontSize="sm">
+    <Accordion allowMultiple defaultIndex={defaultIndex} fontSize="sm">
       <AccordionItem textAlign="left" as={RouterLink} to="/" borderTop="none">
         <AccordionButton fontWeight="700" letterSpacing="1px">
           <IoMdHome />
@@ -146,7 +163,7 @@ function SideBarLinks() {
 
       <CommandCategorySection />
       <LinkCategorySection />
-      {/* <SnippetCategorySection /> */}
+      <SnippetCategorySection />
     </Accordion>
   );
 }

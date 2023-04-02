@@ -14,13 +14,15 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import UserLayout from "components/layout/UserLayout";
-import AddLinkCategory from "components/linkCategories/AddLinkCategory";
-import DeleteLinkCategory from "components/linkCategories/DeleteLinkCategory";
-import EditLinkCategory from "components/linkCategories/EditLinkCategory";
-import LinksManager from "components/links/LinksManager/LinksManager";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
+import AddSnippetCategory from "components/snippetCategories/AddSnippetCategory";
+import DeleteSnippetCategory from "components/snippetCategories/DeleteSnippetCategory";
+import EditSnippetCategory from "components/snippetCategories/EditSnippetCategory";
+import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinksFromSingleCategory from "hooks/links/useLinksFromSingleCategory";
+import useSnippetCategories from "hooks/snippets/useSnippetCategories";
+import useSnippetsFromSingleCategory from "hooks/snippets/useSnippetsFromSingleCategory";
 import { CategoryReadDto } from "models/category";
 import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
@@ -61,13 +63,13 @@ const HeaderOptions = ({
           </PopoverBody>
         </PopoverContent>
       </Popover>
-      <DeleteLinkCategory
+      <DeleteSnippetCategory
         isOpen={isOpen}
         onClose={onClose}
         categoryName={category ? category.name : null}
         categoryId={parseInt(categoryId)}
       />
-      <EditLinkCategory
+      <EditSnippetCategory
         isOpen={isEditModalOpen}
         onClose={editModalClose}
         category={category}
@@ -114,7 +116,7 @@ function LinkCategory() {
     >
       {query.isLoading && <Spinner mb={5} />}
       {!category?.isGroup && (
-        <LinksManager
+        <SnippetsManager
           categoryId={category ? category.id : null}
           links={query.data}
         />
@@ -124,7 +126,7 @@ function LinkCategory() {
           {subCategories.map((item) => (
             <CategoryLinkButton
               item={item}
-              routeType="links"
+              routeType="snippets"
               key={item.id}
               hue={201}
             />
@@ -133,7 +135,7 @@ function LinkCategory() {
       )}
       {category.isGroup && (
         <VStack spacing={2} my={5} align="flex-start">
-          <AddLinkCategory parentId={category.id} />
+          <AddSnippetCategory parentId={category.id} />
         </VStack>
       )}
     </EntityPage>

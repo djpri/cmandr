@@ -1,9 +1,12 @@
+import { CategoryReadDto } from "./category";
+
 export interface SnippetCreateDto {
   title?: string | undefined;
   description?: string | undefined;
   code?: string | undefined;
   language?: string | undefined;
   starred?: boolean;
+  categoryId?: number;
 }
 
 export interface SnippetReadDto {
@@ -14,6 +17,7 @@ export interface SnippetReadDto {
   language: string;
   starred: boolean;
   dateCreated?: Date;
+  category: CategoryReadDto;
   dateUpdated?: Date;
 }
 
@@ -23,4 +27,5 @@ export interface SnippetUpdateDto {
   code?: string | undefined;
   language?: string | undefined;
   starred?: boolean;
+  categoryId?: number;
 }

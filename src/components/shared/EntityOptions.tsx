@@ -41,7 +41,7 @@ function EntityOptions({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay
           bg="blackAlpha.300"
-          backdropFilter="blur(5px) hue-rotate(20deg)"
+          backdropFilter="blur(5px) hue-rotate(-20deg)"
         />
         <ModalContent>
           <ModalHeader textTransform="capitalize">Edit {entityType}</ModalHeader>

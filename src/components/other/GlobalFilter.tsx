@@ -14,7 +14,7 @@ type PropTypes = {
 function GlobalFilter({
   value: initialValue,
   onChange,
-  debounce = 500,
+  debounce = 200,
   table,
 }: PropTypes) {
   const count = table.getPreFilteredRowModel().rows.length;

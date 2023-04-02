@@ -31,15 +31,15 @@ export const Button: ComponentStyleConfig = {
   },
   variants: {
     add: (props) => ({
-      color: mode("white", "white")(props),
-      bg: mode("#5a915b", "#3b7a3c")(props),
+      color: mode("hsl(0, 0%, 100%)", "hsl(0, 0%, 100%)")(props),
+      bg: mode("hsl(130, 30%, 55%)", "hsl(130, 35%, 50%)")(props),
       _hover: {
-        bg: mode("#70b872", "#549d54")(props),
+      bg: mode("hsl(130, 30%, 60%)", "hsl(130, 35%, 55%)")(props),
       },
       _active: {
-        bg: mode("#86cc8a", "#6bbd6b")(props),
+      bg: mode("hsl(130, 30%, 65%)", "hsl(130, 35%, 60%)")(props),
       },
-    })
+      })
 ,    
     edit: (props) => ({
       bg: props.colorMode === "dark" ? "gray.600" : "gray.200",
