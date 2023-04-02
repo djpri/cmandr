@@ -4,6 +4,8 @@ import { FC, lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "views/Home";
 import Loading from "views/Loading";
+import AllSnippetsPage from "views/snippets/AllSnippets";
+import SnippetCategoryPage from "views/snippets/SnippetCategory";
 
 const Dashboard = lazy(() => import("./views/Dashboard"));
 const AllCommands = lazy(() => import("./views/commands/AllCommands"));
@@ -16,6 +18,8 @@ const SpinnerFallback: FC = () => (
     <Spinner />
   </UserLayout>
 );
+
+export type entityRoute = "commands" | "links" | "snippets";
 
 // wrap all elements in suspense
 export const router = createBrowserRouter([
@@ -60,6 +64,22 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<SpinnerFallback />}>
         <LinkCategory />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/snippets",
+    element: (
+      <Suspense fallback={<SpinnerFallback />}>
+        <AllSnippetsPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/snippets/:id",
+    element: (
+      <Suspense fallback={<SpinnerFallback />}>
+        <SnippetCategoryPage />
       </Suspense>
     ),
   },

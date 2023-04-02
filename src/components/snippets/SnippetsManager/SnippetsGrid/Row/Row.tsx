@@ -13,7 +13,7 @@ import { LinkReadDto } from "models/link";
 import { useMemo } from "react";
 import { selectShowImagePreviews } from "redux/slices/linksSlice";
 import { useAppSelector } from "redux/store";
-import LinkOptions from "./LinkOptions/LinkOptions";
+import LinkOptions from "./LinkOptions/SnippetOptions";
 
 interface IProps {
   linkItem: LinkReadDto;

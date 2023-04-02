@@ -3,6 +3,7 @@ import { RootState } from "redux/store";
 
 const initialState = {
   isSidebarOpen: true,
+  sideBarAccordionIndex: [2,4,6],
   categoriesOpen: {},
 };
 
@@ -31,6 +32,13 @@ export const layoutSlice = createSlice({
         [action.payload]: false,
       };
     },
+    setSidebarAccordionIndex: (state, action: { payload: number }) => {
+      if (state.sideBarAccordionIndex.includes(action.payload)) {
+        state.sideBarAccordionIndex = state.sideBarAccordionIndex.filter((index) => index !== action.payload);
+      } else {
+        state.sideBarAccordionIndex = [...state.sideBarAccordionIndex, action.payload];
+      }
+    },
   },
 });
 
@@ -41,6 +49,7 @@ export const {
   setSidebarOpen,
   setCategoryClose,
   setCategoryOpen,
+  setSidebarAccordionIndex,
 } = layoutSlice.actions;
 
 // SELECTORS
@@ -50,4 +59,7 @@ export const selectIsSidebarOpen = (state: RootState) =>
 export const selectOpenCategories = (state: RootState) =>
   state.layout.categoriesOpen;
 
+export const selectSidebarAccordionIndex = (state: RootState) =>
+  state.layout.sideBarAccordionIndex;
+  
 export default layoutSlice.reducer;

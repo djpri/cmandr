@@ -2,13 +2,18 @@ import { GridItem, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { CategoryReadDto } from "models/category";
 import { AiFillFolder, AiOutlineUnorderedList } from "react-icons/ai";
 import { Link as RouterLink } from "react-router-dom";
+import { entityRoute } from "routes";
 
 interface CategoryLinkButtonProps {
   item: CategoryReadDto;
-  type: string;
+  routeType: entityRoute;
   hue: number;
 }
-function CategoryLinkButton({ item, type, hue }: CategoryLinkButtonProps) {
+function CategoryLinkButton({
+  item,
+  routeType: type,
+  hue,
+}: CategoryLinkButtonProps) {
   const itemCountColor = useColorModeValue("gray.600", "gray.300");
 
   const buttonBgGradient = useColorModeValue(

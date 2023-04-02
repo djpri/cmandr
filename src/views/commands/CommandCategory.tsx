@@ -112,7 +112,7 @@ function CommandCategoryPage() {
           {subCategories.map((item) => (
             <CategoryLinkButton
               item={item}
-              type="commands"
+              routeType="commands"
               key={item.id}
               hue={201}
             />
