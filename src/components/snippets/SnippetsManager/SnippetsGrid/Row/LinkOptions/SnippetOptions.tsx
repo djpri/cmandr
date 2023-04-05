@@ -1,24 +1,21 @@
-import {
-  IconButton,
-  useDisclosure,
-} from "@chakra-ui/react";
-import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
+import { Button, HStack, IconButton, useDisclosure } from "@chakra-ui/react";
 import EntityOptions from "components/shared/EntityOptions";
-import useLinks from "hooks/links/useLinks";
-import { LinkReadDto } from "models/link";
+import EditSnippetForm from "components/snippets/EditSnippetForm";
+import useSnippets from "hooks/snippets/useSnippets";
+import { SnippetReadDto } from "models/snippets";
 import { AiFillDelete } from "react-icons/ai";
 
 type IProps = {
-  link: LinkReadDto;
+  snippet: SnippetReadDto;
 };
 
-interface DeleteLinkButtonProps {
-  linkId: number;
+interface DeleteSnippetButtonProps {
+  snippetId: number;
   onClose: () => void;
 }
 
-function DeleteLinkButton({ linkId, onClose }: DeleteLinkButtonProps) {
-  const { deleteLinkMutation } = useLinks();
+function DeleteSnippetButton({ snippetId, onClose }: DeleteSnippetButtonProps) {
+  const { deleteSnippetMutation } = useSnippets();
 
   return (
     <IconButton
@@ -27,7 +24,7 @@ function DeleteLinkButton({ linkId, onClose }: DeleteLinkButtonProps) {
       variant="delete"
       icon={<AiFillDelete />}
       onClick={() => {
-        deleteLinkMutation.mutate(linkId);
+        deleteSnippetMutation.mutate(snippetId);
         onClose();
       }}
     >
@@ -36,19 +33,25 @@ function DeleteLinkButton({ linkId, onClose }: DeleteLinkButtonProps) {
   );
 }
 
-function LinkOptions({ link }: IProps) {
+function SnippetOptions({ snippet: snippet }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
-    <EntityOptions
-      isOpen={isOpen}
-      onClose={onClose}
-      onOpen={onOpen}
-      entityType="link"
-      deleteButton={<DeleteLinkButton linkId={link.id} onClose={onClose} />}
-      editForm={<EditLinkForm linkItem={link} onClose={onClose} />}
-    />
+    <HStack gap={2}>
+          <Button size="xs">View code</Button>
+      
+      <EntityOptions
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+        entityType="link"
+        deleteButton={
+          <DeleteSnippetButton snippetId={snippet.id} onClose={onClose} />
+        }
+        editForm={<EditSnippetForm snippetItem={snippet} onClose={onClose} />}
+      />
+    </HStack>
   );
 }
 
-export default LinkOptions;
+export default SnippetOptions;

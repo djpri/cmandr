@@ -5,7 +5,7 @@ Also includes a bookmark manager for storing links related to development work.
 
 ## Technologies Used
 
-- Frontend: React
+- Frontend: React 18
 - Backend: ASP.NET Core 7.0
 - Database: MySQL
 
@@ -13,20 +13,21 @@ Also includes a bookmark manager for storing links related to development work.
 
 - Drag and drop categories into groups
 - Search, sort and pagination of items
+- Bulk move items to new category
 - Bulk delete items
+
+### Ideas for Future Features
+- Save and manage full code snippets
+- Save and preview CSS styles (e.g. [Css Box Shadow Examples](https://getcssscan.com/css-box-shadow-examples))
+- Chrome extension for easily saving snippets or bookmarks
 
 ## Frontend Directory
 
 ```
 📦src
- ┣ 📂api         - contains axios instance and all of the api endpoints
- ┣ 📂auth        - contains Azure Active Directory B2C policies and msal config
- ┣ 📂components
- ┃ ┣ 📁auth
- ┃ ┣ 📁commands
- ┃ ┣ 📁layout
- ┃ ┣ 📁links
- ┃ ┗ 📁other
+ ┣ 📂api         - contains custom axios instance with methods for calling all of the api endpoints
+ ┣ 📂auth        - contains Azure Active Directory B2C policies and msal config (https://www.npmjs.com/package/%40azure/msal-browser)
+ ┣ 📂components  
  ┣ 📂helpers     - helper functions
  ┣ 📂hooks       - custom react hooks, mainly for react query logic
  ┣ 📂models      - view models based on the web api DTOs (data transfer objects)
@@ -39,7 +40,9 @@ Also includes a bookmark manager for storing links related to development work.
 
 ## Local Development Setup ( Frontend )
 
-Make sure [Node.js](https://nodejs.org/en/) (**16.4.0**) and [Yarn](https://yarnpkg.com/) are installed.
+Make sure [Node.js](https://nodejs.org/en/) (**18.15.0**) and [Yarn](https://yarnpkg.com/) are installed.
+
+Check node version using `node --version`
 
 Then in the project directory, run
 
@@ -49,27 +52,22 @@ $ yarn
 
 ## Environment Variables
 
-Add to .env.local file for use in development.
-
-**VITE_BASE_URL** - The base URL for the backend api
-**VITE_CLIENT_ID** - The client id for Azure B2C
-
-#### Example
-
-```
-VITE_BASE_URL="https://localhost:44310/api/"
-VITE_CLIENT_ID=aaaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
-```
+- See **.env.examples** for a list of all variable names
+- Use **.env** file  for production environment
+- Use **.env.local** file for use in development
 
 ## Scripts
 
 ### Run development server
 
-Open http://localhost:3000/ to view the app if page doesn't load automatically
+First, run the backend server (see [cmandr-backend](https://github.com/djpri/cmandr-backend)) and make sure that VITE_BASE_URL in .env.local is set to the applicationUrl value in launchSettings.json.
+
+Then run:
 
 ```sh
 $ yarn start
 ```
+Open http://localhost:3000/ to view the app if the page doesn't load automatically.
 
 ### Create build folder for production
 
@@ -77,13 +75,13 @@ $ yarn start
 $ yarn build
 ```
 
-### Serve build
+### Preview build
 
 ```sh
 $ yarn serve
 ```
 
-### Run tests using Jest
+### Run tests using Vitest
 
 ```sh
 $ yarn test

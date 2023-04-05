@@ -6,6 +6,7 @@ import AddLinkCategory from "components/linkCategories/AddLinkCategory";
 import { CategoryReadDto, CategoryUpdateDto } from "models/category";
 import { useCallback, useMemo } from "react";
 import DragItem from "./DnD/DragItem";
+import AddSnippetCategory from "components/snippetCategories/AddSnippetCategory";
 
 interface IProps {
   query: UseQueryResult<CategoryReadDto[]>;
@@ -101,6 +102,12 @@ function CategoriesList({ query, type, editCategoryMutation }: IProps) {
             <>
               <AddCommandCategory isGroup />
               <AddCommandCategory />
+            </>
+          )}
+          {type === "snippets" && (
+            <>
+              <AddSnippetCategory isGroup />
+              <AddSnippetCategory />
             </>
           )}
         </Flex>

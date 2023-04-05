@@ -10,29 +10,32 @@ import {
 } from "@tanstack/react-table";
 import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
-import useLinks from "hooks/links/useLinks";
-import { LinkReadDto } from "models/link";
+import { SnippetReadDto } from "models/snippets";
 import { useEffect, useMemo, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import Row from "./Row/Row";
 
 interface IProps {
-  links: LinkReadDto[];
+  snippets: SnippetReadDto[];
   showCategories: boolean;
   isLoading: boolean;
 }
 
-function LinksGrid({ links, showCategories, isLoading }: IProps) {  
-  const columns = useMemo<ColumnDef<LinkReadDto>[]>(() => {
+export const gridColumnsWithCategory = ["1fr", null, null, "10fr 2fr 2fr 2fr"];
+export const gridColumnsWithoutCategory = ["1fr", null, null, "10fr 2fr 2fr"];
+
+
+function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
+  const columns = useMemo<ColumnDef<SnippetReadDto>[]>(() => {
     if (showCategories) {
       return [
         {
-          header: () => "Title",
-          accessorKey: "title",
+          header: () => "Description",
+          accessorKey: "description",
         },
         {
-          header: () => "Url",
-          accessorKey: "url",
+          header: () => "Language",
+          accessorKey: "language",
         },
         {
           header: () => "Category",
@@ -42,19 +45,19 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
     }
     return [
       {
-        header: () => "Title",
-        accessorKey: "title",
+        header: () => "Description",
+        accessorKey: "description",
       },
       {
-        header: () => "Url",
-        accessorKey: "url",
+        header: () => "Language",
+        accessorKey: "language",
       },
     ];
   }, [showCategories]);
   const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
-    data: links,
+    data: snippets,
     columns,
     state: {
       globalFilter,
@@ -70,27 +73,15 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
     table.setPageSize(25);
   }, []);
 
-  const { deleteMultipleLinksMutation } = useLinks();
-
-  const handleBulkDelete = () => {
-    const linkIds = table
-      .getSelectedRowModel()
-      .flatRows.map((rowData) => rowData.original.id);
-    deleteMultipleLinksMutation.mutate(linkIds);
-  };
-
   const Headers = () => {
     return (
-      <Grid
-        templateColumns={
-          showCategories ? ["1fr", null, null, "4fr 6fr 2fr 2fr"] : ["2fr 4fr"]
-        }
-        p="4"
-      >
+      <Grid p="4">
+        <HStack gap="4" justifyContent="flex-end">
+          <Text>Sort by:</Text>
         {table.getHeaderGroups().map((headerGroup) =>
           headerGroup.headers.map((header) => (
-            <GridItem key={header.id}>
               <HStack
+                key={header.id}
                 onClick={header.column.getToggleSortingHandler()}
                 cursor={header.column.getCanSort() ? "pointer" : "none"}
               >
@@ -105,9 +96,9 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
                   desc: <AiFillCaretDown aria-label="sorted ascending" />,
                 }[header.column.getIsSorted() as string] ?? null}
               </HStack>
-            </GridItem>
           ))
-        )}
+          )}</HStack>
+        <hr/>
       </Grid>
     );
   };
@@ -116,7 +107,7 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
     const pageSize = table.getState().pagination.pageSize;
 
     return (
-      <Grid templateColumns={["1fr"]} gap={[1, null, null, 0]}>
+      <Grid>
         <Box>
           {table
             .getRowModel()
@@ -125,7 +116,7 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
               return (
                 <Row
                   showCategories={showCategories}
-                  linkItem={row.original}
+                  snippet={row.original}
                   row={row}
                   isLoading={isLoading}
                   table={table}
@@ -142,7 +133,6 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
     <Box>
       {table.getSelectedRowModel().flatRows.length > 1 && (
         <RowSelectionMenu
-          handleBulkDelete={handleBulkDelete}
           table={table}
           type="link"
         />
@@ -160,4 +150,4 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
   );
 }
 
-export default LinksGrid;
+export default SnippetsGrid;

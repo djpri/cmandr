@@ -21,13 +21,14 @@ import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
 import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
+import { SnippetReadDto } from "models/snippets";
 import { FC, useCallback, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { BiMove } from "react-icons/bi";
 
 interface IProps {
-  handleBulkDelete: () => void;
-  table: Table<CommandReadDto> | Table<LinkReadDto>;
+  handleBulkDelete?: () => void;
+  table: Table<CommandReadDto> | Table<LinkReadDto> | Table<SnippetReadDto>;
   type: "command" | "link";
 }
 
@@ -126,7 +127,16 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
         <Button onClick={onOpen} aria-label="move items" rightIcon={<BiMove />}>
           Move
         </Button>
-        <Button onClick={handleBulkDelete} rightIcon={<AiFillDelete/> }>Delete</Button>
+        <Button
+          onClick={() => {
+            if (handleBulkDelete) {
+              handleBulkDelete();
+            }
+          }}
+          rightIcon={<AiFillDelete />}
+        >
+          Delete
+        </Button>
       </HStack>
       <MoveItemsModal
         isOpen={isOpen}

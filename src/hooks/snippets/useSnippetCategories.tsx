@@ -1,4 +1,4 @@
-import { LinkCategories } from "api";
+import { SnippetCategories } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import { CategoryReadDto } from "models/category";
  * @example
  *
  * ```js
- * const { query } = useLinkCategories();
+ * const { query } = useSnippetCategories();
  * const categories = query.data;
  * ```
  */
@@ -25,7 +25,7 @@ function useSnippetCategories() {
   // Queries
   const query = useQuery(
     ["snippetCategories"],
-    asReactQueryFunction(LinkCategories.getAll),
+    asReactQueryFunction(SnippetCategories.getAll),
     {
       enabled: isAppInitalized,
     }
@@ -33,19 +33,19 @@ function useSnippetCategories() {
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
-  const addCategoryMutation = useMutation(LinkCategories.create, {
+  const addCategoryMutation = useMutation(SnippetCategories.create, {
     onSuccess: () => {
       queryClient.invalidateQueries(["snippetCategories"]);
     },
     onError: showErrorToast,
   });
-  const editCategoryMutation = useMutation(LinkCategories.update, {
+  const editCategoryMutation = useMutation(SnippetCategories.update, {
     onSuccess: () => {
       queryClient.invalidateQueries(["snippetCategories"]);
     },
     onError: showErrorToast,
   });
-  const deleteCategoryMutation = useMutation(LinkCategories.remove, {
+  const deleteCategoryMutation = useMutation(SnippetCategories.remove, {
     onMutate: (id) => {
       queryClient.cancelQueries(["snippetCategories"]);
       const previousCategories = queryClient.getQueryData(["snippetCategories"]);
@@ -60,7 +60,7 @@ function useSnippetCategories() {
       showErrorToast();
     },
   });
-  const manualSortMutation = useMutation(LinkCategories.manualSort, {
+  const manualSortMutation = useMutation(SnippetCategories.manualSort, {
     onSuccess: () => {
       queryClient.refetchQueries(["settings"]);
       queryClient.invalidateQueries(["snippetCategories"]);

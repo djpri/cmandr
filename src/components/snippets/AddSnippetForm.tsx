@@ -1,11 +1,14 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
+import CUIAutoComplete from "components/shared/ChakraUIAutoComplete";
 import useSnippetCategories from "hooks/snippets/useSnippetCategories";
-import useSnippets from "hooks/snippets/useSnippets";
 import { SnippetCreateDto } from "models/snippets";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ValidationError } from "./snippetFormUtils";
 import CodeEditor from "./CodeEditor";
+import { languagesAsItems } from "./languages";
+import { ValidationError } from "./snippetFormUtils";
+import useSnippets from "hooks/snippets/useSnippets";
+import { CategoryReadDto } from "models/category";
 
 interface IProps {
   categoryId?: number;
@@ -15,6 +18,7 @@ function AddSnippetForm({ categoryId }: IProps) {
   const { addSnippetMutation } = useSnippets();
   const { query } = useSnippetCategories();
   const [showCategorySelect, setShowCategorySelect] = useState(true);
+
   const {
     handleSubmit,
     register,
@@ -24,6 +28,7 @@ function AddSnippetForm({ categoryId }: IProps) {
     formState: { errors },
   } = useForm<SnippetCreateDto>();
   const selectCodeValue = watch("code");
+  const selectLanguageValue = watch("language");
 
   useEffect(() => {
     if (categoryId) {
@@ -34,18 +39,26 @@ function AddSnippetForm({ categoryId }: IProps) {
     }
   }, [categoryId, setValue]);
 
-  const onSubmit = (values: SnippetCreateDto) => {
-    // addSnippetMutation.mutate(values);
-    reset({ title: "", categoryId: categoryId || -1 });
+  const onSubmit = (values) => {
+    addSnippetMutation.mutate(values);
+    // console.log(values);
+    reset({ title: "", description: "", code: "", categoryId: categoryId || -1 });
   };
 
   const handleCodeSnippetChange = (value) => {
-    setValue('code', value);
+    setValue("code", value);
+  };
+
+  const handleLanguageValueChange = (value) => {
+    setValue("language", value);
   };
 
   useEffect(() => {
     register("code");
   }, [register]);
+
+  const [defaultLanguage, setDefaultLanguage] = useState("javascript");
+  // const [availableLanguages, setavailableLanguages] = useState(second)
 
   return (
     <>
@@ -56,30 +69,35 @@ function AddSnippetForm({ categoryId }: IProps) {
           gap={6}
           alignItems="end"
         >
-              <Box>
-                <Input
-                  {...register("description")}
-                  placeholder="Description for code snippet"
-                />
-              </Box>
-          <Box maxH="50vh">
-            <CodeEditor handleCodeSnippetChange={handleCodeSnippetChange} value={selectCodeValue}/>
-          </Box>
-
           <Box>
-            <FormLabel htmlFor="language">Language</FormLabel>
             <Input
-              {...register("language")}
-              placeholder="Language of code snippet"
+              {...register("description")}
+              placeholder="Description for code snippet"
             />
           </Box>
+          <CUIAutoComplete
+            items={languagesAsItems ?? []}
+            value={selectLanguageValue}
+            placeholder="Language (select dropdown item to change editor language)"
+            label="Language"
+            handleChooseItem={(langId) => {
+              setDefaultLanguage(langId);
+              handleLanguageValueChange(langId);
+            }}
+          />
+          <CodeEditor
+            handleCodeSnippetChange={handleCodeSnippetChange}
+            value={selectCodeValue}
+            defaultLanguage={defaultLanguage}
+            setDefaultLanguage={setDefaultLanguage}
+          />
 
           {showCategorySelect && (
             <Box>
               <FormLabel htmlFor="category">Category</FormLabel>
               <Select {...register("categoryId", { min: 1 })}>
                 <option value={-1}>Select Category</option>
-                {query?.data?.map((category, index) => (
+                {query?.data?.filter((cat: CategoryReadDto) => !cat.isGroup).map((category, index) => (
                   <option value={category.id} key={index}>
                     {category.name}
                   </option>

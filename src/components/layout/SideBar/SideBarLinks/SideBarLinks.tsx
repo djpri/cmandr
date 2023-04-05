@@ -20,6 +20,7 @@ import { ConnectDropTarget } from "react-dnd/dist/types";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { selectSidebarAccordionIndex, setSidebarAccordionIndex } from "redux/slices/layoutSlice";
+import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 
 const textMargin = "8px";
 
@@ -120,7 +121,7 @@ const LinkCategorySection = () => {
 };
 
 const SnippetCategorySection = () => {
-  const { query, editCategoryMutation } = useLinkCategories();
+  const { query, editCategoryMutation } = useSnippetCategories();
   const { addToCategoryDropRef, isAddToGroupDropActive } =
     useRemoveFromGroupDropItem("snippets", editCategoryMutation, query.data);
   return (

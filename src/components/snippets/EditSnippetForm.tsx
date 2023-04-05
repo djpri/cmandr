@@ -1,36 +1,36 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
-import useLinkCategories from "hooks/links/useLinkCategories";
-import useLinks from "hooks/links/useLinks";
-import { LinkReadDto, LinkUpdateDto } from "models/link";
+import useSnippetCategories from "hooks/snippets/useSnippetCategories";
+import useSnippets from "hooks/snippets/useSnippets";
+import { SnippetReadDto, SnippetUpdateDto } from "models/snippets";
 import { useForm } from "react-hook-form";
-import { ValidationError, urlRegisterOptions } from "./snippetFormUtils";
 
 type IProps = {
-  linkItem: LinkReadDto;
+  snippetItem: SnippetReadDto;
   onClose: () => void;
 };
 
-function EditLinkForm({ linkItem, onClose }: IProps) {
-  const { id, title, url } = linkItem;
-  const { query: allCategoriesQuery } = useLinkCategories();
-  const { editLinkMutation } = useLinks();
+function EditSnippetForm({ snippetItem, onClose }: IProps) {
+  const { id, title, description, language } = snippetItem;
+  const { query: allCategoriesQuery } = useSnippetCategories();
+  const { editSnippetMutation } = useSnippets();
 
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
-  } = useForm<LinkUpdateDto>({
+  } = useForm<SnippetUpdateDto>({
     defaultValues: {
       title,
-      url,
-      categoryId: linkItem.category.id,
+      description,
+      language,
+      categoryId: snippetItem.category.id,
     },
   });
 
-  const onSubmit = (values: LinkUpdateDto) => {
-    editLinkMutation.mutate({ id, body: values });
-    reset({ url: "", title: "", categoryId: -1 });
+  const onSubmit = (values) => {
+    editSnippetMutation.mutate({ id, body: values });
+    reset({ title: "", description: "", language: "", categoryId: -1 });
     // closes popover if using form from popover only
     if (onClose) onClose();
   };
@@ -43,10 +43,10 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
         </FormLabel>
         <Input {...register("title")} placeholder="Link Title" />
 
-        <FormLabel htmlFor="Link">Url</FormLabel>
+        <FormLabel htmlFor="Link">Language</FormLabel>
         <Input
-          {...register("url", urlRegisterOptions)}
-          placeholder="URL for link"
+          {...register("language")}
+          placeholder="code snippet language"
         />
 
         <FormLabel htmlFor="category">Category</FormLabel>
@@ -63,10 +63,9 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
         </Select>
 
         <Button type="submit">Save</Button>
-        {errors.url && <ValidationError message={errors.url.message} />}
       </Stack>
     </form>
   );
 }
 
-export default EditLinkForm;
+export default EditSnippetForm;
