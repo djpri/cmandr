@@ -19,8 +19,6 @@ import AddSnippetCategory from "components/snippetCategories/AddSnippetCategory"
 import DeleteSnippetCategory from "components/snippetCategories/DeleteSnippetCategory";
 import EditSnippetCategory from "components/snippetCategories/EditSnippetCategory";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
-import useLinkCategories from "hooks/links/useLinkCategories";
-import useLinksFromSingleCategory from "hooks/links/useLinksFromSingleCategory";
 import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 import useSnippetsFromSingleCategory from "hooks/snippets/useSnippetsFromSingleCategory";
 import { CategoryReadDto } from "models/category";
@@ -78,10 +76,10 @@ const HeaderOptions = ({
   );
 };
 
-function LinkCategory() {
+function SnippetCategory() {
   const { id: categoryId } = useParams();
-  const { query } = useLinksFromSingleCategory(parseInt(categoryId));
-  const { query: categoriesQuery } = useLinkCategories();
+  const { query } = useSnippetsFromSingleCategory(parseInt(categoryId));
+  const { query: categoriesQuery } = useSnippetCategories();
 
   const category = useMemo(() => {
     if (categoriesQuery.data) {
@@ -118,7 +116,7 @@ function LinkCategory() {
       {!category?.isGroup && (
         <SnippetsManager
           categoryId={category ? category.id : null}
-          links={query.data}
+          snippets={query.data}
         />
       )}
       {subCategories && (
@@ -142,4 +140,4 @@ function LinkCategory() {
   );
 }
 
-export default LinkCategory;
+export default SnippetCategory;

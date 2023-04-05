@@ -91,6 +91,17 @@ export const Snippets = {
   bulkRemove: (ids: number[]) => remove(`snippets/multiple`, { data: ids }),
 };
 
+export const SnippetCategories = {
+  getAll: () => get("snippets/categories"),
+  getById: (id: number) => get(`snippets/categories/${id}`),
+  create: (body: CategoryCreateDto) => post("snippets/categories", body),
+  update: (request: { id: number; body: CategoryUpdateDto }) =>
+    put(`snippets/categories/${request.id}`, request.body),
+  remove: (id: number) => remove(`snippets/categories/${id}`),
+  manualSort: (body: CategoryDisplayIndexDto[]) =>
+    put("snippets/categories/manualsort", body),
+};
+
 export const Settings = {
   get: () => get("user/settings"),
   update: (body: UserSettings) => post("user/settings", body),

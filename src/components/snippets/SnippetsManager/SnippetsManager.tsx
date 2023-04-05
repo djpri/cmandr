@@ -1,26 +1,21 @@
-import {
-  Box,
-  HStack,
-  useColorModeValue,
-  Wrap,
-} from "@chakra-ui/react";
+import { Box, HStack, useColorModeValue, Wrap } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { ForwardedRef, useRef, useState } from "react";
-import { LinkReadDto } from "../../../models/link";
-import AddLinkButton from "./AddSnippetButton";
-import LinksGrid from "./SnippetsGrid/SnippetsGrid";
+import AddSnippetButton from "./AddSnippetButton";
+import SnippetsGrid from "./SnippetsGrid/SnippetsGrid";
+import { SnippetReadDto } from "models/snippets";
 
 interface IProps {
   categoryId?: number;
-  links: LinkReadDto[];
+  snippets: SnippetReadDto[];
 }
 
-function SnippetsManager({ categoryId, links }: IProps) {
-  const addLinkref = useRef<HTMLDivElement | null>(null);
+function SnippetsManager({ categoryId, snippets }: IProps) {
+  const addSnippetRef = useRef<HTMLDivElement | null>(null);
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
   const [currentButtonOpen, setCurrentButtonOpen] = useState<
-    "addLink" | "quickAddLink" | "none"
+    "addSnippet" | "quickAddLink" | "none"
   >("none");
   return (
     <ErrorBoundaryWrapper>
@@ -36,20 +31,20 @@ function SnippetsManager({ categoryId, links }: IProps) {
         <Box zIndex="100" mb="2" pt="5" pl="5" pr="5">
           <Wrap justify="space-between" align="center" mb="3" w="100%">
             <HStack>
-              <AddLinkButton
-                ref={addLinkref as ForwardedRef<HTMLDivElement>}
+              <AddSnippetButton
+                ref={addSnippetRef as ForwardedRef<HTMLDivElement>}
                 categoryId={categoryId}
                 currentButtonOpen={currentButtonOpen}
                 setCurrentButtonOpen={setCurrentButtonOpen}
               />
             </HStack>
           </Wrap>
-          <Box ref={addLinkref} />
+          <Box ref={addSnippetRef} />
         </Box>
-        {links?.length > 0 && (
-          <LinksGrid
+        {snippets?.length > 0 && (
+          <SnippetsGrid
             isLoading={false}
-            links={links}
+            snippets={snippets}
             showCategories={!categoryId}
           />
         )}

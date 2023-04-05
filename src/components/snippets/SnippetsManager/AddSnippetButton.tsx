@@ -5,20 +5,20 @@ import AddSnippetForm from "../AddSnippetForm";
 
 interface IProps {
   categoryId?: number;
-  currentButtonOpen?: "addLink" | "quickAddLink" | "none";
-  setCurrentButtonOpen?: (value: "addLink" | "quickAddLink" | "none") => void;
+  currentButtonOpen?: "addSnippet" | "quickAddLink" | "none";
+  setCurrentButtonOpen?: (value: "addSnippet" | "quickAddLink" | "none") => void;
 }
 
-const AddLinkButton = forwardRef(
+const AddSnippetButton = forwardRef(
   (props: IProps, ref: ForwardedRef<HTMLDivElement | null>) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     useEffect(() => {
-      props.currentButtonOpen === "addLink" ? onOpen() : onClose();
+      props.currentButtonOpen === "addSnippet" ? onOpen() : onClose();
     }, [props.currentButtonOpen, onOpen, onClose]);
 
     const handleOpen = () => {
-      props.setCurrentButtonOpen("addLink");
+      props.setCurrentButtonOpen("addSnippet");
       onOpen();
     };
 
@@ -48,9 +48,11 @@ const AddLinkButton = forwardRef(
             Add
           </Button>
         )}
-        {ref && props.currentButtonOpen === "addLink" && (
+        {ref && props.currentButtonOpen === "addSnippet" && (
           <Portal containerRef={ref as unknown as RefObject<HTMLElement>}>
-            <Fade in={isOpen} unmountOnExit={false}>{portal}</Fade>
+            <Fade in={isOpen} unmountOnExit={false}>
+              {portal}
+            </Fade>
           </Portal>
         )}
       </>
@@ -58,6 +60,6 @@ const AddLinkButton = forwardRef(
   }
 );
 
-AddLinkButton.displayName = "AddLinkButton";
+AddSnippetButton.displayName = "AddLinkButton";
 
-export default AddLinkButton;
+export default AddSnippetButton;

@@ -7,17 +7,17 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillFolderAdd, AiOutlineUnorderedList } from "react-icons/ai";
-import useLinkCategories from "../../hooks/links/useLinkCategories";
+import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 
 interface IProps {
   isGroup?: boolean;
   parentId?: number;
 }
 
-function AddLinkCategory({ isGroup, parentId }: IProps) {
+function AddSnippetCategory({ isGroup, parentId }: IProps) {
   const [category, setCategory] = useState("");
   const { isOpen, onToggle } = useDisclosure();
-  const { addCategoryMutation } = useLinkCategories();
+  const { addCategoryMutation } = useSnippetCategories();
   const inputColor = useColorModeValue("#f2f6fa", "#1f2937");
 
   const handleAddCategory = () => {
@@ -39,7 +39,7 @@ function AddLinkCategory({ isGroup, parentId }: IProps) {
     <>
       <Button
         size="xs"
-        aria-label="add link category"
+        aria-label="add snippet category"
         leftIcon={isGroup ? <AiFillFolderAdd /> : <AiOutlineUnorderedList />}
         onClick={onToggle}
         boxShadow="outline"
@@ -70,4 +70,4 @@ function AddLinkCategory({ isGroup, parentId }: IProps) {
   );
 }
 
-export default AddLinkCategory;
+export default AddSnippetCategory;

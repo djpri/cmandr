@@ -1,15 +1,15 @@
-import useLinks from "hooks/links/useLinks";
-import EntityPage from "views/EntityPage";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
+import useSnippets from "hooks/snippets/useSnippets";
+import EntityPage from "views/EntityPage";
 
-function Links() {
-  const { query } = useLinks();
+function AllSnippets() {
+  const { query } = useSnippets();
 
   return (
     <EntityPage numItems={query?.data && query?.data.length} title="Snippets">
-      <SnippetsManager links={query.data} />
+      <SnippetsManager snippets={query.data} />
     </EntityPage>
   );
 }
 
-export default Links;
+export default AllSnippets;

@@ -4,6 +4,7 @@ import { FC, lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "views/Home";
 import Loading from "views/Loading";
+import AddSnippetPage from "views/snippets/AddSnippetPage";
 import AllSnippetsPage from "views/snippets/AllSnippets";
 import SnippetCategoryPage from "views/snippets/SnippetCategory";
 
@@ -83,4 +84,12 @@ export const router = createBrowserRouter([
       </Suspense>
     ),
   },
+  {
+    path: "/snippets/add",
+    element: (
+      <Suspense fallback={<SpinnerFallback />}>
+        <AddSnippetPage />
+      </Suspense>
+    ),
+  }
 ]);
