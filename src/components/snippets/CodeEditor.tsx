@@ -6,8 +6,10 @@ import { Dispatch, SetStateAction, useEffect, useMemo, useRef } from "react";
 interface CodeEditorProps {
   handleCodeSnippetChange: (value: string) => void;
   value: string;
-  defaultLanguage: string;
+  height?: string;
+  defaultLanguage?: string;
   setDefaultLanguage: Dispatch<SetStateAction<string>>;
+  readonly?: boolean;
   // setAvailableLanguages: SetStateAction<string[]>;
 }
 
@@ -15,7 +17,9 @@ function CodeEditor({
   handleCodeSnippetChange,
   value,
   defaultLanguage,
-  setDefaultLanguage
+  height,
+  setDefaultLanguage,
+  readonly = false
 }: CodeEditorProps) {
   const theme = useColorModeValue("light", "vs-dark");
   const editorRef = useRef(null);
@@ -44,35 +48,37 @@ function CodeEditor({
     editor.onDidChangeModelLanguage(() => {
       setDefaultLanguage(editor.getModel().getLanguageId());
     });
+    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+      noSyntaxValidation: true,
+    });
   };
 
-
-
-  const handleLanguageChange = (language) => {
-    setDefaultLanguage(language);
-  };
+  // const handleLanguageChange = (language) => {
+  //   setDefaultLanguage(language);
+  // };
 
   // const languages = monaco.languages.getLanguages();
 
   return (
-    <Box position="relative" h="100%" borderWidth="1px" borderRadius="lg">
+    <Box position="relative" h="100%" maxH="150vh" maxW="100%" borderWidth="1px" borderRadius="lg">
       <Editor
         theme={theme}
-        height="45vh"
+        height={height ?? "45vh"}
         defaultValue={value}
         value={value}
         onChange={(value) => handleCodeSnippetChange(value)}
-        defaultLanguage="javascript"
+        defaultLanguage={defaultLanguage ?? "javascript"}
         language={defaultLanguage}
         options={{
           lineNumbers: "off",
           minimap: {
             enabled: false,
           },
+          readOnly: readonly,
         }}
         onMount={handleEditorDidMount}
       />
-      {(isSecureContext || isInDevelopment) && (
+      {(isSecureContext || isInDevelopment) && !readonly && (
         <Button
           position="absolute"
           zIndex={1000}
@@ -83,6 +89,18 @@ function CodeEditor({
           onClick={handlePasteButtonClick}
         >
           Paste
+        </Button>
+      )}
+      {readonly && (
+        <Button
+          position="absolute"
+          zIndex={1000}
+          top="1rem"
+          right="2rem"
+          size="xs"
+          variant="save"
+        >
+          Edit
         </Button>
       )}
     </Box>

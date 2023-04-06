@@ -8,8 +8,10 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import ReactDOM from "react-dom/client";
 import { Provider as ReduxProvider } from "react-redux";
-import { store } from "redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "redux/store";
 import { App } from "./App";
+import Loading from "views/Loading";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,11 +33,15 @@ root.render(
     <DndProvider backend={HTML5Backend}>
       <QueryClientProvider client={queryClient}>
         <ReduxProvider store={store}>
-          <CustomMsalProvider instance={msalInstance}>
-            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-            <App />
-            <ReactQueryDevtools initialIsOpen={true} />
-          </CustomMsalProvider>
+          <PersistGate loading={<Loading/>} persistor={persistor}>
+            <CustomMsalProvider instance={msalInstance}>
+              <ColorModeScript
+                initialColorMode={theme.config.initialColorMode}
+              />
+              <App />
+              <ReactQueryDevtools initialIsOpen={true} />
+            </CustomMsalProvider>
+          </PersistGate>
         </ReduxProvider>
       </QueryClientProvider>
     </DndProvider>

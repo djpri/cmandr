@@ -12,7 +12,7 @@ import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto } from "models/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import Row from "./Row/Row";
 
@@ -59,16 +59,17 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
     state: {
       globalFilter,
     },
+    initialState: {
+      pagination: {
+        pageSize: 25,
+      }
+    },
     onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
-  useEffect(() => {
-    table.setPageSize(25);
-  }, []);
 
   const { deleteMultipleLinksMutation } = useLinks();
 

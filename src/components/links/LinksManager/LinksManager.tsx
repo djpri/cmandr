@@ -39,6 +39,7 @@ function LinksManager({ categoryId, links }: IProps) {
         bgColor={bgColor}
         position="relative"
         mb="40"
+        className="linksManager"
       >
         <Box zIndex="100" mb="2" pt="5" pl="5" pr="5">
           <Wrap justify="space-between" align="center" mb="3" w="100%">

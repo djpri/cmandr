@@ -7,6 +7,7 @@ import { AiFillDelete } from "react-icons/ai";
 
 type IProps = {
   snippet: SnippetReadDto;
+  setReadOnlyCode: (code: string, language: string) => void
 };
 
 interface DeleteSnippetButtonProps {
@@ -33,12 +34,12 @@ function DeleteSnippetButton({ snippetId, onClose }: DeleteSnippetButtonProps) {
   );
 }
 
-function SnippetOptions({ snippet: snippet }: IProps) {
+function SnippetOptions({ snippet, setReadOnlyCode }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <HStack gap={2}>
-          <Button size="xs">View code</Button>
+      <Button size="xs" onClick={() => setReadOnlyCode(snippet?.code, snippet?.language)}>View code</Button>
       
       <EntityOptions
         isOpen={isOpen}

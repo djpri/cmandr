@@ -1,11 +1,20 @@
 import { Row, Table } from "@tanstack/react-table";
 import { useCallback } from "react";
 
-function useTableSelectors<TEntity>(table: Table<TEntity>, row: Row<TEntity>) {
+type useTableSelectorsProps<TEntity> = { 
+  table: Table<TEntity>;
+  row: Row<TEntity>;
+  requireClickToSelect?: boolean;
+}
+
+function useTableSelectors<TEntity>({table, row, requireClickToSelect = false}: useTableSelectorsProps<TEntity>) {
   const multiSelectRow = useCallback(
     (event: React.MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (!target.classList.contains("clickToSelect")) {
+      if (requireClickToSelect && !target.classList.contains("clickToSelect")) {
+        return;
+      }
+      if ((event.target as Element).closest("button")) { 
         return;
       }
       const wasSelected = row.getIsSelected();

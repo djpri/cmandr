@@ -61,7 +61,7 @@ function AddSnippetForm({ categoryId }: IProps) {
   // const [availableLanguages, setavailableLanguages] = useState(second)
 
   return (
-    <>
+    <Box maxW="100%">
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <Grid
           mb={5}
@@ -120,7 +120,7 @@ function AddSnippetForm({ categoryId }: IProps) {
       {errors.categoryId && (
         <ValidationError message="* Category is required" />
       )}
-    </>
+    </Box>
   );
 }
 

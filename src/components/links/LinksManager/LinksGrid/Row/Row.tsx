@@ -27,10 +27,11 @@ function TableRow({ linkItem, row, table, showCategories }: IProps) {
   const { title, url, category } = linkItem;
   const showImagePreviews = useAppSelector(selectShowImagePreviews);
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
-  const { multiSelectRow } = useTableSelectors<LinkReadDto>(
+  const { multiSelectRow } = useTableSelectors<LinkReadDto>({
     table,
-    row
-  );
+    row,
+    requireClickToSelect: true,
+  });
 
   const faviconUrl = useMemo(() => {
     if (linkItem?.faviconImageUrl) {

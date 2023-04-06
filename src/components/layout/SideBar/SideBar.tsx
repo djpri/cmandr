@@ -6,7 +6,7 @@ import {
   useColorModeValue,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { lazy, Suspense, useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSidebarOpen,
@@ -108,7 +108,9 @@ function SideBar() {
       zIndex="500"
       boxSizing="content-box"
       userSelect="none"
-    >
+      resize="horizontal"
+      >
+
       {/* SIDE LINKS */}
       <Stack mt="1" mb={24}>
         <StackItem>
