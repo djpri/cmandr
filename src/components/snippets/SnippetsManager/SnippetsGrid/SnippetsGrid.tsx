@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import { Box, Grid, HStack, Text } from "@chakra-ui/react";
 import {
   ColumnDef,
   flexRender,
@@ -11,9 +11,10 @@ import {
 import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
 import { SnippetReadDto } from "models/snippets";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import Row from "./Row/Row";
+import CodeEditor from "components/snippets/CodeEditor";
 
 interface IProps {
   snippets: SnippetReadDto[];
@@ -55,10 +56,20 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
     ];
   }, [showCategories]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const readOnlyCode = useRef({ code: "", language: "" });
+
+  const updateCodeRef = (code: string, language: string) => {
+    readOnlyCode.current = { code, language };
+  };
 
   const table = useReactTable({
     data: snippets,
     columns,
+    initialState: {
+      pagination: {
+        pageSize: 25,
+      }
+    },
     state: {
       globalFilter,
     },
@@ -68,10 +79,6 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
-  useEffect(() => {
-    table.setPageSize(25);
-  }, []);
 
   const Headers = () => {
     return (
@@ -103,12 +110,33 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
     );
   };
 
+  const firstSelectedRow = useMemo<SnippetReadDto>(() => {
+    if (table.getSelectedRowModel()?.flatRows.length > 0) {
+      return table.getSelectedRowModel().flatRows[0].original
+    } else {
+      return null;
+    }
+  }, [table.getSelectedRowModel().flatRows]);
+
+  const editor = useMemo(() => {
+    return (
+      <CodeEditor
+        value={firstSelectedRow?.code ?? ""}
+        defaultLanguage={firstSelectedRow?.language}
+        setDefaultLanguage={() => new Error("Not implemented")}
+        handleCodeSnippetChange={() => new Error("Not implemented")}
+        height="60vh"
+        readonly
+      />
+    );
+  }, [firstSelectedRow]);
+
   const Rows = () => {
     const pageSize = table.getState().pagination.pageSize;
 
     return (
-      <Grid>
-        <Box>
+      <Grid templateColumns={["1fr", null, null, "1fr 1fr"]} gap={4} maxW="100%">
+        <Box gridColumn={[2,null,null,1]}>
           {table
             .getRowModel()
             .rows.slice(0, pageSize)
@@ -121,10 +149,12 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
                   isLoading={isLoading}
                   table={table}
                   key={row.id}
+                  setReadOnlyCode={updateCodeRef}
                 />
               );
             })}
         </Box>
+        <Box gridColumn={[1,null,null,2]}>{editor}</Box>
       </Grid>
     );
   };

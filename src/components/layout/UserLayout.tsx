@@ -18,13 +18,16 @@ function UserLayout({ children }: PropsWithChildren) {
     <>
       <NavBar />
       <AuthenticatedTemplate>
-        <Box display="flex">
+        <Box display="flex" className="userLayout" height="100vh">
           <SideBar />
           <Box
             position="relative"
-            w="90%"
-            maxW="90%"
-            mx={isSidebarOpen && !isSmallerThan1280 ? "15rem" : "auto"}
+            w={isSmallerThan1280 ? "90%" : "100%"}
+            // maxW="90%"
+            ml={(isSidebarOpen && !isSmallerThan1280) ? "15rem" : "auto"}
+            className="userLayout-content"
+            flexGrow={1}
+            px={isSmallerThan1280 ? "2.5vw" : "0"}
           >
             <Box
               mt="5rem"

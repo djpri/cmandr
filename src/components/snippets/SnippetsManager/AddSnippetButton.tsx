@@ -17,6 +17,16 @@ const AddSnippetButton = forwardRef(
       props.currentButtonOpen === "addSnippet" ? onOpen() : onClose();
     }, [props.currentButtonOpen, onOpen, onClose]);
 
+    useEffect(() => {
+      const onResize = () => {
+        handleClose();
+      };
+      addEventListener("resize", onResize);
+      return () => {
+        removeEventListener("resize", onResize);
+      }
+    }, []);
+
     const handleOpen = () => {
       props.setCurrentButtonOpen("addSnippet");
       onOpen();

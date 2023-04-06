@@ -30,10 +30,11 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
   const hoverColor = useColorModeValue("gray.200", "gray.600");
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
-  const { multiSelectRow } = useTableSelectors<CommandReadDto>(
+  const { multiSelectRow } = useTableSelectors<CommandReadDto>({
     table,
-    row
-  );
+    row,
+    requireClickToSelect: true,
+  });
 
   const handleCopy = () => {
     setIsCopied(true);
