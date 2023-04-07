@@ -1,15 +1,15 @@
 import { Spinner } from "@chakra-ui/react";
 import UserLayout from "components/layout/UserLayout";
-import { FC, lazy, Suspense } from "react";
+import { FC, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
-import Dashboard from "views/Dashboard";
-import Home from "views/Home";
-import Loading from "views/Loading";
 import AllCommands from "views/commands/AllCommands";
 import CommandCategory from "views/commands/CommandCategory";
+import Dashboard from "views/Dashboard";
+import Home from "views/Home";
 import AllLinks from "views/links/AllLinks";
 import LinkCategory from "views/links/LinkCategory";
+import Loading from "views/Loading";
 import AddSnippetPage from "views/snippets/AddSnippetPage";
 import AllSnippetsPage from "views/snippets/AllSnippets";
 import SnippetCategoryPage from "views/snippets/SnippetCategory";
@@ -38,12 +38,12 @@ export const router = createBrowserRouter([
     element: <Home />,
   },
   {
+    path: "/test",
+    element: <Loading/>,
+  },
+  {
     path: "/dashboard",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <Dashboard />
-      </Suspense>
-    ),
+    element: <Dashboard />,
   },
   {
     path: "/commands",
@@ -100,5 +100,5 @@ export const router = createBrowserRouter([
         <AddSnippetPage />
       </Suspense>
     ),
-  }
+  },
 ]);
