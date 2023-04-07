@@ -86,3 +86,17 @@ $ yarn serve
 ```sh
 $ yarn test
 ```
+
+## Deployment
+
+
+This application relies on client-side routing, so we redirect all requests to the index.html to be handled by react router.
+
+**vercel.json**
+```
+{
+  "rewrites":  [
+    {"source": "/(.*)", "destination": "/"}
+  ]
+}
+```
