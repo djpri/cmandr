@@ -1,9 +1,9 @@
 import { PublicClientApplication } from "@azure/msal-browser/dist/app/PublicClientApplication";
-import { CLIENT_ID } from "helpers/environment";
+import { BASE_URL, CLIENT_ID } from "helpers/environment";
 
 export const apiConfig = {
   b2cScopes: ["https://CmandrApp.onmicrosoft.com/CmandrApi/access_as_user"],
-  webApi: "http://localhost:44310",
+  webApi: BASE_URL,
 };
 
 const b2cPolicies = {
