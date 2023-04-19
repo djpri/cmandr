@@ -14,11 +14,11 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
+import AddCategory from "components/categories/AddCategory";
+import DeleteCategoryModal from "components/categories/DeleteCategoryModal";
+import EditCategory from "components/categories/EditCategory";
 import UserLayout from "components/layout/UserLayout";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
-import AddSnippetCategory from "components/snippetCategories/AddSnippetCategory";
-import DeleteSnippetCategory from "components/snippetCategories/DeleteSnippetCategory";
-import EditSnippetCategory from "components/snippetCategories/EditSnippetCategory";
 import CodeEditor from "components/snippets/CodeEditor";
 import AddSnippetButton from "components/snippets/SnippetsManager/AddSnippetButton";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
@@ -66,16 +66,18 @@ const HeaderOptions = ({
           </PopoverBody>
         </PopoverContent>
       </Popover>
-      <DeleteSnippetCategory
+      <DeleteCategoryModal
         isOpen={isOpen}
         onClose={onClose}
         categoryName={category ? category.name : null}
         categoryId={parseInt(categoryId)}
+        entityType="snippet"
       />
-      <EditSnippetCategory
+      <EditCategory
         isOpen={isEditModalOpen}
         onClose={editModalClose}
         category={category}
+        entityType="snippet"
       />
     </Box>
   );
@@ -177,7 +179,7 @@ function SnippetCategory() {
       )}
       {category.isGroup && (
         <VStack spacing={2} my={5} align="flex-start">
-          <AddSnippetCategory parentId={category.id} />
+          <AddCategory parentId={category.id} entityType="snippet" />
         </VStack>
       )}
     </EntityPage>

@@ -127,7 +127,7 @@ const CategoryGroup: FC<IProps> = ({
   return (
     <Box
       _hover={{ textDecoration: "none" }}
-      onClick={() => navigate(`/${type}/${item.id}`)}
+      onClick={() => navigate(`/${type}s/${item.id}`)}
     >
       <AccordionItem
         border="none"

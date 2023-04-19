@@ -8,29 +8,32 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
+import useCategories from "hooks/categories/useCategories";
+import { Entity } from "models/entity";
 import { useNavigate } from "react-router-dom";
-import useLinkCategories from "../../hooks/links/useLinkCategories";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void | null;
   categoryName: string;
   categoryId: number;
+  entityType: Entity;
 }
 
-function DeleteLinkCategory({
+function DeleteCategoryModal({
   isOpen,
   onClose,
   categoryName,
   categoryId,
+  entityType,
 }: IProps) {
   const navigate = useNavigate();
-  const { deleteCategoryMutation } = useLinkCategories();
+  const { deleteCategoryMutation } = useCategories(entityType);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Delete {`"${categoryName}"`} links</ModalHeader>
+        <ModalHeader>Delete {`"${categoryName}" ${entityType}s`}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>WARNING! This action cannot be undone.</ModalBody>
 
@@ -55,4 +58,4 @@ function DeleteLinkCategory({
   );
 }
 
-export default DeleteLinkCategory;
+export default DeleteCategoryModal;

@@ -9,24 +9,26 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import useLinkCategories from "hooks/links/useLinkCategories";
+import useCategories from "hooks/categories/useCategories";
 import { CategoryReadDto, CategoryUpdateDto } from "models/category";
+import { Entity } from "models/entity";
 import { useMemo, useState } from "react";
 
-//props
-interface EditLinkCategoryProps {
+interface EditCommandCategoryProps {
   isOpen: boolean;
   onClose: () => void;
   category: CategoryReadDto;
+  entityType: Entity;
 }
 
-function EditLinkCategory({
+function EditCommandCategory({
   isOpen,
   onClose,
   category,
-}: EditLinkCategoryProps) {
+  entityType,
+}: EditCommandCategoryProps) {
   const [categoryName, setCategoryName] = useState("");
-  const { editCategoryMutation } = useLinkCategories();
+  const { editCategoryMutation } = useCategories(entityType);
 
   const categoryUpdateDto: CategoryUpdateDto = useMemo(() => {
     return {
@@ -66,4 +68,4 @@ function EditLinkCategory({
   );
 }
 
-export default EditLinkCategory;
+export default EditCommandCategory;

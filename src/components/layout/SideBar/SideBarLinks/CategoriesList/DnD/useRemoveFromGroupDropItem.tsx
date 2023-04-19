@@ -7,17 +7,18 @@ import {
 import { useCallback } from "react";
 import { useDrop } from "react-dnd";
 import { UseMutationResult } from "@tanstack/react-query";
+import { Entity } from "models/entity";
 
 interface DragItemType {
   index: number;
   id: number;
-  type: "commands" | "links" | "snippets";
+  type: Entity;
   dropType: "sort" | "addToGroup" | "none";
   isGroup: boolean;
 }
 
 function useRemoveFromGroupDropItem(
-  type: "commands" | "links" | "snippets",
+  type: Entity,
   editCategoryMutation: UseMutationResult<
     AxiosResponse<unknown, unknown>,
     unknown,

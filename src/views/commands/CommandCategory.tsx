@@ -11,13 +11,13 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import AddCommandCategory from "components/commandCategories/AddCommandCategory";
-import DeleteCategoryModal from "components/commandCategories/DeleteCategoryModal";
-import EditCommandCategory from "components/commandCategories/EditCommandCategory";
+import AddCategory from "components/categories/AddCategory";
+import DeleteCategoryModal from "components/categories/DeleteCategoryModal";
+import EditCategory from "components/categories/EditCategory";
 import CommandsManager from "components/commands/CommandsManager/CommandsManager";
 import UserLayout from "components/layout/UserLayout";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
-import useCommandCategories from "hooks/commands/useCommandCategories";
+import useCategories from "hooks/categories/useCategories";
 import useCommandsFromSingleCategory from "hooks/commands/useCommandsFromSingleCategory";
 import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
@@ -33,7 +33,7 @@ function CommandCategoryPage() {
   } = useDisclosure();
   const { id: categoryId } = useParams();
   const { query } = useCommandsFromSingleCategory(parseInt(categoryId));
-  const { query: categoriesQuery } = useCommandCategories();
+  const { query: categoriesQuery } = useCategories("command");
 
   const category = useMemo(() => {
     if (categoriesQuery.data) {
@@ -84,12 +84,13 @@ function CommandCategoryPage() {
         onClose={onClose}
         categoryName={category ? category.name : null}
         categoryId={parseInt(categoryId)}
+        entityType="command"
       />
-      <EditCommandCategory
+      <EditCategory
         isOpen={isEditModalOpen}
         onClose={editModalClose}
         category={category}
-        categoryId={parseInt(categoryId)}
+        entityType="command"
       />
     </Box>
   );
@@ -121,7 +122,7 @@ function CommandCategoryPage() {
       )}
       {category.isGroup && (
         <VStack spacing={2} my={5} align="flex-start">
-          <AddCommandCategory parentId={category.id} />
+          <AddCategory parentId={category.id} entityType="command" />
         </VStack>
       )}
     </EntityPage>

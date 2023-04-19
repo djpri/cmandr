@@ -7,29 +7,34 @@ import {
   HStack,
   Text,
 } from "@chakra-ui/react";
-import useCommandCategories from "hooks/commands/useCommandCategories";
+import { UseQueryResult } from "@tanstack/react-query";
 import useLinkCategories from "hooks/links/useLinkCategories";
+import useSnippetCategories from "hooks/snippets/useSnippetCategories";
+import { ConnectDropTarget } from "react-dnd/dist/types";
 import { AiFillCode, AiFillWallet } from "react-icons/ai";
 import { BiCommand } from "react-icons/bi";
+import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { Link as RouterLink } from "react-router-dom";
+import {
+  selectSidebarAccordionIndex,
+  setSidebarAccordionIndex,
+} from "redux/slices/layoutSlice";
+import { useAppDispatch, useAppSelector } from "redux/store";
 import CategoriesList from "./CategoriesList/CategoriesList";
 import useRemoveFromGroupDropItem from "./CategoriesList/DnD/useRemoveFromGroupDropItem";
-import { UseQueryResult } from "@tanstack/react-query";
-import { ConnectDropTarget } from "react-dnd/dist/types";
-import { FaExternalLinkSquareAlt } from "react-icons/fa";
-import { useAppDispatch, useAppSelector } from "redux/store";
-import { selectSidebarAccordionIndex, setSidebarAccordionIndex } from "redux/slices/layoutSlice";
-import useSnippetCategories from "hooks/snippets/useSnippetCategories";
+import useCategories from "hooks/categories/useCategories";
+import { Entity } from "models/entity";
+import { CategoryReadDto } from "models/category";
 
 const textMargin = "8px";
 
 type CategoryAccordionProps = {
   addToCategoryDropRef: ConnectDropTarget;
   isAddToGroupDropActive: boolean;
-  type: "commands" | "links" | "snippets";
+  type: Entity;
   route: string;
-  query: UseQueryResult<any, unknown>;
+  query: UseQueryResult<CategoryReadDto[], unknown>;
   editCategoryMutation: any;
   icon: JSX.Element;
   sidebarIndex: number;
@@ -43,74 +48,81 @@ const CategoryAccordion = ({
   query,
   editCategoryMutation,
   icon,
-  sidebarIndex
+  sidebarIndex,
 }: CategoryAccordionProps) => {
   const dispatch = useAppDispatch();
 
   const setIndex = () => {
     dispatch(setSidebarAccordionIndex(sidebarIndex));
-  }
+  };
 
   return (
-  <AccordionItem >
-    <AccordionButton
-      textAlign="left"
-      ref={addToCategoryDropRef}
+    <AccordionItem>
+      <AccordionButton
+        textAlign="left"
+        ref={addToCategoryDropRef}
         border={isAddToGroupDropActive && "2px solid red"}
         onClick={setIndex}
-    >
-      {icon}
-      <Text flex="1" fontWeight="700" letterSpacing="1px" ml={textMargin} textTransform="capitalize">
-        {type}
-      </Text>
-      <AccordionIcon />
-    </AccordionButton>
-    <AccordionPanel>
-      <AccordionItem as={RouterLink} to={route}>
-        <AccordionButton>
-          <HStack>
-            <AiFillWallet />
-            <Text textTransform="capitalize">{`All ${type}`}</Text>
-          </HStack>
-        </AccordionButton>
-      </AccordionItem>
-      <CategoriesList
-        type={type}
-        query={query}
-        editCategoryMutation={editCategoryMutation}
-      />
-    </AccordionPanel>
-  </AccordionItem>
-)};
+      >
+        {icon}
+        <Text
+          flex="1"
+          fontWeight="700"
+          letterSpacing="1px"
+          ml={textMargin}
+          textTransform="capitalize"
+        >
+          {type}
+        </Text>
+        <AccordionIcon />
+      </AccordionButton>
+      <AccordionPanel>
+        <AccordionItem as={RouterLink} to={route}>
+          <AccordionButton>
+            <HStack>
+              <AiFillWallet />
+              <Text textTransform="capitalize">{`All ${type}s`}</Text>
+            </HStack>
+          </AccordionButton>
+        </AccordionItem>
+        <CategoriesList
+          type={type}
+          query={query}
+          editCategoryMutation={editCategoryMutation}
+        />
+      </AccordionPanel>
+    </AccordionItem>
+  );
+};
 
 const CommandCategorySection = () => {
-  const { query, editCategoryMutation } = useCommandCategories();
+  const { query, editCategoryMutation } = useCategories("command");
   const { addToCategoryDropRef, isAddToGroupDropActive } =
-    useRemoveFromGroupDropItem("commands", editCategoryMutation, query.data);
+    useRemoveFromGroupDropItem("command", editCategoryMutation, query.data);
   return (
     <CategoryAccordion
       addToCategoryDropRef={addToCategoryDropRef}
       isAddToGroupDropActive={isAddToGroupDropActive}
-      type="commands"
+      type="command"
       route="/commands"
       query={query}
       editCategoryMutation={editCategoryMutation}
       icon={<BiCommand />}
       sidebarIndex={2}
-     />
+    />
   );
 };
 
 const LinkCategorySection = () => {
   const { query, editCategoryMutation } = useLinkCategories();
   const { addToCategoryDropRef, isAddToGroupDropActive } =
-    useRemoveFromGroupDropItem("links", editCategoryMutation, query.data);
+    useRemoveFromGroupDropItem("link", editCategoryMutation, query.data);
 
   return (
-    <CategoryAccordion 
+    <CategoryAccordion
       addToCategoryDropRef={addToCategoryDropRef}
       isAddToGroupDropActive={isAddToGroupDropActive}
-      type="links"
+      type="link"
       route="/links"
       query={query}
       editCategoryMutation={editCategoryMutation}
@@ -123,19 +135,19 @@ const LinkCategorySection = () => {
 const SnippetCategorySection = () => {
   const { query, editCategoryMutation } = useSnippetCategories();
   const { addToCategoryDropRef, isAddToGroupDropActive } =
-    useRemoveFromGroupDropItem("snippets", editCategoryMutation, query.data);
+    useRemoveFromGroupDropItem("snippet", editCategoryMutation, query.data);
   return (
     <CategoryAccordion
       addToCategoryDropRef={addToCategoryDropRef}
       isAddToGroupDropActive={isAddToGroupDropActive}
-      type="snippets"
+      type="snippet"
       route="/snippets"
       query={query}
       editCategoryMutation={editCategoryMutation}
       icon={<AiFillCode />}
       sidebarIndex={6}
     />
-  )
+  );
 };
 
 function SideBarLinks() {

@@ -5,41 +5,38 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
+import useCategories from "hooks/categories/useCategories";
+import { Entity } from "models/entity";
 import { useState } from "react";
 import { AiFillFolderAdd, AiOutlineUnorderedList } from "react-icons/ai";
-import useLinkCategories from "../../hooks/links/useLinkCategories";
 
 interface IProps {
   isGroup?: boolean;
   parentId?: number;
+  entityType: Entity;
 }
 
-function AddLinkCategory({ isGroup, parentId }: IProps) {
-  const [category, setCategory] = useState("");
+function AddCategory({ entityType, isGroup, parentId }: IProps) {
+  const { addCategoryMutation } = useCategories(entityType);
+  const [category, setCategory] = useState<string>("");
   const { isOpen, onToggle } = useDisclosure();
-  const { addCategoryMutation } = useLinkCategories();
   const inputColor = useColorModeValue("#f2f6fa", "#1f2937");
 
   const handleAddCategory = () => {
-    try {
-      addCategoryMutation.mutate({
-        name: category,
-        isGroup,
-        parentId: parentId ?? null,
-      });
-      setCategory("");
-      onToggle();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
+    addCategoryMutation.mutate({
+      name: category,
+      isGroup,
+      parentId: parentId ?? null,
+    });
+    setCategory("");
+    onToggle();
   };
 
   return (
     <>
       <Button
         size="xs"
-        aria-label="add link category"
+        aria-label={`add ${entityType} category`}
         leftIcon={isGroup ? <AiFillFolderAdd /> : <AiOutlineUnorderedList />}
         onClick={onToggle}
         boxShadow="outline"
@@ -47,12 +44,12 @@ function AddLinkCategory({ isGroup, parentId }: IProps) {
         {isGroup ? "New Group" : "New Category"}
       </Button>
       {isOpen && (
-        <HStack my={2}>
+        <HStack>
           <Input
             size="sm"
-            display="block"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            variant="filled"
             bgColor={inputColor}
             _hover={{ bgColor: inputColor }}
             _focus={{ bgColor: inputColor }}
@@ -70,4 +67,4 @@ function AddLinkCategory({ isGroup, parentId }: IProps) {
   );
 }
 
-export default AddLinkCategory;
+export default AddCategory;

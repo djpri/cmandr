@@ -1,10 +1,10 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CommandCategories } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CategoryReadDto } from "models/category";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 import useChakraToast from "../other/useChakraToast";
-import { CategoryReadDto } from "models/category";
 
 function useCommandCategories() {
   const queryClient = useQueryClient();

@@ -1,15 +1,15 @@
-import useCommandCategories from "hooks/commands/useCommandCategories";
+import { useQueryClient } from "@tanstack/react-query";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useSettings from "hooks/settings/useSettings";
 import { CategoryReadDto } from "models/category";
 import { UserSettings } from "models/user";
 import { useMemo } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import useCategories from "./useCategories";
 
 type SortType = "manual" | "ascending" | "descending" | "size";
 
 function useSortCategories(type: "command" | "link") {
-  const { query: commandCategoryQuery } = useCommandCategories();
+  const { query: commandCategoryQuery } = useCategories("command");
   const { query: linkCategoryQuery } = useLinkCategories();
   const { query: settingsQuery, editSettingsMutation } = useSettings();
   const queryClient = useQueryClient();
