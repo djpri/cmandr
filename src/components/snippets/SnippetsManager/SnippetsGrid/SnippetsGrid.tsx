@@ -11,10 +11,11 @@ import {
 import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
 import { SnippetReadDto } from "models/snippets";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import { setCode, setLanguage } from "redux/slices/editorSlice";
+import { useAppDispatch } from "redux/store";
 import Row from "./Row/Row";
-import CodeEditor from "components/snippets/CodeEditor";
 
 interface IProps {
   snippets: SnippetReadDto[];
@@ -24,7 +25,6 @@ interface IProps {
 
 export const gridColumnsWithCategory = ["1fr", null, null, "10fr 2fr 2fr 2fr"];
 export const gridColumnsWithoutCategory = ["1fr", null, null, "10fr 2fr 2fr"];
-
 
 function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
   const columns = useMemo<ColumnDef<SnippetReadDto>[]>(() => {
@@ -55,12 +55,13 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
       },
     ];
   }, [showCategories]);
-  const [globalFilter, setGlobalFilter] = useState("");
   const readOnlyCode = useRef({ code: "", language: "" });
 
   const updateCodeRef = (code: string, language: string) => {
     readOnlyCode.current = { code, language };
   };
+
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data: snippets,
@@ -68,7 +69,7 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
     initialState: {
       pagination: {
         pageSize: 25,
-      }
+      },
     },
     state: {
       globalFilter,
@@ -85,8 +86,8 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
       <Grid p="4">
         <HStack gap="4" justifyContent="flex-end">
           <Text>Sort by:</Text>
-        {table.getHeaderGroups().map((headerGroup) =>
-          headerGroup.headers.map((header) => (
+          {table.getHeaderGroups().map((headerGroup) =>
+            headerGroup.headers.map((header) => (
               <HStack
                 key={header.id}
                 onClick={header.column.getToggleSortingHandler()}
@@ -103,40 +104,71 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
                   desc: <AiFillCaretDown aria-label="sorted ascending" />,
                 }[header.column.getIsSorted() as string] ?? null}
               </HStack>
-          ))
-          )}</HStack>
-        <hr/>
+            ))
+          )}
+        </HStack>
+        <hr />
       </Grid>
     );
   };
 
   const firstSelectedRow = useMemo<SnippetReadDto>(() => {
     if (table.getSelectedRowModel()?.flatRows.length > 0) {
-      return table.getSelectedRowModel().flatRows[0].original
+      return table.getSelectedRowModel().flatRows[0].original;
     } else {
       return null;
     }
   }, [table.getSelectedRowModel().flatRows]);
 
-  const editor = useMemo(() => {
-    return (
-      <CodeEditor
-        value={firstSelectedRow?.code ?? ""}
-        defaultLanguage={firstSelectedRow?.language}
-        setDefaultLanguage={() => new Error("Not implemented")}
-        handleCodeSnippetChange={() => new Error("Not implemented")}
-        height="60vh"
-        readonly
-      />
-    );
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (firstSelectedRow) {
+      dispatch(setCode(firstSelectedRow.code));
+      dispatch(setLanguage(firstSelectedRow.language));
+    }
   }, [firstSelectedRow]);
+
+  const handleKeyPressRowSelection = (e: KeyboardEvent) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") { 
+      e.preventDefault();
+      if (table.getSelectedRowModel().flatRows.length === 0) {
+        const firstRow = table.getRowModel().rows[0];
+        table.setRowSelection({ [firstRow.id]: true });
+      }
+    }
+    if (e.key === "ArrowDown") {
+      const selectedRow = table.getSelectedRowModel().flatRows[0];
+      const rowCount = table.getRowModel().rows.length;
+      const nextRowExists = selectedRow.index + 1 < rowCount;
+      if (nextRowExists) {
+        const nextRow = table.getRowModel().rows[selectedRow.index + 1];
+        table.setRowSelection({ [nextRow.id]: true });
+      }
+    }
+    if (e.key === "ArrowUp") {
+      const selectedRow = table.getSelectedRowModel().flatRows[0];
+      const previousRowExists = selectedRow.index >= 1;
+      if (previousRowExists) {
+        const previousRow = table.getRowModel().rows[selectedRow.index - 1];
+        table.setRowSelection({ [previousRow.id]: true });
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPressRowSelection);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPressRowSelection);
+    };
+  }, []);
 
   const Rows = () => {
     const pageSize = table.getState().pagination.pageSize;
 
     return (
-      <Grid templateColumns={["1fr", null, null, "1fr 1fr"]} gap={4} maxW="100%">
-        <Box gridColumn={[2,null,null,1]}>
+      <Grid templateColumns={"1fr"} gap={4} maxW="100%">
+        <Box gridColumn={[2, null, null, 1]}>
           {table
             .getRowModel()
             .rows.slice(0, pageSize)
@@ -154,18 +186,14 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
               );
             })}
         </Box>
-        <Box gridColumn={[1,null,null,2]}>{editor}</Box>
       </Grid>
     );
   };
 
   return (
-    <Box>
+    <Box w="100%">
       {table.getSelectedRowModel().flatRows.length > 1 && (
-        <RowSelectionMenu
-          table={table}
-          type="link"
-        />
+        <RowSelectionMenu table={table} type="snippet" />
       )}
       {table.getPreFilteredRowModel().flatRows.length > 1 && (
         <SearchAndPagination

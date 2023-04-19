@@ -1,7 +1,15 @@
-import { Box, Button, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, VStack, useColorModeValue } from "@chakra-ui/react";
 import Editor from "@monaco-editor/react";
 import { isInDevelopment } from "helpers/environment";
-import { Dispatch, SetStateAction, useEffect, useMemo, useRef } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 interface CodeEditorProps {
   handleCodeSnippetChange: (value: string) => void;
@@ -10,6 +18,7 @@ interface CodeEditorProps {
   defaultLanguage?: string;
   setDefaultLanguage: Dispatch<SetStateAction<string>>;
   readonly?: boolean;
+  onSave?: () => void;
   // setAvailableLanguages: SetStateAction<string[]>;
 }
 
@@ -19,14 +28,24 @@ function CodeEditor({
   defaultLanguage,
   height,
   setDefaultLanguage,
-  readonly = false
+  readonly = false,
+  onSave,
 }: CodeEditorProps) {
   const theme = useColorModeValue("light", "vs-dark");
   const editorRef = useRef(null);
-
   const isSecureContext = useMemo(() => {
     return location.protocol === "https:";
   }, []);
+
+  const [isCopied, setIsCopied] = useState(false);
+  const [isReadOnly, setIsReadOnly] = useState(false);
+
+  const handleCopy = () => {
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 1500);
+  };
 
   const handlePasteButtonClick = async () => {
     const clipboardText = await navigator.clipboard.readText();
@@ -36,9 +55,12 @@ function CodeEditor({
   };
 
   useEffect(() => {
+    setIsReadOnly(readonly);
+  }, [readonly, value]);
+
+  useEffect(() => {
     handleCodeSnippetChange(value);
   }, [defaultLanguage]);
-
 
   const handleEditorDidMount = (editor, monaco) => {
     // editor.getModel().dispose(); // dispose the old model to avoid memory leaks
@@ -50,6 +72,7 @@ function CodeEditor({
     });
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       noSyntaxValidation: true,
+      allowNonTsExtensions: true,
     });
   };
 
@@ -60,7 +83,50 @@ function CodeEditor({
   // const languages = monaco.languages.getLanguages();
 
   return (
-    <Box position="relative" h="100%" maxH="150vh" maxW="100%" borderWidth="1px" borderRadius="lg">
+    <Box
+      position="relative"
+      h="100%"
+      w="100%"
+      maxW="100%"
+      maxH="70vh"
+      // borderWidth="1px"
+      borderRadius="lg"
+      borderTopWidth={onSave && !isReadOnly && "1rem"}
+      borderColor="yellow.500"
+    >
+      <VStack
+        zIndex={1000}
+        spacing={2}
+        position="absolute"
+        top="1rem"
+        right="2rem"
+      >
+        <CopyToClipboard text={value} onCopy={() => handleCopy()}>
+          <Button
+            size="xs"
+            variant="settings"
+            w="4rem"
+            display={["none", null, null, "block"]}
+          >
+            {isCopied ? "Copied" : "Copy"}
+          </Button>
+        </CopyToClipboard>
+        {(isSecureContext || isInDevelopment) && !readonly && (
+          <Button size="xs" variant="save" onClick={handlePasteButtonClick}>
+            Paste
+          </Button>
+        )}
+        {onSave && isReadOnly && (
+          <Button size="xs" variant="save" onClick={() => setIsReadOnly(false)}>
+            Edit
+          </Button>
+        )}
+        {onSave && !isReadOnly && (
+          <Button size="xs" variant="save" onClick={() => setIsReadOnly(true)}>
+            Save
+          </Button>
+        )}
+      </VStack>
       <Editor
         theme={theme}
         height={height ?? "45vh"}
@@ -68,41 +134,16 @@ function CodeEditor({
         value={value}
         onChange={(value) => handleCodeSnippetChange(value)}
         defaultLanguage={defaultLanguage ?? "javascript"}
-        language={defaultLanguage}
+        language={defaultLanguage ?? "javascript"}
         options={{
           lineNumbers: "off",
           minimap: {
             enabled: false,
           },
-          readOnly: readonly,
+          readOnly: isReadOnly,
         }}
         onMount={handleEditorDidMount}
       />
-      {(isSecureContext || isInDevelopment) && !readonly && (
-        <Button
-          position="absolute"
-          zIndex={1000}
-          top="1rem"
-          right="2rem"
-          size="xs"
-          variant="save"
-          onClick={handlePasteButtonClick}
-        >
-          Paste
-        </Button>
-      )}
-      {readonly && (
-        <Button
-          position="absolute"
-          zIndex={1000}
-          top="1rem"
-          right="2rem"
-          size="xs"
-          variant="save"
-        >
-          Edit
-        </Button>
-      )}
     </Box>
   );
 }

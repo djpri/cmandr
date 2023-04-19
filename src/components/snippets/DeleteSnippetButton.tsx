@@ -1,20 +1,20 @@
 import { Button } from "@chakra-ui/react";
-import useLinks from "hooks/links/useLinks";
+import useSnippets from "hooks/snippets/useSnippets";
 
 interface DeleteLinkButtonProps {
   linkId: number;
   onClose: () => void;
 }
 
-function DeleteLinkButton({ linkId, onClose }: DeleteLinkButtonProps) {
-  const { deleteLinkMutation } = useLinks();
+function DeleteSnippetButton({ linkId, onClose }: DeleteLinkButtonProps) {
+  const { deleteSnippetMutation } = useSnippets();
 
   return (
     <Button
       size="xs"
       variant="delete"
       onClick={() => {
-        deleteLinkMutation.mutate(linkId);
+        deleteSnippetMutation.mutate(linkId);
         onClose();
       }}
     >
@@ -23,4 +23,4 @@ function DeleteLinkButton({ linkId, onClose }: DeleteLinkButtonProps) {
   );
 }
 
-export default DeleteLinkButton;
+export default DeleteSnippetButton;

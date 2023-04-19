@@ -2,9 +2,9 @@ import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { Row, Table } from "@tanstack/react-table";
 import useTableSelectors from "hooks/table/useTableSelectors";
 import { SnippetReadDto } from "models/snippets";
-import SnippetOptions from "./LinkOptions/SnippetOptions";
-import { AiOutlineUnorderedList } from "react-icons/ai";
 import { useState } from "react";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import SnippetOptions from "./Options/SnippetOptions";
 
 interface IProps {
   snippet: SnippetReadDto;
@@ -15,11 +15,20 @@ interface IProps {
   table: Table<SnippetReadDto>;
 }
 
-function TableRow({ snippet, row, table, showCategories, setReadOnlyCode }: IProps) {
+function TableRow({
+  snippet,
+  row,
+  table,
+  showCategories,
+  setReadOnlyCode,
+}: IProps) {
   const { description, category, language } = snippet;
-  // const showImagePreviews = useAppSelector(selectShowImagePreviews);
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
-  const { multiSelectRow } = useTableSelectors<SnippetReadDto>({table, row});
+  const { multiSelectRow } = useTableSelectors<SnippetReadDto>({
+    table,
+    row,
+    requireClickToSelect: true,
+  });
   const [showOptions, setShowOptions] = useState(false);
 
   const languageColor = useColorModeValue("teal.800", "teal.300");
@@ -42,20 +51,23 @@ function TableRow({ snippet, row, table, showCategories, setReadOnlyCode }: IPro
       onMouseLeave={() => setShowOptions(false)}
     >
       <Box className="clickToSelect">
-        <Box className="clickToSelect">
-          {description}
-        </Box>
+        <Box className="clickToSelect">{description}</Box>
         <HStack className="clickToSelect">
-        <Text fontWeight="700" fontSize="sm" color={languageColor}>{language}</Text>
-        {showCategories && <HStack>
-          <AiOutlineUnorderedList />
-          <Text fontSize="xs" fontWeight="500" color={categoryColor}>{category?.name}</Text>
-        </HStack>}
+          <Text fontWeight="700" fontSize="sm" color={languageColor}>
+            {language}
+          </Text>
+          {showCategories && (
+            <HStack>
+              <AiOutlineUnorderedList />
+              <Text fontSize="xs" fontWeight="500" color={categoryColor}>
+                {category?.name}
+              </Text>
+            </HStack>
+          )}
         </HStack>
       </Box>
 
-
-      <Box display={(showOptions && !row.getIsSelected()) ? "inline" : "none"}>
+      <Box display={showOptions && !row.getIsSelected() ? "inline" : "none"}>
         <SnippetOptions snippet={snippet} setReadOnlyCode={setReadOnlyCode} />
       </Box>
     </Flex>

@@ -1,4 +1,4 @@
-import { Button, Fade, Portal, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Fade, Portal, useDisclosure } from "@chakra-ui/react";
 import { ForwardedRef, RefObject, forwardRef, useEffect, useMemo } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import AddSnippetForm from "../AddSnippetForm";
@@ -48,7 +48,7 @@ const AddSnippetButton = forwardRef(
     );
 
     return (
-      <>
+      <Box mb={5}>
         {isOpen ? (
           <Button onClick={handleClose} rightIcon={<AiFillCaretUp />}>
             Add
@@ -65,7 +65,7 @@ const AddSnippetButton = forwardRef(
             </Fade>
           </Portal>
         )}
-      </>
+      </Box>
     );
   }
 );

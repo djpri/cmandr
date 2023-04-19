@@ -38,7 +38,7 @@ function EntityOptions({
         />
         {deleteButton}
       </HStack>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={entityType === "snippet" ? "full" : "xl"}>
         <ModalOverlay
           bg="blackAlpha.300"
           backdropFilter="blur(5px) hue-rotate(-20deg)"

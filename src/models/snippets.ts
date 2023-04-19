@@ -22,10 +22,10 @@ export interface SnippetReadDto {
 }
 
 export interface SnippetUpdateDto {
-  title?: string | undefined;
-  description?: string | undefined;
-  code?: string | undefined;
-  language?: string | undefined;
-  starred?: boolean;
-  categoryId?: number;
+  title: string | undefined;
+  description: string | undefined;
+  code: string | undefined;
+  language: string | undefined;
+  starred: boolean;
+  categoryId: number;
 }

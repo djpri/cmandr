@@ -4,6 +4,7 @@ import { Dict } from "@chakra-ui/utils";
 import { Accordion } from "./components/Accordion";
 import { Button } from "./components/Button";
 import "@fontsource/roboto";
+import { Modal } from "./components/Modal";
 
 const theme = extendTheme({
   initialColorMode: "dark",
@@ -69,6 +70,7 @@ const theme = extendTheme({
   components: {
     Button,
     Accordion,
+    Modal,
     Input: {
       defaultProps: {
         focusBorderColor: "hsla(270, 26%, 59%, 0.5)",

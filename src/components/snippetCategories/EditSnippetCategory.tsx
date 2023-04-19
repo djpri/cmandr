@@ -9,30 +9,31 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import useLinkCategories from "hooks/links/useLinkCategories";
+import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 import { CategoryReadDto, CategoryUpdateDto } from "models/category";
 import { useMemo, useState } from "react";
 
 //props
-interface EditLinkCategoryProps {
+interface EditSnippetCategoryProps {
   isOpen: boolean;
   onClose: () => void;
   category: CategoryReadDto;
 }
 
-function EditLinkCategory({
+function EditSnippetCategory({
   isOpen,
   onClose,
   category,
-}: EditLinkCategoryProps) {
+}: EditSnippetCategoryProps) {
   const [categoryName, setCategoryName] = useState("");
-  const { editCategoryMutation } = useLinkCategories();
+  const { editCategoryMutation } = useSnippetCategories();
 
   const categoryUpdateDto: CategoryUpdateDto = useMemo(() => {
     return {
       name: category.name,
       parentId: category.parentId,
       isGroup: category.isGroup,
+      displayIndex: category.displayIndex,
     };
   }, [category]);
 
@@ -65,4 +66,4 @@ function EditLinkCategory({
   );
 }
 
-export default EditLinkCategory;
+export default EditSnippetCategory;

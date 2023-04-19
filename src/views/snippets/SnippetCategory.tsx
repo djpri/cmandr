@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Grid,
+  GridItem,
   HStack,
   Spinner,
   VStack,
@@ -18,13 +19,17 @@ import CategoryLinkButton from "components/other/CategoryLinkButton";
 import AddSnippetCategory from "components/snippetCategories/AddSnippetCategory";
 import DeleteSnippetCategory from "components/snippetCategories/DeleteSnippetCategory";
 import EditSnippetCategory from "components/snippetCategories/EditSnippetCategory";
+import CodeEditor from "components/snippets/CodeEditor";
+import AddSnippetButton from "components/snippets/SnippetsManager/AddSnippetButton";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
 import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 import useSnippetsFromSingleCategory from "hooks/snippets/useSnippetsFromSingleCategory";
 import { CategoryReadDto } from "models/category";
-import { useMemo } from "react";
+import { ForwardedRef, useEffect, useMemo, useRef, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import { selectCode, selectLanguage, setCode } from "redux/slices/editorSlice";
+import { useAppDispatch, useAppSelector } from "redux/store";
 import EntityPage from "views/EntityPage";
 
 const HeaderOptions = ({
@@ -80,6 +85,19 @@ function SnippetCategory() {
   const { id: categoryId } = useParams();
   const { query } = useSnippetsFromSingleCategory(parseInt(categoryId));
   const { query: categoriesQuery } = useSnippetCategories();
+  const code = useAppSelector(selectCode);
+  const language = useAppSelector(selectLanguage);
+
+  const [currentButtonOpen, setCurrentButtonOpen] = useState<
+    "addSnippet" | "quickAddLink" | "none"
+  >("none");
+  const addSnippetRef = useRef<HTMLDivElement | null>(null);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setCode(""));
+  }, []);
 
   const category = useMemo(() => {
     if (categoriesQuery.data) {
@@ -114,10 +132,36 @@ function SnippetCategory() {
     >
       {query.isLoading && <Spinner mb={5} />}
       {!category?.isGroup && (
-        <SnippetsManager
-          categoryId={category ? category.id : null}
-          snippets={query.data}
-        />
+        <>
+          <AddSnippetButton
+            ref={addSnippetRef as ForwardedRef<HTMLDivElement>}
+            currentButtonOpen={currentButtonOpen}
+            setCurrentButtonOpen={setCurrentButtonOpen}
+          />
+          <Box ref={addSnippetRef} mb={5} />
+          <Grid
+            templateColumns={["1fr", null, null, null, "1fr 1fr"]}
+            gap={4}
+            top="100px"
+          >
+            <GridItem>
+              <SnippetsManager
+                categoryId={category ? category.id : null}
+                snippets={query.data}
+              />
+            </GridItem>
+            <GridItem overflowX={"auto"}>
+              <CodeEditor
+                value={code}
+                defaultLanguage={language ?? "javascript"}
+                setDefaultLanguage={() => new Error("Not implemented")}
+                handleCodeSnippetChange={() => new Error("Not implemented")}
+                height="100%"
+                readonly
+              />
+            </GridItem>
+          </Grid>
+        </>
       )}
       {subCategories && (
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
