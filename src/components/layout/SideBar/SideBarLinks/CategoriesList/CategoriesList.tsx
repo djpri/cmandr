@@ -1,16 +1,15 @@
 import { AccordionItem, Flex, Spinner } from "@chakra-ui/react";
 import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
-import AddCommandCategory from "components/commandCategories/AddCommandCategory";
-import AddLinkCategory from "components/linkCategories/AddLinkCategory";
-import { CategoryReadDto, CategoryUpdateDto } from "models/category";
+import { CategoryReadDto, CategoryUpdateDto, mapToCategoryUpdateDto } from "models/category";
 import { useCallback, useMemo } from "react";
 import DragItem from "./DnD/DragItem";
-import AddSnippetCategory from "components/snippetCategories/AddSnippetCategory";
+import AddCategory from "components/categories/AddCategory";
+import { Entity } from "models/entity";
 
 interface IProps {
   query: UseQueryResult<CategoryReadDto[]>;
-  type: "commands" | "links" | "snippets";
+  type: Entity;
   editCategoryMutation: UseMutationResult<
     AxiosResponse<unknown, unknown>,
     unknown,
@@ -41,7 +40,7 @@ function CategoriesList({ query, type, editCategoryMutation }: IProps) {
       categoryToUpdate.parentId = targetGroupId;
       await editCategoryMutation.mutateAsync({
         id: categoryToUpdate.id,
-        body: categoryToUpdate,
+        body: mapToCategoryUpdateDto(categoryToUpdate),
       });
     },
     [categories, editCategoryMutation]
@@ -92,24 +91,8 @@ function CategoriesList({ query, type, editCategoryMutation }: IProps) {
 
       <AccordionItem borderTop="none">
         <Flex pt="2" py="4" px="6" flexDirection="column" gap={2}>
-          {type === "links" && (
-            <>
-              <AddLinkCategory isGroup />
-              <AddLinkCategory />
-            </>
-          )}
-          {type === "commands" && (
-            <>
-              <AddCommandCategory isGroup />
-              <AddCommandCategory />
-            </>
-          )}
-          {type === "snippets" && (
-            <>
-              <AddSnippetCategory isGroup />
-              <AddSnippetCategory />
-            </>
-          )}
+          <AddCategory isGroup entityType={type} />
+          <AddCategory entityType={type} />
         </Flex>
       </AccordionItem>
     </>

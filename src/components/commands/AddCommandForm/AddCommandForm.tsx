@@ -7,13 +7,12 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import useCommandCategories from "hooks/commands/useCommandCategories";
+import useCategories from "hooks/categories/useCategories";
 import useCommands from "hooks/commands/useCommands";
 import { CommandCreateDto } from "models/command";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { isWebUri } from "valid-url";
-
 
 interface IProps {
   categoryId?: number;
@@ -29,7 +28,7 @@ function AddCommandForm({ categoryId }: IProps) {
     formState: { errors },
   } = useForm<CommandCreateDto>();
   const { addCommandMutation } = useCommands();
-  const { query: allCategoriesQuery } = useCommandCategories();
+  const { query: allCategoriesQuery } = useCategories("command");
 
   useEffect(() => {
     if (categoryId) {
@@ -86,9 +85,12 @@ function AddCommandForm({ categoryId }: IProps) {
 
           <Box>
             <FormLabel htmlFor="line">Command</FormLabel>
-            <Input {...register("line", {
+            <Input
+              {...register("line", {
                 required: "Command is required",
-            })} placeholder="Command" />
+              })}
+              placeholder="Command"
+            />
           </Box>
 
           {showCategorySelect && (

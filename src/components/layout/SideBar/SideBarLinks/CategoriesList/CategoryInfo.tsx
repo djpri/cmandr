@@ -72,7 +72,7 @@ const CategoryInfo: FC<IProps> = ({
         _hover={{ textDecoration: "none" }}
         onClick={(e) => {
           e.stopPropagation();
-          navigate(`/${type}/${item.id}`);
+          navigate(`/${type}s/${item.id}`);
         }}
       >
         <AccordionItem

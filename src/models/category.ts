@@ -12,6 +12,7 @@ export const mapToCategoryUpdateDto = (readDto: CategoryReadDto) => {
     name: readDto.name,
     parentId: readDto?.parentId,
     displayIndex: readDto?.displayIndex,
+    isGroup: readDto?.isGroup,
   };
 };
 

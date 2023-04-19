@@ -8,11 +8,10 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import AddCommandCategory from "components/commandCategories/AddCommandCategory";
-import AddLinkCategory from "components/linkCategories/AddLinkCategory";
+import AddCategory from "components/categories/AddCategory";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
+import useCategories from "hooks/categories/useCategories";
 import useSortCategories from "hooks/categories/useSortCategories";
-import useCommandCategories from "hooks/commands/useCommandCategories";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useSettings from "hooks/settings/useSettings";
 import { CategoryReadDto } from "models/category";
@@ -27,7 +26,7 @@ type SortButtonProps = {
 };
 
 function Dashboard() {
-  const { query: commandCategoryQuery } = useCommandCategories();
+  const { query: commandCategoryQuery } = useCategories("command");
   const { query: linkCategoryQuery } = useLinkCategories();
   const { query: settingsQuery } = useSettings();
 
@@ -109,8 +108,8 @@ function Dashboard() {
           {commandCategoryQuery.isLoading && <Spinner />}
         </Grid>
         <VStack spacing={2} my={5} align="flex-start">
-          <AddCommandCategory isGroup />
-          <AddCommandCategory />
+          <AddCategory isGroup entityType="command" />
+          <AddCategory entityType="command" />
         </VStack>
 
         <Heading as="h1" fontSize="3xl">
@@ -132,8 +131,8 @@ function Dashboard() {
         </Grid>
       </Box>
       <VStack spacing={2} my={5} align="flex-start">
-        <AddLinkCategory isGroup />
-        <AddLinkCategory />
+        <AddCategory isGroup entityType="link" />
+        <AddCategory entityType="link" />
       </VStack>
     </UserLayout>
   );

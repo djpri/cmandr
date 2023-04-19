@@ -13,10 +13,10 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
+import AddCategory from "components/categories/AddCategory";
+import DeleteCategoryModal from "components/categories/DeleteCategoryModal";
+import EditCategory from "components/categories/EditCategory";
 import UserLayout from "components/layout/UserLayout";
-import AddLinkCategory from "components/linkCategories/AddLinkCategory";
-import DeleteLinkCategory from "components/linkCategories/DeleteLinkCategory";
-import EditLinkCategory from "components/linkCategories/EditLinkCategory";
 import LinksManager from "components/links/LinksManager/LinksManager";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useLinkCategories from "hooks/links/useLinkCategories";
@@ -61,13 +61,15 @@ const HeaderOptions = ({
           </PopoverBody>
         </PopoverContent>
       </Popover>
-      <DeleteLinkCategory
+      <DeleteCategoryModal
+        entityType="link"
         isOpen={isOpen}
         onClose={onClose}
         categoryName={category ? category.name : null}
         categoryId={parseInt(categoryId)}
       />
-      <EditLinkCategory
+      <EditCategory
+        entityType="link"
         isOpen={isEditModalOpen}
         onClose={editModalClose}
         category={category}
@@ -133,7 +135,7 @@ function LinkCategory() {
       )}
       {category.isGroup && (
         <VStack spacing={2} my={5} align="flex-start">
-          <AddLinkCategory parentId={category.id} />
+          <AddCategory parentId={category.id} entityType="link" />
         </VStack>
       )}
     </EntityPage>
