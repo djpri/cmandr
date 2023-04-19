@@ -6,16 +6,6 @@ import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 import useChakraToast from "../other/useChakraToast";
 import { CategoryReadDto } from "models/category";
 
-/**
- * Custom hook that contains react query logic for command categories
- *
- * @example
- *
- * ```js
- * const { query } = useCommandCategories();
- * const categories = query.data;
- * ```
- */
 function useCommandCategories() {
   const queryClient = useQueryClient();
   const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);

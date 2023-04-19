@@ -26,7 +26,6 @@ type Props = {
 
 function CommandRow({ row, table, showCategories, commandItem }: Props) {
   const { id, description, line, reference, category } = commandItem;
-  const [isCopied, setIsCopied] = useState(false);
   const hoverColor = useColorModeValue("gray.200", "gray.600");
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
@@ -35,7 +34,8 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
     row,
     requireClickToSelect: true,
   });
-
+  
+  const [isCopied, setIsCopied] = useState(false);
   const handleCopy = () => {
     setIsCopied(true);
     setTimeout(() => {

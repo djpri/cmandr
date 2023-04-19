@@ -84,7 +84,6 @@ function useCommands() {
     onSuccess: () => {
       queryClient.invalidateQueries(["commands"]);
       queryClient.invalidateQueries(["commandCategories"]);
-      showSuccessToast("Command Deleted", "Command deleted successfully");
     },
     onError: showErrorToast,
   });
@@ -99,7 +98,6 @@ function useCommands() {
     onSuccess: () => {
       queryClient.invalidateQueries(["commands"]);
       queryClient.invalidateQueries(["commandCategories"]);
-      showSuccessToast("Commands Deleted", "Commands deleted successfully");
     },
     onError: showErrorToast,
   });

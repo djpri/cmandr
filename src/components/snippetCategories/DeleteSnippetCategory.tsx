@@ -9,7 +9,7 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import useLinkCategories from "../../hooks/links/useLinkCategories";
+import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 
 interface IProps {
   isOpen: boolean;
@@ -18,19 +18,19 @@ interface IProps {
   categoryId: number;
 }
 
-function DeleteLinkCategory({
+function DeleteSnippetCategory({
   isOpen,
   onClose,
   categoryName,
   categoryId,
 }: IProps) {
   const navigate = useNavigate();
-  const { deleteCategoryMutation } = useLinkCategories();
+  const { deleteCategoryMutation } = useSnippetCategories();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Delete {`"${categoryName}"`} links</ModalHeader>
+        <ModalHeader>Delete {`"${categoryName}"`} snippets</ModalHeader>
         <ModalCloseButton />
         <ModalBody>WARNING! This action cannot be undone.</ModalBody>
 
@@ -55,4 +55,4 @@ function DeleteLinkCategory({
   );
 }
 
-export default DeleteLinkCategory;
+export default DeleteSnippetCategory;

@@ -6,16 +6,7 @@ import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 import useChakraToast from "../other/useChakraToast";
 import { CategoryReadDto } from "models/category";
 
-/**
- * Custom hook that contains react query logic for link categories
- *
- * @example
- *
- * ```js
- * const { query } = useSnippetCategories();
- * const categories = query.data;
- * ```
- */
+
 function useSnippetCategories() {
   const queryClient = useQueryClient();
   const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);

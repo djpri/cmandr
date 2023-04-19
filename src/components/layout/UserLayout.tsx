@@ -26,7 +26,7 @@ function UserLayout({ children }: PropsWithChildren) {
             // maxW="90%"
             ml={(isSidebarOpen && !isSmallerThan1280) ? "15rem" : "auto"}
             className="userLayout-content"
-            flexGrow={1}
+            flex={1}
             px={isSmallerThan1280 ? "2.5vw" : "0"}
           >
             <Box
@@ -34,6 +34,7 @@ function UserLayout({ children }: PropsWithChildren) {
               mx="auto"
               px={!isSmallerThan1280 && "3rem"}
               mb="3rem"
+              
             >
               {children}
             </Box>

@@ -5,29 +5,45 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import appReducer from "./slices/appSlice";
 import layoutReducer from "./slices/layoutSlice";
 import linksReducer from "./slices/linksSlice";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from 'redux-persist/lib/storage';
+import editorReducer from "./slices/editorSlice";
 
 export const rootReducer = combineReducers({
   app: appReducer,
   layout: layoutReducer,
   links: linksReducer,
+  editor: editorReducer,
 });
 
-
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['layout', 'links'], // persist only the "someReducer" state
+  whitelist: ["layout", "links"], // persist only the "someReducer" state
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export const persistor = persistStore(store);

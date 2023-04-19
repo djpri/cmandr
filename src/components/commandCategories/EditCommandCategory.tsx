@@ -34,6 +34,7 @@ function EditCommandCategory({
       name: category.name,
       parentId: category.parentId,
       isGroup: category.isGroup,
+      displayIndex: category.displayIndex,
     };
   }, [category]);
 

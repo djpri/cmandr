@@ -19,6 +19,8 @@ import useCommandCategories from "hooks/commands/useCommandCategories";
 import useCommands from "hooks/commands/useCommands";
 import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
+import useSnippetCategories from "hooks/snippets/useSnippetCategories";
+import useSnippets from "hooks/snippets/useSnippets";
 import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
 import { SnippetReadDto } from "models/snippets";
@@ -29,16 +31,23 @@ import { BiMove } from "react-icons/bi";
 interface IProps {
   handleBulkDelete?: () => void;
   table: Table<CommandReadDto> | Table<LinkReadDto> | Table<SnippetReadDto>;
-  type: "command" | "link";
+  type: "command" | "link" | "snippet";
 }
 
 interface MoveItemsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  type: "command" | "link";
-  items: CommandReadDto[] | LinkReadDto[];
+  type: "command" | "link" | "snippet";
+  items: CommandReadDto[] | LinkReadDto[] | SnippetReadDto[];
   clearSelection: (value?: boolean) => void;
 }
+
+const categoryHook = {
+  command: useCommandCategories,
+  link: useLinkCategories,
+  snippet: useSnippetCategories,
+};
+
 
 const MoveItemsModal: FC<MoveItemsModalProps> = ({
   isOpen,
@@ -47,13 +56,14 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
   items,
   clearSelection,
 }) => {
-  const useCategories =
-    type === "command" ? useCommandCategories() : useLinkCategories();
+  const useCategories = categoryHook[type]();
+  const mutationHook = {
+    command: useCommands().editMultipleCommandsMutation,
+    link: useLinks().editMultipleLinksMutation,
+    snippet: useSnippets().editMultipleSnippetsMutation,
+  };
+  const mutation = mutationHook[type];
   const categories = useCategories.query.data;
-  const mutation =
-    type === "command"
-      ? useCommands().editMultipleCommandsMutation
-      : useLinks().editMultipleLinksMutation;
 
   const [newCategoryId, setNewCategoryId] = useState(-1);
 

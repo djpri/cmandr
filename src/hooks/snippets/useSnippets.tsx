@@ -41,10 +41,17 @@ function useSnippets() {
     },
     onError: showErrorToast,
   });
+  const editMultipleSnippetsMutation = useMutation(Snippets.bulkUpdate, { 
+    onSuccess: () => {
+      queryClient.invalidateQueries(["snippets"]);
+      queryClient.invalidateQueries(["snippetCategories"]);
+      showSuccessToast("Snippets Edited", "Snippets edited successfully");
+    },
+    onError: showErrorToast,
+  });
   const deleteSnippetMutation = useMutation(Snippets.remove, {
     onSuccess: () => {
       queryClient.invalidateQueries(["snippets"]);
-      showSuccessToast("Snippet Deleted", "Snippet deleted successfully");
     },
     onError: showErrorToast,
   });
@@ -53,6 +60,7 @@ function useSnippets() {
     query,
     addSnippetMutation,
     editSnippetMutation,
+    editMultipleSnippetsMutation,
     deleteSnippetMutation,
   };
 }

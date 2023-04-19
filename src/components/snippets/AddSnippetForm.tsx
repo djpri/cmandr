@@ -1,14 +1,21 @@
-import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Grid,
+  Input,
+  Select,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import CUIAutoComplete from "components/shared/ChakraUIAutoComplete";
 import useSnippetCategories from "hooks/snippets/useSnippetCategories";
+import useSnippets from "hooks/snippets/useSnippets";
+import { CategoryReadDto } from "models/category";
 import { SnippetCreateDto } from "models/snippets";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import CodeEditor from "./CodeEditor";
 import { languagesAsItems } from "./languages";
 import { ValidationError } from "./snippetFormUtils";
-import useSnippets from "hooks/snippets/useSnippets";
-import { CategoryReadDto } from "models/category";
 
 interface IProps {
   categoryId?: number;
@@ -42,7 +49,13 @@ function AddSnippetForm({ categoryId }: IProps) {
   const onSubmit = (values) => {
     addSnippetMutation.mutate(values);
     // console.log(values);
-    reset({ title: "", description: "", code: "", categoryId: categoryId || -1 });
+    reset({
+      title: "",
+      description: "",
+      language: "",
+      code: "",
+      categoryId: categoryId || -1,
+    });
   };
 
   const handleCodeSnippetChange = (value) => {
@@ -58,10 +71,17 @@ function AddSnippetForm({ categoryId }: IProps) {
   }, [register]);
 
   const [defaultLanguage, setDefaultLanguage] = useState("javascript");
-  // const [availableLanguages, setavailableLanguages] = useState(second)
 
+  const bgColor = useColorModeValue("gray.50", "gray.800");
   return (
-    <Box maxW="100%">
+    <Box
+      maxW="100%"
+      bgColor={bgColor}
+      p={4}
+      boxShadow="base"
+      rounded="md"
+      borderColor="gray.700"
+    >
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <Grid
           mb={5}
@@ -94,14 +114,15 @@ function AddSnippetForm({ categoryId }: IProps) {
 
           {showCategorySelect && (
             <Box>
-              <FormLabel htmlFor="category">Category</FormLabel>
               <Select {...register("categoryId", { min: 1 })}>
                 <option value={-1}>Select Category</option>
-                {query?.data?.filter((cat: CategoryReadDto) => !cat.isGroup).map((category, index) => (
-                  <option value={category.id} key={index}>
-                    {category.name}
-                  </option>
-                ))}
+                {query?.data
+                  ?.filter((cat: CategoryReadDto) => !cat.isGroup)
+                  .map((category, index) => (
+                    <option value={category.id} key={index}>
+                      {category.name}
+                    </option>
+                  ))}
               </Select>
             </Box>
           )}

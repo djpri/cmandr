@@ -24,9 +24,9 @@ export interface CategoryCreateDto {
 
 export interface CategoryUpdateDto {
   name: string;
-  parentId?: number;
-  isGroup?: boolean;
-  displayIndex?: number;
+  parentId: number;
+  isGroup: boolean;
+  displayIndex: number;
 }
 
 export interface CategoryDisplayIndexDto {
