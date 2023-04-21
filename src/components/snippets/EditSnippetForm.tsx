@@ -1,12 +1,12 @@
 import { Button,  Input, Select, Stack, chakra } from "@chakra-ui/react";
 import CUIAutoComplete from "components/shared/ChakraUIAutoComplete";
-import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 import useSnippets from "hooks/snippets/useSnippets";
 import { SnippetReadDto, SnippetUpdateDto } from "models/snippets";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CodeEditor from "./CodeEditor";
 import { languagesAsItems } from "./languages";
+import useCategories from "../../hooks/categories/useCategories";
 
 type IProps = {
   snippetItem: SnippetReadDto;
@@ -14,7 +14,7 @@ type IProps = {
 };
 
 function EditSnippetForm({ snippetItem, onClose }: IProps) {
-  const { query: allCategoriesQuery } = useSnippetCategories();
+  const { query: allCategoriesQuery } = useCategories("snippet");
   const { editSnippetMutation } = useSnippets();
 
   const {

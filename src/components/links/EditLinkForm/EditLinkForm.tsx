@@ -1,9 +1,9 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
-import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
 import { LinkReadDto, LinkUpdateDto } from "models/link";
 import { useForm } from "react-hook-form";
 import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
+import useCategories from "../../../hooks/categories/useCategories";
 
 type IProps = {
   linkItem: LinkReadDto;
@@ -12,7 +12,7 @@ type IProps = {
 
 function EditLinkForm({ linkItem, onClose }: IProps) {
   const { id, title, url } = linkItem;
-  const { query: allCategoriesQuery } = useLinkCategories();
+  const { query: allCategoriesQuery } = useCategories("link");
   const { editLinkMutation } = useLinks();
 
   const {

@@ -7,7 +7,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import CUIAutoComplete from "components/shared/ChakraUIAutoComplete";
-import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 import useSnippets from "hooks/snippets/useSnippets";
 import { CategoryReadDto } from "models/category";
 import { SnippetCreateDto } from "models/snippets";
@@ -16,6 +15,7 @@ import { useForm } from "react-hook-form";
 import CodeEditor from "./CodeEditor";
 import { languagesAsItems } from "./languages";
 import { ValidationError } from "./snippetFormUtils";
+import useCategories from "../../hooks/categories/useCategories";
 
 interface IProps {
   categoryId?: number;
@@ -23,7 +23,7 @@ interface IProps {
 
 function AddSnippetForm({ categoryId }: IProps) {
   const { addSnippetMutation } = useSnippets();
-  const { query } = useSnippetCategories();
+  const { query } = useCategories("snippet");
   const [showCategorySelect, setShowCategorySelect] = useState(true);
 
   const {

@@ -1,10 +1,10 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
-import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LinkCreateDto } from "../../../models/link";
 import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
+import useCategories from "../../../hooks/categories/useCategories";
 
 interface IProps {
   categoryId?: number;
@@ -16,7 +16,7 @@ interface IProps {
  */
 function AddLinkForm({ categoryId }: IProps) {
   const { addLinkMutation } = useLinks();
-  const { query } = useLinkCategories();
+  const { query } = useCategories("link");
   const [showCategorySelect, setShowCategorySelect] = useState(true);
   const {
     handleSubmit,

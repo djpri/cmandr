@@ -11,19 +11,19 @@ import useChakraToast from "../other/useChakraToast";
 const getCategoryInfo = (entity: Entity) => {
   if (entity === "command") {
     return {
-      queryKey: ["commandCategories"],
+      queryKey: "commandCategories",
       endpoints: CommandCategories,
     };
   }
   if (entity === "link") {
     return {
-      queryKey: ["linkCategories"],
+      queryKey: "linkCategories",
       endpoints: LinkCategories,
     };
   }
   if (entity === "snippet") {
     return {
-      queryKey: ["snippetCategories"],
+      queryKey: "snippetCategories",
       endpoints: SnippetCategories,
     };
   }
@@ -31,47 +31,47 @@ const getCategoryInfo = (entity: Entity) => {
 
 function useCategories(entity: Entity) {
   const queryClient = useQueryClient();
-  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
+  const isAppInitialized: boolean = useSelector(selectUserHasReceivedToken);
   const { showErrorToast } = useChakraToast();
   const [{ endpoints, queryKey }] = useState(getCategoryInfo(entity));
 
   // Queries
   const query = useQuery([queryKey], asReactQueryFunction(endpoints.getAll), {
-    enabled: isAppInitalized,
+    enabled: isAppInitialized,
   });
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
   const addCategoryMutation = useMutation(endpoints.create, {
-    onSuccess: () => {
-      queryClient.invalidateQueries([queryKey]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([queryKey]);
     },
     onError: showErrorToast,
   });
   const editCategoryMutation = useMutation(endpoints.update, {
-    onSuccess: () => {
-      queryClient.invalidateQueries([queryKey]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([queryKey]);
     },
     onError: showErrorToast,
   });
   const deleteCategoryMutation = useMutation(endpoints.remove, {
-    onMutate: (id) => {
-      queryClient.cancelQueries([queryKey]);
+    onMutate: async (id) => {
+      await queryClient.cancelQueries([queryKey]);
       const previousCategories = queryClient.getQueryData([queryKey]);
       queryClient.setQueryData([queryKey], (old: CategoryReadDto[]) => {
         return old.filter((category: CategoryReadDto) => category.id !== id);
       });
-      return () => queryClient.setQueryData([queryKey], previousCategories);
+      return previousCategories;
     },
-    onError: () => {
-      queryClient.invalidateQueries([queryKey]);
+    onError: async () => {
+      await queryClient.invalidateQueries([queryKey]);
       showErrorToast();
     },
   });
   const manualSortMutation = useMutation(endpoints.manualSort, {
-    onSuccess: () => {
-      queryClient.refetchQueries(["settings"]);
-      queryClient.invalidateQueries([queryKey]);
+    onSuccess: async () => {
+      await queryClient.refetchQueries(["settings"]);
+      await queryClient.invalidateQueries([queryKey]);
     },
     onError: showErrorToast,
   });

@@ -19,13 +19,13 @@ import EditCategory from "components/categories/EditCategory";
 import UserLayout from "components/layout/UserLayout";
 import LinksManager from "components/links/LinksManager/LinksManager";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
-import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinksFromSingleCategory from "hooks/links/useLinksFromSingleCategory";
 import { CategoryReadDto } from "models/category";
 import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import EntityPage from "views/EntityPage";
+import useCategories from "../../hooks/categories/useCategories";
 
 const HeaderOptions = ({
   category,
@@ -81,7 +81,7 @@ const HeaderOptions = ({
 function LinkCategory() {
   const { id: categoryId } = useParams();
   const { query } = useLinksFromSingleCategory(parseInt(categoryId));
-  const { query: categoriesQuery } = useLinkCategories();
+  const { query: categoriesQuery } = useCategories("link");
 
   const category = useMemo(() => {
     if (categoriesQuery.data) {

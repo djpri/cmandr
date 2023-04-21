@@ -130,7 +130,7 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
   }, [firstSelectedRow]);
 
   const handleKeyPressRowSelection = (e: KeyboardEvent) => {
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") { 
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
       if (table.getSelectedRowModel().flatRows.length === 0) {
         const firstRow = table.getRowModel().rows[0];
@@ -168,7 +168,7 @@ function SnippetsGrid({ snippets, showCategories, isLoading }: IProps) {
 
     return (
       <Grid templateColumns={"1fr"} gap={4} maxW="100%">
-        <Box gridColumn={[2, null, null, 1]}>
+        <Box>
           {table
             .getRowModel()
             .rows.slice(0, pageSize)

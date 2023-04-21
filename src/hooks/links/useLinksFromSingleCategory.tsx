@@ -19,12 +19,12 @@ import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 function useLinksFromSingleCategory(linkId: number) {
   const queryClient = useQueryClient();
   const { showSuccessToast, showErrorToast } = useChakraToast();
-  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
+  const isAppInitialized: boolean = useSelector(selectUserHasReceivedToken);
 
   const query = useQuery(
     ["links", linkId],
     asReactQueryFunction(() => Links.getAllByCategoryId(linkId)),
-    { enabled: isAppInitalized }
+    { enabled: isAppInitialized }
   );
 
   const addLinkMutation = useMutation(Links.create, {

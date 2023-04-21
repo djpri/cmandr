@@ -5,6 +5,7 @@ import { LinkReadDto } from "models/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { selectUserHasReceivedToken } from "redux/slices/appSlice";
+import { CategoryReadDto } from "../../models/category";
 
 /**
  * Custom hook that contains react query logic for links
@@ -18,7 +19,7 @@ import { selectUserHasReceivedToken } from "redux/slices/appSlice";
  */
 function useLinks() {
   const queryClient = useQueryClient();
-  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
+  const isAppInitialized: boolean = useSelector(selectUserHasReceivedToken);
 
   const { showSuccessToast, showErrorToast } = useChakraToast();
 
@@ -27,55 +28,58 @@ function useLinks() {
     ["links"],
     asReactQueryFunction(Links.getAll),
     {
-      enabled: isAppInitalized,
+      enabled: isAppInitialized,
     }
   );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
   const addLinkMutation = useMutation(Links.create, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["links"]);
-      queryClient.invalidateQueries(["linkCategories"]);
-      showSuccessToast("Link Added", "Link added successfully");
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["links"]);
+      await queryClient.invalidateQueries(["linkCategories"]);
     },
     onError: showErrorToast,
   });
   const quickAddLinkMutation = useMutation(Links.quickAdd, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["links"]);
-      queryClient.invalidateQueries(["linkCategories"]);
-      showSuccessToast("Link Added", "Link added successfully");
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["links"]);
+      await queryClient.invalidateQueries(["linkCategories"]);
     },
     onError: showErrorToast,
   });
   const editLinkMutation = useMutation(Links.update, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["links"]);
-      queryClient.invalidateQueries(["linkCategories"]);
-      showSuccessToast("Link Edited", "Link edited successfully");
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["links"]);
+      await queryClient.invalidateQueries(["linkCategories"]);
     },
     onError: showErrorToast,
   });
   const deleteLinkMutation = useMutation(Links.remove, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["links"]);
-      queryClient.invalidateQueries(["linkCategories"]);
-      showSuccessToast("Link Deleted", "Link deleted successfully");
+    onMutate: async (id: number) => {
+      const previousLinks: LinkReadDto[] =
+        queryClient.getQueryData(["links"]) || [];
+      
+      queryClient.setQueryData(["links"], (old: LinkReadDto[]) => {
+        return old.filter((link: LinkReadDto) => link.id !== id);
+      });
+      await queryClient.invalidateQueries(["linkCategories"]);
+      
+      return previousLinks;
     },
     onError: showErrorToast,
   });
   const editMultipleLinksMutation = useMutation(Links.bulkUpdate, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["links"]);
-      queryClient.invalidateQueries(["linkCategories"]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["links"]);
+      await queryClient.invalidateQueries(["linkCategories"]);
     },
     onError: showErrorToast,
   });
   const deleteMultipleLinksMutation = useMutation(Links.bulkRemove, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["links"]);
-      queryClient.invalidateQueries(["linkCategories"]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["links"]);
+      await queryClient.invalidateQueries(["linkCategories"]);
       showSuccessToast("Links Deleted", "Links deleted successfully");
     },
     onError: showErrorToast,
