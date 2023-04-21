@@ -9,13 +9,13 @@ import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 function useSnippetsFromSingleCategory(linkId: number) {
   const queryClient = useQueryClient();
   const { showSuccessToast, showErrorToast } = useChakraToast();
-  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
+  const isAppInitialized: boolean = useSelector(selectUserHasReceivedToken);
 
 
   const query = useQuery(
     ["snippets", linkId],
     asReactQueryFunction(() => Snippets.getAllByCategoryId(linkId)),
-    { enabled: isAppInitalized }
+    { enabled: isAppInitialized }
   );
 
   const addSnippetMutation = useMutation(Snippets.create, {

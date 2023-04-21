@@ -22,7 +22,6 @@ import CategoryLinkButton from "components/other/CategoryLinkButton";
 import CodeEditor from "components/snippets/CodeEditor";
 import AddSnippetButton from "components/snippets/SnippetsManager/AddSnippetButton";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
-import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 import useSnippetsFromSingleCategory from "hooks/snippets/useSnippetsFromSingleCategory";
 import { CategoryReadDto } from "models/category";
 import { ForwardedRef, useEffect, useMemo, useRef, useState } from "react";
@@ -31,6 +30,7 @@ import { useParams } from "react-router-dom";
 import { selectCode, selectLanguage, setCode } from "redux/slices/editorSlice";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import EntityPage from "views/EntityPage";
+import useCategories from "../../hooks/categories/useCategories";
 
 const HeaderOptions = ({
   category,
@@ -86,7 +86,7 @@ const HeaderOptions = ({
 function SnippetCategory() {
   const { id: categoryId } = useParams();
   const { query } = useSnippetsFromSingleCategory(parseInt(categoryId));
-  const { query: categoriesQuery } = useSnippetCategories();
+  const { query: categoriesQuery } = useCategories("snippet");
   const code = useAppSelector(selectCode);
   const language = useAppSelector(selectLanguage);
 

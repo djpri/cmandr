@@ -15,11 +15,8 @@ import {
 } from "@chakra-ui/react";
 import { Table } from "@tanstack/react-table";
 import { isInDevelopment } from "helpers/environment";
-import useCommandCategories from "hooks/commands/useCommandCategories";
 import useCommands from "hooks/commands/useCommands";
-import useLinkCategories from "hooks/links/useLinkCategories";
 import useLinks from "hooks/links/useLinks";
-import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 import useSnippets from "hooks/snippets/useSnippets";
 import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
@@ -27,6 +24,7 @@ import { SnippetReadDto } from "models/snippets";
 import { FC, useCallback, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { BiMove } from "react-icons/bi";
+import UseCategories from "../../hooks/categories/useCategories";
 
 interface IProps {
   handleBulkDelete?: () => void;
@@ -42,12 +40,6 @@ interface MoveItemsModalProps {
   clearSelection: (value?: boolean) => void;
 }
 
-const categoryHook = {
-  command: useCommandCategories,
-  link: useLinkCategories,
-  snippet: useSnippetCategories,
-};
-
 
 const MoveItemsModal: FC<MoveItemsModalProps> = ({
   isOpen,
@@ -56,7 +48,7 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
   items,
   clearSelection,
 }) => {
-  const useCategories = categoryHook[type]();
+  const useCategories = UseCategories(type);
   const mutationHook = {
     command: useCommands().editMultipleCommandsMutation,
     link: useLinks().editMultipleLinksMutation,

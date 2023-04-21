@@ -14,19 +14,19 @@ import { CategoryReadDto, CategoryUpdateDto } from "models/category";
 import { Entity } from "models/entity";
 import { useMemo, useState } from "react";
 
-interface EditCommandCategoryProps {
+interface EditCategoryProps {
   isOpen: boolean;
   onClose: () => void;
   category: CategoryReadDto;
   entityType: Entity;
 }
 
-function EditCommandCategory({
+function EditCategory({
   isOpen,
   onClose,
   category,
   entityType,
-}: EditCommandCategoryProps) {
+}: EditCategoryProps) {
   const [categoryName, setCategoryName] = useState("");
   const { editCategoryMutation } = useCategories(entityType);
 
@@ -68,4 +68,4 @@ function EditCommandCategory({
   );
 }
 
-export default EditCommandCategory;
+export default EditCategory;

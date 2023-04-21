@@ -8,8 +8,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { UseQueryResult } from "@tanstack/react-query";
-import useLinkCategories from "hooks/links/useLinkCategories";
-import useSnippetCategories from "hooks/snippets/useSnippetCategories";
 import { ConnectDropTarget } from "react-dnd/dist/types";
 import { AiFillCode, AiFillWallet } from "react-icons/ai";
 import { BiCommand } from "react-icons/bi";
@@ -72,7 +70,7 @@ const CategoryAccordion = ({
           ml={textMargin}
           textTransform="capitalize"
         >
-          {type}
+          {`${type}s`}
         </Text>
         <AccordionIcon />
       </AccordionButton>
@@ -114,7 +112,7 @@ const CommandCategorySection = () => {
 };
 
 const LinkCategorySection = () => {
-  const { query, editCategoryMutation } = useLinkCategories();
+  const { query, editCategoryMutation } = useCategories("link");
   const { addToCategoryDropRef, isAddToGroupDropActive } =
     useRemoveFromGroupDropItem("link", editCategoryMutation, query.data);
 
@@ -133,7 +131,7 @@ const LinkCategorySection = () => {
 };
 
 const SnippetCategorySection = () => {
-  const { query, editCategoryMutation } = useSnippetCategories();
+  const { query, editCategoryMutation } = useCategories("snippet");
   const { addToCategoryDropRef, isAddToGroupDropActive } =
     useRemoveFromGroupDropItem("snippet", editCategoryMutation, query.data);
   return (

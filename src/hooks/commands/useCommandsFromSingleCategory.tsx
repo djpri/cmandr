@@ -8,13 +8,13 @@ import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 function useCommandsFromSingleCategory(categoryId: number) {
   const queryClient = useQueryClient();
   const { showSuccessToast, showErrorToast } = useChakraToast();
-  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
+  const isAppInitialized: boolean = useSelector(selectUserHasReceivedToken);
 
   const query = useQuery(
     ["commands", categoryId],
     asReactQueryFunction(() => Commands.getAllByCategoryId(categoryId)),
     {
-      enabled: isAppInitalized,
+      enabled: isAppInitialized,
     }
   );
 

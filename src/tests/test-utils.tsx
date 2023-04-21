@@ -34,6 +34,7 @@ const AllProviders = ({ children }: { children?: React.ReactNode }) => (
         layout: {
           isSidebarOpen: false,
           categoriesOpen: {},
+          sideBarAccordionIndex: [2,4,6],
         },
       },
     })}

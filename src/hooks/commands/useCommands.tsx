@@ -19,32 +19,32 @@ import { selectUserHasReceivedToken } from "redux/slices/appSlice";
  * const commandsData = query.data;
  * ```
  */
-function useCommands() {
+function useCommands(categoryId?: number) {
   const queryClient = useQueryClient();
-  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
+  const isAppInitialized: boolean = useSelector(selectUserHasReceivedToken);
+  const queryKey = categoryId ? ["commands", categoryId] : ["commands"];
 
-  const { showSuccessToast, showErrorToast } = useChakraToast();
+  const { showErrorToast } = useChakraToast();
 
   // Queries
   const query = useQuery<CommandReadDto[]>(
-    ["commands"],
+    queryKey,
     asReactQueryFunction(() => Commands.getAll()),
     {
-      enabled: isAppInitalized,
+      enabled: isAppInitialized,
     }
   );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
   const addCommandMutation = useMutation(Commands.create, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["commands"]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queryKey);
       // queryClient.invalidateQueries("commandCategories");
-      showSuccessToast("Command Added", "Command added successfully");
     },
     onMutate: async (newCommand): Promise<CategoryReadDto[]> => {
       // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-      await queryClient.cancelQueries(["todos"]);
+      await queryClient.cancelQueries(["commandCategories"]);
 
       // Snapshot the previous value
       const previousCategories: CategoryReadDto[] =
@@ -67,37 +67,36 @@ function useCommands() {
       return previousCategories;
     },
 
-    onError: () => {
-      queryClient.invalidateQueries(["commandCategories"]);
+    onError: async () => {
+      await queryClient.invalidateQueries(["commandCategories"]);
       showErrorToast();
     },
   });
   const editCommandMutation = useMutation(Commands.update, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["commands"]);
-      queryClient.invalidateQueries(["commandCategories"]);
-      showSuccessToast("Command Edited", "Command edited successfully");
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(["commandCategories"]);
     },
     onError: showErrorToast,
   });
   const deleteCommandMutation = useMutation(Commands.remove, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["commands"]);
-      queryClient.invalidateQueries(["commandCategories"]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(["commandCategories"]);
     },
     onError: showErrorToast,
   });
   const editMultipleCommandsMutation = useMutation(Commands.bulkUpdate, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["commands"]);
-      queryClient.invalidateQueries(["commandCategories"]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(["commandCategories"]);
     },
     onError: showErrorToast,
   });
   const deleteMultipleCommandsMutation = useMutation(Commands.bulkRemove, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["commands"]);
-      queryClient.invalidateQueries(["commandCategories"]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(["commandCategories"]);
     },
     onError: showErrorToast,
   });

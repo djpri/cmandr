@@ -8,29 +8,56 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import AddCategory from "components/categories/AddCategory";
+import { AddCategory } from "components/categories";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCategories from "hooks/categories/useCategories";
 import useSortCategories from "hooks/categories/useSortCategories";
-import useLinkCategories from "hooks/links/useLinkCategories";
 import useSettings from "hooks/settings/useSettings";
 import { CategoryReadDto } from "models/category";
 import { UserSettings } from "models/user";
 import { FC, lazy, useMemo } from "react";
+import { Entity } from "../models/entity";
 
 const UserLayout = lazy(() => import("../components/layout/UserLayout"));
 
 type SortButtonProps = {
-  type: "command" | "link";
+  type: Entity;
   settings: UserSettings;
 };
 
+function CategoriesGrid({ entityType, categoriesQuery, entityRoute }) {
+  const baseHue = 184;
+  const categories = useMemo(() => {
+    if (categoriesQuery.data?.length <= 0) return [];
+    return categoriesQuery.data?.filter((c) => c.parentId <= 0);
+  }, [categoriesQuery]);
+
+  return (
+    <>
+      <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
+        {categories?.map((item: CategoryReadDto, index: number) => (
+          <CategoryLinkButton
+            routeType={entityRoute}
+            key={item.id}
+            item={item}
+            hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
+          />
+        ))}
+        {categoriesQuery.isLoading && <Spinner />}
+      </Grid>
+      <VStack spacing={2} my={5} align="flex-start">
+        <AddCategory isGroup entityType={entityType} />
+        <AddCategory entityType={entityType} />
+      </VStack>
+    </>
+  );
+}
+
 function Dashboard() {
   const { query: commandCategoryQuery } = useCategories("command");
-  const { query: linkCategoryQuery } = useLinkCategories();
+  const { query: linkCategoryQuery } = useCategories("link");
+  const { query: snippetCategoryQuery } = useCategories("snippet");
   const { query: settingsQuery } = useSettings();
-
-  const baseHue = 184;
 
   const SortButtons: FC<SortButtonProps> = ({ type, settings }) => {
     const {
@@ -77,40 +104,20 @@ function Dashboard() {
     );
   };
 
-  const commandCategories = useMemo(() => {
-    if (commandCategoryQuery.data?.length <= 0) return [];
-    return commandCategoryQuery.data?.filter((c) => c.parentId <= 0);
-  }, [commandCategoryQuery]);
-
-  const linkCategories = useMemo(() => {
-    if (linkCategoryQuery.data?.length <= 0) return [];
-    return linkCategoryQuery.data?.filter((c) => c.parentId <= 0);
-  }, [linkCategoryQuery]);
-
   return (
     <UserLayout>
-      <Box fontSize="xl">
+      <Box fontSize="xl" pb={16}>
         <Heading as="h1" fontSize="3xl">
           Commands
         </Heading>
         {settingsQuery.data && (
           <SortButtons type="command" settings={settingsQuery.data} />
         )}
-        <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
-          {commandCategories?.map((item: CategoryReadDto, index: number) => (
-            <CategoryLinkButton
-              routeType="commands"
-              key={item.id}
-              item={item}
-              hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
-            />
-          ))}
-          {commandCategoryQuery.isLoading && <Spinner />}
-        </Grid>
-        <VStack spacing={2} my={5} align="flex-start">
-          <AddCategory isGroup entityType="command" />
-          <AddCategory entityType="command" />
-        </VStack>
+        <CategoriesGrid
+          entityType="command"
+          entityRoute="commands"
+          categoriesQuery={commandCategoryQuery}
+        />
 
         <Heading as="h1" fontSize="3xl">
           Links
@@ -118,22 +125,24 @@ function Dashboard() {
         {settingsQuery.data && (
           <SortButtons type="link" settings={settingsQuery.data} />
         )}
-        <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
-          {linkCategories?.map((item: CategoryReadDto, index: number) => (
-            <CategoryLinkButton
-              routeType="links"
-              key={item.id}
-              item={item}
-              hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
-            />
-          ))}
-          {linkCategoryQuery.isLoading && <Spinner />}
-        </Grid>
+        <CategoriesGrid
+          entityType="link"
+          entityRoute="links"
+          categoriesQuery={linkCategoryQuery}
+        />
+
+        <Heading as="h1" fontSize="3xl">
+          Snippets
+        </Heading>
+        {settingsQuery.data && (
+          <SortButtons type="snippet" settings={settingsQuery.data} />
+        )}
+        <CategoriesGrid
+          entityType="snippet"
+          entityRoute="snippets"
+          categoriesQuery={snippetCategoryQuery}
+        />
       </Box>
-      <VStack spacing={2} my={5} align="flex-start">
-        <AddCategory isGroup entityType="link" />
-        <AddCategory entityType="link" />
-      </VStack>
     </UserLayout>
   );
 }
