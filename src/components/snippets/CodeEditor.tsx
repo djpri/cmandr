@@ -86,6 +86,7 @@ function CodeEditor({
     <Box
       position="relative"
       h="100%"
+      minH="50vh"
       w="100%"
       maxW="100%"
       maxH="70vh"

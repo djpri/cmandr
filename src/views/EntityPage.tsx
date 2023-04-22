@@ -1,5 +1,6 @@
 import { Heading, Stack, Text } from "@chakra-ui/react";
 import UserLayout from "components/layout/UserLayout";
+import { pluralizeNumItems } from "helpers/pluralize";
 import { PropsWithChildren } from "react";
 
 interface EntityPageProps {
@@ -25,7 +26,7 @@ function EntityPage({
       </Stack>
 
       <Text mb="30px" color="gray.500" fontWeight="700">
-        {numItems} items
+        {pluralizeNumItems(numItems)}
       </Text>
 
       {children}

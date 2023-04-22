@@ -48,7 +48,6 @@ function AddSnippetForm({ categoryId }: IProps) {
 
   const onSubmit = (values) => {
     addSnippetMutation.mutate(values);
-    // console.log(values);
     reset({
       title: "",
       description: "",

@@ -18,7 +18,7 @@ function UserLayout({ children }: PropsWithChildren) {
     <>
       <NavBar />
       <AuthenticatedTemplate>
-        <Box display="flex" className="userLayout" height="100vh">
+        <Box display="flex" className="userLayout">
           <SideBar />
           <Box
             position="relative"
@@ -32,7 +32,7 @@ function UserLayout({ children }: PropsWithChildren) {
             <Box
               mt="5rem"
               mx="auto"
-              px={!isSmallerThan1280 && "3rem"}
+              px={!isSmallerThan1280 ? "3rem" : "0.5rem"}
               mb="3rem"
             >
               {children}

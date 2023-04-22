@@ -139,6 +139,7 @@ function SnippetCategory() {
             ref={addSnippetRef as ForwardedRef<HTMLDivElement>}
             currentButtonOpen={currentButtonOpen}
             setCurrentButtonOpen={setCurrentButtonOpen}
+            categoryId={category ? category.id : null}
           />
           <Box ref={addSnippetRef} mb={5} />
           <Grid

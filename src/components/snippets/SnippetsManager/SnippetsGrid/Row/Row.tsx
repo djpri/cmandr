@@ -1,8 +1,15 @@
-import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  HStack,
+  Text,
+  useColorModeValue,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { Row, Table } from "@tanstack/react-table";
 import useTableSelectors from "hooks/table/useTableSelectors";
 import { SnippetReadDto } from "models/snippets";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import SnippetOptions from "./Options/SnippetOptions";
 
@@ -24,15 +31,20 @@ function TableRow({
 }: IProps) {
   const { description, category, language } = snippet;
   const selectedRowColor = useColorModeValue("gray.300", "blue.600");
+  const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
   const { multiSelectRow } = useTableSelectors<SnippetReadDto>({
     table,
     row,
     requireClickToSelect: true,
   });
-  const [showOptions, setShowOptions] = useState(false);
+  const [showOptions, setShowOptions] = useState(isSmallerThan1280);
 
   const languageColor = useColorModeValue("teal.800", "teal.300");
   const categoryColor = useColorModeValue("gray.800", "gray.300");
+
+  useEffect(() => {
+    setShowOptions(isSmallerThan1280);
+  }, [isSmallerThan1280]);
 
   return (
     <Flex
@@ -47,8 +59,16 @@ function TableRow({
         bgColor: row.getIsSelected() && selectedRowColor,
       }}
       onMouseDown={multiSelectRow}
-      onMouseEnter={() => setShowOptions(true)}
-      onMouseLeave={() => setShowOptions(false)}
+      onMouseEnter={() => {
+        if (!isSmallerThan1280) {
+          setShowOptions(true);
+        }
+      }}
+      onMouseLeave={() => {
+        if (!isSmallerThan1280) {
+          setShowOptions(false);
+        }
+      }}
     >
       <Box className="clickToSelect">
         <Box className="clickToSelect">{description}</Box>

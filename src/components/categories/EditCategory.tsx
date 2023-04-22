@@ -32,12 +32,12 @@ function EditCategory({
 
   const categoryUpdateDto: CategoryUpdateDto = useMemo(() => {
     return {
-      name: category.name,
+      name: categoryName || category.name,
       parentId: category.parentId,
       isGroup: category.isGroup,
       displayIndex: category.displayIndex,
     };
-  }, [category]);
+  }, [category, categoryName]);
 
   const handleEdit = () => {
     editCategoryMutation.mutate({ id: category.id, body: categoryUpdateDto });

@@ -25,6 +25,7 @@ const SearchAndPagination = ({ table, value, onChange }: IProps) => {
       alignItems="center"
       justifyContent="space-between"
       wrap="wrap"
+      gap={2}
     >
       <GlobalFilter table={table} value={value} onChange={onChange} />
       <Box pr="2rem">

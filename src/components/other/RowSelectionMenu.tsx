@@ -18,25 +18,23 @@ import { isInDevelopment } from "helpers/environment";
 import useCommands from "hooks/entities/useCommands";
 import useLinks from "hooks/entities/useLinks";
 import useSnippets from "hooks/entities/useSnippets";
-import { CommandReadDto } from "models/command";
-import { LinkReadDto } from "models/link";
-import { SnippetReadDto } from "models/snippets";
 import { FC, useCallback, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { BiMove } from "react-icons/bi";
 import UseCategories from "../../hooks/categories/useCategories";
+import { Entity, EntityReadDto } from "models/entity";
 
 interface IProps {
   handleBulkDelete?: () => void;
-  table: Table<CommandReadDto> | Table<LinkReadDto> | Table<SnippetReadDto>;
-  type: "command" | "link" | "snippet";
+  type: Entity;
+  table: Table<EntityReadDto>;
 }
 
 interface MoveItemsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  type: "command" | "link" | "snippet";
-  items: CommandReadDto[] | LinkReadDto[] | SnippetReadDto[];
+  type: Entity;
+  items: EntityReadDto[];
   clearSelection: (value?: boolean) => void;
 }
 
@@ -119,13 +117,15 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
       mb={4}
       justify="space-between"
       align="center"
+      wrap="wrap"
+      gap={2}
     >
       <Text>{table.getSelectedRowModel().flatRows.length} items selected</Text>
       <HStack>
-        <Button onClick={() => table.toggleAllRowsSelected(false)}>
+        <Button onClick={() => table.toggleAllRowsSelected(false)} size={["xs", null, null, "sm"]}>
           Clear Selection
         </Button>
-        <Button onClick={onOpen} aria-label="move items" rightIcon={<BiMove />}>
+        <Button onClick={onOpen} aria-label="move items" rightIcon={<BiMove />} size={["xs", null, null, "sm"]}>
           Move
         </Button>
         <Button
@@ -135,6 +135,7 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
             }
           }}
           rightIcon={<AiFillDelete />}
+          size={["xs", null, null, "sm"]}
         >
           Delete
         </Button>
