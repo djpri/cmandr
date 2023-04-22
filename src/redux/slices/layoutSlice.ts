@@ -3,7 +3,7 @@ import { RootState } from "redux/store";
 
 const initialState = {
   isSidebarOpen: true,
-  sideBarAccordionIndex: [2,4,6],
+  sideBarAccordionIndex: [2, 4, 6],
   categoriesOpen: {},
 };
 
@@ -34,9 +34,14 @@ export const layoutSlice = createSlice({
     },
     setSidebarAccordionIndex: (state, action: { payload: number }) => {
       if (state.sideBarAccordionIndex.includes(action.payload)) {
-        state.sideBarAccordionIndex = state.sideBarAccordionIndex.filter((index) => index !== action.payload);
+        state.sideBarAccordionIndex = state.sideBarAccordionIndex.filter(
+          (index) => index !== action.payload
+        );
       } else {
-        state.sideBarAccordionIndex = [...state.sideBarAccordionIndex, action.payload];
+        state.sideBarAccordionIndex = [
+          ...state.sideBarAccordionIndex,
+          action.payload,
+        ];
       }
     },
   },
@@ -61,5 +66,5 @@ export const selectOpenCategories = (state: RootState) =>
 
 export const selectSidebarAccordionIndex = (state: RootState) =>
   state.layout.sideBarAccordionIndex;
-  
+
 export default layoutSlice.reducer;

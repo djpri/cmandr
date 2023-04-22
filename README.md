@@ -17,6 +17,7 @@ Also includes a bookmark manager for storing links related to development work.
 - Bulk delete items
 
 ### Ideas for Future Features
+
 - Save and manage full code snippets
 - Save and preview CSS styles (e.g. [Css Box Shadow Examples](https://getcssscan.com/css-box-shadow-examples))
 - Chrome extension for easily saving snippets or bookmarks
@@ -27,7 +28,7 @@ Also includes a bookmark manager for storing links related to development work.
 📦src
  ┣ 📂api         - contains custom axios instance with methods for calling all of the api endpoints
  ┣ 📂auth        - contains Azure Active Directory B2C policies and msal config (https://www.npmjs.com/package/%40azure/msal-browser)
- ┣ 📂components  
+ ┣ 📂components
  ┣ 📂helpers     - helper functions
  ┣ 📂hooks       - custom react hooks, mainly for react query logic
  ┣ 📂models      - view models based on the web api DTOs (data transfer objects)
@@ -53,7 +54,7 @@ $ yarn
 ## Environment Variables
 
 - See **.env.examples** for a list of all variable names
-- Use **.env** file  for production environment
+- Use **.env** file for production environment
 - Use **.env.local** file for use in development
 
 ## Scripts
@@ -67,6 +68,7 @@ Then run:
 ```sh
 $ yarn start
 ```
+
 Open http://localhost:3000/ to view the app if the page doesn't load automatically.
 
 ### Create build folder for production
@@ -89,10 +91,10 @@ $ yarn test
 
 ## Deployment
 
-
 This application relies on client-side routing, so we redirect all requests to the index.html to be handled by react router.
 
 **vercel.json**
+
 ```
 {
   "rewrites":  [

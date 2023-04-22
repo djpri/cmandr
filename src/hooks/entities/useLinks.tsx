@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { Links } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useReactQueryEntity from "hooks/entities/useReactQueryEntity";
@@ -23,8 +24,9 @@ function useLinks(categoryId?: number) {
 
   const {
     query,
-    useDefaultMutation,
+    defaultMutationSettings,
     addMutation,
+    editMutation,
     deleteMutation,
   } = useReactQueryEntity<LinkReadDto>({
     queryKey,
@@ -39,19 +41,23 @@ function useLinks(categoryId?: number) {
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
-  const quickAddLinkMutation = useDefaultMutation(quickAdd);
+  const quickAddLinkMutation = useMutation(quickAdd, defaultMutationSettings);
 
-  const editLinkMutation = useDefaultMutation(update);
+  const editMultipleLinksMutation = useMutation(
+    bulkUpdate,
+    defaultMutationSettings
+  );
 
-  const editMultipleLinksMutation = useDefaultMutation(bulkUpdate);
-
-  const deleteMultipleLinksMutation = useDefaultMutation(bulkRemove);
+  const deleteMultipleLinksMutation = useMutation(
+    bulkRemove,
+    defaultMutationSettings
+  );
 
   return {
     query,
     addLinkMutation: addMutation,
     quickAddLinkMutation,
-    editLinkMutation,
+    editLinkMutation: editMutation,
     deleteLinkMutation: deleteMutation,
     editMultipleLinksMutation,
     deleteMultipleLinksMutation,

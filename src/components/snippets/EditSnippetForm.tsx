@@ -1,12 +1,12 @@
-import { Button,  Input, Select, Stack, chakra } from "@chakra-ui/react";
+import { Button, Input, Select, Stack, chakra } from "@chakra-ui/react";
 import CUIAutoComplete from "components/shared/ChakraUIAutoComplete";
-import useSnippets from "hooks/snippets/useSnippets";
+import useSnippets from "hooks/entities/useSnippets";
 import { SnippetReadDto, SnippetUpdateDto } from "models/snippets";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import useCategories from "../../hooks/categories/useCategories";
 import CodeEditor from "./CodeEditor";
 import { languagesAsItems } from "./languages";
-import useCategories from "../../hooks/categories/useCategories";
 
 type IProps = {
   snippetItem: SnippetReadDto;
@@ -17,14 +17,7 @@ function EditSnippetForm({ snippetItem, onClose }: IProps) {
   const { query: allCategoriesQuery } = useCategories("snippet");
   const { editSnippetMutation } = useSnippets();
 
-  const {
-    id,
-    title,
-    description,
-    code,
-    language,
-    starred,
-  } = snippetItem;
+  const { id, title, description, code, language, starred } = snippetItem;
 
   const {
     handleSubmit,
@@ -47,6 +40,8 @@ function EditSnippetForm({ snippetItem, onClose }: IProps) {
   const selectLanguageValue = watch("language");
 
   const onSubmit = (values) => {
+    // ensure that categoryId is a number before submitting
+    values.categoryId = parseInt(values.categoryId.toString());
     editSnippetMutation.mutate({ id, body: values });
     reset({ title: "", description: "", language: "", categoryId: -1 });
     // closes popover if using form from popover only

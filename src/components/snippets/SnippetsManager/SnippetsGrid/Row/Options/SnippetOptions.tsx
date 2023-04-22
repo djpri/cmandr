@@ -1,7 +1,7 @@
 import { Button, HStack, IconButton, useDisclosure } from "@chakra-ui/react";
 import EntityOptions from "components/shared/EntityOptions";
 import EditSnippetForm from "components/snippets/EditSnippetForm";
-import useSnippets from "hooks/snippets/useSnippets";
+import useSnippets from "hooks/entities/useSnippets";
 import { SnippetReadDto } from "models/snippets";
 import { AiFillDelete } from "react-icons/ai";
 import { setCode, setLanguage } from "redux/slices/editorSlice";

@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { Commands } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useReactQueryEntity from "hooks/entities/useReactQueryEntity";
@@ -21,7 +22,7 @@ function useCommands(categoryId?: number) {
 
   const {
     query,
-    useDefaultMutation,
+    defaultMutationSettings,
     addMutation,
     editMutation,
     deleteMutation,
@@ -33,14 +34,20 @@ function useCommands(categoryId?: number) {
       create,
       update,
       remove,
-    }
+    },
   });
 
   // Mutations
   // Note: mutation functions can only take ONE parameter
-  const editMultipleCommandsMutation = useDefaultMutation(bulkUpdate);
+  const editMultipleCommandsMutation = useMutation(
+    bulkUpdate,
+    defaultMutationSettings
+  );
 
-  const deleteMultipleCommandsMutation = useDefaultMutation(bulkRemove);
+  const deleteMultipleCommandsMutation = useMutation(
+    bulkRemove,
+    defaultMutationSettings
+  );
 
   return {
     query,

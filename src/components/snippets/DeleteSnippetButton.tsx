@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import useSnippets from "hooks/snippets/useSnippets";
+import useSnippets from "hooks/entities/useSnippets";
 
 interface DeleteLinkButtonProps {
   linkId: number;

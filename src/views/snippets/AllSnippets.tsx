@@ -2,7 +2,7 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import CodeEditor from "components/snippets/CodeEditor";
 import AddSnippetButton from "components/snippets/SnippetsManager/AddSnippetButton";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
-import useSnippets from "hooks/snippets/useSnippets";
+import useSnippets from "hooks/entities/useSnippets";
 import { ForwardedRef, useEffect, useRef, useState } from "react";
 import { selectCode, selectLanguage, setCode } from "redux/slices/editorSlice";
 import { useAppDispatch, useAppSelector } from "redux/store";
@@ -21,8 +21,8 @@ function AllSnippets() {
 
   useEffect(() => {
     dispatch(setCode(""));
-  }, [])
-  
+  }, []);
+
   return (
     <EntityPage numItems={query?.data && query?.data.length} title="Snippets">
       <AddSnippetButton

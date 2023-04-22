@@ -36,17 +36,20 @@ test("Displays validation messages correctly", async () => {
 });
 
 test("Submitting new link works correctly", async () => {
-  const { getByRole, getByPlaceholderText, findAllByRole } =
-    customRender(<AddLinkForm />);
+  const { getByRole, getByPlaceholderText, findAllByRole } = customRender(
+    <AddLinkForm />
+  );
 
-  // Get the inputs and submit button 
+  // Get the inputs and submit button
   const linkInput = getByPlaceholderText(/URL for link/i);
   const titleInput = getByPlaceholderText(/Title for link/i);
   const submitButton = getByRole("button", { name: /Add link/i });
   const categorySelect = getByRole("combobox");
 
   // Wait for the options to load
-  expect((await findAllByRole('option')).length).toBe(testData.linkCategories.length + 1);
+  expect((await findAllByRole("option")).length).toBe(
+    testData.linkCategories.length + 1
+  );
 
   // Add the values to the inputs
   await userEvent.type(linkInput, "https://www.google.com");
@@ -62,5 +65,4 @@ test("Submitting new link works correctly", async () => {
     expect(titleInput).toHaveValue("");
     expect(categorySelect).toHaveValue("-1");
   });
-
 });

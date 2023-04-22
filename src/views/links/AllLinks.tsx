@@ -1,4 +1,4 @@
-import useLinks from "hooks/links/useLinks";
+import useLinks from "hooks/entities/useLinks";
 import EntityPage from "views/EntityPage";
 import LinksManager from "../../components/links/LinksManager/LinksManager";
 
@@ -7,7 +7,7 @@ function Links() {
 
   return (
     <EntityPage numItems={query?.data && query?.data.length} title="Links">
-      <LinksManager links={query.data} />
+      <LinksManager links={query?.data} />
     </EntityPage>
   );
 }

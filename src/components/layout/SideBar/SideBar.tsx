@@ -109,8 +109,7 @@ function SideBar() {
       boxSizing="content-box"
       userSelect="none"
       resize="horizontal"
-      >
-
+    >
       {/* SIDE LINKS */}
       <Stack mt="1" mb={24}>
         <StackItem>

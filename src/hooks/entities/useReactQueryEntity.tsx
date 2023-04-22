@@ -72,14 +72,13 @@ function useReactQueryEntity<T extends EntityReadDto>({
     };
   };
 
-  const useDefaultMutation = (mutationFn) =>
-    useMutation(mutationFn, {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(queryKey);
-        await queryClient.invalidateQueries(categoryQueryKey);
-      },
-      onError: showErrorToast,
-    });
+  const defaultMutationSettings = {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(categoryQueryKey);
+    },
+    onError: showErrorToast,
+  };
 
   const addMutation = useMutation(endpoints.create, {
     onMutate: async (newCommand) => {
@@ -163,7 +162,7 @@ function useReactQueryEntity<T extends EntityReadDto>({
           );
         }
       }
-      
+
       queryClient.setQueryData(
         [queryKey[0], currentEntity.category.id],
         (commands: any[]) => {
@@ -178,6 +177,10 @@ function useReactQueryEntity<T extends EntityReadDto>({
       );
 
       return snapshot;
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(categoryQueryKey);
+      await queryClient.invalidateQueries(queryKey);
     },
     onError: async () => {
       await queryClient.invalidateQueries(categoryQueryKey);
@@ -223,7 +226,7 @@ function useReactQueryEntity<T extends EntityReadDto>({
     queryClient,
     showErrorToast,
     snapshotPreviousData,
-    useDefaultMutation,
+    defaultMutationSettings,
     addMutation,
     editMutation,
     deleteMutation,

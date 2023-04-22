@@ -33,7 +33,7 @@ root.render(
     <DndProvider backend={HTML5Backend}>
       <QueryClientProvider client={queryClient}>
         <ReduxProvider store={store}>
-          <PersistGate loading={<Loading/>} persistor={persistor}>
+          <PersistGate loading={<Loading />} persistor={persistor}>
             <CustomMsalProvider instance={msalInstance}>
               <ColorModeScript
                 initialColorMode={theme.config.initialColorMode}

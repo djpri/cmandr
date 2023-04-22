@@ -15,9 +15,9 @@ import {
 } from "@chakra-ui/react";
 import { Table } from "@tanstack/react-table";
 import { isInDevelopment } from "helpers/environment";
-import useCommands from "hooks/commands/useCommands";
-import useLinks from "hooks/links/useLinks";
-import useSnippets from "hooks/snippets/useSnippets";
+import useCommands from "hooks/entities/useCommands";
+import useLinks from "hooks/entities/useLinks";
+import useSnippets from "hooks/entities/useSnippets";
 import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
 import { SnippetReadDto } from "models/snippets";
@@ -39,7 +39,6 @@ interface MoveItemsModalProps {
   items: CommandReadDto[] | LinkReadDto[] | SnippetReadDto[];
   clearSelection: (value?: boolean) => void;
 }
-
 
 const MoveItemsModal: FC<MoveItemsModalProps> = ({
   isOpen,

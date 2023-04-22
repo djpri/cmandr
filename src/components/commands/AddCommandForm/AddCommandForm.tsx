@@ -8,7 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import useCategories from "hooks/categories/useCategories";
-import useCommands from "hooks/commands/useCommands";
+import useCommands from "hooks/entities/useCommands";
 import { CommandCreateDto } from "models/command";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -118,7 +118,12 @@ function AddCommandForm({ categoryId }: IProps) {
             />
           </Box>
 
-          <Button type="submit" variant="add" size="sm">
+          <Button
+            type="submit"
+            variant="add"
+            size="sm"
+            isLoading={addCommandMutation.isLoading}
+          >
             Add command
           </Button>
         </Grid>

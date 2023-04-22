@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-table";
 import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
-import useLinks from "hooks/links/useLinks";
+import useLinks from "hooks/entities/useLinks";
 import { LinkReadDto } from "models/link";
 import { useMemo, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
@@ -22,7 +22,7 @@ interface IProps {
   isLoading: boolean;
 }
 
-function LinksGrid({ links, showCategories, isLoading }: IProps) {  
+function LinksGrid({ links, showCategories, isLoading }: IProps) {
   const columns = useMemo<ColumnDef<LinkReadDto>[]>(() => {
     if (showCategories) {
       return [
@@ -62,7 +62,7 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
     initialState: {
       pagination: {
         pageSize: 25,
-      }
+      },
     },
     onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
