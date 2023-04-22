@@ -5,10 +5,20 @@ import useReactQueryEntity from "hooks/entities/useReactQueryEntity";
 import { SnippetReadDto } from "models/snippets";
 
 function useSnippets(categoryId?: number) {
-  const { getAll, create, update, bulkRemove, bulkUpdate, remove } = Snippets;
+  const {
+    getAll,
+    create,
+    update,
+    bulkRemove,
+    bulkUpdate,
+    remove,
+    getAllByCategoryId,
+  } = Snippets;
   const queryKey = categoryId ? ["snippets", categoryId] : ["snippets"];
   const categoryQueryKey = ["snippetCategories"];
-  const queryFunction = asReactQueryFunction(getAll);
+  const queryFunction = categoryId
+    ? asReactQueryFunction(() => getAllByCategoryId(categoryId))
+    : asReactQueryFunction(getAll);
 
   const { query, defaultMutationSettings, addMutation, deleteMutation } =
     useReactQueryEntity<SnippetReadDto>({

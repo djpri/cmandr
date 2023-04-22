@@ -21,7 +21,6 @@ function SnippetsManager({ categoryId, snippets }: IProps) {
         borderColor="gray.700"
         bgColor={bgColor}
         position="relative"
-        mb="40"
       >
         {snippets?.length > 0 && (
           <SnippetsGrid

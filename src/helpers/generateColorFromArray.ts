@@ -1,4 +1,5 @@
 import { CategoryReadDto } from "models/category";
+
 export const generateColorFromArray = (
   item: CategoryReadDto,
   array: unknown[],

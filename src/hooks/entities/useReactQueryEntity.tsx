@@ -179,12 +179,12 @@ function useReactQueryEntity<T extends EntityReadDto>({
       return snapshot;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries(categoryQueryKey);
       await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(categoryQueryKey);
     },
     onError: async () => {
-      await queryClient.invalidateQueries(categoryQueryKey);
       await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(categoryQueryKey);
       showErrorToast();
     },
   });
@@ -204,13 +204,21 @@ function useReactQueryEntity<T extends EntityReadDto>({
           CategoriesUpdater.remove(categories, currentEntity.category.id)
       );
 
-      // query key is manually set to ensure that the correct data is mutated
-      queryClient.setQueryData(
-        [queryKey[0], currentEntity.category.id],
-        (commands: T[]) => {
-          return commands.filter((command) => command.id !== entityId);
-        }
-      );
+      try {
+        queryClient.setQueryData(
+          [queryKey[0], currentEntity.category.id],
+          (items: T[]) => {
+            return items?.filter((item) => item.id !== entityId);
+          }
+        );
+      } catch (error) {
+        queryClient.setQueryData(
+          [queryKey[0]],
+          (items: T[]) => {
+            return items?.filter((item) => item.id !== entityId);
+          }
+        );
+      }
 
       return snapshot;
     },
