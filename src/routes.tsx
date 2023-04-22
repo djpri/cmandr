@@ -21,7 +21,9 @@ const CommandCategory = lazy(() => import("./views/commands/CommandCategory"));
 const AllLinks = lazy(() => import("./views/links/AllLinks"));
 const LinkCategory = lazy(() => import("./views/links/LinkCategory"));
 const AllSnippetsPage = lazy(() => import("./views/snippets/AllSnippets"));
-const SnippetCategoryPage = lazy(() => import("./views/snippets/SnippetCategory"));
+const SnippetCategoryPage = lazy(
+  () => import("./views/snippets/SnippetCategory")
+);
 const AddSnippetPage = lazy(() => import("./views/snippets/AddSnippetPage"));
 
 const SpinnerFallback: FC = () => (
@@ -101,5 +103,5 @@ export const router = createBrowserRouter([
         <AddSnippetPage />
       </Suspense>
     ),
-  }
+  },
 ]);

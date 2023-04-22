@@ -5,8 +5,8 @@ import { isWebUri } from "valid-url";
 
 export const urlErrorMessages = {
   required: "Please enter a link",
-  validate: "Link is not a valid URL"
-}
+  validate: "Link is not a valid URL",
+};
 
 export const urlRegisterOptions: RegisterOptions = {
   required: urlErrorMessages.required,
@@ -21,7 +21,8 @@ interface ValidationErrorProps {
 export const ValidationError: FC<ValidationErrorProps> = ({ message }) => {
   return (
     <Text display="block" color="red.500" fontWeight="bold">
-      <span>* </span>{message}
+      <span>* </span>
+      {message}
     </Text>
   );
 };

@@ -32,7 +32,8 @@ export const editorSlice = createSlice({
 });
 
 // ACTIONS
-export const { setCode, setTheme, setLanguage, setFontSize, setReadOnly } = editorSlice.actions;
+export const { setCode, setTheme, setLanguage, setFontSize, setReadOnly } =
+  editorSlice.actions;
 
 // SELECTORS
 export const selectCode = (state: RootState) => state.editor.code;

@@ -1,9 +1,9 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
+import useCategories from "hooks/categories/useCategories";
 import { CategoryReadDto } from "models/category";
 import { useForm } from "react-hook-form";
-import useCommands from "../../../hooks/commands/useCommands";
+import useCommands from "../../../hooks/entities/useCommands";
 import { CommandReadDto, CommandUpdateDto } from "../../../models/command";
-import useCategories from "hooks/categories/useCategories";
 
 type IProps = {
   commandItem: CommandReadDto;
@@ -27,6 +27,9 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
   });
 
   const onSubmit = (values: CommandUpdateDto) => {
+    // ensure that categoryId is a number before submitting
+    values.categoryId = parseInt(values.categoryId.toString());
+
     editCommandMutation.mutate({ id: commandItem.id, body: { ...values } });
     // closes popover if using the form inside a popover
     if (onClose) onClose();

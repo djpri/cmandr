@@ -22,7 +22,7 @@ import CategoryLinkButton from "components/other/CategoryLinkButton";
 import CodeEditor from "components/snippets/CodeEditor";
 import AddSnippetButton from "components/snippets/SnippetsManager/AddSnippetButton";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
-import useSnippetsFromSingleCategory from "hooks/snippets/useSnippetsFromSingleCategory";
+import useSnippets from "hooks/entities/useSnippets";
 import { CategoryReadDto } from "models/category";
 import { ForwardedRef, useEffect, useMemo, useRef, useState } from "react";
 import { FaEdit } from "react-icons/fa";
@@ -85,7 +85,7 @@ const HeaderOptions = ({
 
 function SnippetCategory() {
   const { id: categoryId } = useParams();
-  const { query } = useSnippetsFromSingleCategory(parseInt(categoryId));
+  const { query } = useSnippets(parseInt(categoryId));
   const { query: categoriesQuery } = useCategories("snippet");
   const code = useAppSelector(selectCode);
   const language = useAppSelector(selectLanguage);

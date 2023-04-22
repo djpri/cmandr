@@ -1,9 +1,9 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
-import useLinks from "hooks/links/useLinks";
+import useLinks from "hooks/entities/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
 import useCategories from "../../../hooks/categories/useCategories";
+import { ValidationError, urlRegisterOptions } from "../linkFormUtils";
 
 interface IProps {
   categoryId?: number;
@@ -47,7 +47,6 @@ function QuickAddLinkForm({ categoryId }: IProps) {
   const onSubmit = (values: FormValues) => {
     reset({ url: "", categoryId: categoryId || -1 });
     quickAddLinkMutation.mutate(values);
-
   };
 
   return (
@@ -99,9 +98,7 @@ function QuickAddLinkForm({ categoryId }: IProps) {
           </Button>
         </Grid>
       </form>
-      {errors.categoryId && (
-        <ValidationError message="Category is required" />
-      )}
+      {errors.categoryId && <ValidationError message="Category is required" />}
       {errors.url && <ValidationError message={errors.url.message} />}
     </>
   );

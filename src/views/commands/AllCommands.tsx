@@ -1,13 +1,13 @@
-import useCommands from "hooks/commands/useCommands";
+import useCommands from "hooks/entities/useCommands";
 import EntityPage from "views/EntityPage";
 import CommandsManager from "../../components/commands/CommandsManager/CommandsManager";
 
 function AllCommandsPage() {
-  const { data } = useCommands();
+  const { query } = useCommands();
 
   return (
-    <EntityPage numItems={data && data.length} title="Commands">
-      <CommandsManager commands={data} />
+    <EntityPage numItems={query?.data && query.data.length} title="Commands">
+      <CommandsManager commands={query?.data} />
     </EntityPage>
   );
 }

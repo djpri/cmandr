@@ -23,7 +23,9 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       const silentRequest: SilentRequest = {
         scopes: apiConfig.b2cScopes,
         account: accounts[0],
-        cacheLookupPolicy: fromCache ? CacheLookupPolicy.Default : CacheLookupPolicy.RefreshToken,
+        cacheLookupPolicy: fromCache
+          ? CacheLookupPolicy.Default
+          : CacheLookupPolicy.RefreshToken,
       };
 
       try {
@@ -73,9 +75,10 @@ interface CustomMsalProviderProps {
   instance: PublicClientApplication;
 }
 
-const CustomMsalProvider: FC<PropsWithChildren<CustomMsalProviderProps>> = (
-  { instance, children },
-) => {
+const CustomMsalProvider: FC<PropsWithChildren<CustomMsalProviderProps>> = ({
+  instance,
+  children,
+}) => {
   return (
     <MsalProvider instance={instance}>
       <AuthProvider>{children}</AuthProvider>

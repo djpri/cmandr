@@ -1,10 +1,7 @@
-import {
-  IconButton,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { IconButton, useDisclosure } from "@chakra-ui/react";
 import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
 import EntityOptions from "components/shared/EntityOptions";
-import useLinks from "hooks/links/useLinks";
+import useLinks from "hooks/entities/useLinks";
 import { LinkReadDto } from "models/link";
 import { AiFillDelete } from "react-icons/ai";
 

@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { Snippets } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import useReactQueryEntity from "hooks/entities/useReactQueryEntity";
@@ -9,7 +10,7 @@ function useSnippets(categoryId?: number) {
   const categoryQueryKey = ["snippetCategories"];
   const queryFunction = asReactQueryFunction(getAll);
 
-  const { query, useDefaultMutation, addMutation, deleteMutation } =
+  const { query, defaultMutationSettings, addMutation, deleteMutation } =
     useReactQueryEntity<SnippetReadDto>({
       queryKey,
       categoryQueryKey,
@@ -21,11 +22,17 @@ function useSnippets(categoryId?: number) {
       },
     });
 
-  const editSnippetMutation = useDefaultMutation(update);
+  const editSnippetMutation = useMutation(update, defaultMutationSettings);
 
-  const editMultipleSnippetsMutation = useDefaultMutation(bulkUpdate);
+  const editMultipleSnippetsMutation = useMutation(
+    bulkUpdate,
+    defaultMutationSettings
+  );
 
-  const deleteMultipleSnippetsMutation = useDefaultMutation(bulkRemove);
+  const deleteMultipleSnippetsMutation = useMutation(
+    bulkRemove,
+    defaultMutationSettings
+  );
 
   return {
     query,

@@ -6,7 +6,9 @@ import AddSnippetForm from "../AddSnippetForm";
 interface IProps {
   categoryId?: number;
   currentButtonOpen?: "addSnippet" | "quickAddLink" | "none";
-  setCurrentButtonOpen?: (value: "addSnippet" | "quickAddLink" | "none") => void;
+  setCurrentButtonOpen?: (
+    value: "addSnippet" | "quickAddLink" | "none"
+  ) => void;
 }
 
 const AddSnippetButton = forwardRef(
@@ -24,7 +26,7 @@ const AddSnippetButton = forwardRef(
       addEventListener("resize", onResize);
       return () => {
         removeEventListener("resize", onResize);
-      }
+      };
     }, []);
 
     const handleOpen = () => {

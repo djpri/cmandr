@@ -1,10 +1,10 @@
 import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
-import useLinks from "hooks/links/useLinks";
+import useLinks from "hooks/entities/useLinks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LinkCreateDto } from "../../../models/link";
-import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
 import useCategories from "../../../hooks/categories/useCategories";
+import { LinkCreateDto } from "../../../models/link";
+import { ValidationError, urlRegisterOptions } from "../linkFormUtils";
 
 interface IProps {
   categoryId?: number;

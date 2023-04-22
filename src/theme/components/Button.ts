@@ -34,13 +34,12 @@ export const Button: ComponentStyleConfig = {
       color: mode("hsl(0, 0%, 100%)", "hsl(0, 0%, 100%)")(props),
       bg: mode("hsl(130, 30%, 55%)", "hsl(130, 35%, 50%)")(props),
       _hover: {
-      bg: mode("hsl(130, 30%, 60%)", "hsl(130, 35%, 55%)")(props),
+        bg: mode("hsl(130, 30%, 60%)", "hsl(130, 35%, 55%)")(props),
       },
       _active: {
-      bg: mode("hsl(130, 30%, 65%)", "hsl(130, 35%, 60%)")(props),
+        bg: mode("hsl(130, 30%, 65%)", "hsl(130, 35%, 60%)")(props),
       },
-      })
-,    
+    }),
     edit: (props) => ({
       bg: props.colorMode === "dark" ? "gray.600" : "gray.200",
       _hover: {

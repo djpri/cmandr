@@ -31,7 +31,9 @@ test("Submitting new link works correctly", async () => {
   const linkInput = getByPlaceholderText(/URL for link/i);
   const submitButton = getByRole("button", { name: /Add link/i });
   const categorySelect = getByRole("combobox");
-  expect((await findAllByRole('option')).length).toBe(testData.linkCategories.length + 1);
+  expect((await findAllByRole("option")).length).toBe(
+    testData.linkCategories.length + 1
+  );
 
   // Add the values to the inputs
   await userEvent.type(linkInput, "https://www.google.com");
@@ -41,9 +43,7 @@ test("Submitting new link works correctly", async () => {
   submitButton.click();
 
   // Wait for the form to close and the mutation to complete
-  await waitFor(
-    () => {
-      expect(linkInput).toHaveValue("");
-    },
-  );
+  await waitFor(() => {
+    expect(linkInput).toHaveValue("");
+  });
 });

@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-table";
 import RowSelectionMenu from "components/other/RowSelectionMenu";
 import SearchAndPagination from "components/other/SearchAndPagination";
-import useCommands from "hooks/commands/useCommands";
+import useCommands from "hooks/entities/useCommands";
 import { CommandReadDto } from "models/command";
 import { useEffect, useMemo, useState } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";

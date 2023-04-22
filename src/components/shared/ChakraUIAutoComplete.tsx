@@ -4,10 +4,10 @@
 import {
   useCombobox,
   useMultipleSelection,
-  UseMultipleSelectionProps
-} from 'downshift'
-import Highlighter from 'react-highlight-words'
-import { FormLabel, FormLabelProps } from '@chakra-ui/form-control'
+  UseMultipleSelectionProps,
+} from "downshift";
+import Highlighter from "react-highlight-words";
+import { FormLabel, FormLabelProps } from "@chakra-ui/form-control";
 import {
   Text,
   Stack,
@@ -15,63 +15,74 @@ import {
   BoxProps,
   List,
   ListItem,
-  ListIcon
-} from '@chakra-ui/layout'
-import { Button, ButtonProps } from '@chakra-ui/button'
-import { Input, InputProps } from '@chakra-ui/input'
-import { IconProps, CheckCircleIcon, ArrowDownIcon } from '@chakra-ui/icons'
-import { Tag, TagCloseButton, TagLabel, TagProps } from '@chakra-ui/tag'
-import { ComponentWithAs, useColorModeValue } from '@chakra-ui/react'
-import { matchSorter } from "match-sorter"
-import useDeepCompareEffect from "react-use/lib/useDeepCompareEffect"
-import { ReactNode, ComponentType, ReactElement, useState, useRef, useEffect, SetStateAction } from "react"
+  ListIcon,
+} from "@chakra-ui/layout";
+import { Button, ButtonProps } from "@chakra-ui/button";
+import { Input, InputProps } from "@chakra-ui/input";
+import { IconProps, CheckCircleIcon, ArrowDownIcon } from "@chakra-ui/icons";
+import { Tag, TagCloseButton, TagLabel, TagProps } from "@chakra-ui/tag";
+import { ComponentWithAs, useColorModeValue } from "@chakra-ui/react";
+import { matchSorter } from "match-sorter";
+import useDeepCompareEffect from "react-use/lib/useDeepCompareEffect";
+import {
+  ReactNode,
+  ComponentType,
+  ReactElement,
+  useState,
+  useRef,
+  useEffect,
+  SetStateAction,
+} from "react";
 
 interface Item {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 interface CUIAutoCompleteProps<T extends Item>
   extends UseMultipleSelectionProps<T> {
-  items: T[]
-  placeholder: string
-  label: string
-  highlightItemBg?: string
-  onCreateItem?: (item: T) => void
-  optionFilterFunc?: (items: T[], inputValue: string) => T[]
-  itemRenderer?: (item: T) => string | JSX.Element
-  labelStyleProps?: FormLabelProps
-  inputStyleProps?: InputProps
-  toggleButtonStyleProps?: ButtonProps
-  tagStyleProps?: TagProps
-  listStyleProps?: BoxProps
-  listItemStyleProps?: BoxProps
-  emptyState?: (inputValue: string) => ReactNode
-  selectedIconProps?: Omit<IconProps, 'name'> & {
-    icon: IconProps['name'] | ComponentType
-  }
-  icon?: ComponentWithAs<'svg', IconProps>
-  hideToggleButton?: boolean
-  createItemRenderer?: (value: string) => string | JSX.Element
-  disableCreateItem?: boolean
-  renderCustomInput?: (inputProps: unknown, toggleButtonProps: unknown) => JSX.Element
-  handleChooseItem?: (item) => void
-  value?: string
+  items: T[];
+  placeholder: string;
+  label: string;
+  highlightItemBg?: string;
+  onCreateItem?: (item: T) => void;
+  optionFilterFunc?: (items: T[], inputValue: string) => T[];
+  itemRenderer?: (item: T) => string | JSX.Element;
+  labelStyleProps?: FormLabelProps;
+  inputStyleProps?: InputProps;
+  toggleButtonStyleProps?: ButtonProps;
+  tagStyleProps?: TagProps;
+  listStyleProps?: BoxProps;
+  listItemStyleProps?: BoxProps;
+  emptyState?: (inputValue: string) => ReactNode;
+  selectedIconProps?: Omit<IconProps, "name"> & {
+    icon: IconProps["name"] | ComponentType;
+  };
+  icon?: ComponentWithAs<"svg", IconProps>;
+  hideToggleButton?: boolean;
+  createItemRenderer?: (value: string) => string | JSX.Element;
+  disableCreateItem?: boolean;
+  renderCustomInput?: (
+    inputProps: unknown,
+    toggleButtonProps: unknown
+  ) => JSX.Element;
+  handleChooseItem?: (item) => void;
+  value?: string;
 }
 
 function defaultOptionFilterFunc<T>(items: T[], inputValue: string) {
-  return matchSorter(items, inputValue, { keys: ['value', 'label'] })
+  return matchSorter(items, inputValue, { keys: ["value", "label"] });
 }
 
 function defaultCreateItemRenderer(value: string) {
   return (
     <Text>
-      <Box as='span'>Create</Box>{' '}
-      <Box as='span' fontWeight='bold'>
+      <Box as="span">Create</Box>{" "}
+      <Box as="span" fontWeight="bold">
         {`"${value}"`}
       </Box>
     </Text>
-  )
+  );
 }
 
 const CUIAutoComplete = <T extends Item>(
@@ -81,7 +92,7 @@ const CUIAutoComplete = <T extends Item>(
     items,
     optionFilterFunc = defaultOptionFilterFunc,
     itemRenderer,
-    highlightItemBg = 'gray.500',
+    highlightItemBg = "gray.500",
     placeholder,
     label,
     value,
@@ -100,17 +111,17 @@ const CUIAutoComplete = <T extends Item>(
     renderCustomInput,
     handleChooseItem,
     ...downshiftProps
-  } = props
+  } = props;
 
   const defaultHighlightItemBg = useColorModeValue("gray.100", "gray.800");
 
   /* Refs */
-  const disclosureRef = useRef(null)
+  const disclosureRef = useRef(null);
 
   /* States */
-  const [isCreating, setIsCreating] = useState(false)
-  const [inputValue, setInputValue] = useState(value ?? "")
-  const [inputItems, setInputItems] = useState<T[]>(items)
+  const [isCreating, setIsCreating] = useState(false);
+  const [inputValue, setInputValue] = useState(value ?? "");
+  const [inputItems, setInputItems] = useState<T[]>(items);
 
   /* Downshift Props */
   const {
@@ -118,20 +129,20 @@ const CUIAutoComplete = <T extends Item>(
     getDropdownProps,
     addSelectedItem,
     removeSelectedItem,
-    selectedItems
-  } = useMultipleSelection(downshiftProps)
-  const selectedItemValues = selectedItems.map((item) => item.value)
+    selectedItems,
+  } = useMultipleSelection(downshiftProps);
+  const selectedItemValues = selectedItems.map((item) => item.value);
 
   const handleSelect = (selectedItem) => {
     if (selectedItem) {
       if (selectedItemValues.includes(selectedItem.value)) {
-        removeSelectedItem(selectedItem)
+        removeSelectedItem(selectedItem);
       } else {
         if (onCreateItem && isCreating) {
-          onCreateItem(selectedItem)
-          setIsCreating(false)
-          setInputItems(items)
-          setInputValue('')
+          onCreateItem(selectedItem);
+          setIsCreating(false);
+          setInputItems(items);
+          setInputValue("");
         } else {
           // addSelectedItem(selectedItem)
           handleChooseItem(selectedItem.value);
@@ -139,9 +150,9 @@ const CUIAutoComplete = <T extends Item>(
         }
       }
 
-      selectItem(null)
+      selectItem(null);
     }
-  }
+  };
 
   const {
     isOpen,
@@ -153,92 +164,96 @@ const CUIAutoComplete = <T extends Item>(
     getItemProps,
     openMenu,
     selectItem,
-    setHighlightedIndex
+    setHighlightedIndex,
   } = useCombobox({
     inputValue,
     selectedItem: undefined,
     items: inputItems,
     onInputValueChange: ({ inputValue, selectedItem }) => {
-      const filteredItems = optionFilterFunc(items, inputValue || '')
+      const filteredItems = optionFilterFunc(items, inputValue || "");
 
       if (isCreating && filteredItems.length > 0) {
-        setIsCreating(false)
+        setIsCreating(false);
       }
 
       if (!selectedItem) {
-        setInputItems(filteredItems)
+        setInputItems(filteredItems);
       }
     },
     stateReducer: (state, actionAndChanges) => {
-      const { changes, type } = actionAndChanges
+      const { changes, type } = actionAndChanges;
       switch (type) {
         case useCombobox.stateChangeTypes.InputBlur:
           return {
             ...changes,
-            isOpen: false
-          }
+            isOpen: false,
+          };
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
           return {
             ...changes,
             highlightedIndex: state.highlightedIndex,
             inputValue,
-            isOpen: false
-          }
+            isOpen: false,
+          };
         case useCombobox.stateChangeTypes.FunctionSelectItem:
           return {
             ...changes,
-            inputValue
-          }
+            inputValue,
+          };
         default:
-          return changes
+          return changes;
       }
     },
     onStateChange: ({ inputValue, type, selectedItem }) => {
       switch (type) {
         case useCombobox.stateChangeTypes.InputChange:
-          setInputValue(inputValue || "")
+          setInputValue(inputValue || "");
           handleChooseItem(inputValue || "");
-          break
+          break;
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
           if (selectedItem) {
-            handleSelect(selectedItem)
+            handleSelect(selectedItem);
           }
-          break
+          break;
         default:
-          break
+          break;
       }
-    }
-  })
+    },
+  });
 
   useEffect(() => {
     if (inputItems.length === 0 && !disableCreateItem) {
-      setIsCreating(true)
-      setInputItems([{ label: `${inputValue}`, value: inputValue }] as SetStateAction<T[]>)
-      setHighlightedIndex(0)
+      setIsCreating(true);
+      setInputItems([
+        { label: `${inputValue}`, value: inputValue },
+      ] as SetStateAction<T[]>);
+      setHighlightedIndex(0);
     }
   }, [
     inputItems,
     setIsCreating,
     setHighlightedIndex,
     inputValue,
-    disableCreateItem
-  ])
+    disableCreateItem,
+  ]);
 
   useDeepCompareEffect(() => {
-    setInputItems(items)
-  }, [items])
+    setInputItems(items);
+  }, [items]);
 
-  const CustomHighlighter = (item) => (<Highlighter
-    autoEscape
-    searchWords={[inputValue || '']}
-    textToHighlight={defaultItemRenderer(item)}
-  />);
+  const CustomHighlighter = (item) => (
+    <Highlighter
+      autoEscape
+      searchWords={[inputValue || ""]}
+      textToHighlight={defaultItemRenderer(item)}
+    />
+  );
 
   /* Default Items Renderer */
   function defaultItemRenderer<T extends Item>(selected: T) {
-    return selected.label
+    return selected.label;
   }
 
   return (
@@ -249,7 +264,7 @@ const CUIAutoComplete = <T extends Item>(
 
       {/* ---------Stack with Selected Menu Tags above the Input Box--------- */}
       {selectedItems && (
-        <Stack spacing={2} isInline flexWrap='wrap'>
+        <Stack spacing={2} isInline flexWrap="wrap">
           {selectedItems.map((selectedItem, index) => (
             <Tag
               mb={1}
@@ -260,10 +275,10 @@ const CUIAutoComplete = <T extends Item>(
               <TagLabel>{selectedItem.label}</TagLabel>
               <TagCloseButton
                 onClick={(e) => {
-                  e.stopPropagation()
-                  removeSelectedItem(selectedItem)
+                  e.stopPropagation();
+                  removeSelectedItem(selectedItem);
                 }}
-                aria-label='Remove menu selection badge'
+                aria-label="Remove menu selection badge"
               />
             </Tag>
           ))}
@@ -282,15 +297,15 @@ const CUIAutoComplete = <T extends Item>(
                   placeholder,
                   onClick: isOpen ? () => {} : openMenu,
                   onFocus: isOpen ? () => {} : openMenu,
-                  ref: disclosureRef
+                  ref: disclosureRef,
                 })
-              )
+              ),
             },
             {
               ...toggleButtonStyleProps,
               ...getToggleButtonProps(),
-              ariaLabel: 'toggle menu',
-              hideToggleButton
+              ariaLabel: "toggle menu",
+              hideToggleButton,
             }
           )
         ) : (
@@ -302,7 +317,7 @@ const CUIAutoComplete = <T extends Item>(
                   placeholder,
                   onClick: isOpen ? () => {} : openMenu,
                   onFocus: isOpen ? () => {} : openMenu,
-                  ref: disclosureRef
+                  ref: disclosureRef,
                 })
               )}
             />
@@ -310,7 +325,7 @@ const CUIAutoComplete = <T extends Item>(
               <Button
                 {...toggleButtonStyleProps}
                 {...getToggleButtonProps()}
-                aria-label='toggle menu'
+                aria-label="toggle menu"
               >
                 <ArrowDownIcon />
               </Button>
@@ -323,9 +338,9 @@ const CUIAutoComplete = <T extends Item>(
       {/* -----------Section that renders the Menu Lists Component ----------------- */}
       <Box pb={4} mb={4}>
         <List
-          borderRadius='4px'
-          border={isOpen && '2px solid rgba(128, 128, 128, 0.1)'}
-          boxShadow='6px 5px 8px rgba(167, 167, 167, 0.02)'
+          borderRadius="4px"
+          border={isOpen && "2px solid rgba(128, 128, 128, 0.1)"}
+          boxShadow="6px 5px 8px rgba(167, 167, 167, 0.02)"
           {...listStyleProps}
           {...getMenuProps()}
           maxH="20vh"
@@ -340,23 +355,27 @@ const CUIAutoComplete = <T extends Item>(
               <ListItem
                 px={2}
                 py={1}
-                borderBottom='1px solid rgba(0,0,0,0.01)'
+                borderBottom="1px solid rgba(0,0,0,0.01)"
                 {...listItemStyleProps}
-                bgColor={highlightedIndex === index ? highlightItemBg : defaultHighlightItemBg }
+                bgColor={
+                  highlightedIndex === index
+                    ? highlightItemBg
+                    : defaultHighlightItemBg
+                }
                 key={`${item.value}${index}`}
                 {...getItemProps({ item, index })}
               >
                 {isCreating ? (
                   createItemRenderer(item.label)
                 ) : (
-                  <Box display='inline-flex' alignItems='center'>
+                  <Box display="inline-flex" alignItems="center">
                     {selectedItemValues.includes(item.value) && (
                       <ListIcon
                         as={icon || CheckCircleIcon}
-                        color='green.500'
-                        role='img'
-                        display='inline'
-                        aria-label='Selected'
+                        color="green.500"
+                        role="img"
+                        display="inline"
+                        aria-label="Selected"
                         {...selectedIconProps}
                       />
                     )}
@@ -364,8 +383,7 @@ const CUIAutoComplete = <T extends Item>(
                     {/* {itemRenderer ? (
                       itemRenderer(item)
                       ) : CustomHighlighter(item)} */}
-                      {defaultItemRenderer(item)}
-
+                    {defaultItemRenderer(item)}
                   </Box>
                 )}
               </ListItem>
@@ -374,7 +392,7 @@ const CUIAutoComplete = <T extends Item>(
       </Box>
       {/* ----------- End Section that renders the Menu Lists Component ----------------- */}
     </Stack>
-  )
-}
+  );
+};
 
 export default CUIAutoComplete;

@@ -1,9 +1,9 @@
 import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
-import useLinks from "hooks/links/useLinks";
+import useLinks from "hooks/entities/useLinks";
 import { LinkReadDto, LinkUpdateDto } from "models/link";
 import { useForm } from "react-hook-form";
-import { urlRegisterOptions, ValidationError } from "../linkFormUtils";
 import useCategories from "../../../hooks/categories/useCategories";
+import { ValidationError, urlRegisterOptions } from "../linkFormUtils";
 
 type IProps = {
   linkItem: LinkReadDto;
@@ -29,6 +29,9 @@ function EditLinkForm({ linkItem, onClose }: IProps) {
   });
 
   const onSubmit = (values: LinkUpdateDto) => {
+    // ensure that categoryId is a number before submitting
+    values.categoryId = parseInt(values.categoryId.toString());
+
     editLinkMutation.mutate({ id, body: values });
     reset({ url: "", title: "", categoryId: -1 });
     // closes popover if using form from popover only

@@ -34,7 +34,7 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
     row,
     requireClickToSelect: true,
   });
-  
+
   const [isCopied, setIsCopied] = useState(false);
   const handleCopy = () => {
     setIsCopied(true);

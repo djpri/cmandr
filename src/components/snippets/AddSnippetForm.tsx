@@ -7,15 +7,15 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import CUIAutoComplete from "components/shared/ChakraUIAutoComplete";
-import useSnippets from "hooks/snippets/useSnippets";
+import useSnippets from "hooks/entities/useSnippets";
 import { CategoryReadDto } from "models/category";
 import { SnippetCreateDto } from "models/snippets";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import useCategories from "../../hooks/categories/useCategories";
 import CodeEditor from "./CodeEditor";
 import { languagesAsItems } from "./languages";
 import { ValidationError } from "./snippetFormUtils";
-import useCategories from "../../hooks/categories/useCategories";
 
 interface IProps {
   categoryId?: number;

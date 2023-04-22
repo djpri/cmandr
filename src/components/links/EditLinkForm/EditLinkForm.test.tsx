@@ -27,8 +27,9 @@ test("Displays validation messages correctly", async () => {
 });
 
 test("Submitting edited link works correctly", async () => {
-  const { getByRole, getByPlaceholderText } =
-    customRender(<EditLinkForm linkItem={testLink} onClose={vi.fn()} />);
+  const { getByRole, getByPlaceholderText } = customRender(
+    <EditLinkForm linkItem={testLink} onClose={vi.fn()} />
+  );
 
   // Get the inputs and submit button
   const linkInput = getByPlaceholderText(/Url/i);

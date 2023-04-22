@@ -7,7 +7,10 @@ import {
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { ForwardedRef, useRef, useState } from "react";
-import { selectShowImagePreviews, toggleShowImagePreviews } from "redux/slices/linksSlice";
+import {
+  selectShowImagePreviews,
+  toggleShowImagePreviews,
+} from "redux/slices/linksSlice";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton";
@@ -57,7 +60,13 @@ function LinksManager({ categoryId, links }: IProps) {
                 setCurrentButtonOpen={setCurrentButtonOpen}
               />
             </HStack>
-            <Checkbox isChecked={showImagePreviews} colorScheme={"purple"} onChange={() => dispatch(toggleShowImagePreviews())}>Show image previews</Checkbox>
+            <Checkbox
+              isChecked={showImagePreviews}
+              colorScheme={"purple"}
+              onChange={() => dispatch(toggleShowImagePreviews())}
+            >
+              Show image previews
+            </Checkbox>
           </Wrap>
           <Box ref={addLinkref} />
           <Box ref={quickAddLinkref} />

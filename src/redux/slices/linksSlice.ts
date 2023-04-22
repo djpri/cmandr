@@ -16,8 +16,7 @@ export const linksSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { toggleShowImagePreviews } =
-  linksSlice.actions;
+export const { toggleShowImagePreviews } = linksSlice.actions;
 
 // SELECTORS
 export const selectShowImagePreviews = (state: RootState) =>

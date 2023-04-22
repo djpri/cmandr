@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import useLinks from "hooks/links/useLinks";
+import useLinks from "hooks/entities/useLinks";
 
 interface DeleteLinkButtonProps {
   linkId: number;

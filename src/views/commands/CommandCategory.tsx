@@ -18,7 +18,7 @@ import CommandsManager from "components/commands/CommandsManager/CommandsManager
 import UserLayout from "components/layout/UserLayout";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCategories from "hooks/categories/useCategories";
-import useCommandsFromSingleCategory from "hooks/commands/useCommandsFromSingleCategory";
+import useCommands from "hooks/entities/useCommands";
 import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
@@ -32,7 +32,7 @@ function CommandCategoryPage() {
     onClose: editModalClose,
   } = useDisclosure();
   const { id: categoryId } = useParams();
-  const { query } = useCommandsFromSingleCategory(parseInt(categoryId));
+  const { query } = useCommands(parseInt(categoryId));
   const { query: categoriesQuery } = useCategories("command");
 
   const category = useMemo(() => {

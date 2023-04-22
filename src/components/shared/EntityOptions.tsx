@@ -38,13 +38,19 @@ function EntityOptions({
         />
         {deleteButton}
       </HStack>
-      <Modal isOpen={isOpen} onClose={onClose} size={entityType === "snippet" ? "full" : "xl"}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={entityType === "snippet" ? "full" : "xl"}
+      >
         <ModalOverlay
           bg="blackAlpha.300"
           backdropFilter="blur(5px) hue-rotate(-20deg)"
         />
         <ModalContent>
-          <ModalHeader textTransform="capitalize">Edit {entityType}</ModalHeader>
+          <ModalHeader textTransform="capitalize">
+            Edit {entityType}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>{editForm}</ModalBody>
         </ModalContent>
