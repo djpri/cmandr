@@ -10,31 +10,24 @@ const testLink: LinkReadDto = {
   starred: false,
 };
 
-test("Shows edit and delete buttons when clicked", async () => {
+test("Shows edit and delete buttons", async () => {
   customRender(<LinkOptions link={testLink} />);
-  const button = screen.getByRole("button");
-  fireEvent.click(button);
-  const heading = screen.getByText("Options");
-  const editButton = screen.getByText("Edit");
-  const deleteButton = screen.getByText("Delete");
-  expect(heading).toBeInTheDocument();
+  const editButton = screen.getByLabelText(/edit/i);
+  const deleteButton = screen.getByLabelText(/delete/i);
   expect(editButton).toBeInTheDocument();
   expect(deleteButton).toBeInTheDocument();
 });
 
 test("Shows edit form with correct default information when edit button is clicked", async () => {
   customRender(<LinkOptions link={testLink} />);
-  // click button
-  const button = screen.getByRole("button");
-  fireEvent.click(button);
-  // then click the edit button
-  const editButton = screen.getByText("Edit");
+  // click edit button
+  const editButton = screen.getByLabelText(/edit/i);
   fireEvent.click(editButton);
-  // then view the edit command form
+  // then view the edit form
   const defaultTitle = screen.getByDisplayValue(testLink.title);
   const defaultLink = screen.getByDisplayValue(testLink.url);
   // const defaultCategory = screen.getByDisplayValue(testLink.category.name);
-  const saveButton = screen.getByText("Save");
+  const saveButton = screen.getByText(/Save/i);
 
   expect(defaultTitle).toBeInTheDocument();
   expect(defaultLink).toBeInTheDocument();

@@ -63,7 +63,7 @@ function useReactQueryEntity<T extends EntityReadDto>({
   const { showErrorToast } = useChakraToast();
   const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
-  const query = useQuery(queryKey, queryFunction, { enabled: isAppInitalized });
+  const query = useQuery(queryKey, queryFunction);
 
   const snapshotPreviousData = (): SnapshotData<T> => {
     return {

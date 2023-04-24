@@ -5,14 +5,13 @@ import {
   Grid,
   Input,
   Select,
-  Text,
 } from "@chakra-ui/react";
 import useCategories from "hooks/categories/useCategories";
 import useCommands from "hooks/entities/useCommands";
 import { CommandCreateDto } from "models/command";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { isWebUri } from "valid-url";
+import { ValidationError, registerOptions } from "../commandFormUtils";
 
 interface IProps {
   categoryId?: number;
@@ -49,11 +48,6 @@ function AddCommandForm({ categoryId }: IProps) {
     });
   };
 
-  const validateUrl = (url: string) => {
-    if (!url) return true;
-    return isWebUri(url) ? true : "Link is not a valid URL";
-  };
-
   return (
     <>
       <form
@@ -76,9 +70,7 @@ function AddCommandForm({ categoryId }: IProps) {
           <Box>
             <FormLabel htmlFor="description">Description</FormLabel>
             <Input
-              {...register("description", {
-                required: "Description is required",
-              })}
+              {...register("description", registerOptions.description)}
               placeholder="Description of what command does"
             />
           </Box>
@@ -86,9 +78,7 @@ function AddCommandForm({ categoryId }: IProps) {
           <Box>
             <FormLabel htmlFor="line">Command</FormLabel>
             <Input
-              {...register("line", {
-                required: "Command is required",
-              })}
+              {...register("line", registerOptions.line)}
               placeholder="Command"
             />
           </Box>
@@ -111,9 +101,7 @@ function AddCommandForm({ categoryId }: IProps) {
           <Box>
             <FormLabel htmlFor="reference">Reference</FormLabel>
             <Input
-              {...register("reference", {
-                validate: validateUrl,
-              })}
+              {...register("reference", registerOptions.reference)}
               placeholder="Reference"
             />
           </Box>
@@ -129,19 +117,13 @@ function AddCommandForm({ categoryId }: IProps) {
         </Grid>
       </form>
       {errors.description && (
-        <Text display="block" color="red.500" fontWeight="bold">
-          * {errors.description.message}
-        </Text>
+        <ValidationError message={errors.description.message} />
       )}
       {errors.line && (
-        <Text display="block" color="red.500" fontWeight="bold">
-          * {errors.line.message}
-        </Text>
+        <ValidationError message={errors.line.message} />
       )}
       {errors.reference && (
-        <Text display="block" color="red.500" fontWeight="bold">
-          * {errors.reference.message}
-        </Text>
+        <ValidationError message={errors.reference.message} />
       )}
     </>
   );

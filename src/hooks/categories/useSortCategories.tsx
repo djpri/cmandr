@@ -1,34 +1,24 @@
 import { useQueryClient } from "@tanstack/react-query";
-import useSettings from "hooks/settings/useSettings";
 import { CategoryReadDto } from "models/category";
-import { UserSettings } from "models/user";
-import { useMemo } from "react";
 import useCategories from "./useCategories";
 import { Entity } from "../../models/entity";
+import { useAppDispatch } from "redux/store";
+import { setCategoriesSort } from "redux/slices/settingsSlice";
 
 type SortType = "manual" | "ascending" | "descending" | "size";
 
+const queryKeyDictionary: Record<Entity, string> = {
+  command: "commandCategories",
+  link: "linkCategories",
+  snippet: "snippetCategories",
+};
+
 function useSortCategories(type: Entity) {
-  const { query: commandCategoryQuery } = useCategories("command");
-  const { query: linkCategoryQuery } = useCategories("link");
-  const { query: settingsQuery, editSettingsMutation } = useSettings();
   const queryClient = useQueryClient();
-
-  const categories = useMemo(
-    () =>
-      type === "command" ? commandCategoryQuery.data : linkCategoryQuery.data,
-    [commandCategoryQuery.data, linkCategoryQuery.data, type]
-  );
-
-  const queryKey = useMemo(
-    () => (type === "command" ? "commandCategories" : "linkCategories"),
-    [type]
-  );
-
-  const settingToUpdate = useMemo(
-    () => (type === "command" ? "commandCategoriesSort" : "linkCategoriesSort"),
-    [type]
-  );
+  const { query } = useCategories(type);
+  const dispatch = useAppDispatch();
+  const categories = query?.data ?? [];
+  const queryKey = queryKeyDictionary[type];
 
   const updateSettingsAndCategories = (
     sortType: SortType,
@@ -38,12 +28,7 @@ function useSortCategories(type: Entity) {
     const lists = categories.filter((c: CategoryReadDto) => !c?.isGroup);
     const sortedCategories = sortFunction(groups).concat(sortFunction(lists));
 
-    const settings = settingsQuery.data;
-    const newSettings: UserSettings = {
-      ...settings,
-      [settingToUpdate]: sortType,
-    };
-    settingsQuery.data && editSettingsMutation.mutate(newSettings);
+    dispatch(setCategoriesSort({ entity: type, sortOption: sortType }));
     queryClient.setQueryData([queryKey], sortedCategories);
   };
 
@@ -53,36 +38,31 @@ function useSortCategories(type: Entity) {
         (a: CategoryReadDto, b: CategoryReadDto) =>
           a.displayIndex - b.displayIndex
       );
-    const settings = settingsQuery.data;
-    const newSettings: UserSettings = {
-      ...settings,
-      [settingToUpdate]: "manual",
-    };
-    settingsQuery.data && editSettingsMutation.mutate(newSettings);
+    dispatch(setCategoriesSort({ entity: type, sortOption: "manual" }));
     queryClient.setQueryData([queryKey], sortedCategories);
   };
 
   const sortCategoriesAscending = () => {
-    const sort = (items: CategoryReadDto[]) =>
+    const sortFn = (items: CategoryReadDto[]) =>
       items.sort((a: CategoryReadDto, b: CategoryReadDto) =>
         a.name.localeCompare(b.name)
       );
 
-    updateSettingsAndCategories("ascending", sort);
+    updateSettingsAndCategories("ascending", sortFn);
   };
 
   const sortCategoriesDescending = () => {
-    const sort = (items: CategoryReadDto[]) =>
+    const sortFn = (items: CategoryReadDto[]) =>
       items.sort((a: CategoryReadDto, b: CategoryReadDto) =>
         b.name.localeCompare(a.name)
       );
-    updateSettingsAndCategories("descending", sort);
+    updateSettingsAndCategories("descending", sortFn);
   };
 
   const sortCategoriesByItemCount = () => {
-    const sort = (items: CategoryReadDto[]) =>
+    const sortFn = (items: CategoryReadDto[]) =>
       items.sort((a: CategoryReadDto, b: CategoryReadDto) => b.items - a.items);
-    updateSettingsAndCategories("size", sort);
+    updateSettingsAndCategories("size", sortFn);
   };
 
   return {

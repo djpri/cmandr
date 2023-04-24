@@ -90,6 +90,7 @@ function Home() {
               </Button>
             </Link>
             <Button
+              className="login-button"
               size="md"
               bgColor="purple.400"
               color="white"

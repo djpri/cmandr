@@ -52,6 +52,8 @@
     "@typescript-eslint/parser": "^5.54.1",
     "@vitejs/plugin-react": "^3.1.0",
     "@vitest/ui": "^0.29.3",
+    "concurrently": "^8.0.1",
+    "cypress": "^12.10.0",
     "eslint": "^8.35.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
@@ -71,6 +73,7 @@
     "build": "vite build",
     "serve": "vite preview --port 3000",
     "test": "vitest --ui",
+    "test-e2e": "concurrently \"vite preview --port 3000\" \"cypress open\"",
     "lint": "eslint --ignore-path .gitignore .",
     "prettier": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
   },

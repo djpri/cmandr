@@ -12,20 +12,29 @@ import { AddCategory } from "components/categories";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCategories from "hooks/categories/useCategories";
 import useSortCategories from "hooks/categories/useSortCategories";
-import useSettings from "hooks/settings/useSettings";
 import { CategoryReadDto } from "models/category";
-import { UserSettings } from "models/user";
 import { FC, lazy, useMemo } from "react";
 import { Entity } from "../models/entity";
+import { UseQueryResult } from "@tanstack/react-query";
+import { entityRoute } from "routes";
+import { useAppSelector } from "redux/store";
+import { selectCategoriesSort } from "redux/slices/settingsSlice";
 
 const UserLayout = lazy(() => import("../components/layout/UserLayout"));
+type SortType = "manual" | "ascending" | "descending" | "size";
 
 type SortButtonProps = {
   type: Entity;
-  settings: UserSettings;
+  sortOption: SortType;
 };
 
-function CategoriesGrid({ entityType, categoriesQuery, entityRoute }) {
+type CategoriesGridProps = {
+  entityType: Entity;
+  categoriesQuery: UseQueryResult<CategoryReadDto[]>;
+  entityRoute: entityRoute;
+};
+
+function CategoriesGrid({ entityType, categoriesQuery, entityRoute }: CategoriesGridProps) {
   const baseHue = 184;
   const categories = useMemo(() => {
     if (categoriesQuery.data?.length <= 0) return [];
@@ -57,46 +66,43 @@ function Dashboard() {
   const { query: commandCategoryQuery } = useCategories("command");
   const { query: linkCategoryQuery } = useCategories("link");
   const { query: snippetCategoryQuery } = useCategories("snippet");
-  const { query: settingsQuery } = useSettings();
 
-  const SortButtons: FC<SortButtonProps> = ({ type, settings }) => {
+  const categorySortOptions = useAppSelector(selectCategoriesSort);
+
+  const SortButtons: FC<SortButtonProps> = ({ type, sortOption }) => {
     const {
       sortCategoriesAscending,
       sortCategoriesDescending,
       sortCategoriesByItemCount,
     } = useSortCategories(type);
     const selectedSortBgColor = useColorModeValue("gray.100", "teal.600");
-    const sortSetting =
-      type === "command"
-        ? settings.commandCategoriesSort
-        : settings.linkCategoriesSort;
 
     const noCategoryData =
-      !commandCategoryQuery.data || !linkCategoryQuery.data;
+      !commandCategoryQuery.data || !linkCategoryQuery.data || !snippetCategoryQuery.data;
 
     return (
       <Wrap my={4}>
         <Button
           variant="options"
-          bgColor={sortSetting === "ascending" && selectedSortBgColor}
+          bgColor={sortOption === "ascending" && selectedSortBgColor}
           onClick={sortCategoriesAscending}
-          disabled={noCategoryData || sortSetting === "ascending"}
+          disabled={noCategoryData || sortOption === "ascending"}
         >
           Sort A-Z
         </Button>
         <Button
           variant="options"
-          bgColor={sortSetting === "descending" && selectedSortBgColor}
+          bgColor={sortOption === "descending" && selectedSortBgColor}
           onClick={sortCategoriesDescending}
-          disabled={noCategoryData || sortSetting === "descending"}
+          disabled={noCategoryData || sortOption === "descending"}
         >
           Sort Z-A
         </Button>
         <Button
           variant="options"
-          bgColor={sortSetting === "size" && selectedSortBgColor}
+          bgColor={sortOption === "size" && selectedSortBgColor}
           onClick={sortCategoriesByItemCount}
-          disabled={noCategoryData || sortSetting === "size"}
+          disabled={noCategoryData || sortOption === "size"}
         >
           Sort by size
         </Button>
@@ -110,8 +116,8 @@ function Dashboard() {
         <Heading as="h1" fontSize="3xl">
           Commands
         </Heading>
-        {settingsQuery.data && (
-          <SortButtons type="command" settings={settingsQuery.data} />
+        {categorySortOptions["command"] && (
+          <SortButtons type="command" sortOption={categorySortOptions["command"]} />
         )}
         <CategoriesGrid
           entityType="command"
@@ -122,8 +128,8 @@ function Dashboard() {
         <Heading as="h1" fontSize="3xl">
           Links
         </Heading>
-        {settingsQuery.data && (
-          <SortButtons type="link" settings={settingsQuery.data} />
+        {categorySortOptions["link"] && (
+          <SortButtons type="link" sortOption={categorySortOptions["link"]} />
         )}
         <CategoriesGrid
           entityType="link"
@@ -134,8 +140,8 @@ function Dashboard() {
         <Heading as="h1" fontSize="3xl">
           Snippets
         </Heading>
-        {settingsQuery.data && (
-          <SortButtons type="snippet" settings={settingsQuery.data} />
+        {categorySortOptions["snippet"] && (
+          <SortButtons type="snippet" sortOption={categorySortOptions["snippet"]} />
         )}
         <CategoriesGrid
           entityType="snippet"

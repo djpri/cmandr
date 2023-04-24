@@ -49,7 +49,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const interceptor = CmandrApi.interceptors.request.use(
       async function (config) {
-        const token = await getToken({ fromCache: false });
+        const token = await getToken({ fromCache: true });
         config.headers.Authorization = `bearer ${token}`;
         return config;
       },
