@@ -75,7 +75,7 @@ const CategoryAccordion = ({
         <AccordionIcon />
       </AccordionButton>
       <AccordionPanel>
-        <AccordionItem as={RouterLink} to={route}>
+        <AccordionItem as={RouterLink} to={route} aria-label={`Link to all ${type}s`}>
           <AccordionButton>
             <HStack>
               <AiFillWallet />

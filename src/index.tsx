@@ -1,5 +1,5 @@
 import { ColorModeScript, theme } from "@chakra-ui/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { msalInstance } from "auth/auth";
 import CustomMsalProvider from "components/auth/AuthProvider";
@@ -10,21 +10,20 @@ import ReactDOM from "react-dom/client";
 import { Provider as ReduxProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "redux/store";
-import { App } from "./App";
 import Loading from "views/Loading";
-import { PersistedClient, Persister, persistQueryClient } from "@tanstack/react-query-persist-client";
+import { App } from "./App";
+import { PersistQueryClientProvider, PersistedClient, Persister } from "@tanstack/react-query-persist-client";
 import { get, set, del } from "idb-keyval";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+      staleTime: 1000 * 60 * 60 * 24, // 24 hours
       refetchOnWindowFocus: false,
       refetchOnMount: false,
     },
   },
 });
-
 
 function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
   return {
@@ -39,12 +38,7 @@ function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
     },
   } as Persister;
 }
-const IDBPersister = createIDBPersister();
-
-persistQueryClient({
-  queryClient,
-  persister: IDBPersister,
-})
+export const IDBPersister = createIDBPersister();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -54,7 +48,7 @@ root.render(
   <StrictMode>
     <ColorModeScript />
     <DndProvider backend={HTML5Backend}>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider client={queryClient} persistOptions={{ persister: IDBPersister }}>
         <ReduxProvider store={store}>
           <PersistGate loading={<Loading />} persistor={persistor}>
             <CustomMsalProvider instance={msalInstance}>
@@ -66,7 +60,7 @@ root.render(
             </CustomMsalProvider>
           </PersistGate>
         </ReduxProvider>
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </DndProvider>
   </StrictMode>
 );

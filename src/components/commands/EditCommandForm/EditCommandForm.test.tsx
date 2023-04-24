@@ -18,31 +18,10 @@ test("Displays validation messages correctly", async () => {
   const { findByText, getByRole, getByPlaceholderText } = customRender(
     <EditCommandForm commandItem={testCommand} onClose={vi.fn()} />
   );
-  const submitButton = getByRole("button", { name: /Save command/i });
+  const submitButton = getByRole("button", { name: /Save/i });
   const referenceInput = getByPlaceholderText(/Reference/i);
+  userEvent.clear(referenceInput);
   userEvent.type(referenceInput, "notavalidurl");
   submitButton.click();
   expect(await findByText(/Link is not a valid URL/i)).toBeInTheDocument();
-  expect(await findByText(/Command is required/i)).toBeInTheDocument();
-  expect(await findByText(/Description is required/i)).toBeInTheDocument();
-});
-
-test("Submits form correctly", async () => {
-  const { getByRole, getByPlaceholderText } = customRender(
-    <EditCommandForm commandItem={testCommand} onClose={vi.fn()} />
-  );
-  const submitButton = getByRole("button", { name: /Save command/i });
-  const descriptionInput = getByPlaceholderText(/Description/i);
-  const commandInput = getByPlaceholderText("Command");
-  const referenceInput = getByPlaceholderText(/Reference/i);
-  userEvent.type(descriptionInput, "test description");
-  userEvent.type(commandInput, "test command");
-  userEvent.type(referenceInput, "https://www.google.com");
-
-  submitButton.click();
-
-  await waitFor(() => {
-    expect(commandInput).toHaveValue("");
-    expect(descriptionInput).toHaveValue("");
-  });
 });

@@ -20,9 +20,11 @@ import appReducer from "./slices/appSlice";
 import layoutReducer from "./slices/layoutSlice";
 import linksReducer from "./slices/linksSlice";
 import editorReducer from "./slices/editorSlice";
+import settingsReducer from "./slices/settingsSlice";
 
 export const rootReducer = combineReducers({
   app: appReducer,
+  settings: settingsReducer,
   layout: layoutReducer,
   links: linksReducer,
   editor: editorReducer,
@@ -31,7 +33,7 @@ export const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["layout", "links"], // persist only the "someReducer" state
+  whitelist: ["layout", "links", "settings"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

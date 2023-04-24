@@ -36,9 +36,7 @@ function useCategories(entity: Entity) {
   const [{ endpoints, queryKey }] = useState(getCategoryInfo(entity));
 
   // Queries
-  const query = useQuery([queryKey], asReactQueryFunction(endpoints.getAll), {
-    enabled: isAppInitialized,
-  });
+  const query = useQuery([queryKey], asReactQueryFunction(endpoints.getAll));
 
   // Mutations
   // Note: mutation functions can only take ONE parameter

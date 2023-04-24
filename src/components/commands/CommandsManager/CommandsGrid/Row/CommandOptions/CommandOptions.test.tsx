@@ -14,25 +14,19 @@ const testCommand: CommandReadDto = {
   id: 10,
 };
 
-test("Shows edit and delete buttons when clicked", async () => {
+test("Shows edit and delete buttons", async () => {
   customRender(<CommandOptions command={testCommand} />);
-  const button = screen.getByRole("button");
-  fireEvent.click(button);
-
-  expect(screen.getByText("Options")).toBeInTheDocument();
-  expect(screen.getByText("Edit")).toBeInTheDocument();
-  expect(screen.getByText("Delete")).toBeInTheDocument();
+  const editButton = screen.getByLabelText(/edit/i);
+  const deleteButton = screen.getByLabelText(/delete/i);
+  expect(editButton).toBeInTheDocument();
+  expect(deleteButton).toBeInTheDocument();
 });
 
 test("Shows edit form with correct default information when edit button is clicked", async () => {
   customRender(<CommandOptions command={testCommand} />);
-
-  // click button
-  const button = screen.getByRole("button");
-  fireEvent.click(button);
-
-  // then click the edit button
-  const editButton = screen.getByText("Edit");
+  
+  // click edit button
+  const editButton = screen.getByLabelText(/edit/i);
   fireEvent.click(editButton);
 
   // then view the edit command form
