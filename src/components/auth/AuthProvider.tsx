@@ -6,6 +6,7 @@ import {
   SilentRequest,
 } from "@azure/msal-browser";
 import { MsalProvider, useMsal } from "@azure/msal-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { CmandrApi } from "api";
 import { apiConfig } from "auth/auth";
 import { FC, PropsWithChildren, useEffect } from "react";
@@ -14,9 +15,14 @@ import { useAppDispatch } from "redux/store";
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const { instance, accounts } = useMsal();
+  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (!accounts[0]) {
+      queryClient.clear();
+    }
+
     const getToken = async ({ fromCache = true }: { fromCache: boolean }) => {
       if (!accounts[0]) return null;
 

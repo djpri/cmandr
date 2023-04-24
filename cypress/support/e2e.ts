@@ -13,9 +13,6 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
-import "./commands";
-
 function loginViaAAD(username: string, password: string) {
   cy.visit("http://localhost:3000/");
   cy.get(".login-button").click();
@@ -42,15 +39,22 @@ function loginViaAAD(username: string, password: string) {
 }
 
 Cypress.Commands.add("loginToAAD", (username: string, password: string) => {
-  const log = Cypress.log({
-    displayName: "Azure Active Directory B2C Login",
-    message: [`🔐 Authenticating | ${username}`],
-    autoEnd: false,
+  cy.session(`aad-${username}`, () => {
+    const log = Cypress.log({
+      displayName: "Azure Active Directory B2C Login",
+      message: [`🔐 Authenticating | ${username}`],
+      autoEnd: false,
+    });
+    log.snapshot("before");
+
+    loginViaAAD(username, password);
+
+    log.snapshot("after");
+    log.end();
+  }, {
+    validate: () => {
+      cy.visit('http://localhost:3000');
+      cy.get('.login-button').should('be.disabled');
+    }
   });
-  log.snapshot("before");
-
-  loginViaAAD(username, password);
-
-  log.snapshot("after");
-  log.end();
 });

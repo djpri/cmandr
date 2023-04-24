@@ -1,8 +1,8 @@
 import {
   Box,
-  Button,
   Heading,
   HStack,
+  IconButton,
   Link,
   Text,
   useColorModeValue,
@@ -12,11 +12,12 @@ import { isInDevelopment } from "helpers/environment";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link as RouterLink } from "react-router-dom";
 import { setSidebarToggle } from "redux/slices/layoutSlice";
-import { useAppDispatch } from "redux/store";
+import { useAppDispatch, useAppSelector } from "redux/store";
 import LoginPopover from "./LoginPopover";
 
 function NavBar() {
   const dispatch = useAppDispatch();
+  const isSidebarOpen = useAppSelector((state) => state.layout.isSidebarOpen);
   const bgColor = useColorModeValue("purple.600", "purple.800");
 
   return (
@@ -44,14 +45,16 @@ function NavBar() {
         <HStack>
           {/* OPEN/CLOSE SIDEBAR BUTTON */}
           <Box>
-            <Button
+            <IconButton
+              data-cy={isSidebarOpen ? "close-sidebar-button" : "open-sidebar-button"}
               variant="ghost"
               colorScheme="whiteAlpha"
               border="0px"
               onClick={() => dispatch(setSidebarToggle())}
-            >
-              <GiHamburgerMenu size="1.2rem" color="white" />
-            </Button>
+              icon={<GiHamburgerMenu size="1.2rem" color="white" />}
+              aria-label="Open sidebar"
+              p={4}
+            />
           </Box>
           <Link as={RouterLink} to="/">
             <Heading as="h1" fontSize="lg" fontWeight="900" color="whiteAlpha">

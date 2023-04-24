@@ -46,7 +46,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <ColorModeScript />
+    <ColorModeScript initialColorMode="dark"/>
     <DndProvider backend={HTML5Backend}>
       <PersistQueryClientProvider client={queryClient} persistOptions={{ persister: IDBPersister }}>
         <ReduxProvider store={store}>
@@ -56,7 +56,7 @@ root.render(
                 initialColorMode={theme.config.initialColorMode}
               />
               <App />
-              <ReactQueryDevtools initialIsOpen={true} />
+              <ReactQueryDevtools initialIsOpen={false} />
             </CustomMsalProvider>
           </PersistGate>
         </ReduxProvider>

@@ -1,9 +1,11 @@
 import { useMsal } from "@azure/msal-react";
 import { Button, Stack } from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { apiConfig } from "auth/auth";
 
 function LoginButton() {
   const { instance } = useMsal();
+  const queryClient = useQueryClient();
 
   const loginRedirect = async () => {
     try {
@@ -21,6 +23,7 @@ function LoginButton() {
       <Button
         colorScheme="red"
         onClick={() => {
+          queryClient.clear();
           loginRedirect();
         }}
       >

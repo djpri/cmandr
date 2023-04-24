@@ -43,9 +43,10 @@ function CategoriesGrid({ entityType, categoriesQuery, entityRoute }: Categories
 
   return (
     <>
-      <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
+      <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)" data-cy={`categories-grid ${entityType}`}>
         {categories?.map((item: CategoryReadDto, index: number) => (
           <CategoryLinkButton
+            entityType={entityType}
             routeType={entityRoute}
             key={item.id}
             item={item}
@@ -112,7 +113,7 @@ function Dashboard() {
 
   return (
     <UserLayout>
-      <Box fontSize="xl" pb={16}>
+      <Box fontSize="xl" pb={16} data-cy="dashboard">
         <Heading as="h1" fontSize="3xl">
           Commands
         </Heading>
