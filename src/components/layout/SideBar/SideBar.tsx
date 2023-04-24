@@ -93,6 +93,7 @@ function SideBar() {
 
   return (
     <Box
+      data-cy="sidebar"
       id="sidebar"
       bgColor={bgColor}
       position={isSmallerThan1280 ? "fixed" : "fixed"}

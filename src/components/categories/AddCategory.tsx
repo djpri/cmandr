@@ -35,6 +35,7 @@ function AddCategory({ entityType, isGroup, parentId }: IProps) {
   return (
     <>
       <Button
+        data-cy={`add-${isGroup ? "group" : "category"} ${entityType}`}
         size="xs"
         aria-label={`add ${entityType} category`}
         leftIcon={isGroup ? <AiFillFolderAdd /> : <AiOutlineUnorderedList />}
@@ -46,6 +47,7 @@ function AddCategory({ entityType, isGroup, parentId }: IProps) {
       {isOpen && (
         <HStack>
           <Input
+            data-cy={`add-${isGroup ? "group" : "category"} ${entityType} input`}
             size="sm"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -55,6 +57,7 @@ function AddCategory({ entityType, isGroup, parentId }: IProps) {
             _focus={{ bgColor: inputColor }}
           />
           <Button
+            data-cy={`add-${isGroup ? "group" : "category"} ${entityType} save`}
             size="sm"
             onClick={handleAddCategory}
             disabled={category.length < 1}

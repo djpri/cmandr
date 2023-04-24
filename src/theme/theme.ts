@@ -7,8 +7,8 @@ import "@fontsource/roboto";
 import { Modal } from "./components/Modal";
 
 const theme = extendTheme({
-  initialColorMode: "dark",
   useSystemColorMode: false,
+  initialColorMode: "dark",
   // remove outline on focus
   shadows: {
     outline:
