@@ -21,7 +21,7 @@ interface IProps {
   showCategories: boolean;
 }
 
-function CommandsTable({ commands, showCategories }: IProps) {
+function CommandsGrid({ commands, showCategories }: IProps) {
   const columns = useMemo<ColumnDef<CommandReadDto>[]>(() => {
     if (showCategories) {
       return [
@@ -81,7 +81,7 @@ function CommandsTable({ commands, showCategories }: IProps) {
   };
 
   return (
-    <Box p="0" display="flex" flexDirection="column">
+    <Box p="0" display="flex" flexDirection="column" data-cy="commands-grid">
       {table.getSelectedRowModel().flatRows.length > 1 && (
         <RowSelectionMenu
           handleBulkDelete={handleBulkDelete}
@@ -144,4 +144,4 @@ function CommandsTable({ commands, showCategories }: IProps) {
   );
 }
 
-export default CommandsTable;
+export default CommandsGrid;

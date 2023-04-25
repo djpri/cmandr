@@ -81,7 +81,11 @@ function AddSnippetForm({ categoryId }: IProps) {
       rounded="md"
       borderColor="gray.700"
     >
-      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete="off"
+        data-cy="add-command-form"
+      >
         <Grid
           mb={5}
           templateColumns={["repeat(1, 1fr)"]}
@@ -92,6 +96,7 @@ function AddSnippetForm({ categoryId }: IProps) {
             <Input
               {...register("description")}
               placeholder="Description for code snippet"
+              data-cy="add-snippet-form-description"
             />
           </Box>
           <CUIAutoComplete
@@ -113,7 +118,10 @@ function AddSnippetForm({ categoryId }: IProps) {
 
           {showCategorySelect && (
             <Box>
-              <Select {...register("categoryId", { min: 1 })}>
+              <Select
+                {...register("categoryId", { min: 1 })}
+                data-cy="add-snippet-form-category"
+              >
                 <option value={-1}>Select Category</option>
                 {query?.data
                   ?.filter((cat: CategoryReadDto) => !cat.isGroup)
@@ -132,6 +140,7 @@ function AddSnippetForm({ categoryId }: IProps) {
             size="sm"
             isLoading={addSnippetMutation.isLoading}
             maxW="15rem"
+            data-cy="add-snippet-form-submit"
           >
             Add snippet
           </Button>

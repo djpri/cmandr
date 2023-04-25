@@ -13,8 +13,10 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-function loginViaAAD(username: string, password: string) {
-  cy.visit("http://localhost:3000/");
+import "./commands";
+
+export function loginViaAAD(username: string, password: string) {
+  cy.visit("/");
   cy.get(".login-button").click();
 
   cy.origin(
@@ -33,28 +35,7 @@ function loginViaAAD(username: string, password: string) {
     }
   );
 
+  cy.wait(2000)
   // Ensure Microsoft has redirected us back to the sample app with our logged in user.
-  cy.wait(2000);
-  cy.url().should("equal", "http://localhost:3000/");
+  cy.url().should("equal", Cypress.config().baseUrl + "/");
 }
-
-Cypress.Commands.add("loginToAAD", (username: string, password: string) => {
-  cy.session(`aad-${username}`, () => {
-    const log = Cypress.log({
-      displayName: "Azure Active Directory B2C Login",
-      message: [`🔐 Authenticating | ${username}`],
-      autoEnd: false,
-    });
-    log.snapshot("before");
-
-    loginViaAAD(username, password);
-
-    log.snapshot("after");
-    log.end();
-  }, {
-    validate: () => {
-      cy.visit('http://localhost:3000');
-      cy.get('.login-button').should('be.disabled');
-    }
-  });
-});

@@ -23,11 +23,14 @@ import { AiFillDelete } from "react-icons/ai";
 import { BiMove } from "react-icons/bi";
 import UseCategories from "../../hooks/categories/useCategories";
 import { Entity, EntityReadDto } from "models/entity";
+import { CommandReadDto } from "models/command";
+import { LinkReadDto } from "models/link";
+import { SnippetReadDto } from "models/snippets";
 
 interface IProps {
   handleBulkDelete?: () => void;
   type: Entity;
-  table: Table<EntityReadDto>;
+  table: Table<CommandReadDto> | Table<LinkReadDto> | Table<SnippetReadDto>;
 }
 
 interface MoveItemsModalProps {

@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  FormLabel,
-  Grid,
-  Input,
-  Select,
-} from "@chakra-ui/react";
+import { Box, Button, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
 import useCategories from "hooks/categories/useCategories";
 import useCommands from "hooks/entities/useCommands";
 import { CommandCreateDto } from "models/command";
@@ -39,6 +32,7 @@ function AddCommandForm({ categoryId }: IProps) {
   }, [categoryId, setValue]);
 
   const onSubmit = (values: CommandCreateDto) => {
+    values.categoryId = parseInt(values.categoryId.toString());
     addCommandMutation.mutate(values);
     reset({
       description: "",
@@ -52,6 +46,7 @@ function AddCommandForm({ categoryId }: IProps) {
     <>
       <form
         aria-label="add command form"
+        data-cy="add-command-form"
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
       >
@@ -70,8 +65,9 @@ function AddCommandForm({ categoryId }: IProps) {
           <Box>
             <FormLabel htmlFor="description">Description</FormLabel>
             <Input
+              data-cy="add-command-form-description"
               {...register("description", registerOptions.description)}
-              placeholder="Description of what command does"
+              placeholder="* Description of what command does"
             />
           </Box>
 
@@ -79,17 +75,20 @@ function AddCommandForm({ categoryId }: IProps) {
             <FormLabel htmlFor="line">Command</FormLabel>
             <Input
               {...register("line", registerOptions.line)}
-              placeholder="Command"
+              placeholder="* Command"
+              data-cy="add-command-form-line"
             />
           </Box>
 
           {showCategorySelect && (
             <Box>
               <FormLabel htmlFor="categoryId">Category</FormLabel>
-              <Select {...register("categoryId")}>
-                <option value="">Select Category</option>
+              <Select {...register("categoryId", registerOptions.category)}
+                data-cy="add-command-form-category"
+              >
+                <option value={-1}>Select Category</option>
                 {allCategoriesQuery.data &&
-                  allCategoriesQuery.data.map((category, index) => (
+                  allCategoriesQuery.data.filter(cat => !cat.isGroup).map((category, index) => (
                     <option value={category.id} key={index}>
                       {category.name}
                     </option>
@@ -103,6 +102,7 @@ function AddCommandForm({ categoryId }: IProps) {
             <Input
               {...register("reference", registerOptions.reference)}
               placeholder="Reference"
+              data-cy="add-command-form-reference"
             />
           </Box>
 
@@ -111,20 +111,16 @@ function AddCommandForm({ categoryId }: IProps) {
             variant="add"
             size="sm"
             isLoading={addCommandMutation.isLoading}
+            data-cy="add-command-form-submit"
+            disabled={Object.keys(errors)?.length > 0}
           >
             Add command
           </Button>
         </Grid>
       </form>
-      {errors.description && (
-        <ValidationError message={errors.description.message} />
-      )}
-      {errors.line && (
-        <ValidationError message={errors.line.message} />
-      )}
-      {errors.reference && (
-        <ValidationError message={errors.reference.message} />
-      )}
+      {Object.keys(errors)?.map((key) => (
+        <ValidationError key={key} message={errors[key].message} />
+      ))}
     </>
   );
 }

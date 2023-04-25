@@ -17,7 +17,7 @@ const selectors = ({
     ? `add-group ${entityType}`
     : `add-category ${entityType}`;
   return {
-    showInputButton: createDataCySelector(base),
+    showInputButton: createDataCySelector( base),
     input: createDataCySelector(`${base} input`),
     save: createDataCySelector(`${base} save`),
   };
@@ -26,12 +26,13 @@ const selectors = ({
 describe("Adds group and category for each entity and displays on dashboard", () => {
   beforeEach(() => {
     cy.loginToAAD(Cypress.env("aad_username"), Cypress.env("aad_password"));
-    cy.visit("http://localhost:3000");
+    // cy.login();
+    cy.visit("/");
   });
 
   entityTypes.forEach((entityType) => {
     it(`${entityType}: should add new group or category when save button is clicked`, () => {
-      cy.visit("http://localhost:3000/dashboard");
+      cy.visit("/dashboard");
 
       const randomGroupName = `Group ${uuidv4()}`;
       const randomCategoryName = `Category ${uuidv4()}`;
