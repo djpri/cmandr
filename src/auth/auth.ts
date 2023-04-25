@@ -1,3 +1,4 @@
+import { Configuration } from "@azure/msal-browser";
 import { PublicClientApplication } from "@azure/msal-browser/dist/app/PublicClientApplication";
 import { BASE_URL, CLIENT_ID } from "helpers/environment";
 
@@ -5,6 +6,8 @@ export const apiConfig = {
   b2cScopes: ["https://CmandrApp.onmicrosoft.com/CmandrApi/access_as_user"],
   webApi: BASE_URL,
 };
+
+const baseUrl = "https://CmandrApp.b2clogin.com/CmandrApp.onmicrosoft.com/"
 
 const b2cPolicies = {
   names: {
@@ -16,25 +19,25 @@ const b2cPolicies = {
   authorities: {
     signIn: {
       authority:
-        "https://CmandrApp.b2clogin.com/CmandrApp.onmicrosoft.com/B2C_1_sign_in",
+        `${baseUrl}B2C_1_sign_in`,
     },
     signUpSignIn: {
       authority:
-        "https://CmandrApp.b2clogin.com/CmandrApp.onmicrosoft.com/B2C_1_signup_signin",
+        `${baseUrl}B2C_1_signup_signin`,
     },
     forgotPassword: {
       authority:
-        "https://CmandrApp.b2clogin.com/CmandrApp.onmicrosoft.com/B2C_1_reset",
+        `${baseUrl}B2C_1_reset`,
     },
     editProfile: {
       authority:
-        "https://CmandrApp.b2clogin.com/CmandrApp.onmicrosoft.com/B2C_1_edit",
+        `${baseUrl}B2C_1_edit`,
     },
   },
   authorityDomain: "CmandrApp.b2clogin.com",
 };
 
-export const msalConfig = {
+export const msalConfig: Configuration = {
   auth: {
     clientId: CLIENT_ID,
     authority: b2cPolicies.authorities.signIn.authority,

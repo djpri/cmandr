@@ -23,6 +23,7 @@ const AddCommandButton = forwardRef(
             aria-label="show add command form"
             onClick={onToggle}
             rightIcon={<AiFillCaretDown />}
+            data-cy="add-command-button"
           >
             Add
           </Button>

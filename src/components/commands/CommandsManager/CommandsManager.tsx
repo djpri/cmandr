@@ -3,7 +3,7 @@ import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { CommandReadDto } from "models/command";
 import { ForwardedRef, useRef } from "react";
 import AddCommandButton from "./AddCommandButton/AddCommandButton";
-import CommandsTable from "./CommandsGrid/CommandsGrid";
+import CommandsGrid from "./CommandsGrid/CommandsGrid";
 
 interface IProps {
   categoryId?: number;
@@ -43,7 +43,7 @@ function CommandsManager({ categoryId, commands }: IProps) {
           <Box ref={ref} />
         </Box>
         {commands?.length > 0 && (
-          <CommandsTable commands={commands} showCategories={!categoryId} />
+          <CommandsGrid commands={commands} showCategories={!categoryId} />
         )}
       </Box>
     </ErrorBoundaryWrapper>

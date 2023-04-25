@@ -1,10 +1,10 @@
-import { testData } from "tests/testData";
 import { customRender } from "tests/test-utils";
-import CommandsTable from "./CommandsGrid";
+import { testData } from "tests/testData";
+import CommandsGrid from "./CommandsGrid";
 
 test("Displays all headers correctly", async () => {
   const { getByText } = customRender(
-    <CommandsTable commands={testData.commands} showCategories />
+    <CommandsGrid commands={testData.commands} showCategories />
   );
   expect(getByText("Description")).toBeInTheDocument();
   expect(getByText("Command")).toBeInTheDocument();
@@ -13,7 +13,7 @@ test("Displays all headers correctly", async () => {
 
 test("Displays all headers correctly for no categories", async () => {
   const { getByText, queryByText } = customRender(
-    <CommandsTable commands={testData.commands} showCategories={false} />
+    <CommandsGrid commands={testData.commands} showCategories={false} />
   );
   expect(getByText("Description")).toBeInTheDocument();
   expect(getByText("Command")).toBeInTheDocument();
@@ -22,7 +22,7 @@ test("Displays all headers correctly for no categories", async () => {
 
 test("Displays pagination information correctly", () => {
   const { getByText } = customRender(
-    <CommandsTable commands={testData.commands} showCategories />
+    <CommandsGrid commands={testData.commands} showCategories />
   );
   expect(getByText("Page")).toBeInTheDocument();
   expect(getByText("1 of 1")).toBeInTheDocument();
@@ -30,14 +30,14 @@ test("Displays pagination information correctly", () => {
 
 test("Displays correct placeholder information in search bar", () => {
   const { getByPlaceholderText } = customRender(
-    <CommandsTable commands={testData.commands} showCategories />
+    <CommandsGrid commands={testData.commands} showCategories />
   );
   expect(getByPlaceholderText("Search all 17 items...")).toBeInTheDocument();
 });
 
 test("Pagination buttons are enabled or disabled when expected", () => {
   const { getByRole } = customRender(
-    <CommandsTable commands={testData.commands} showCategories />
+    <CommandsGrid commands={testData.commands} showCategories />
   );
   const goToFirstPageButton = getByRole("button", {
     name: "goToFirstPage",
