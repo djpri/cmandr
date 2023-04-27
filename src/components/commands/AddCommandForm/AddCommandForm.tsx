@@ -74,6 +74,7 @@ function AddCommandForm({ categoryId }: IProps) {
           <Box>
             <FormLabel htmlFor="line">Command</FormLabel>
             <Input
+              id="line"
               {...register("line", registerOptions.line)}
               placeholder="* Command"
               data-cy="add-command-form-line"

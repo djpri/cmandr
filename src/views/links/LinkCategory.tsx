@@ -126,6 +126,7 @@ function LinkCategory() {
           {subCategories.map((item) => (
             <CategoryLinkButton
               item={item}
+              entityType="link"
               routeType="links"
               key={item.id}
               hue={201}

@@ -113,6 +113,7 @@ function CommandCategoryPage() {
           {subCategories.map((item) => (
             <CategoryLinkButton
               item={item}
+              entityType="command"
               routeType="commands"
               key={item.id}
               hue={201}

@@ -2,7 +2,7 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
 import { CommandReadDto } from "models/command";
 import { ForwardedRef, useRef } from "react";
-import AddCommandButton from "./AddCommandButton/AddCommandButton";
+import AddCommandButton from "./AddCommandButton";
 import CommandsGrid from "./CommandsGrid/CommandsGrid";
 
 interface IProps {
