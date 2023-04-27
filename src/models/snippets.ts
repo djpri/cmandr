@@ -16,9 +16,7 @@ export interface SnippetReadDto {
   code: string;
   language: string;
   starred: boolean;
-  dateCreated?: Date;
   category: CategoryReadDto;
-  dateUpdated?: Date;
 }
 
 export interface SnippetUpdateDto {

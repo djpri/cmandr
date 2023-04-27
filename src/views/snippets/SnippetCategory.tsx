@@ -171,6 +171,7 @@ function SnippetCategory() {
           {subCategories.map((item) => (
             <CategoryLinkButton
               item={item}
+              entityType="snippet"
               routeType="snippets"
               key={item.id}
               hue={201}

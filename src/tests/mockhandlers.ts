@@ -31,11 +31,17 @@ const getHandlers = [
   get(`${baseUrl}links`, (req, res, ctx) => {
     return res(ctx.json(testData.links));
   }),
+  get(`${baseUrl}snippets`, (req, res, ctx) => {
+    return res(ctx.json(testData.snippets));
+  }),
   get(`${baseUrl}commands/categories`, (req, res, ctx) => {
     return res(ctx.json(testData.commandCategories));
   }),
   get(`${baseUrl}links/categories`, (req, res, ctx) => {
     return res(ctx.json(testData.linkCategories));
+  }),
+  get(`${baseUrl}snippets/categories`, (req, res, ctx) => {
+    return res(ctx.json(testData.snippetCategories));
   }),
   get(
     "https://login.microsoftonline.com/common/discovery/instance",

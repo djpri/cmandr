@@ -1,7 +1,7 @@
 import { Box, Button, Fade, Portal, useDisclosure } from "@chakra-ui/react";
 import { ForwardedRef, RefObject, forwardRef, useEffect, useMemo } from "react";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import AddSnippetForm from "../AddSnippetForm";
+import AddSnippetForm from "../AddSnippetForm/AddSnippetForm";
 
 interface IProps {
   categoryId?: number;

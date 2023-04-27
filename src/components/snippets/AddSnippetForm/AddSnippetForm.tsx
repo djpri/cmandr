@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  FormLabel,
   Grid,
   Input,
   Select,
@@ -12,14 +13,17 @@ import { CategoryReadDto } from "models/category";
 import { SnippetCreateDto } from "models/snippets";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import useCategories from "../../hooks/categories/useCategories";
-import CodeEditor from "./CodeEditor";
-import { languagesAsItems } from "./languages";
-import { ValidationError } from "./snippetFormUtils";
+import useCategories from "../../../hooks/categories/useCategories";
+import CodeEditor from "../CodeEditor";
+import { languagesAsItems } from "../languages";
+import { snippetFormUtils } from "../snippetFormUtils";
 
 interface IProps {
   categoryId?: number;
 }
+
+const { labels, registerOptions, ValidationError } =
+  snippetFormUtils;
 
 function AddSnippetForm({ categoryId }: IProps) {
   const { addSnippetMutation } = useSnippets();
@@ -66,7 +70,8 @@ function AddSnippetForm({ categoryId }: IProps) {
   };
 
   useEffect(() => {
-    register("code");
+    register("code", registerOptions.code);
+    register("language", registerOptions.language);
   }, [register]);
 
   const [defaultLanguage, setDefaultLanguage] = useState("javascript");
@@ -93,33 +98,41 @@ function AddSnippetForm({ categoryId }: IProps) {
           alignItems="end"
         >
           <Box>
+            <FormLabel htmlFor="description">{labels.description}</FormLabel>
             <Input
-              {...register("description")}
+              {...register("description", registerOptions.description)}
               placeholder="Description for code snippet"
               data-cy="add-snippet-form-description"
             />
           </Box>
-          <CUIAutoComplete
-            items={languagesAsItems ?? []}
-            value={selectLanguageValue}
-            placeholder="Language (select dropdown item to change editor language)"
-            label="Language"
-            handleChooseItem={(langId) => {
-              setDefaultLanguage(langId);
-              handleLanguageValueChange(langId);
-            }}
-          />
-          <CodeEditor
-            handleCodeSnippetChange={handleCodeSnippetChange}
-            value={selectCodeValue}
-            defaultLanguage={defaultLanguage}
-            setDefaultLanguage={setDefaultLanguage}
-          />
+          <Box>
+            <FormLabel htmlFor="language">{labels.language}</FormLabel>
+            <CUIAutoComplete
+              items={languagesAsItems ?? []}
+              value={selectLanguageValue}
+              placeholder="Language (select dropdown item to change editor language)"
+              label="Language"
+              handleChooseItem={(langId) => {
+                setDefaultLanguage(langId);
+                handleLanguageValueChange(langId);
+              }}
+            />
+          </Box>
+          <Box>
+            <FormLabel htmlFor="code">{labels.code}</FormLabel>
+            <CodeEditor
+              handleCodeSnippetChange={handleCodeSnippetChange}
+              value={selectCodeValue}
+              defaultLanguage={defaultLanguage}
+              setDefaultLanguage={setDefaultLanguage}
+            />
+          </Box>
 
           {showCategorySelect && (
             <Box>
+              <FormLabel htmlFor="categoryId">{labels.category}</FormLabel>
               <Select
-                {...register("categoryId", { min: 1 })}
+                {...register("categoryId", registerOptions.category)}
                 data-cy="add-snippet-form-category"
               >
                 <option value={-1}>Select Category</option>
@@ -146,8 +159,12 @@ function AddSnippetForm({ categoryId }: IProps) {
           </Button>
         </Grid>
       </form>
-      {errors.categoryId && (
-        <ValidationError message="* Category is required" />
+      {errors && (
+        <Box mb={4}>
+          {Object.keys(errors)?.map((key) => (
+            <ValidationError key={key} message={errors[key].message} />
+          ))}
+        </Box>
       )}
     </Box>
   );

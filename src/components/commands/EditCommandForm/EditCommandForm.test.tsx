@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import { customRender, waitFor } from "tests/test-utils";
+import { customRender } from "tests/test-utils";
 import { testData } from "tests/testData";
 import EditCommandForm from "./EditCommandForm";
 
