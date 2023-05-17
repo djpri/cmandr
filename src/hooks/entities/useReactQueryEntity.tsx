@@ -65,6 +65,8 @@ function useReactQueryEntity<T extends EntityReadDto>({
 
   const query = useQuery(queryKey, queryFunction);
 
+  // TODO: update queryclient cache for all categoires when all entities are fetched
+
   const snapshotPreviousData = (): SnapshotData<T> => {
     return {
       entities: queryClient.getQueryData(queryKey) || [],

@@ -11,6 +11,9 @@ interface CategoryLinkButtonProps {
   entityType: Entity;
   hue: number;
 }
+
+// TODO: Add more interesting styling
+
 function CategoryLinkButton({
   item,
   routeType: type,
@@ -49,14 +52,16 @@ function CategoryLinkButton({
     >
       <HStack>
         {item?.isGroup ? <AiFillFolder /> : <AiOutlineUnorderedList />}
-        <Text data-cy={`category-link-button ${entityType} name`}>{item.name}</Text>
+        <Text data-cy={`category-link-button ${entityType} name`}>
+          {item.name}
+        </Text>
       </HStack>
       <Text fontSize="sm">
         <Text as="span" color={itemCountColor} fontWeight="700">
           {item?.items}{" "}
           {item.isGroup
             ? ` categor${item.items === 1 ? "y" : "ies"}`
-            : " items"}
+            : ` item${item.items === 1 ? "" : "s"}`}
         </Text>
       </Text>
     </GridItem>

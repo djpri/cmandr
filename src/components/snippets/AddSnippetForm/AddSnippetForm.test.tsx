@@ -1,11 +1,25 @@
 import { customRender } from "tests/test-utils";
 import AddSnippetForm from "./AddSnippetForm";
 import { snippetFormUtils } from "../snippetFormUtils";
+import { test } from "vitest";
 
 const {
   labels,
   registerOptions,
 } = snippetFormUtils;
+
+vi.mock('@monaco-editor/react', () => {
+  const FakeEditor = (props: any) => {
+    return (
+      <textarea
+        id="code"
+        onChange={(value) => props.onChange(value)}
+        value={props.value}
+      ></textarea>
+    );
+  };
+  return { default: FakeEditor };
+});
 
 test("Displays form labels correctly without categoryId prop", async () => {
   const { getByText } = customRender(<AddSnippetForm />);
@@ -14,6 +28,21 @@ test("Displays form labels correctly without categoryId prop", async () => {
   expect(getByText(labels.language)).toBeInTheDocument();
   expect(getByText(labels.code)).toBeInTheDocument();
   expect(getByText(labels.category)).toBeInTheDocument();
+});
+
+test("Displays all inputs correctly", async () => {
+  const { getByRole } = customRender(
+    <AddSnippetForm />
+  );
+  const codeInput = getByRole("textbox", { name: /code/i });
+  const descriptionInput = getByRole("textbox", { name: /description/i });
+  const languageInput = getByRole("combobox", { name: /language/i });
+  const categoryInput = getByRole("combobox", { name: /category/i });
+  
+  expect(codeInput).toBeInTheDocument();
+  expect(descriptionInput).toBeInTheDocument();
+  expect(languageInput).toBeInTheDocument();
+  expect(categoryInput).toBeInTheDocument();
 });
 
 test("Displays form labels correctly with categoryId prop", async () => {

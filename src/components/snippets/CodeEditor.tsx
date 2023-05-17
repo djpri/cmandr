@@ -129,6 +129,7 @@ function CodeEditor({
         )}
       </VStack>
       <Editor
+        aria-labelledby="code"
         theme={theme}
         height={height ?? "45vh"}
         defaultValue={value}
