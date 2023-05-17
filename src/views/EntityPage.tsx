@@ -10,6 +10,8 @@ interface EntityPageProps {
   headerOptions?: JSX.Element;
 }
 
+// TODO: Add link to parent group if a parent group exists
+
 function EntityPage({
   children,
   numItems,

@@ -93,6 +93,8 @@ const CategoryAccordion = ({
   );
 };
 
+// TODO: Reduce duplication in these components
+
 const CommandCategorySection = () => {
   const { query, editCategoryMutation } = useCategories("command");
   const { addToCategoryDropRef, isAddToGroupDropActive } =

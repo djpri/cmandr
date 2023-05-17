@@ -22,8 +22,7 @@ interface IProps {
   categoryId?: number;
 }
 
-const { labels, registerOptions, ValidationError } =
-  snippetFormUtils;
+const { labels, registerOptions, ValidationError } = snippetFormUtils;
 
 function AddSnippetForm({ categoryId }: IProps) {
   const { addSnippetMutation } = useSnippets();
@@ -100,6 +99,7 @@ function AddSnippetForm({ categoryId }: IProps) {
           <Box>
             <FormLabel htmlFor="description">{labels.description}</FormLabel>
             <Input
+              id="description"
               {...register("description", registerOptions.description)}
               placeholder="Description for code snippet"
               data-cy="add-snippet-form-description"
@@ -108,6 +108,7 @@ function AddSnippetForm({ categoryId }: IProps) {
           <Box>
             <FormLabel htmlFor="language">{labels.language}</FormLabel>
             <CUIAutoComplete
+              id="language"
               items={languagesAsItems ?? []}
               value={selectLanguageValue}
               placeholder="Language (select dropdown item to change editor language)"
@@ -132,6 +133,7 @@ function AddSnippetForm({ categoryId }: IProps) {
             <Box>
               <FormLabel htmlFor="categoryId">{labels.category}</FormLabel>
               <Select
+                id="categoryId"
                 {...register("categoryId", registerOptions.category)}
                 data-cy="add-snippet-form-category"
               >

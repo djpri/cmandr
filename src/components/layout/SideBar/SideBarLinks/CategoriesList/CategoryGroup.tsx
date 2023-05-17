@@ -34,6 +34,8 @@ interface IProps {
   ) => void;
 }
 
+// TODO: Save state of toggle into redux
+
 const CategoryGroup: FC<IProps> = ({
   item,
   isChild,

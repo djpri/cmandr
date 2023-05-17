@@ -1,38 +1,37 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 
+import { Button, ButtonProps } from "@chakra-ui/button";
+import { FormLabelProps } from "@chakra-ui/form-control";
+import { ArrowDownIcon, CheckCircleIcon, IconProps } from "@chakra-ui/icons";
+import { Input, InputProps } from "@chakra-ui/input";
 import {
-  useCombobox,
-  useMultipleSelection,
-  UseMultipleSelectionProps,
-} from "downshift";
-import Highlighter from "react-highlight-words";
-import { FormLabel, FormLabelProps } from "@chakra-ui/form-control";
-import {
-  Text,
-  Stack,
   Box,
   BoxProps,
   List,
-  ListItem,
   ListIcon,
+  ListItem,
+  Stack,
+  Text,
 } from "@chakra-ui/layout";
-import { Button, ButtonProps } from "@chakra-ui/button";
-import { Input, InputProps } from "@chakra-ui/input";
-import { IconProps, CheckCircleIcon, ArrowDownIcon } from "@chakra-ui/icons";
-import { Tag, TagCloseButton, TagLabel, TagProps } from "@chakra-ui/tag";
 import { ComponentWithAs, useColorModeValue } from "@chakra-ui/react";
-import { matchSorter } from "match-sorter";
-import useDeepCompareEffect from "react-use/lib/useDeepCompareEffect";
+import { Tag, TagCloseButton, TagLabel, TagProps } from "@chakra-ui/tag";
 import {
-  ReactNode,
+  UseMultipleSelectionProps,
+  useCombobox,
+  useMultipleSelection,
+} from "downshift";
+import { matchSorter } from "match-sorter";
+import {
   ComponentType,
   ReactElement,
-  useState,
-  useRef,
-  useEffect,
+  ReactNode,
   SetStateAction,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
+import Highlighter from "react-highlight-words";
+import useDeepCompareEffect from "react-use/lib/useDeepCompareEffect";
 
 interface Item {
   label: string;
@@ -41,6 +40,7 @@ interface Item {
 
 interface CUIAutoCompleteProps<T extends Item>
   extends UseMultipleSelectionProps<T> {
+  id?: string;
   items: T[];
   placeholder: string;
   label: string;
@@ -89,6 +89,7 @@ const CUIAutoComplete = <T extends Item>(
   props: CUIAutoCompleteProps<T>
 ): ReactElement<CUIAutoCompleteProps<T>> => {
   const {
+    id,
     items,
     optionFilterFunc = defaultOptionFilterFunc,
     itemRenderer,
@@ -314,6 +315,7 @@ const CUIAutoComplete = <T extends Item>(
               {...inputStyleProps}
               {...getInputProps(
                 getDropdownProps({
+                  id,
                   placeholder,
                   onClick: isOpen ? () => {} : openMenu,
                   onFocus: isOpen ? () => {} : openMenu,
