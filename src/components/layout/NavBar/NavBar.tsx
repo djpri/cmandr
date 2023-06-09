@@ -18,7 +18,7 @@ import LoginPopover from "./LoginPopover";
 function NavBar() {
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector((state) => state.layout.isSidebarOpen);
-  const bgColor = useColorModeValue("purple.700", "purple.800");
+  const bgColor = useColorModeValue("purple.700", "#2b1b5f");
 
   return (
     <Box

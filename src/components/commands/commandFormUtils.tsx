@@ -1,5 +1,4 @@
 import { Text } from "@chakra-ui/react";
-import { FormUtils } from "helpers/formUtils";
 import { FC } from "react";
 import { RegisterOptions } from "react-hook-form";
 import { isWebUri } from "valid-url";
