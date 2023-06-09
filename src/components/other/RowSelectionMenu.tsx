@@ -125,10 +125,18 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
     >
       <Text>{table.getSelectedRowModel().flatRows.length} items selected</Text>
       <HStack>
-        <Button onClick={() => table.toggleAllRowsSelected(false)} size={["xs", null, null, "sm"]}>
+        <Button
+          onClick={() => table.toggleAllRowsSelected(false)}
+          size={["xs", null, null, "sm"]}
+        >
           Clear Selection
         </Button>
-        <Button onClick={onOpen} aria-label="move items" rightIcon={<BiMove />} size={["xs", null, null, "sm"]}>
+        <Button
+          onClick={onOpen}
+          aria-label="move items"
+          rightIcon={<BiMove />}
+          size={["xs", null, null, "sm"]}
+        >
           Move
         </Button>
         <Button

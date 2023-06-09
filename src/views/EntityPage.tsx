@@ -21,7 +21,7 @@ function EntityPage({
   return (
     <UserLayout>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
-        <Heading as="h2" fontWeight="900" fontSize="3xl">
+        <Heading as="h2" fontWeight="900" fontSize="2xl">
           {title}
         </Heading>
         {headerOptions}

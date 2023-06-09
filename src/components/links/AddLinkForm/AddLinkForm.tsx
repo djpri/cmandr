@@ -42,7 +42,11 @@ function AddLinkForm({ categoryId }: IProps) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" data-cy="add-link-form">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete="off"
+        data-cy="add-link-form"
+      >
         <Grid
           mb={5}
           templateColumns={[
@@ -57,7 +61,11 @@ function AddLinkForm({ categoryId }: IProps) {
         >
           <Box>
             <FormLabel htmlFor="title">Title</FormLabel>
-            <Input {...register("title")} placeholder="Title for link" data-cy="add-link-form-title" />
+            <Input
+              {...register("title")}
+              placeholder="Title for link"
+              data-cy="add-link-form-title"
+            />
           </Box>
 
           <Box>
@@ -72,7 +80,10 @@ function AddLinkForm({ categoryId }: IProps) {
           {showCategorySelect && (
             <Box>
               <FormLabel htmlFor="category">Category</FormLabel>
-              <Select {...register("categoryId", { min: 1 })} data-cy="add-link-form-category">
+              <Select
+                {...register("categoryId", { min: 1 })}
+                data-cy="add-link-form-category"
+              >
                 <option value={-1}>Select Category</option>
                 {query?.data?.map((category, index) => (
                   <option value={category.id} key={index}>

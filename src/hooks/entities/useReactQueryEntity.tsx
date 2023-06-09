@@ -214,12 +214,9 @@ function useReactQueryEntity<T extends EntityReadDto>({
           }
         );
       } catch (error) {
-        queryClient.setQueryData(
-          [queryKey[0]],
-          (items: T[]) => {
-            return items?.filter((item) => item.id !== entityId);
-          }
-        );
+        queryClient.setQueryData([queryKey[0]], (items: T[]) => {
+          return items?.filter((item) => item.id !== entityId);
+        });
       }
 
       return snapshot;

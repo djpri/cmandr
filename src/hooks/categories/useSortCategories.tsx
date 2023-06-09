@@ -20,6 +20,8 @@ function useSortCategories(type: Entity) {
   const categories = query?.data ?? [];
   const queryKey = queryKeyDictionary[type];
 
+  const categoriesAvailable = categories.length > 0;
+
   const updateSettingsAndCategories = (
     sortType: SortType,
     sortFunction: (items: CategoryReadDto[]) => CategoryReadDto[]
@@ -66,6 +68,7 @@ function useSortCategories(type: Entity) {
   };
 
   return {
+    categoriesAvailable,
     sortCategoriesAscending,
     sortCategoriesDescending,
     sortCategoriesByItemCount,

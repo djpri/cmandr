@@ -19,7 +19,10 @@ export const settingsSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setCategoriesSort: (state, action: { payload: { entity: Entity, sortOption: SortOption } }) => {
+    setCategoriesSort: (
+      state,
+      action: { payload: { entity: Entity; sortOption: SortOption } }
+    ) => {
       const { entity, sortOption } = action.payload;
       state.categoriesSort[entity] = sortOption;
     },
@@ -30,6 +33,7 @@ export const settingsSlice = createSlice({
 export const { setCategoriesSort } = settingsSlice.actions;
 
 // SELECTORS
-export const selectCategoriesSort = (state: { settings: UserSettings }) => state.settings.categoriesSort;
+export const selectCategoriesSort = (state: { settings: UserSettings }) =>
+  state.settings.categoriesSort;
 
 export default settingsSlice.reducer;

@@ -8,6 +8,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { UseQueryResult } from "@tanstack/react-query";
+import useCategories from "hooks/categories/useCategories";
+import { CategoryReadDto } from "models/category";
+import { Entity } from "models/entity";
+import { FC } from "react";
 import { ConnectDropTarget } from "react-dnd/dist/types";
 import { AiFillCode, AiFillWallet } from "react-icons/ai";
 import { BiCommand } from "react-icons/bi";
@@ -19,11 +23,9 @@ import {
   setSidebarAccordionIndex,
 } from "redux/slices/layoutSlice";
 import { useAppDispatch, useAppSelector } from "redux/store";
+import { entityRoute } from "routes";
 import CategoriesList from "./CategoriesList/CategoriesList";
 import useRemoveFromGroupDropItem from "./CategoriesList/DnD/useRemoveFromGroupDropItem";
-import useCategories from "hooks/categories/useCategories";
-import { Entity } from "models/entity";
-import { CategoryReadDto } from "models/category";
 
 const textMargin = "8px";
 
@@ -75,7 +77,11 @@ const CategoryAccordion = ({
         <AccordionIcon />
       </AccordionButton>
       <AccordionPanel>
-        <AccordionItem as={RouterLink} to={route} aria-label={`Link to all ${type}s`}>
+        <AccordionItem
+          as={RouterLink}
+          to={route}
+          aria-label={`Link to all ${type}s`}
+        >
           <AccordionButton>
             <HStack>
               <AiFillWallet />
@@ -95,57 +101,30 @@ const CategoryAccordion = ({
 
 // TODO: Reduce duplication in these components
 
-const CommandCategorySection = () => {
-  const { query, editCategoryMutation } = useCategories("command");
+interface CategorySectionProps {
+  entityType: Entity;
+  entityRoute: entityRoute;
+  icon: JSX.Element;
+}
+
+const CategorySection: FC<CategorySectionProps> = ({
+  entityType,
+  entityRoute,
+  icon,
+}) => {
+  const { query, editCategoryMutation } = useCategories(entityType);
   const { addToCategoryDropRef, isAddToGroupDropActive } =
-    useRemoveFromGroupDropItem("command", editCategoryMutation, query.data);
+    useRemoveFromGroupDropItem(entityType, editCategoryMutation, query.data);
   return (
     <CategoryAccordion
       addToCategoryDropRef={addToCategoryDropRef}
       isAddToGroupDropActive={isAddToGroupDropActive}
-      type="command"
-      route="/commands"
+      type={entityType}
+      route={entityRoute}
       query={query}
       editCategoryMutation={editCategoryMutation}
-      icon={<BiCommand />}
+      icon={icon}
       sidebarIndex={2}
-    />
-  );
-};
-
-const LinkCategorySection = () => {
-  const { query, editCategoryMutation } = useCategories("link");
-  const { addToCategoryDropRef, isAddToGroupDropActive } =
-    useRemoveFromGroupDropItem("link", editCategoryMutation, query.data);
-
-  return (
-    <CategoryAccordion
-      addToCategoryDropRef={addToCategoryDropRef}
-      isAddToGroupDropActive={isAddToGroupDropActive}
-      type="link"
-      route="/links"
-      query={query}
-      editCategoryMutation={editCategoryMutation}
-      icon={<FaExternalLinkSquareAlt />}
-      sidebarIndex={4}
-    />
-  );
-};
-
-const SnippetCategorySection = () => {
-  const { query, editCategoryMutation } = useCategories("snippet");
-  const { addToCategoryDropRef, isAddToGroupDropActive } =
-    useRemoveFromGroupDropItem("snippet", editCategoryMutation, query.data);
-  return (
-    <CategoryAccordion
-      addToCategoryDropRef={addToCategoryDropRef}
-      isAddToGroupDropActive={isAddToGroupDropActive}
-      type="snippet"
-      route="/snippets"
-      query={query}
-      editCategoryMutation={editCategoryMutation}
-      icon={<AiFillCode />}
-      sidebarIndex={6}
     />
   );
 };
@@ -155,13 +134,6 @@ function SideBarLinks() {
 
   return (
     <Accordion allowMultiple defaultIndex={defaultIndex} fontSize="sm">
-      <AccordionItem textAlign="left" as={RouterLink} to="/" borderTop="none">
-        <AccordionButton fontWeight="700" letterSpacing="1px">
-          <IoMdHome />
-          <Text ml={textMargin}>Home</Text>
-        </AccordionButton>
-      </AccordionItem>
-
       <AccordionItem
         textAlign="left"
         as={RouterLink}
@@ -174,9 +146,21 @@ function SideBarLinks() {
         </AccordionButton>
       </AccordionItem>
 
-      <CommandCategorySection />
-      <LinkCategorySection />
-      <SnippetCategorySection />
+      <CategorySection
+        entityType="command"
+        entityRoute="commands"
+        icon={<BiCommand />}
+      />
+      <CategorySection
+        entityType="link"
+        entityRoute="links"
+        icon={<FaExternalLinkSquareAlt />}
+      />
+      <CategorySection
+        entityType="snippet"
+        entityRoute="snippets"
+        icon={<AiFillCode />}
+      />
     </Accordion>
   );
 }

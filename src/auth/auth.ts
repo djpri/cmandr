@@ -7,7 +7,7 @@ export const apiConfig = {
   webApi: BASE_URL,
 };
 
-const baseUrl = "https://CmandrApp.b2clogin.com/CmandrApp.onmicrosoft.com/"
+const baseUrl = "https://CmandrApp.b2clogin.com/CmandrApp.onmicrosoft.com/";
 
 const b2cPolicies = {
   names: {
@@ -18,20 +18,16 @@ const b2cPolicies = {
   },
   authorities: {
     signIn: {
-      authority:
-        `${baseUrl}B2C_1_sign_in`,
+      authority: `${baseUrl}B2C_1_sign_in`,
     },
     signUpSignIn: {
-      authority:
-        `${baseUrl}B2C_1_signup_signin`,
+      authority: `${baseUrl}B2C_1_signup_signin`,
     },
     forgotPassword: {
-      authority:
-        `${baseUrl}B2C_1_reset`,
+      authority: `${baseUrl}B2C_1_reset`,
     },
     editProfile: {
-      authority:
-        `${baseUrl}B2C_1_edit`,
+      authority: `${baseUrl}B2C_1_edit`,
     },
   },
   authorityDomain: "CmandrApp.b2clogin.com",

@@ -24,7 +24,7 @@ test("Shows edit and delete buttons", async () => {
 
 test("Shows edit form with correct default information when edit button is clicked", async () => {
   customRender(<CommandOptions command={testCommand} />);
-  
+
   // click edit button
   const editButton = screen.getByLabelText(/edit/i);
   fireEvent.click(editButton);

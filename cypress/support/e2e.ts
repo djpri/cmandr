@@ -35,7 +35,7 @@ export function loginViaAAD(username: string, password: string) {
     }
   );
 
-  cy.wait(2000)
+  cy.wait(2000);
   // Ensure Microsoft has redirected us back to the sample app with our logged in user.
   cy.url().should("equal", Cypress.config().baseUrl + "/");
 }

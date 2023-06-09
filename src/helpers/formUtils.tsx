@@ -25,4 +25,4 @@ export type FormUtils<Fields extends string> = {
   errorMessages: Record<Fields, string>;
   registerOptions: Record<Fields, RegisterOptions>;
   ValidationError: FC<ValidationErrorProps>;
-}
+};

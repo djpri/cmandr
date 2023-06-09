@@ -17,7 +17,7 @@ const selectors = ({
     ? `add-group ${entityType}`
     : `add-category ${entityType}`;
   return {
-    showInputButton: createDataCySelector( base),
+    showInputButton: createDataCySelector(base),
     input: createDataCySelector(`${base} input`),
     save: createDataCySelector(`${base} save`),
   };
@@ -65,7 +65,7 @@ describe("Adds group and category for each entity and displays on dashboard", ()
         randomGroupName
       );
       cy.log("Click on category button");
-      cy.contains( randomCategoryName).click();
+      cy.contains(randomCategoryName).click();
     });
   });
 });

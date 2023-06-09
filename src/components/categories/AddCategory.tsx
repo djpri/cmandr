@@ -47,7 +47,9 @@ function AddCategory({ entityType, isGroup, parentId }: IProps) {
       {isOpen && (
         <HStack>
           <Input
-            data-cy={`add-${isGroup ? "group" : "category"} ${entityType} input`}
+            data-cy={`add-${
+              isGroup ? "group" : "category"
+            } ${entityType} input`}
             size="sm"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
