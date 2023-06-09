@@ -26,8 +26,7 @@ interface IProps {
 function TableRow({ linkItem, row, table, showCategories }: IProps) {
   const { title, url, category } = linkItem;
   const showImagePreviews = useAppSelector(selectShowImagePreviews);
-  const selectedRowColor = useColorModeValue("gray.300", "blue.600");
-  const { multiSelectRow } = useTableSelectors<LinkReadDto>({
+  const { multiSelectRow, selectedRowColor } = useTableSelectors<LinkReadDto>({
     table,
     row,
     requireClickToSelect: true,

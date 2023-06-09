@@ -3,7 +3,7 @@ import { RootState } from "redux/store";
 
 const initialState = {
   isSidebarOpen: true,
-  sideBarAccordionIndex: [2, 4, 6],
+  sideBarAccordionIndex: [1, 3, 5],
   categoriesOpen: {},
 };
 

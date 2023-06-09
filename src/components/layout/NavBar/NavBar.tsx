@@ -23,12 +23,15 @@ function NavBar() {
   return (
     <Box
       position="fixed"
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
       top="0"
       w="100vw"
       pr="1rem"
       bgColor={bgColor}
       color="white"
-      h="50"
+      h="45"
       shadow="base"
       zIndex={200}
     >
@@ -36,9 +39,8 @@ function NavBar() {
       <HStack
         pl="2"
         pr="5"
-        pt="2"
-        pb="2"
         display="flex"
+        w="100%"
         flexDirection="row"
         justifyContent="space-between"
       >

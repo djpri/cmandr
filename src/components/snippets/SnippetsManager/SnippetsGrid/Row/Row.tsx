@@ -30,9 +30,8 @@ function TableRow({
   setReadOnlyCode,
 }: IProps) {
   const { description, category, language } = snippet;
-  const selectedRowColor = useColorModeValue("gray.300", "blue.600");
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
-  const { multiSelectRow } = useTableSelectors<SnippetReadDto>({
+  const { multiSelectRow, selectedRowColor } = useTableSelectors<SnippetReadDto>({
     table,
     row,
     requireClickToSelect: true,
