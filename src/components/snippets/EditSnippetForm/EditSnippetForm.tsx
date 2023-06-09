@@ -1,4 +1,12 @@
-import { Box, Button, FormLabel, Input, Select, Stack, chakra } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormLabel,
+  Input,
+  Select,
+  Stack,
+  chakra,
+} from "@chakra-ui/react";
 import CUIAutoComplete from "components/shared/ChakraUIAutoComplete";
 import useSnippets from "hooks/entities/useSnippets";
 import { SnippetReadDto, SnippetUpdateDto } from "models/snippets";
@@ -14,11 +22,7 @@ type IProps = {
   onClose: () => void;
 };
 
-const {
-  labels,
-  registerOptions,
-  ValidationError,
-} = snippetFormUtils;
+const { labels, registerOptions, ValidationError } = snippetFormUtils;
 
 function EditSnippetForm({ snippetItem, onClose }: IProps) {
   const { query: allCategoriesQuery } = useCategories("snippet");

@@ -18,7 +18,7 @@ import LoginPopover from "./LoginPopover";
 function NavBar() {
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector((state) => state.layout.isSidebarOpen);
-  const bgColor = useColorModeValue("purple.600", "purple.800");
+  const bgColor = useColorModeValue("purple.700", "purple.800");
 
   return (
     <Box
@@ -26,7 +26,7 @@ function NavBar() {
       top="0"
       w="100vw"
       pr="1rem"
-      bgColor={isInDevelopment ? "yellow.500" : bgColor}
+      bgColor={bgColor}
       color="white"
       h="50"
       shadow="base"
@@ -46,7 +46,9 @@ function NavBar() {
           {/* OPEN/CLOSE SIDEBAR BUTTON */}
           <Box>
             <IconButton
-              data-cy={isSidebarOpen ? "close-sidebar-button" : "open-sidebar-button"}
+              data-cy={
+                isSidebarOpen ? "close-sidebar-button" : "open-sidebar-button"
+              }
               variant="ghost"
               colorScheme="whiteAlpha"
               border="0px"

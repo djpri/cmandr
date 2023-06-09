@@ -3,12 +3,9 @@ import AddSnippetForm from "./AddSnippetForm";
 import { snippetFormUtils } from "../snippetFormUtils";
 import { test } from "vitest";
 
-const {
-  labels,
-  registerOptions,
-} = snippetFormUtils;
+const { labels, registerOptions } = snippetFormUtils;
 
-vi.mock('@monaco-editor/react', () => {
+vi.mock("@monaco-editor/react", () => {
   const FakeEditor = (props: any) => {
     return (
       <textarea
@@ -31,14 +28,12 @@ test("Displays form labels correctly without categoryId prop", async () => {
 });
 
 test("Displays all inputs correctly", async () => {
-  const { getByRole } = customRender(
-    <AddSnippetForm />
-  );
+  const { getByRole } = customRender(<AddSnippetForm />);
   const codeInput = getByRole("textbox", { name: /code/i });
   const descriptionInput = getByRole("textbox", { name: /description/i });
   const languageInput = getByRole("combobox", { name: /language/i });
   const categoryInput = getByRole("combobox", { name: /category/i });
-  
+
   expect(codeInput).toBeInTheDocument();
   expect(descriptionInput).toBeInTheDocument();
   expect(languageInput).toBeInTheDocument();
@@ -57,15 +52,19 @@ test("Displays form labels correctly with categoryId prop", async () => {
 });
 
 test("When submitting empty form, validation messages are displayed correctly", async () => {
-  const { getByRole, findByText } = customRender(
-    <AddSnippetForm />
-  );
+  const { getByRole, findByText } = customRender(<AddSnippetForm />);
   const submitButton = getByRole("button", { name: /Add snippet/i });
   submitButton.click();
 
-  const descriptionRequiredError = await findByText(registerOptions.description.required as string);
-  const languageRequiredError = await findByText(registerOptions.language.required as string);
-  const codeRequiredError = await findByText(registerOptions.code.required as string);
+  const descriptionRequiredError = await findByText(
+    registerOptions.description.required as string
+  );
+  const languageRequiredError = await findByText(
+    registerOptions.language.required as string
+  );
+  const codeRequiredError = await findByText(
+    registerOptions.code.required as string
+  );
 
   expect(descriptionRequiredError).toBeInTheDocument();
   expect(languageRequiredError).toBeInTheDocument();

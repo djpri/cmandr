@@ -1,10 +1,4 @@
-import {
-  Button,
-  FormLabel,
-  Input,
-  Select,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
 import useCategories from "hooks/categories/useCategories";
 import { CategoryReadDto } from "models/category";
 import { useForm } from "react-hook-form";
@@ -58,7 +52,10 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
             placeholder="Description of what command does"
           />
           <FormLabel htmlFor="command">Command</FormLabel>
-          <Input {...register("line", registerOptions.line)} placeholder="Command" />
+          <Input
+            {...register("line", registerOptions.line)}
+            placeholder="Command"
+          />
           <FormLabel htmlFor="category">Category</FormLabel>
           <Select {...register("categoryId")}>
             <option value={-1}>Select Category</option>
@@ -72,16 +69,17 @@ function EditCommandForm({ commandItem, onClose }: IProps) {
                 ))}
           </Select>
           <FormLabel htmlFor="reference">Reference</FormLabel>
-          <Input {...register("reference", registerOptions.reference)} placeholder="Reference" />
+          <Input
+            {...register("reference", registerOptions.reference)}
+            placeholder="Reference"
+          />
           <Button type="submit">Save</Button>
         </Stack>
       </form>
       {errors.description && (
         <ValidationError message={errors.description.message} />
       )}
-      {errors.line && (
-        <ValidationError message={errors.line.message} />
-      )}
+      {errors.line && <ValidationError message={errors.line.message} />}
       {errors.reference && (
         <ValidationError message={errors.reference.message} />
       )}

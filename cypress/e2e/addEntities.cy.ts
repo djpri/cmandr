@@ -5,7 +5,7 @@ describe("Adds group and category for each entity and displays on dashboard", ()
   });
 
   it("should add new command to commands grid", () => {
-    cy.log("Visit commands page")
+    cy.log("Visit commands page");
     cy.visit("/commands");
 
     cy.log("Show command form");
@@ -26,7 +26,7 @@ describe("Adds group and category for each entity and displays on dashboard", ()
   });
 
   it("should add new link to links grid", () => {
-    cy.log("Visit links page")
+    cy.log("Visit links page");
     cy.visit("/links");
 
     cy.log("Show link form");

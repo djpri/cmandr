@@ -31,29 +31,33 @@ import { loginViaAAD } from "./e2e";
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
 
-Cypress.Commands.add('dataCy', (value) => {
-  return cy.get(`[data-cy=${value}]`)
-})
+Cypress.Commands.add("dataCy", (value) => {
+  return cy.get(`[data-cy=${value}]`);
+});
 
 Cypress.Commands.add("loginToAAD", (username: string, password: string) => {
-  cy.session(`aad-${username}`, () => {
-    const log = Cypress.log({
-      displayName: "Azure Active Directory B2C Login",
-      message: [`🔐 Authenticating | ${username}`],
-      autoEnd: false,
-    });
-    // log.snapshot("before");
+  cy.session(
+    `aad-${username}`,
+    () => {
+      const log = Cypress.log({
+        displayName: "Azure Active Directory B2C Login",
+        message: [`🔐 Authenticating | ${username}`],
+        autoEnd: false,
+      });
+      // log.snapshot("before");
 
-    loginViaAAD(username, password);
+      loginViaAAD(username, password);
 
-    // log.snapshot("after");
-    log.end();
-  }, {
-    validate: () => {
-      cy.visit('/');
-      cy.get('.login-button').should('be.disabled');
+      // log.snapshot("after");
+      log.end();
+    },
+    {
+      validate: () => {
+        cy.visit("/");
+        cy.get(".login-button").should("be.disabled");
+      },
     }
-  });
+  );
 });
 
 let cachedTokenExpiryTime = new Date().getTime();

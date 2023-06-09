@@ -1,11 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  UseQueryResult,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { CommandCategories, LinkCategories, SnippetCategories } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import { CategoryReadDto } from "models/category";
 import { Entity } from "models/entity";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 import useChakraToast from "../other/useChakraToast";
 
 const getCategoryInfo = (entity: Entity) => {
@@ -31,12 +34,14 @@ const getCategoryInfo = (entity: Entity) => {
 
 function useCategories(entity: Entity) {
   const queryClient = useQueryClient();
-  const isAppInitialized: boolean = useSelector(selectUserHasReceivedToken);
   const { showErrorToast } = useChakraToast();
   const [{ endpoints, queryKey }] = useState(getCategoryInfo(entity));
 
   // Queries
-  const query = useQuery([queryKey], asReactQueryFunction(endpoints.getAll));
+  const query: UseQueryResult<CategoryReadDto[]> = useQuery(
+    [queryKey],
+    asReactQueryFunction(endpoints.getAll)
+  );
 
   // Mutations
   // Note: mutation functions can only take ONE parameter

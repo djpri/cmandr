@@ -23,7 +23,9 @@ function CategoryLinkButton({
   const itemCountColor = useColorModeValue("gray.600", "gray.300");
 
   const buttonBgGradient = useColorModeValue(
-    `linear-gradient(135deg, hsl(${hue + 3}, 50%, 80%), transparent)`,
+    `linear-gradient(135deg, hsl(${hue + 3}, 50%, 80%), hsla(${
+      hue + 3
+    }, 80%, 40%, 0.2))`,
     `linear-gradient(45deg, hsl(${hue}, 50%, 40%), transparent)`
   );
 

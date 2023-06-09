@@ -4,7 +4,6 @@ import {
   Grid,
   Heading,
   Spinner,
-  useColorModeValue,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
@@ -14,11 +13,10 @@ import useCategories from "hooks/categories/useCategories";
 import useSortCategories from "hooks/categories/useSortCategories";
 import { CategoryReadDto } from "models/category";
 import { FC, lazy, useMemo } from "react";
-import { Entity } from "../models/entity";
-import { UseQueryResult } from "@tanstack/react-query";
-import { entityRoute } from "routes";
-import { useAppSelector } from "redux/store";
 import { selectCategoriesSort } from "redux/slices/settingsSlice";
+import { useAppSelector } from "redux/store";
+import { entityRoute } from "routes";
+import { Entity } from "../models/entity";
 
 const UserLayout = lazy(() => import("../components/layout/UserLayout"));
 type SortType = "manual" | "ascending" | "descending" | "size";
@@ -30,20 +28,25 @@ type SortButtonProps = {
 
 type CategoriesGridProps = {
   entityType: Entity;
-  categoriesQuery: UseQueryResult<CategoryReadDto[]>;
   entityRoute: entityRoute;
 };
 
-function CategoriesGrid({ entityType, categoriesQuery, entityRoute }: CategoriesGridProps) {
+function CategoriesGrid({ entityType, entityRoute }: CategoriesGridProps) {
   const baseHue = 184;
+  const { query } = useCategories(entityType);
   const categories = useMemo(() => {
-    if (categoriesQuery.data?.length <= 0) return [];
-    return categoriesQuery.data?.filter((c) => c.parentId <= 0);
-  }, [categoriesQuery]);
+    if (query.data?.length <= 0) return [];
+    return query.data?.filter((c) => c.parentId <= 0);
+  }, [query]);
 
   return (
     <>
-      <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)" data-cy={`categories-grid ${entityType}`}>
+      <Grid
+        my="30px"
+        gap={3}
+        templateColumns="repeat(auto-fill, 250px)"
+        data-cy={`categories-grid ${entityType}`}
+      >
         {categories?.map((item: CategoryReadDto, index: number) => (
           <CategoryLinkButton
             entityType={entityType}
@@ -53,7 +56,7 @@ function CategoriesGrid({ entityType, categoriesQuery, entityRoute }: Categories
             hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
           />
         ))}
-        {categoriesQuery.isLoading && <Spinner />}
+        {query.isLoading && <Spinner />}
       </Grid>
       <VStack spacing={2} my={5} align="flex-start">
         <AddCategory isGroup entityType={entityType} />
@@ -64,46 +67,45 @@ function CategoriesGrid({ entityType, categoriesQuery, entityRoute }: Categories
 }
 
 function Dashboard() {
-  const { query: commandCategoryQuery } = useCategories("command");
-  const { query: linkCategoryQuery } = useCategories("link");
-  const { query: snippetCategoryQuery } = useCategories("snippet");
-
   const categorySortOptions = useAppSelector(selectCategoriesSort);
 
   const SortButtons: FC<SortButtonProps> = ({ type, sortOption }) => {
     const {
+      categoriesAvailable,
       sortCategoriesAscending,
       sortCategoriesDescending,
       sortCategoriesByItemCount,
     } = useSortCategories(type);
-    const selectedSortBgColor = useColorModeValue("gray.100", "teal.600");
-
-    const noCategoryData =
-      !commandCategoryQuery.data || !linkCategoryQuery.data || !snippetCategoryQuery.data;
 
     return (
       <Wrap my={4}>
         <Button
           variant="options"
-          bgColor={sortOption === "ascending" && selectedSortBgColor}
+          border={sortOption === "ascending" ? "2px" : "none"}
+          borderColor={"purple.500"}
+          rounded="md"
           onClick={sortCategoriesAscending}
-          disabled={noCategoryData || sortOption === "ascending"}
+          disabled={categoriesAvailable || sortOption === "ascending"}
         >
           Sort A-Z
         </Button>
         <Button
           variant="options"
-          bgColor={sortOption === "descending" && selectedSortBgColor}
+          border={sortOption === "descending" ? "2px" : "none"}
+          borderColor={"purple.500"}
+          rounded="md"
           onClick={sortCategoriesDescending}
-          disabled={noCategoryData || sortOption === "descending"}
+          disabled={categoriesAvailable || sortOption === "descending"}
         >
           Sort Z-A
         </Button>
         <Button
           variant="options"
-          bgColor={sortOption === "size" && selectedSortBgColor}
+          border={sortOption === "size" ? "2px" : "none"}
+          borderColor={"purple.500"}
+          rounded="md"
           onClick={sortCategoriesByItemCount}
-          disabled={noCategoryData || sortOption === "size"}
+          disabled={categoriesAvailable || sortOption === "size"}
         >
           Sort by size
         </Button>
@@ -114,41 +116,35 @@ function Dashboard() {
   return (
     <UserLayout>
       <Box fontSize="xl" pb={16} data-cy="dashboard">
-        <Heading as="h1" fontSize="3xl">
+        <Heading as="h1" fontSize="2xl">
           Commands
         </Heading>
         {categorySortOptions["command"] && (
-          <SortButtons type="command" sortOption={categorySortOptions["command"]} />
+          <SortButtons
+            type="command"
+            sortOption={categorySortOptions["command"]}
+          />
         )}
-        <CategoriesGrid
-          entityType="command"
-          entityRoute="commands"
-          categoriesQuery={commandCategoryQuery}
-        />
+        <CategoriesGrid entityType="command" entityRoute="commands" />
 
-        <Heading as="h1" fontSize="3xl">
+        <Heading as="h1" fontSize="2xl">
           Links
         </Heading>
         {categorySortOptions["link"] && (
           <SortButtons type="link" sortOption={categorySortOptions["link"]} />
         )}
-        <CategoriesGrid
-          entityType="link"
-          entityRoute="links"
-          categoriesQuery={linkCategoryQuery}
-        />
+        <CategoriesGrid entityType="link" entityRoute="links" />
 
-        <Heading as="h1" fontSize="3xl">
+        <Heading as="h1" fontSize="2xl">
           Snippets
         </Heading>
         {categorySortOptions["snippet"] && (
-          <SortButtons type="snippet" sortOption={categorySortOptions["snippet"]} />
+          <SortButtons
+            type="snippet"
+            sortOption={categorySortOptions["snippet"]}
+          />
         )}
-        <CategoriesGrid
-          entityType="snippet"
-          entityRoute="snippets"
-          categoriesQuery={snippetCategoryQuery}
-        />
+        <CategoriesGrid entityType="snippet" entityRoute="snippets" />
       </Box>
     </UserLayout>
   );

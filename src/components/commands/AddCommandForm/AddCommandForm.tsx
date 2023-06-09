@@ -84,16 +84,19 @@ function AddCommandForm({ categoryId }: IProps) {
           {showCategorySelect && (
             <Box>
               <FormLabel htmlFor="categoryId">Category</FormLabel>
-              <Select {...register("categoryId", registerOptions.category)}
+              <Select
+                {...register("categoryId", registerOptions.category)}
                 data-cy="add-command-form-category"
               >
                 <option value={-1}>Select Category</option>
                 {allCategoriesQuery.data &&
-                  allCategoriesQuery.data.filter(cat => !cat.isGroup).map((category, index) => (
-                    <option value={category.id} key={index}>
-                      {category.name}
-                    </option>
-                  ))}
+                  allCategoriesQuery.data
+                    .filter((cat) => !cat.isGroup)
+                    .map((category, index) => (
+                      <option value={category.id} key={index}>
+                        {category.name}
+                      </option>
+                    ))}
               </Select>
             </Box>
           )}

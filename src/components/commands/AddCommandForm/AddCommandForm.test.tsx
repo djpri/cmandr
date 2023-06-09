@@ -29,10 +29,14 @@ test("Displays validation messages correctly", async () => {
 
   userEvent.type(referenceInput, "notavalidurl");
   submitButton.click();
-  
+
   const referenceError = await findByText(errorMessages.reference);
-  const lineRequiredError = await findByText(registerOptions.line.required as string);
-  const descriptionRequiredError = await findByText(registerOptions.description.required as string);
+  const lineRequiredError = await findByText(
+    registerOptions.line.required as string
+  );
+  const descriptionRequiredError = await findByText(
+    registerOptions.description.required as string
+  );
 
   expect(lineRequiredError).toBeInTheDocument();
   expect(descriptionRequiredError).toBeInTheDocument();
@@ -50,11 +54,11 @@ test("Submits form correctly", async () => {
   const descriptionInput = getByPlaceholderText(/Description/i);
   const commandInput = getByRole("textbox", { name: "Command" });
   const referenceInput = getByPlaceholderText(/Reference/i);
-  
+
   userEvent.type(descriptionInput, "test description");
   userEvent.type(commandInput, "test command");
   userEvent.type(referenceInput, "https://www.google.com");
-  
+
   const submitButton = getByRole("button", { name: /Add command/i });
   submitButton.click();
 

@@ -12,7 +12,11 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "redux/store";
 import Loading from "views/Loading";
 import { App } from "./App";
-import { PersistQueryClientProvider, PersistedClient, Persister } from "@tanstack/react-query-persist-client";
+import {
+  PersistQueryClientProvider,
+  PersistedClient,
+  Persister,
+} from "@tanstack/react-query-persist-client";
 import { get, set, del } from "idb-keyval";
 
 const queryClient = new QueryClient({
@@ -46,9 +50,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <ColorModeScript initialColorMode="dark"/>
+    <ColorModeScript initialColorMode="dark" />
     <DndProvider backend={HTML5Backend}>
-      <PersistQueryClientProvider client={queryClient} persistOptions={{ persister: IDBPersister }}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister: IDBPersister }}
+      >
         <ReduxProvider store={store}>
           <PersistGate loading={<Loading />} persistor={persistor}>
             <CustomMsalProvider instance={msalInstance}>

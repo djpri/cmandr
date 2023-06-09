@@ -34,7 +34,11 @@ const AddLinkButton = forwardRef(
             Add
           </Button>
         ) : (
-          <Button onClick={handleOpen} rightIcon={<AiFillCaretDown />} data-cy="add-link-button">
+          <Button
+            onClick={handleOpen}
+            rightIcon={<AiFillCaretDown />}
+            data-cy="add-link-button"
+          >
             Add
           </Button>
         )}
