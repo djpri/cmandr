@@ -27,9 +27,8 @@ type Props = {
 function CommandRow({ row, table, showCategories, commandItem }: Props) {
   const { id, description, line, reference, category } = commandItem;
   const hoverColor = useColorModeValue("gray.200", "gray.600");
-  const selectedRowColor = useColorModeValue("gray.300", "blue.600");
   const categoryTextColor = useColorModeValue("gray.500", "gray.300");
-  const { multiSelectRow } = useTableSelectors<CommandReadDto>({
+  const { multiSelectRow, selectedRowColor } = useTableSelectors<CommandReadDto>({
     table,
     row,
     requireClickToSelect: true,

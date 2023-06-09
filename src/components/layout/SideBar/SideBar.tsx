@@ -98,7 +98,7 @@ function SideBar() {
       bgColor={bgColor}
       position={isSmallerThan1280 ? "fixed" : "fixed"}
       w="15rem"
-      mt="50px"
+      mt="45px"
       left="0"
       h="100vh"
       borderColor={borderColor}

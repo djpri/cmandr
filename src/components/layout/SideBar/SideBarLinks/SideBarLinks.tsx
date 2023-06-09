@@ -105,12 +105,14 @@ interface CategorySectionProps {
   entityType: Entity;
   entityRoute: entityRoute;
   icon: JSX.Element;
+  sidebarIndex: number;
 }
 
 const CategorySection: FC<CategorySectionProps> = ({
   entityType,
   entityRoute,
   icon,
+  sidebarIndex
 }) => {
   const { query, editCategoryMutation } = useCategories(entityType);
   const { addToCategoryDropRef, isAddToGroupDropActive } =
@@ -124,7 +126,7 @@ const CategorySection: FC<CategorySectionProps> = ({
       query={query}
       editCategoryMutation={editCategoryMutation}
       icon={icon}
-      sidebarIndex={2}
+      sidebarIndex={sidebarIndex}
     />
   );
 };
@@ -150,16 +152,19 @@ function SideBarLinks() {
         entityType="command"
         entityRoute="commands"
         icon={<BiCommand />}
+        sidebarIndex={1}
       />
       <CategorySection
         entityType="link"
         entityRoute="links"
         icon={<FaExternalLinkSquareAlt />}
+        sidebarIndex={3}
       />
       <CategorySection
         entityType="snippet"
         entityRoute="snippets"
         icon={<AiFillCode />}
+        sidebarIndex={5}
       />
     </Accordion>
   );
