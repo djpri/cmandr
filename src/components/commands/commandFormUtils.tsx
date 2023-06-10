@@ -33,8 +33,11 @@ export const registerOptions: Record<string, RegisterOptions> = {
       errorMessages.category,
   },
   reference: {
-    validate: (value) =>
-      value === "" || isWebUri(value) !== undefined || errorMessages.reference,
+    validate: (value) => {
+      return (
+        !value || isWebUri(value) !== undefined || errorMessages.reference
+      );
+    },
   },
 };
 

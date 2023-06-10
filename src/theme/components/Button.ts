@@ -5,12 +5,16 @@ export const Button: ComponentStyleConfig = {
   baseStyle: (props) => ({
     color: props.colorMode === "dark" ? "gray.50" : "gray.900",
     fontWeight: "600",
-    boxShadow: "none",
+    boxShadow: "base",
     textTransform: "Capitalize",
     borderRadius: "sm", // <-- border radius is same for all variants and sizes
     transitionProperty: "background-color",
     transitionDuration: "0ms",
-    letterSpacing: "0.05rem",
+    letterSpacing: "0.08rem",
+    border: "2px solid transparent",
+    _focus: {
+      borderColor: mode("#8a4cca", "#8a4cca")(props),
+    },
   }),
   // Two sizes: sm and md
   sizes: {
