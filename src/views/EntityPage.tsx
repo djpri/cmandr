@@ -11,6 +11,8 @@ interface EntityPageProps {
 }
 
 // TODO: Add link to parent group if a parent group exists
+// TODO: Use "Editable" component from Chakra UI to allow users to edit category names
+// https://chakra-ui.com/docs/components/editable
 
 function EntityPage({
   children,

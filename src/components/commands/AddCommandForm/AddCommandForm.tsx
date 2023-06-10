@@ -67,7 +67,6 @@ function AddCommandForm({ categoryId }: IProps) {
             <Input
               data-cy="add-command-form-description"
               {...register("description", registerOptions.description)}
-              placeholder="* Description of what command does"
             />
           </Box>
 
@@ -76,7 +75,6 @@ function AddCommandForm({ categoryId }: IProps) {
             <Input
               id="line"
               {...register("line", registerOptions.line)}
-              placeholder="* Command"
               data-cy="add-command-form-line"
             />
           </Box>
@@ -105,7 +103,6 @@ function AddCommandForm({ categoryId }: IProps) {
             <FormLabel htmlFor="reference">Reference</FormLabel>
             <Input
               {...register("reference", registerOptions.reference)}
-              placeholder="Reference"
               data-cy="add-command-form-reference"
             />
           </Box>

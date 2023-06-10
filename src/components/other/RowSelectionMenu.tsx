@@ -108,7 +108,7 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
 };
 
 const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
-  const selectedRowsInfoColor = useColorModeValue("gray.400", "blue.600");
+  const selectedRowsInfoColor = useColorModeValue("gray.400", "#413b77");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
