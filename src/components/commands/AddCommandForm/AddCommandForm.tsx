@@ -67,6 +67,7 @@ function AddCommandForm({ categoryId }: IProps) {
             <Input
               data-cy="add-command-form-description"
               {...register("description", registerOptions.description)}
+              id="description"
             />
           </Box>
 
@@ -104,6 +105,7 @@ function AddCommandForm({ categoryId }: IProps) {
             <Input
               {...register("reference", registerOptions.reference)}
               data-cy="add-command-form-reference"
+              id="reference"
             />
           </Box>
 
