@@ -108,14 +108,15 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
 };
 
 const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
-  const selectedRowsInfoColor = useColorModeValue("gray.400", "#413b77");
+  const selectedRowsInfoColor = useColorModeValue("gray.300", "#413b77");
+  const selectedRowsTextColor = useColorModeValue("black", "white");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Flex
       p={5}
       bgColor={selectedRowsInfoColor}
-      color="white"
+      color={selectedRowsTextColor}
       rounded="none"
       mb={4}
       justify="space-between"
