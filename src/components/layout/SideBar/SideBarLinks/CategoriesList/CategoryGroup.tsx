@@ -71,26 +71,33 @@ const CategoryGroup: FC<IProps> = ({
     [childCategories]
   );
 
-  const OpenCloseFolderButton: FC = () => (
-    <Center
-      h="100%"
-      cursor="pointer"
-      left="-1rem"
-      aria-label="open-folder"
-      onClick={
-        openCategories[item.id] ? (e) => handleClose(e) : (e) => handleOpen(e)
-      }
-      visibility={"visible"}
-      _hover={{ bgColor: "hsl(0, 70%, 55%)" }}
-      rounded="sm"
-    >
-      {openCategories[item.id] ? (
-        <IoMdArrowDropdown style={{ marginLeft: "-4px" }} size="1.3rem" />
-      ) : (
-        <IoMdArrowDropright style={{ marginLeft: "-4px" }} size="1.3rem" />
-      )}
-    </Center>
-  );
+  const OpenCloseFolderButton: FC = () => {
+    const hoverStyle = useColorModeValue(
+      { bgColor: "hsl(254, 100%, 87.45%)" },
+      { bgColor: "hsl(254, 70%, 55%)" }
+    );
+
+    return (
+      <Center
+        h="100%"
+        cursor="pointer"
+        left="-1rem"
+        aria-label="open-folder"
+        onClick={
+          openCategories[item.id] ? (e) => handleClose(e) : (e) => handleOpen(e)
+        }
+        visibility={"visible"}
+        _hover={hoverStyle}
+        rounded="sm"
+      >
+        {openCategories[item.id] ? (
+          <IoMdArrowDropdown style={{ marginLeft: "-4px" }} size="1.3rem" />
+        ) : (
+          <IoMdArrowDropright style={{ marginLeft: "-4px" }} size="1.3rem" />
+        )}
+      </Center>
+    );
+  };
 
   const Folder: FC = () => {
     if (location.pathname === `/${type}/${item.id}`) {
@@ -114,6 +121,8 @@ const CategoryGroup: FC<IProps> = ({
         display="inline"
         whiteSpace="nowrap"
         fontSize="sm"
+        fontWeight="600"
+        letterSpacing="wider"
       >
         {isInDevelopment && `(${item.id})`} {item.name}
       </Text>

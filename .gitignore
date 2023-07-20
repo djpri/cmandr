@@ -15,6 +15,7 @@
 /coverage
 cypress.env.json
 cypress/videos
+cypress/screenshots
 cypress/support/auth.ts
 cypress/support/authTypes.ts
 

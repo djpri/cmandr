@@ -23,14 +23,18 @@ function CategoryLinkButton({
   const itemCountColor = useColorModeValue("gray.600", "gray.300");
 
   const buttonBgGradient = useColorModeValue(
-    `linear-gradient(135deg, hsl(${hue + 3}, 50%, 80%), hsla(${
+    `linear-gradient(135deg, hsl(${hue + 3}, 20%, 80%), hsla(${
       hue + 3
     }, 80%, 40%, 0.2))`,
-    `linear-gradient(45deg, hsl(${hue}, 50%, 40%), transparent)`
+    `linear-gradient(45deg, hsl(${hue}, 30%, 40%), transparent)`
   );
 
+  const bgPositionEnd = useColorModeValue("100%", "0%");
+
   const buttonBgGradientHover = useColorModeValue(
-    `linear-gradient(135deg, hsl(${hue + 3}, 50%, 90%), transparent)`,
+    `linear-gradient(135deg, hsl(${hue + 3}, 70%, 90%), hsla(${
+      hue + 3
+    }, 80%, 80%, 0.5))`,
     `linear-gradient(135deg, hsl(${hue + 3}, 60%, 50%), transparent)`
   );
   return (
@@ -46,8 +50,8 @@ function CategoryLinkButton({
       bgPosition="75%"
       bgSize="300%"
       _hover={{
-        bgColor: buttonBgGradientHover,
-        bgPosition: "0%",
+        bgImage: buttonBgGradientHover,
+        bgPosition: bgPositionEnd,
       }}
       fontSize="lg"
       fontWeight="bold"

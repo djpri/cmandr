@@ -41,6 +41,7 @@ function AddCategory({ entityType, isGroup, parentId }: IProps) {
         leftIcon={isGroup ? <AiFillFolderAdd /> : <AiOutlineUnorderedList />}
         onClick={onToggle}
         boxShadow="outline"
+        isLoading = {addCategoryMutation.isLoading}
       >
         {isGroup ? "New Group" : "New Category"}
       </Button>

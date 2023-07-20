@@ -2,8 +2,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CategoryReadDto } from "models/category";
 import { EntityReadDto, EntityUpdateDto } from "models/entity";
-import { useSelector } from "react-redux";
-import { selectUserHasReceivedToken } from "redux/slices/appSlice";
 import useChakraToast from "../other/useChakraToast";
 
 type SnapshotData<T> = {
@@ -61,11 +59,10 @@ function useReactQueryEntity<T extends EntityReadDto>({
 }: Props) {
   const queryClient = useQueryClient();
   const { showErrorToast } = useChakraToast();
-  const isAppInitalized: boolean = useSelector(selectUserHasReceivedToken);
 
   const query = useQuery(queryKey, queryFunction);
 
-  // TODO: update queryclient cache for all categoires when all entities are fetched
+  // TODO: update queryclient cache for all categories when all entities are fetched
 
   const snapshotPreviousData = (): SnapshotData<T> => {
     return {
@@ -168,7 +165,7 @@ function useReactQueryEntity<T extends EntityReadDto>({
       queryClient.setQueryData(
         [queryKey[0], currentEntity.category.id],
         (commands: any[]) => {
-          return commands.map((command) => {
+          return commands?.map((command) => {
             if (command.id === updatedEntityRequest.id) {
               return mapToReadDto(updatedEntityRequest.body, currentEntity);
             } else {

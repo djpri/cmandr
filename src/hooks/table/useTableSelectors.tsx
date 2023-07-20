@@ -1,3 +1,4 @@
+import { useColorModeValue } from "@chakra-ui/react";
 import { Row, Table } from "@tanstack/react-table";
 import { useCallback } from "react";
 
@@ -12,6 +13,8 @@ function useTableSelectors<TEntity>({
   row,
   requireClickToSelect = false,
 }: useTableSelectorsProps<TEntity>) {
+  const selectedRowColor = useColorModeValue("gray.300", "#413b77");
+
   const multiSelectRow = useCallback(
     (event: React.MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -53,7 +56,8 @@ function useTableSelectors<TEntity>({
   );
 
   return {
-    multiSelectRow,
+    selectedRowColor,
+    multiSelectRow
   };
 }
 
