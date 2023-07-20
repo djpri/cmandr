@@ -77,38 +77,42 @@ function Dashboard() {
       sortCategoriesByItemCount,
     } = useSortCategories(type);
 
+    const buttonsData = [
+      {
+        id: 1,
+        text: "Sort A-Z",
+        sortOption: "ascending",
+        onClick: sortCategoriesAscending,
+      },
+      {
+        id: 2,
+        text: "Sort Z-A",
+        sortOption: "descending",
+        onClick: sortCategoriesDescending,
+      },
+      {
+        id: 3,
+        text: "Sort by size",
+        sortOption: "size",
+        onClick: sortCategoriesByItemCount,
+      },
+    ];
+
     return (
       <Wrap my={4}>
-        <Button
-          variant="options"
-          border={sortOption === "ascending" ? "2px" : "none"}
-          borderColor={"purple.500"}
-          rounded="md"
-          onClick={sortCategoriesAscending}
-          disabled={categoriesAvailable || sortOption === "ascending"}
-        >
-          Sort A-Z
-        </Button>
-        <Button
-          variant="options"
-          border={sortOption === "descending" ? "2px" : "none"}
-          borderColor={"purple.500"}
-          rounded="md"
-          onClick={sortCategoriesDescending}
-          disabled={categoriesAvailable || sortOption === "descending"}
-        >
-          Sort Z-A
-        </Button>
-        <Button
-          variant="options"
-          border={sortOption === "size" ? "2px" : "none"}
-          borderColor={"purple.500"}
-          rounded="md"
-          onClick={sortCategoriesByItemCount}
-          disabled={categoriesAvailable || sortOption === "size"}
-        >
-          Sort by size
-        </Button>
+        {buttonsData.map((button) => (
+          <Button
+            key={button.id}
+            variant="options"
+            border={sortOption === button.sortOption ? "2px" : "none"}
+            borderColor={"hsla(254, 54%, 81%, 0.5)"}
+            rounded="md"
+            onClick={button.onClick}
+            isDisabled={!categoriesAvailable || sortOption === button.sortOption}
+          >
+            {button.text}
+          </Button>
+        ))}
       </Wrap>
     );
   };

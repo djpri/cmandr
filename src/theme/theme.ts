@@ -12,7 +12,7 @@ const theme = extendTheme({
   // remove outline on focus
   shadows: {
     outline:
-      "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;",
+      "rgba(0, 0, 0, 0.05) 0px 6px 12px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;",
   },
   styles: {
     global: (props: Dict<never>) => ({
@@ -73,7 +73,7 @@ const theme = extendTheme({
     Modal,
     Input: {
       defaultProps: {
-        focusBorderColor: "hsla(270, 26%, 59%, 0.5)",
+        focusBorderColor: "hsla(270, 66%, 59%, 0.9)",
       },
       baseStyle: {
         field: {

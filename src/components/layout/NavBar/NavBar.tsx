@@ -18,17 +18,25 @@ import LoginPopover from "./LoginPopover";
 function NavBar() {
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector((state) => state.layout.isSidebarOpen);
-  const bgColor = useColorModeValue("purple.700", "purple.800");
+
+  const bgImage = useColorModeValue(
+    "linear-gradient(to right, #72709b, #2b1b5f)",
+    "linear-gradient(to right, #474492, purple.700)"
+  );
 
   return (
     <Box
       position="fixed"
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
       top="0"
       w="100vw"
       pr="1rem"
-      bgColor={bgColor}
+      // bgColor={bgColor}
+      bgImage={bgImage}
       color="white"
-      h="50"
+      h="45"
       shadow="base"
       zIndex={200}
     >
@@ -36,9 +44,8 @@ function NavBar() {
       <HStack
         pl="2"
         pr="5"
-        pt="2"
-        pb="2"
         display="flex"
+        w="100%"
         flexDirection="row"
         justifyContent="space-between"
       >

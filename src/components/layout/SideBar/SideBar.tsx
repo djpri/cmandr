@@ -45,7 +45,7 @@ function SideBar() {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectIsSidebarOpen);
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
-  const bgColor = useColorModeValue("gray.200", "gray.900");
+  const bgColor = useColorModeValue("#f2f0f9", "gray.900");
   const borderColor = useColorModeValue("gray.300", "gray.700");
 
   // sidebar is initially closed on smaller devices
@@ -98,7 +98,7 @@ function SideBar() {
       bgColor={bgColor}
       position={isSmallerThan1280 ? "fixed" : "fixed"}
       w="15rem"
-      mt="50px"
+      mt="45px"
       left="0"
       h="100vh"
       borderColor={borderColor}
@@ -114,7 +114,7 @@ function SideBar() {
       {/* SIDE LINKS */}
       <Stack mt="1" mb={24}>
         <StackItem>
-          <Suspense fallback={<Spinner />}>
+          <Suspense>
             <SideBarLinks />
           </Suspense>
           {/* <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} /> */}

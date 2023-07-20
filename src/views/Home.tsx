@@ -24,7 +24,6 @@ function Home() {
       await instance.loginRedirect({
         scopes: apiConfig.b2cScopes,
       });
-      navigate("/dashboard");
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -32,11 +31,10 @@ function Home() {
   };
 
   useEffect(() => {
-    loginRedirect();
     if (accounts[0]) {
       navigate("/dashboard");
     }
-  }, []);
+  }, [accounts]);
 
   return (
     <Flex
