@@ -20,7 +20,7 @@ function NavBar() {
   const isSidebarOpen = useAppSelector((state) => state.layout.isSidebarOpen);
 
   const bgImage = useColorModeValue(
-    "linear-gradient(to right, #474492, #2b1b5f)",
+    "linear-gradient(to right, #72709b, #2b1b5f)",
     "linear-gradient(to right, #474492, purple.700)"
   );
 
