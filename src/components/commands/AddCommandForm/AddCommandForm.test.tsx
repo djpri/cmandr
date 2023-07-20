@@ -21,11 +21,11 @@ test("Displays form labels correctly with categoryId prop", async () => {
 });
 
 test("Displays validation messages correctly", async () => {
-  const { findByText, getByRole, getByPlaceholderText } = customRender(
+  const { findByText, getByRole, getByLabelText } = customRender(
     <AddCommandForm />
   );
   const submitButton = getByRole("button", { name: /Add command/i });
-  const referenceInput = getByPlaceholderText(/Reference/i);
+  const referenceInput = getByLabelText('Reference');
 
   userEvent.type(referenceInput, "notavalidurl");
   submitButton.click();
@@ -48,12 +48,12 @@ test("Displays validation messages correctly", async () => {
 });
 
 test("Submits form correctly", async () => {
-  const { getByRole, getByPlaceholderText } = customRender(
+  const { getByRole, getByLabelText } = customRender(
     <AddCommandForm categoryId={1} />
   );
-  const descriptionInput = getByPlaceholderText(/Description/i);
+  const descriptionInput = getByLabelText("Description");
   const commandInput = getByRole("textbox", { name: "Command" });
-  const referenceInput = getByPlaceholderText(/Reference/i);
+  const referenceInput = getByLabelText('Reference');
 
   userEvent.type(descriptionInput, "test description");
   userEvent.type(commandInput, "test command");
