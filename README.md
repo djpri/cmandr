@@ -53,7 +53,7 @@ $ yarn
 
 ## Environment Variables
 
-- See **.env.examples** for a list of all variable names
+- See **.env.example** for a list of all variable names
 - Use **.env** file for production environment
 - Use **.env.local** file for use in development
 

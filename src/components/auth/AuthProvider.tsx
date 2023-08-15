@@ -71,16 +71,16 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   return <>{children}</>;
 };
 
-/**
- * This component is responsible for authenticating the user and setting the user session in the redux store.
- * It also handles the redirect from the Azure B2C login page.
- * This must be wrapped in the redux provider component.
- */
 
 interface CustomMsalProviderProps {
   instance: PublicClientApplication;
 }
 
+/**
+ * This component is responsible for authenticating the user and setting the user session in the redux store.
+ * It also handles the redirect from the Azure B2C login page.
+ * This must be wrapped in the redux provider component.
+ */
 const CustomMsalProvider: FC<PropsWithChildren<CustomMsalProviderProps>> = ({
   instance,
   children,
