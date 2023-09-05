@@ -20,8 +20,8 @@ test("Displays validation messages correctly", async () => {
   );
   const submitButton = getByRole("button", { name: /Save/i });
   const referenceInput = getByPlaceholderText(/Reference/i);
-  userEvent.clear(referenceInput);
-  userEvent.type(referenceInput, "notavalidurl");
+  await userEvent.clear(referenceInput);
+  await userEvent.type(referenceInput, "notavalidurl");
   submitButton.click();
   expect(await findByText(/Link is not a valid URL/i)).toBeInTheDocument();
 });

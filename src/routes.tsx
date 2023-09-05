@@ -1,11 +1,11 @@
 import { Spinner } from "@chakra-ui/react";
+import UserLayout from "components/layout/UserLayout";
 import { lazy, ReactNode, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "views/Home";
-import Loading from "views/Loading";
+import Login from "views/Login";
 import LoginRedirect from "views/login-redirect";
 
-const UserLayout = lazy(() => import("./components/layout/UserLayout"));
 const Dashboard = lazy(() => import("./views/Dashboard"));
 const AllCommands = lazy(() => import("./views/commands/AllCommands"));
 const CommandCategory = lazy(() => import("./views/commands/CommandCategory"));
@@ -27,11 +27,9 @@ export const basicRouter = createBrowserRouter([
 ]);
 
 const WithUserLayout = ({ component }: { component: ReactNode }) => (
-  <Suspense fallback={<Loading />}>
-    <UserLayout>
-      <Suspense fallback={<Spinner size="lg" />}>{component}</Suspense>
-    </UserLayout>
-  </Suspense>
+  <UserLayout>
+    <Suspense fallback={<Spinner size="lg" />}>{component}</Suspense>
+  </UserLayout>
 );
 
 // wrap all elements in suspense
@@ -39,6 +37,10 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
   {
     path: "/login-redirect",

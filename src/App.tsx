@@ -6,6 +6,7 @@ import {
   Persister,
   PersistQueryClientProvider,
 } from "@tanstack/react-query-persist-client";
+import useAuth from "components/auth/useAuth";
 import { del, get, set } from "idb-keyval";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -43,6 +44,8 @@ function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
 const IDBPersister = createIDBPersister();
 
 export const App = () => {
+  useAuth();
+
   return (
     <PersistQueryClientProvider
       client={queryClient}

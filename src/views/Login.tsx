@@ -1,45 +1,34 @@
-import { Box, Container, Heading } from "@chakra-ui/react";
+import { useMsal } from "@azure/msal-react";
+import { Center, Heading, VStack } from "@chakra-ui/react";
 import LoginButton from "components/auth/LoginButton";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  const [formType] = useState("login");
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const { accounts } = useMsal();
+  const navigate = useNavigate();
 
-  // if (isInitialized && isLoggedIn) {
-  //   navigate(state.path || "/");
-  // }
-
-  // useEffect(() => {
-  //   if (isInitialized && isLoggedIn) {
-  //     navigate(location.state.from.pathname || "/");
-  //   }
-  // }, [isLoggedIn, isInitialized, navigate, location.state.from.pathname]);
+  useEffect(() => {
+    if (accounts[0]) {
+      navigate("/dashboard");
+    }
+  }, [accounts]);
 
   return (
-    <Box
+    <Center
       h="100vh"
-      position="relative"
-      display="flex"
-      alignItems="center"
-      flexDirection="column"
-      justifyContent="center"
-      w="container.md"
-      mx="auto"
+      w="100vw"
+      background="radial-gradient(circle at top, hsl(256, 37%, 20%) 0%,  hsl(256, 37%, 15%) 50%, #131316 70%)"
     >
-      <Heading as="h1" mb="30" w="100%" textAlign="center">
-        Cmandr
-      </Heading>
-      <Container maxW="container.sm">
-        <Heading mb="5">
-          {formType === "login"
-            ? "Log in to your account"
-            : "Create a new account"}
-        </Heading>
-        <LoginButton />
-      </Container>
-    </Box>
+      {!accounts[0] && (
+        <VStack>
+          <Heading mb="5" as="h2">
+            Log in to your account
+          </Heading>
+          <LoginButton />
+        </VStack>
+      )}
+    </Center>
   );
 }
 

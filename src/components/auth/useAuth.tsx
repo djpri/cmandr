@@ -2,27 +2,23 @@ import {
   AuthenticationResult,
   CacheLookupPolicy,
   InteractionRequiredAuthError,
-  PublicClientApplication,
   SilentRequest,
 } from "@azure/msal-browser";
-import { MsalProvider, useMsal } from "@azure/msal-react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMsal } from "@azure/msal-react";
 import { CmandrApi } from "api";
 import { apiConfig } from "auth/auth";
-import { FC, PropsWithChildren, useEffect } from "react";
-import { setEndOfUserSession, setUserSession } from "redux/slices/appSlice";
-import { useAppDispatch } from "redux/store";
+import { useEffect, useState } from "react";
 
-const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
+/**
+ * This component is responsible for authenticating the user and setting the user session in the redux store.
+ * It also handles the redirect from the Azure B2C login page.
+ * This must be wrapped in the redux provider component.
+ */
+const useAuth = () => {
+  const [authSuccess, setAuthSuccess] = useState(false)
   const { instance, accounts } = useMsal();
-  const queryClient = useQueryClient();
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!accounts[0]) {
-      queryClient.clear();
-    }
-
     const getToken = async ({ fromCache = true }: { fromCache: boolean }) => {
       if (!accounts[0]) return null;
 
@@ -35,14 +31,18 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       };
 
       try {
+        console.log("Acquiring token silently...")
         const response: AuthenticationResult =
           await instance.acquireTokenSilent(silentRequest);
 
-        if (response?.accessToken === null) dispatch(setEndOfUserSession);
+        console.log("Token acquired!");
 
-        dispatch(setUserSession());
+        setAuthSuccess(true);
         return response?.accessToken || null;
       } catch (error) {
+        console.log("Couldn't acquire token");
+        console.log(error);
+
         if (error instanceof InteractionRequiredAuthError) {
           // fallback to interaction when silent call fails
           await instance.acquireTokenRedirect(silentRequest);
@@ -51,7 +51,6 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     };
 
     getToken({ fromCache: true });
-    dispatch(setUserSession());
 
     const interceptor = CmandrApi.interceptors.request.use(
       async function (config) {
@@ -66,30 +65,11 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     return () => {
       CmandrApi.interceptors.request.eject(interceptor);
     };
-  }, [instance, accounts, dispatch]);
+  }, [instance, accounts]);
 
-  return <>{children}</>;
+  return {
+    authSuccess
+  };
 };
 
-
-interface CustomMsalProviderProps {
-  instance: PublicClientApplication;
-}
-
-/**
- * This component is responsible for authenticating the user and setting the user session in the redux store.
- * It also handles the redirect from the Azure B2C login page.
- * This must be wrapped in the redux provider component.
- */
-const CustomMsalProvider: FC<PropsWithChildren<CustomMsalProviderProps>> = ({
-  instance,
-  children,
-}) => {
-  return (
-    <MsalProvider instance={instance}>
-      <AuthProvider>{children}</AuthProvider>
-    </MsalProvider>
-  );
-};
-
-export default CustomMsalProvider;
+export default useAuth;
