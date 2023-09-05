@@ -5,6 +5,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Home from "views/Home";
 import Loading from "views/Loading";
+import LoginRedirect from "views/login-redirect";
 
 // import Dashboard from "views/Dashboard";
 // import AllCommands from "views/commands/AllCommands";
@@ -34,11 +35,22 @@ const SpinnerFallback: FC = () => (
 
 export type entityRoute = "commands" | "links" | "snippets";
 
+export const basicRouter = createBrowserRouter([
+  {
+    path: "/login-redirect",
+    element: <LoginRedirect />,
+  },
+]);
+
 // wrap all elements in suspense
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/login-redirect",
+    element: <LoginRedirect />,
   },
   {
     path: "/dashboard",

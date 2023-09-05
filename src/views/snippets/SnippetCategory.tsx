@@ -159,7 +159,7 @@ function SnippetCategory() {
                 defaultLanguage={language ?? "javascript"}
                 setDefaultLanguage={() => new Error("Not implemented")}
                 handleCodeSnippetChange={() => new Error("Not implemented")}
-                height="100%"
+                height="80vh"
                 readonly
               />
             </GridItem>

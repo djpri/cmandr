@@ -1,4 +1,4 @@
-import { Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 import UserLayout from "components/layout/UserLayout";
 import { pluralizeNumItems } from "helpers/pluralize";
 import { PropsWithChildren } from "react";
@@ -33,7 +33,7 @@ function EntityPage({
         {pluralizeNumItems(numItems)}
       </Text>
 
-      {children}
+      <Box position="relative">{children}</Box>
     </UserLayout>
   );
 }

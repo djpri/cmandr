@@ -9,7 +9,7 @@ import {
 import { Row, Table } from "@tanstack/react-table";
 import useTableSelectors from "hooks/table/useTableSelectors";
 import { SnippetReadDto } from "models/snippets";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import SnippetOptions from "./Options/SnippetOptions";
 
@@ -31,19 +31,20 @@ function TableRow({
 }: IProps) {
   const { description, category, language } = snippet;
   const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
-  const { multiSelectRow, selectedRowColor } = useTableSelectors<SnippetReadDto>({
-    table,
-    row,
-    requireClickToSelect: true,
-  });
-  const [showOptions, setShowOptions] = useState(isSmallerThan1280);
+  const { multiSelectRow, selectedRowColor } =
+    useTableSelectors<SnippetReadDto>({
+      table,
+      row,
+      requireClickToSelect: true,
+    });
+  const [showOptions] = useState(true);
 
   const languageColor = useColorModeValue("teal.800", "teal.300");
   const categoryColor = useColorModeValue("gray.800", "gray.300");
 
-  useEffect(() => {
-    setShowOptions(isSmallerThan1280);
-  }, [isSmallerThan1280]);
+  // useEffect(() => {
+  //   setShowOptions(isSmallerThan1280);
+  // }, [isSmallerThan1280]);
 
   return (
     <Flex
@@ -58,16 +59,12 @@ function TableRow({
         bgColor: row.getIsSelected() && selectedRowColor,
       }}
       onMouseDown={multiSelectRow}
-      onMouseEnter={() => {
-        if (!isSmallerThan1280) {
-          setShowOptions(true);
-        }
-      }}
-      onMouseLeave={() => {
-        if (!isSmallerThan1280) {
-          setShowOptions(false);
-        }
-      }}
+      // onMouseEnter={() => {
+      //   setShowOptions(true);
+      // }}
+      // onMouseLeave={() => {
+      //   setShowOptions(false);
+      // }}
     >
       <Box className="clickToSelect">
         <Box className="clickToSelect">{description}</Box>
@@ -86,9 +83,11 @@ function TableRow({
         </HStack>
       </Box>
 
-      <Box display={showOptions && !row.getIsSelected() ? "inline" : "none"}>
-        <SnippetOptions snippet={snippet} setReadOnlyCode={setReadOnlyCode} />
-      </Box>
+      {showOptions && (
+        <Box>
+          <SnippetOptions snippet={snippet} setReadOnlyCode={setReadOnlyCode} />
+        </Box>
+      )}
     </Flex>
   );
 }

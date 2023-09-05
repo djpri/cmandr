@@ -89,7 +89,7 @@ function CodeEditor({
       minH="50vh"
       w="100%"
       maxW="100%"
-      maxH="70vh"
+      maxH="90vh"
       // borderWidth="1px"
       borderRadius="lg"
       borderTopWidth={onSave && !isReadOnly && "1rem"}

@@ -16,6 +16,8 @@ import useCategories from "../../../hooks/categories/useCategories";
 import CodeEditor from "../CodeEditor";
 import { languagesAsItems } from "../languages";
 import { snippetFormUtils } from "../snippetFormUtils";
+import { useAppDispatch } from "redux/store";
+import { setCode, setLanguage } from "redux/slices/editorSlice";
 
 type IProps = {
   snippetItem: SnippetReadDto;
@@ -26,6 +28,7 @@ const { labels, registerOptions, ValidationError } = snippetFormUtils;
 
 function EditSnippetForm({ snippetItem, onClose }: IProps) {
   const { query: allCategoriesQuery } = useCategories("snippet");
+  const dispatch = useAppDispatch();
   const { editSnippetMutation } = useSnippets();
 
   const { id, title, description, code, language, starred } = snippetItem;
@@ -54,6 +57,8 @@ function EditSnippetForm({ snippetItem, onClose }: IProps) {
     // ensure that categoryId is a number before submitting
     values.categoryId = parseInt(values.categoryId.toString());
     editSnippetMutation.mutate({ id, body: values });
+    dispatch(setCode(values.code));
+    dispatch(setLanguage(values.language));
     reset({ title: "", description: "", language: "", categoryId: -1 });
     // closes popover if using form from popover only
     if (onClose) onClose();

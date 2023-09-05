@@ -30,26 +30,26 @@ function AllSnippets() {
         currentButtonOpen={currentButtonOpen}
         setCurrentButtonOpen={setCurrentButtonOpen}
       />
-      <Box ref={addSnippetRef} mb={5} />
-      <Grid
-        templateColumns={["1fr", null, null, null, "1fr 1fr"]}
-        gap={4}
-        top="100px"
-      >
-        <GridItem>
-          <SnippetsManager snippets={query.data} />
-        </GridItem>
-        <GridItem overflowX={"auto"}>
-          <CodeEditor
-            value={code}
-            defaultLanguage={language ?? "javascript"}
-            setDefaultLanguage={() => new Error("Not implemented")}
-            handleCodeSnippetChange={() => new Error("Not implemented")}
-            height="100%"
-            readonly
-          />
-        </GridItem>
-      </Grid>
+        <Box ref={addSnippetRef} mb={5} />
+        <Grid
+          templateColumns={["1fr", null, null, null, "1fr 1fr"]}
+          gap={4}
+          top="100px"
+        >
+          <GridItem>
+            <SnippetsManager snippets={query.data} />
+          </GridItem>
+          <GridItem overflowX={"auto"}>
+            <CodeEditor
+              value={code}
+              defaultLanguage={language ?? "javascript"}
+              setDefaultLanguage={() => new Error("Not implemented")}
+              handleCodeSnippetChange={() => new Error("Not implemented")}
+              height="80vh"
+              readonly
+            />
+          </GridItem>
+        </Grid>
     </EntityPage>
   );
 }

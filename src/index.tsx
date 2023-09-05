@@ -59,7 +59,7 @@ root.render(
       >
         <ReduxProvider store={store}>
           <PersistGate loading={<Loading />} persistor={persistor}>
-            <CustomMsalProvider instance={msalInstance}>
+      <CustomMsalProvider instance={msalInstance}>
               <ColorModeScript
                 initialColorMode={theme.config.initialColorMode}
               />

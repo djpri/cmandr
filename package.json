@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@azure/msal-browser": "^2.38.0",
-    "@azure/msal-react": "^1.5.9",
+    "@azure/msal-browser": "^2.38.1",
+    "@azure/msal-react": "^1.5.10",
     "@chakra-ui/icons": "^2.1.0",
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
