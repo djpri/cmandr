@@ -1,21 +1,11 @@
 import { Spinner } from "@chakra-ui/react";
-import UserLayout from "components/layout/UserLayout";
-import { FC, lazy, Suspense } from "react";
+import { lazy, ReactNode, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
-
 import Home from "views/Home";
 import Loading from "views/Loading";
 import LoginRedirect from "views/login-redirect";
 
-// import Dashboard from "views/Dashboard";
-// import AllCommands from "views/commands/AllCommands";
-// import CommandCategory from "views/commands/CommandCategory";
-// import AllLinks from "views/links/AllLinks";
-// import LinkCategory from "views/links/LinkCategory";
-// import AddSnippetPage from "views/snippets/AddSnippetPage";
-// import AllSnippetsPage from "views/snippets/AllSnippets";
-// import SnippetCategoryPage from "views/snippets/SnippetCategory";
-
+const UserLayout = lazy(() => import("./components/layout/UserLayout"));
 const Dashboard = lazy(() => import("./views/Dashboard"));
 const AllCommands = lazy(() => import("./views/commands/AllCommands"));
 const CommandCategory = lazy(() => import("./views/commands/CommandCategory"));
@@ -27,12 +17,6 @@ const SnippetCategoryPage = lazy(
 );
 const AddSnippetPage = lazy(() => import("./views/snippets/AddSnippetPage"));
 
-const SpinnerFallback: FC = () => (
-  <UserLayout>
-    <Spinner />
-  </UserLayout>
-);
-
 export type entityRoute = "commands" | "links" | "snippets";
 
 export const basicRouter = createBrowserRouter([
@@ -41,6 +25,14 @@ export const basicRouter = createBrowserRouter([
     element: <LoginRedirect />,
   },
 ]);
+
+const WithUserLayout = ({ component }: { component: ReactNode }) => (
+  <Suspense fallback={<Loading />}>
+    <UserLayout>
+      <Suspense fallback={<Spinner size="lg" />}>{component}</Suspense>
+    </UserLayout>
+  </Suspense>
+);
 
 // wrap all elements in suspense
 export const router = createBrowserRouter([
@@ -54,66 +46,34 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <Dashboard />
-      </Suspense>
-    ),
+    element: <WithUserLayout component={<Dashboard />} />,
   },
   {
     path: "/commands",
-    element: (
-      <Suspense fallback={<SpinnerFallback />}>
-        <AllCommands />
-      </Suspense>
-    ),
+    element: <WithUserLayout component={<AllCommands />} />,
   },
   {
     path: "/commands/:id",
-    element: (
-      <Suspense fallback={<SpinnerFallback />}>
-        <CommandCategory />
-      </Suspense>
-    ),
+    element: <WithUserLayout component={<CommandCategory />} />,
   },
   {
     path: "/links",
-    element: (
-      <Suspense fallback={<SpinnerFallback />}>
-        <AllLinks />
-      </Suspense>
-    ),
+    element: <WithUserLayout component={<AllLinks />} />,
   },
   {
     path: "/links/:id",
-    element: (
-      <Suspense fallback={<SpinnerFallback />}>
-        <LinkCategory />
-      </Suspense>
-    ),
+    element: <WithUserLayout component={<LinkCategory />} />,
   },
   {
     path: "/snippets",
-    element: (
-      <Suspense fallback={<SpinnerFallback />}>
-        <AllSnippetsPage />
-      </Suspense>
-    ),
+    element: <WithUserLayout component={<AllSnippetsPage />} />,
   },
   {
     path: "/snippets/:id",
-    element: (
-      <Suspense fallback={<SpinnerFallback />}>
-        <SnippetCategoryPage />
-      </Suspense>
-    ),
+    element: <WithUserLayout component={<SnippetCategoryPage />} />,
   },
   {
     path: "/snippets/add",
-    element: (
-      <Suspense fallback={<SpinnerFallback />}>
-        <AddSnippetPage />
-      </Suspense>
-    ),
+    element: <WithUserLayout component={<AddSnippetPage />} />,
   },
 ]);

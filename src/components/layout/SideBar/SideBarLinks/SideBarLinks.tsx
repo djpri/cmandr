@@ -7,9 +7,9 @@ import {
   HStack,
   Text,
 } from "@chakra-ui/react";
-import { UseQueryResult } from "@tanstack/react-query";
+import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import useCategories from "hooks/categories/useCategories";
-import { CategoryReadDto } from "models/category";
+import { CategoryReadDto, CategoryUpdateDto } from "models/category";
 import { Entity } from "models/entity";
 import { FC } from "react";
 import { ConnectDropTarget } from "react-dnd/dist/types";
@@ -26,6 +26,7 @@ import { useAppDispatch, useAppSelector } from "redux/store";
 import { entityRoute } from "routes";
 import CategoriesList from "./CategoriesList/CategoriesList";
 import useRemoveFromGroupDropItem from "./CategoriesList/DnD/useRemoveFromGroupDropItem";
+import { AxiosResponse } from "axios";
 
 const textMargin = "8px";
 
@@ -35,7 +36,10 @@ type CategoryAccordionProps = {
   type: Entity;
   route: string;
   query: UseQueryResult<CategoryReadDto[], unknown>;
-  editCategoryMutation: any;
+  editCategoryMutation: UseMutationResult<AxiosResponse<unknown, unknown>, unknown, {
+    id: number;
+    body: CategoryUpdateDto;
+}, unknown>;
   icon: JSX.Element;
   sidebarIndex: number;
 };

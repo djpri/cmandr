@@ -40,7 +40,6 @@ function useRemoveFromGroupDropItem(
         return;
       }
 
-      // console.log(categoryToUpdate);
       await editCategoryMutation.mutateAsync({
         id: categoryIdToAdd,
         body: mapToCategoryUpdateDto(categoryToUpdate),

@@ -12,13 +12,12 @@ import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCategories from "hooks/categories/useCategories";
 import useSortCategories from "hooks/categories/useSortCategories";
 import { CategoryReadDto } from "models/category";
-import { FC, lazy, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { selectCategoriesSort } from "redux/slices/settingsSlice";
 import { useAppSelector } from "redux/store";
 import { entityRoute } from "routes";
 import { Entity } from "../models/entity";
 
-const UserLayout = lazy(() => import("../components/layout/UserLayout"));
 type SortType = "manual" | "ascending" | "descending" | "size";
 
 type SortButtonProps = {
@@ -108,7 +107,9 @@ function Dashboard() {
             borderColor={"hsla(254, 54%, 81%, 0.5)"}
             rounded="md"
             onClick={button.onClick}
-            isDisabled={!categoriesAvailable || sortOption === button.sortOption}
+            isDisabled={
+              !categoriesAvailable || sortOption === button.sortOption
+            }
           >
             {button.text}
           </Button>
@@ -118,39 +119,37 @@ function Dashboard() {
   };
 
   return (
-    <UserLayout>
-      <Box fontSize="xl" pb={16} data-cy="dashboard">
-        <Heading as="h1" fontSize="2xl">
-          Commands
-        </Heading>
-        {categorySortOptions["command"] && (
-          <SortButtons
-            type="command"
-            sortOption={categorySortOptions["command"]}
-          />
-        )}
-        <CategoriesGrid entityType="command" entityRoute="commands" />
+    <Box fontSize="xl" pb={16} data-cy="dashboard">
+      <Heading as="h1" fontSize="2xl">
+        Commands
+      </Heading>
+      {categorySortOptions["command"] && (
+        <SortButtons
+          type="command"
+          sortOption={categorySortOptions["command"]}
+        />
+      )}
+      <CategoriesGrid entityType="command" entityRoute="commands" />
 
-        <Heading as="h1" fontSize="2xl">
-          Links
-        </Heading>
-        {categorySortOptions["link"] && (
-          <SortButtons type="link" sortOption={categorySortOptions["link"]} />
-        )}
-        <CategoriesGrid entityType="link" entityRoute="links" />
+      <Heading as="h1" fontSize="2xl">
+        Links
+      </Heading>
+      {categorySortOptions["link"] && (
+        <SortButtons type="link" sortOption={categorySortOptions["link"]} />
+      )}
+      <CategoriesGrid entityType="link" entityRoute="links" />
 
-        <Heading as="h1" fontSize="2xl">
-          Snippets
-        </Heading>
-        {categorySortOptions["snippet"] && (
-          <SortButtons
-            type="snippet"
-            sortOption={categorySortOptions["snippet"]}
-          />
-        )}
-        <CategoriesGrid entityType="snippet" entityRoute="snippets" />
-      </Box>
-    </UserLayout>
+      <Heading as="h1" fontSize="2xl">
+        Snippets
+      </Heading>
+      {categorySortOptions["snippet"] && (
+        <SortButtons
+          type="snippet"
+          sortOption={categorySortOptions["snippet"]}
+        />
+      )}
+      <CategoriesGrid entityType="snippet" entityRoute="snippets" />
+    </Box>
   );
 }
 

@@ -1,18 +1,16 @@
-import { Center, HStack, Spinner, Text } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 
 function Loading() {
   return (
     <Center
-      h="100vh"
-      w="100vw"
-      background="radial-gradient(circle at top, hsl(256, 37%, 20%) 0%,  hsl(256, 37%, 15%) 50%, #131316 70%)"
+      h="100%"
+      w="100%"
+      background="radial-gradient(circle at top, hsl(256, 37%, 20%) 0%,  hsl(256, 37%, 15%) 80%, #0f0f0f 100%)"
       backgroundSize="contain"
       backgroundRepeat="no-repeat"
+      p={4}
     >
-      <HStack>
-        <Text fontSize="3xl">Loading...</Text>
         <Spinner size="lg" />
-      </HStack>
     </Center>
   );
 }

@@ -31,14 +31,15 @@
   },
   // off, warn or error
   "rules": {
-    "testing-library/no-render-in-setup": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/no-empty-interface": "off",
     "react/no-unused-state": "error",
     "react/react-in-jsx-scope": "off",
+    "react/jsx-key": "error",
+    "testing-library/no-render-in-setup": "off",
     "no-explicit-any": "off",
     "import/named": "off",
     "no-console": "warn",
-    "no-alert": "error",
-    "react/jsx-key": "error"
+    "no-alert": "error"
   }
 }

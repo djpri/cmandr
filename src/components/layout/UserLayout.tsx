@@ -1,5 +1,7 @@
 import { AuthenticatedTemplate } from "@azure/msal-react";
 import { Box, useMediaQuery } from "@chakra-ui/react";
+import { msalInstance } from "auth/auth";
+import CustomMsalProvider from "components/auth/AuthProvider";
 import { PropsWithChildren } from "react";
 import { useSelector } from "react-redux";
 import { selectIsSidebarOpen } from "redux/slices/layoutSlice";
@@ -15,7 +17,7 @@ function UserLayout({ children }: PropsWithChildren) {
   const isSidebarOpen = useSelector(selectIsSidebarOpen);
 
   return (
-    <>
+    <CustomMsalProvider instance={msalInstance}>
       <NavBar />
       <AuthenticatedTemplate>
         <Box display="flex" className="userLayout">
@@ -40,7 +42,7 @@ function UserLayout({ children }: PropsWithChildren) {
           </Box>
         </Box>
       </AuthenticatedTemplate>
-    </>
+    </CustomMsalProvider>
   );
 }
 

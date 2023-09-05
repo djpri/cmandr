@@ -1,4 +1,3 @@
-import { useMsal } from "@azure/msal-react";
 import {
   Box,
   Button,
@@ -9,33 +8,11 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { apiConfig } from "auth/auth";
-import { useEffect } from "react";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { RiCommandLine } from "react-icons/ri";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 function Home() {
-  const { instance, accounts } = useMsal();
-  const navigate = useNavigate();
-
-  const loginRedirect = async () => {
-    try {
-      await instance.loginRedirect({
-        scopes: apiConfig.b2cScopes,
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (accounts[0]) {
-      navigate("/dashboard");
-    }
-  }, [accounts]);
-
   return (
     <Flex
       height="100vh"
@@ -87,7 +64,6 @@ function Home() {
                 color="white"
                 variant="solid"
                 textShadow="outline"
-                isDisabled={accounts[0] === undefined}
                 _hover={{
                   bgColor: "blue.600",
                 }}
@@ -95,47 +71,62 @@ function Home() {
                 Open App
               </Button>
             </Link>
-            <Button
-              className="login-button"
-              size="md"
-              bgColor="purple.400"
-              color="white"
-              variant="outline"
-              textShadow="outline"
-              _hover={{
-                bgColor: "purple.300",
-                textDecoration: "none",
-              }}
-              onClick={() => {
-                loginRedirect();
-              }}
-              isDisabled={accounts[0] !== undefined}
-            >
-              Log In / Sign Up
-            </Button>
           </HStack>
         </Box>
       </VStack>
-      <Flex gap={6} direction="column">
-        <Box shadow="base" p="20px">
+      <Flex gap={6} direction="column" fontSize="lg">
+        <Box
+          shadow="rgb(137 137 137 / 82%) 0px 8px 22px"
+          py={4}
+          px={8}
+          rounded="md"
+        >
           <HStack my={5}>
             <RiCommandLine size="1.5rem" color="white" />
-            <Text fontSize="1rem" color="white">
+            <Text color="white">
               Store and manage commands into categories
             </Text>
           </HStack>
+            {/* <UnorderedList spacing={3} styleType="square" fontSize="md" px={4}>
+              <ListItem>Drag and drop to organise your folders</ListItem>
+              <ListItem>Sort folders, either alphabetically or by item count, using the dashboard</ListItem>
+            </UnorderedList> */}
           {/* <chakra.img
             src="/command-categories.png"
             alt="command-categories"
             width="min(80vw, 800px)"
           /> */}
         </Box>
-        <Box shadow="base" p="20px">
+        <Box
+          shadow="rgb(137 137 137 / 82%) 0px 8px 22px"
+          p={4}
+          px={8}
+          rounded="md"
+        >
           <HStack my={5}>
             <FaExternalLinkSquareAlt size="1.5rem" color="white" />
-            <Text fontSize="1rem" color="white">
-              Also features a bookmark manager for documentation, blogs, or
+            <Text color="white">
+              Use the built-in bookmark manager for storing documentation, blogs, or
               other sites
+            </Text>
+          </HStack>
+          {/* <chakra.img
+            src="/links.png"
+            alt="links"
+            width="min(80vw, 800px)"
+            shadow="lg"
+          /> */}
+        </Box>
+        <Box
+          shadow="rgb(137 137 137 / 82%) 0px 8px 22px"
+          p={4}
+          px={8}
+          rounded="md"
+        >
+          <HStack my={5}>
+            <FaExternalLinkSquareAlt size="1.5rem" color="white" />
+            <Text color="white">
+              Store code snippets
             </Text>
           </HStack>
           {/* <chakra.img

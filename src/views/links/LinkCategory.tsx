@@ -16,16 +16,15 @@ import {
 import AddCategory from "components/categories/AddCategory";
 import DeleteCategoryModal from "components/categories/DeleteCategoryModal";
 import EditCategory from "components/categories/EditCategory";
-import UserLayout from "components/layout/UserLayout";
 import LinksManager from "components/links/LinksManager/LinksManager";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
+import useLinks from "hooks/entities/useLinks";
 import { CategoryReadDto } from "models/category";
 import { useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import EntityPage from "views/EntityPage";
 import useCategories from "../../hooks/categories/useCategories";
-import useLinks from "hooks/entities/useLinks";
 
 const HeaderOptions = ({
   category,
@@ -99,11 +98,7 @@ function LinkCategory() {
   }, [categoriesQuery.data, categoryId]);
 
   if (!query.data || !category) {
-    return (
-      <UserLayout>
-        <Spinner />
-      </UserLayout>
-    );
+    return <Spinner />;
   }
 
   return (

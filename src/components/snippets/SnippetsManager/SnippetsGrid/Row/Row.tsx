@@ -30,7 +30,7 @@ function TableRow({
   setReadOnlyCode,
 }: IProps) {
   const { description, category, language } = snippet;
-  const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
+  // const [isSmallerThan1280] = useMediaQuery("(max-width: 1280px)");
   const { multiSelectRow, selectedRowColor } =
     useTableSelectors<SnippetReadDto>({
       table,

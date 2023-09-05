@@ -1,12 +1,15 @@
 import { customRender } from "tests/test-utils";
-import AddSnippetForm from "./AddSnippetForm";
-import { snippetFormUtils } from "../snippetFormUtils";
 import { test } from "vitest";
+import { snippetFormUtils } from "../snippetFormUtils";
+import AddSnippetForm from "./AddSnippetForm";
 
 const { labels, registerOptions } = snippetFormUtils;
 
 vi.mock("@monaco-editor/react", () => {
-  const FakeEditor = (props: any) => {
+  const FakeEditor = (props: {
+    value: string | number | readonly string[];
+    onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+  }) => {
     return (
       <textarea
         id="code"

@@ -1,5 +1,4 @@
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
-import UserLayout from "components/layout/UserLayout";
 import { pluralizeNumItems } from "helpers/pluralize";
 import { PropsWithChildren } from "react";
 
@@ -21,7 +20,7 @@ function EntityPage({
   headerOptions,
 }: PropsWithChildren<EntityPageProps>) {
   return (
-    <UserLayout>
+    <>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
         <Heading as="h2" fontWeight="900" fontSize="2xl">
           {title}
@@ -34,7 +33,7 @@ function EntityPage({
       </Text>
 
       <Box position="relative">{children}</Box>
-    </UserLayout>
+    </>
   );
 }
 

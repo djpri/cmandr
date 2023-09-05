@@ -15,7 +15,6 @@ import AddCategory from "components/categories/AddCategory";
 import DeleteCategoryModal from "components/categories/DeleteCategoryModal";
 import EditCategory from "components/categories/EditCategory";
 import CommandsManager from "components/commands/CommandsManager/CommandsManager";
-import UserLayout from "components/layout/UserLayout";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCategories from "hooks/categories/useCategories";
 import useCommands from "hooks/entities/useCommands";
@@ -51,11 +50,7 @@ function CommandCategoryPage() {
   }, [categoriesQuery.data, categoryId]);
 
   if (!query.data || !category) {
-    return (
-      <UserLayout>
-        <Spinner />
-      </UserLayout>
-    );
+    return <Spinner />;
   }
 
   const HeaderOptions = () => (
