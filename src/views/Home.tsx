@@ -9,32 +9,13 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { apiConfig } from "auth/auth";
-import { useEffect } from "react";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { RiCommandLine } from "react-icons/ri";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 function Home() {
-  const { instance, accounts } = useMsal();
+  const { accounts } = useMsal();
   const navigate = useNavigate();
-
-  const loginRedirect = async () => {
-    try {
-      await instance.loginRedirect({
-        scopes: apiConfig.b2cScopes,
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (accounts[0]) {
-      navigate("/dashboard");
-    }
-  }, [accounts]);
 
   return (
     <Flex
@@ -107,7 +88,7 @@ function Home() {
                 textDecoration: "none",
               }}
               onClick={() => {
-                loginRedirect();
+                navigate("/login");
               }}
               isDisabled={accounts[0] !== undefined}
             >

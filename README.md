@@ -48,7 +48,7 @@ Check node version using `node --version`
 Then in the project directory, run
 
 ```sh
-$ yarn
+$ npm install
 ```
 
 ## Environment Variables
@@ -66,7 +66,7 @@ First, run the backend server (see [cmandr-backend](https://github.com/djpri/cma
 Then run:
 
 ```sh
-$ yarn start
+$ npm run start
 ```
 
 Open http://localhost:3000/ to view the app if the page doesn't load automatically.
@@ -74,19 +74,19 @@ Open http://localhost:3000/ to view the app if the page doesn't load automatical
 ### Create build folder for production
 
 ```sh
-$ yarn build
+$ npm run build
 ```
 
 ### Preview build
 
 ```sh
-$ yarn serve
+$ npm run serve
 ```
 
 ### Run tests using Vitest
 
 ```sh
-$ yarn test
+$ npm run test
 ```
 
 ## Deployment

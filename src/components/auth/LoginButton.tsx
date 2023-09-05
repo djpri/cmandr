@@ -21,7 +21,14 @@ function LoginButton() {
   return (
     <Stack spacing={3}>
       <Button
-        colorScheme="red"
+        bgColor="red.200"
+        _hover={{
+          bgColor: "red.300",
+        }}
+        _active={{
+          bgColor: "red.400",
+        }}
+        color="black"
         onClick={() => {
           queryClient.clear();
           loginRedirect();

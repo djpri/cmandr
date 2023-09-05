@@ -22,7 +22,7 @@ function LoginPage() {
     >
       {!accounts[0] && (
         <VStack>
-          <Heading mb="5" as="h2">
+          <Heading mb="5" as="h2" color="white">
             Log in to your account
           </Heading>
           <LoginButton />
