@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
  * This must be wrapped in the redux provider component.
  */
 const useAuth = () => {
-  const [authSuccess, setAuthSuccess] = useState(false)
+  const [authSuccess, setAuthSuccess] = useState(false);
   const { instance, accounts } = useMsal();
 
   useEffect(() => {
@@ -31,18 +31,12 @@ const useAuth = () => {
       };
 
       try {
-        console.log("Acquiring token silently...")
         const response: AuthenticationResult =
           await instance.acquireTokenSilent(silentRequest);
-
-        console.log("Token acquired!");
 
         setAuthSuccess(true);
         return response?.accessToken || null;
       } catch (error) {
-        console.log("Couldn't acquire token");
-        console.log(error);
-
         if (error instanceof InteractionRequiredAuthError) {
           // fallback to interaction when silent call fails
           await instance.acquireTokenRedirect(silentRequest);
@@ -68,7 +62,7 @@ const useAuth = () => {
   }, [instance, accounts]);
 
   return {
-    authSuccess
+    authSuccess,
   };
 };
 

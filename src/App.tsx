@@ -46,10 +46,17 @@ const IDBPersister = createIDBPersister();
 export const App = () => {
   useAuth();
 
+  // see https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-js-avoid-page-reloads
+  const isIframe = window !== window.parent && !window.opener;
+
+  if (isIframe) {
+    return null;
+  }
+
   return (
     <PersistQueryClientProvider
       client={queryClient}
-      persistOptions={{ persister: IDBPersister }}
+      persistOptions={{ persister: IDBPersister, buster: __BUSTER__ }}
     >
       <DndProvider backend={HTML5Backend}>
         <ReduxProvider store={store}>

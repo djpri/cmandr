@@ -91,8 +91,8 @@ function AddCommandForm({ categoryId }: IProps) {
                 {allCategoriesQuery.data &&
                   allCategoriesQuery.data
                     .filter((cat) => !cat.isGroup)
-                    .map((category, index) => (
-                      <option value={category.id} key={index}>
+                    .map((category) => (
+                      <option value={category.id} key={category.id}>
                         {category.name}
                       </option>
                     ))}

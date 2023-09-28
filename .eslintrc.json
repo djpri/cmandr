@@ -35,6 +35,7 @@
     "@typescript-eslint/no-empty-interface": "off",
     "react/no-unused-state": "error",
     "react/react-in-jsx-scope": "off",
+    "react/no-array-index-key": "warn",
     "react/jsx-key": "error",
     "testing-library/no-render-in-setup": "off",
     "no-explicit-any": "off",

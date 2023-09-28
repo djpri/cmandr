@@ -20,12 +20,13 @@ function NavBar() {
   const isSidebarOpen = useAppSelector((state) => state.layout.isSidebarOpen);
 
   const bgImage = useColorModeValue(
-    "linear-gradient(to right, #403b99, #2b1b5f)",
-    "linear-gradient(to right, #474492, purple.700)"
+    "linear-gradient(to right, #eeecff, #d8d4e5)",
+    "linear-gradient(to right, #0a0312, #281f41);"
   );
 
   return (
     <Box
+      as="nav"
       position="fixed"
       display="flex"
       justifyContent="space-between"
@@ -35,9 +36,8 @@ function NavBar() {
       pr="1rem"
       // bgColor={bgColor}
       bgImage={bgImage}
-      color="white"
       h="45"
-      shadow="base"
+      // shadow="base"
       zIndex={200}
     >
       {/* TOP BUTTONS */}
@@ -57,10 +57,10 @@ function NavBar() {
                 isSidebarOpen ? "close-sidebar-button" : "open-sidebar-button"
               }
               variant="ghost"
-              colorScheme="whiteAlpha"
+              boxShadow={"outline"}
               border="0px"
               onClick={() => dispatch(setSidebarToggle())}
-              icon={<GiHamburgerMenu size="1.2rem" color="white" />}
+              icon={<GiHamburgerMenu size="1.2rem" />}
               aria-label="Open sidebar"
               p={4}
             />

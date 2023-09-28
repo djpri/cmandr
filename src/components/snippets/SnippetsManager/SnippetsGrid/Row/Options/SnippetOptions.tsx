@@ -1,4 +1,4 @@
-import { Button, HStack, IconButton, useDisclosure } from "@chakra-ui/react";
+import { HStack, IconButton, useDisclosure } from "@chakra-ui/react";
 import EntityOptions from "components/shared/EntityOptions";
 import EditSnippetForm from "components/snippets/EditSnippetForm/EditSnippetForm";
 import useSnippets from "hooks/entities/useSnippets";
@@ -26,10 +26,6 @@ function SnippetOptions({ snippet, setReadOnlyCode }: IProps) {
 
   return (
     <HStack gap={2}>
-      <Button size="xs" onClick={viewCode}>
-        View code
-      </Button>
-
       <EntityOptions
         isOpen={isOpen}
         onClose={onClose}

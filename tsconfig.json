@@ -30,6 +30,6 @@
   "watchOptions": {
     "excludeDirectories": ["**/node_modules", "build"]
   },
-  "include": ["src"],
+  "include": ["src", "vite-env.d.ts"],
   "exclude": ["node_modules", "cypress"]
 }

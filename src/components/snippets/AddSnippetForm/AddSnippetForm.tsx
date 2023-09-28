@@ -140,8 +140,8 @@ function AddSnippetForm({ categoryId }: IProps) {
                 <option value={-1}>Select Category</option>
                 {query?.data
                   ?.filter((cat: CategoryReadDto) => !cat.isGroup)
-                  .map((category, index) => (
-                    <option value={category.id} key={index}>
+                  .map((category) => (
+                    <option value={category.id} key={category.id}>
                       {category.name}
                     </option>
                   ))}

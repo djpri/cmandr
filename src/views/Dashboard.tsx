@@ -120,7 +120,7 @@ function Dashboard() {
 
   return (
     <Box fontSize="xl" pb={16} data-cy="dashboard">
-      <Heading as="h1" fontSize="2xl">
+      <Heading as="h1" fontSize="2xl" userSelect="none">
         Commands
       </Heading>
       {categorySortOptions["command"] && (
@@ -131,7 +131,7 @@ function Dashboard() {
       )}
       <CategoriesGrid entityType="command" entityRoute="commands" />
 
-      <Heading as="h1" fontSize="2xl">
+      <Heading as="h1" fontSize="2xl" userSelect="none">
         Links
       </Heading>
       {categorySortOptions["link"] && (
@@ -139,7 +139,7 @@ function Dashboard() {
       )}
       <CategoriesGrid entityType="link" entityRoute="links" />
 
-      <Heading as="h1" fontSize="2xl">
+      <Heading as="h1" fontSize="2xl" userSelect="none">
         Snippets
       </Heading>
       {categorySortOptions["snippet"] && (
