@@ -12,11 +12,11 @@ import {
 import LoginButton from "components/auth/LoginButton";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { RiCommandLine } from "react-icons/ri";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 function Home() {
   const { accounts } = useMsal();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <Flex

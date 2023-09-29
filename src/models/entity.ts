@@ -12,6 +12,8 @@ import { LinkCreateDto, LinkReadDto, LinkUpdateDto } from "./link";
 
 export type Entity = "command" | "link" | "snippet";
 
+export type EntityBasePath = "commands" | "links" | "snippets";
+
 export type EntityReadDto = CommandReadDto | LinkReadDto | SnippetReadDto;
 
 export type EntityCreateDto =
