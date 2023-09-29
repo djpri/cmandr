@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { apiConfig } from "auth/auth";
 
 function LoginButton() {
-  const { instance } = useMsal();
+  const { instance, accounts } = useMsal();
   const queryClient = useQueryClient();
 
   const loginRedirect = async () => {
@@ -21,18 +21,21 @@ function LoginButton() {
   return (
     <Stack spacing={3}>
       <Button
-        bgColor="red.200"
+        className="login-button"
+        size="md"
+        bgColor="purple.400"
+        color="white"
+        variant="outline"
+        textShadow="outline"
         _hover={{
-          bgColor: "red.300",
+          bgColor: "purple.300",
+          textDecoration: "none",
         }}
-        _active={{
-          bgColor: "red.400",
-        }}
-        color="black"
         onClick={() => {
           queryClient.clear();
           loginRedirect();
         }}
+        isDisabled={accounts[0] !== undefined}
       >
         Log In
       </Button>

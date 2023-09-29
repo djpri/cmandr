@@ -10,6 +10,7 @@ import {
   CommandReadDto,
   CommandUpdateDto,
 } from "models/command";
+import { EntityCreateDto, EntityReadDto, EntityUpdateDto } from "models/entity";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
 import { UserSettings } from "models/user";
 import { LinkReadDto } from "../models/link";
@@ -25,6 +26,33 @@ export const CmandrApi: AxiosInstance = axios.create({
 
 const { get, post, put, delete: remove } = CmandrApi;
 
+function commonEntityEndpoints<
+  TReadDto extends EntityReadDto,
+  TCreateDto extends EntityCreateDto,
+  TUpdateDto extends EntityUpdateDto,
+>(basePath: string) {
+  return {
+    getAll: () => get<TReadDto[]>(basePath),
+    getById: (id: number) => get<TReadDto>(`${basePath}/${id}`),
+    getAllByCategoryId: (id: number) =>
+      get<TReadDto[]>(`${basePath}/list/${id}`),
+    create: (body: TCreateDto) => post<void>(basePath, body),
+    update: (request: { id: number; body: TUpdateDto }) =>
+      put(`${basePath}/${request.id}`, request.body),
+    remove: (id: number) => remove<void>(`${basePath}/${id}`),
+    bulkUpdate: (request: { body: number[][] }) =>
+      put(`${basePath}/multiple`, request.body),
+    bulkRemove: (ids: number[]) =>
+      remove(`${basePath}/multiple`, { data: ids }),
+  };
+}
+
+const commandEndpoints = commonEntityEndpoints<
+  CommandReadDto,
+  CommandCreateDto,
+  CommandUpdateDto
+>("commands");
+
 export const Commands = {
   getAll: () => get<CommandReadDto[]>("commands"),
   getById: (id: number) => get<CommandReadDto>(`commands/${id}`),
@@ -38,17 +66,6 @@ export const Commands = {
     put<void>(`commands/multiple`, request.body),
   bulkRemove: (ids: number[]) =>
     remove<void>(`commands/multiple`, { data: ids }),
-};
-
-export const CommandCategories = {
-  getAll: () => get<CommandReadDto[]>("commands/categories"),
-  getById: (id: number) => get(`commands/categories/${id}`),
-  create: (body: CategoryCreateDto) => post("commands/categories", body),
-  update: (request: { id: number; body: CategoryUpdateDto }) =>
-    put(`commands/categories/${request.id}`, request.body),
-  remove: (id: number) => remove(`commands/categories/${id}`),
-  manualSort: (body: CategoryDisplayIndexDto[]) =>
-    put("commands/categories/manualsort", body),
 };
 
 export const Links = {
@@ -66,17 +83,6 @@ export const Links = {
   bulkRemove: (ids: number[]) => remove(`links/multiple`, { data: ids }),
 };
 
-export const LinkCategories = {
-  getAll: () => get("links/categories"),
-  getById: (id: number) => get(`links/categories/${id}`),
-  create: (body: CategoryCreateDto) => post("links/categories", body),
-  update: (request: { id: number; body: CategoryUpdateDto }) =>
-    put(`links/categories/${request.id}`, request.body),
-  remove: (id: number) => remove(`links/categories/${id}`),
-  manualSort: (body: CategoryDisplayIndexDto[]) =>
-    put("links/categories/manualsort", body),
-};
-
 export const Snippets = {
   getAll: () => get("snippets"),
   getById: (id: number) => get(`snippets/${id}`),
@@ -91,18 +97,22 @@ export const Snippets = {
   bulkRemove: (ids: number[]) => remove(`snippets/multiple`, { data: ids }),
 };
 
-export const SnippetCategories = {
-  getAll: () => get("snippets/categories"),
-  getById: (id: number) => get(`snippets/categories/${id}`),
-  create: (body: CategoryCreateDto) => post("snippets/categories", body),
-  update: (request: { id: number; body: CategoryUpdateDto }) =>
-    put(`snippets/categories/${request.id}`, request.body),
-  remove: (id: number) => remove(`snippets/categories/${id}`),
-  manualSort: (body: CategoryDisplayIndexDto[]) =>
-    put("snippets/categories/manualsort", body),
-};
-
 export const Settings = {
   get: () => get("user/settings"),
   update: (body: UserSettings) => post("user/settings", body),
 };
+
+const baseCategoryEndpoints = (basePath: string) => ({
+  getAll: () => get(`${basePath}/categories`),
+  getById: (id: number) => get(`${basePath}/categories/${id}`),
+  create: (body: CategoryCreateDto) => post(`${basePath}/categories`, body),
+  update: (request: { id: number; body: CategoryUpdateDto }) =>
+    put(`${basePath}/categories/${request.id}`, request.body),
+  remove: (id: number) => remove(`${basePath}/categories/${id}`),
+  manualSort: (body: CategoryDisplayIndexDto[]) =>
+    put(`${basePath}/categories/manualsort`, body),
+});
+
+export const CommandCategories = baseCategoryEndpoints("commands");
+export const LinkCategories = baseCategoryEndpoints("links");
+export const SnippetCategories = baseCategoryEndpoints("snippets");

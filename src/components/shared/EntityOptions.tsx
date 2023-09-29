@@ -7,8 +7,11 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Tooltip,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
+import { FaStar } from "react-icons/fa";
 
 interface EntityOptionsProps {
   entityType: "command" | "link" | "snippet";
@@ -17,6 +20,7 @@ interface EntityOptionsProps {
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
+  isStarred: boolean;
 }
 
 function EntityOptions({
@@ -24,19 +28,36 @@ function EntityOptions({
   deleteButton,
   editForm,
   isOpen,
+  isStarred,
   onClose,
   onOpen,
 }: EntityOptionsProps) {
+  const [isStarredState, setIsStarredState] = useState(isStarred);
+
+  useEffect(() => {
+    setIsStarredState(isStarred);
+  }, [isStarred])
+  
   return (
     <HStack m="0">
       <HStack>
+        <Tooltip label="Add to favorites" openDelay={500}>
+          <IconButton
+            size="xs"
+            icon={<FaStar color={isStarredState ? "yellow" : "gray"} />}
+            onClick={() => {
+              setIsStarredState(!isStarredState);
+            }}
+            aria-label={`Star ${entityType}`}
+          />
+        </Tooltip>
         <IconButton
           size="xs"
           onClick={onOpen}
           icon={<AiFillEdit />}
           aria-label={`Edit ${entityType}`}
         />
-        {deleteButton}
+        <Tooltip label={"Delete item"} openDelay={500}>{deleteButton}</Tooltip>
       </HStack>
       <Modal
         isOpen={isOpen}

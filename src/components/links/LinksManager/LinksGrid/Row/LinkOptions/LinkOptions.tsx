@@ -44,6 +44,7 @@ function LinkOptions({ link }: IProps) {
       entityType="link"
       deleteButton={<DeleteLinkButton linkId={link.id} onClose={onClose} />}
       editForm={<EditLinkForm linkItem={link} onClose={onClose} />}
+      isStarred={link.starred}
     />
   );
 }
