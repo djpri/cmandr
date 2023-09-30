@@ -13,6 +13,8 @@ function useSnippets(categoryId?: number) {
     bulkUpdate,
     remove,
     getAllByCategoryId,
+    addToFavorites,
+    removeFromFavorites
   } = Snippets;
   const queryKey = categoryId ? ["snippets", categoryId] : ["snippets"];
   const categoryQueryKey = ["snippetCategories"];
@@ -29,6 +31,8 @@ function useSnippets(categoryId?: number) {
         create,
         update,
         remove,
+        addToFavorites,
+        removeFromFavorites,
       },
     });
 

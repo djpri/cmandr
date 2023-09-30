@@ -14,6 +14,8 @@ function useLinks(categoryId?: number) {
     bulkUpdate,
     bulkRemove,
     getAllByCategoryId,
+    addToFavorites,
+    removeFromFavorites
   } = Links;
 
   const queryKey = categoryId ? ["links", categoryId] : ["links"];
@@ -36,6 +38,8 @@ function useLinks(categoryId?: number) {
       create,
       update,
       remove,
+      addToFavorites,
+      removeFromFavorites,
     },
   });
 

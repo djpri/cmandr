@@ -33,6 +33,7 @@ const { get, post, put, delete: remove } = CmandrApi;
 
 /**
  * Create the set of base endpoint methods shared by all entities
+ * Most endpoints for each entity are covered by these.
  * @param basePath 
  * @returns 
  */
@@ -54,15 +55,20 @@ function baseEntityEndpoints<
       put(`${basePath}/multiple`, request.body),
     bulkRemove: (ids: number[]) =>
       remove(`${basePath}/multiple`, { data: ids }),
+    addToFavorites: (id: number) =>
+      post(`${basePath}/addToFavorites/${id}`),
+    removeFromFavorites: (id: number) =>
+      post(`${basePath}/removeFromFavorites/${id}`),
   };
 }
 
 /**
- * Creates the set of base endpoint methods shared by all category types
+ * Creates the endpoint methods shared by all category types.
+ * All category types use the same schema for their endpoints.
  * @param basePath
  * @returns 
  */
-const baseCategoryEndpoints = (basePath: string) => ({
+const categoryEndpoints = (basePath: string) => ({
   getAll: () => get(`${basePath}/categories`),
   getById: (id: number) => get(`${basePath}/categories/${id}`),
   create: (body: CategoryCreateDto) => post(`${basePath}/categories`, body),
@@ -91,11 +97,11 @@ export const Snippets = {
   ),
 };
 
-export const CommandCategories = baseCategoryEndpoints("commands");
+export const CommandCategories = categoryEndpoints("commands");
 
-export const LinkCategories = baseCategoryEndpoints("links");
+export const LinkCategories = categoryEndpoints("links");
 
-export const SnippetCategories = baseCategoryEndpoints("snippets");
+export const SnippetCategories = categoryEndpoints("snippets");
 
 export const Settings = {
   get: () => get("user/settings"),

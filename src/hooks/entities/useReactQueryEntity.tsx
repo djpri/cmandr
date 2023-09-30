@@ -13,6 +13,8 @@ type MutationEndpoints = {
   create: (newEntity: any) => Promise<any>;
   update: (updatedEntity: any) => Promise<any>;
   remove: (id: number) => Promise<any>;
+  addToFavorites: (id: number) => Promise<any>;
+  removeFromFavorites: (id: number) => Promise<any>;
 };
 
 type Props = {
@@ -225,6 +227,71 @@ function useReactQueryEntity<T extends EntityReadDto>({
     },
   });
 
+  const addToFavoritesMutation = useMutation(endpoints.addToFavorites, {
+    onMutate: async (id: number) => {
+      await queryClient.cancelQueries(categoryQueryKey);
+      const snapshot = snapshotPreviousData();
+
+      const currentEntity = (queryClient.getQueryData(queryKey) as T[]).find(
+        (item) => item.id === id
+      );
+
+      queryClient.setQueryData(
+        [queryKey[0], currentEntity.category.id],
+        (entities: EntityReadDto[]) => {
+          return entities?.map((entity) => {
+            if (entity.id === id) {
+              entity.starred = true;
+              return entity;
+            } else {
+              return entity;
+            }
+          });
+        }
+      );
+
+      return snapshot;
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(categoryQueryKey);
+    },
+  });
+
+  const removeFromFavoritesMutation = useMutation(
+    endpoints.removeFromFavorites,
+    {
+      onMutate: async (id: number) => {
+        await queryClient.cancelQueries(categoryQueryKey);
+        const snapshot = snapshotPreviousData();
+  
+        const currentEntity = (queryClient.getQueryData(queryKey) as T[]).find(
+          (item) => item.id === id
+        );
+  
+        queryClient.setQueryData(
+          [queryKey[0], currentEntity.category.id],
+          (entities: EntityReadDto[]) => {
+            return entities?.map((entity) => {
+              if (entity.id === id) {
+                entity.starred = false;
+                return entity;
+              } else {
+                return entity;
+              }
+            });
+          }
+        );
+  
+        return snapshot;
+      },
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(queryKey);
+        await queryClient.invalidateQueries(categoryQueryKey);
+      },
+    }
+  );
+
   return {
     query,
     queryClient,
@@ -234,6 +301,8 @@ function useReactQueryEntity<T extends EntityReadDto>({
     addMutation,
     editMutation,
     deleteMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation,
   };
 }
 

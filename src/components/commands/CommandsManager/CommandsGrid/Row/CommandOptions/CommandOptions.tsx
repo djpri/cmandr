@@ -41,6 +41,7 @@ function CommandOptions({ command }: IProps) {
       onClose={onClose}
       onOpen={onOpen}
       entityType="command"
+      isStarred={command?.starred}
       deleteButton={
         <DeleteCommandButton commandId={command.id} onClose={onClose} />
       }

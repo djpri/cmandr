@@ -31,6 +31,7 @@ function SnippetOptions({ snippet, setReadOnlyCode }: IProps) {
         onClose={onClose}
         onOpen={onOpen}
         entityType="snippet"
+        isStarred={snippet?.starred}
         deleteButton={
           <IconButton
             size="xs"

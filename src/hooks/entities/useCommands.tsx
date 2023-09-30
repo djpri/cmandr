@@ -13,6 +13,8 @@ function useCommands(categoryId?: number) {
     bulkUpdate,
     remove,
     getAllByCategoryId,
+    addToFavorites,
+    removeFromFavorites
   } = Commands;
   const queryKey = categoryId ? ["commands", categoryId] : ["commands"];
   const categoryQueryKey = ["commandCategories"];
@@ -34,6 +36,8 @@ function useCommands(categoryId?: number) {
       create,
       update,
       remove,
+      addToFavorites,
+      removeFromFavorites,
     },
   });
 
