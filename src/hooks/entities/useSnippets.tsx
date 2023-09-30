@@ -22,7 +22,7 @@ function useSnippets(categoryId?: number) {
     ? asReactQueryFunction(() => getAllByCategoryId(categoryId))
     : asReactQueryFunction(getAll);
 
-  const { query, defaultMutationSettings, addMutation, deleteMutation } =
+  const { query, defaultMutationSettings, addMutation, deleteMutation, addToFavoritesMutation, removeFromFavoritesMutation } =
     useReactQueryEntity<SnippetReadDto>({
       queryKey,
       categoryQueryKey,
@@ -55,6 +55,8 @@ function useSnippets(categoryId?: number) {
     editMultipleSnippetsMutation,
     deleteSnippetMutation: deleteMutation,
     deleteMultipleSnippetsMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation
   };
 }
 

@@ -30,6 +30,8 @@ function useLinks(categoryId?: number) {
     addMutation,
     editMutation,
     deleteMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation
   } = useReactQueryEntity<LinkReadDto>({
     queryKey,
     categoryQueryKey,
@@ -65,6 +67,9 @@ function useLinks(categoryId?: number) {
     deleteLinkMutation: deleteMutation,
     editMultipleLinksMutation,
     deleteMultipleLinksMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation
+
   };
 }
 

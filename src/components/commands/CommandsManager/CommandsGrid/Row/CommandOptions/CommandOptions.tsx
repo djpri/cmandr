@@ -15,7 +15,9 @@ interface DeleteCommandButtonProps {
 }
 
 function DeleteCommandButton({ commandId, onClose }: DeleteCommandButtonProps) {
-  const { deleteCommandMutation } = useCommands();
+  const {
+    deleteCommandMutation,
+  } = useCommands();
 
   return (
     <IconButton
@@ -35,13 +37,18 @@ function DeleteCommandButton({ commandId, onClose }: DeleteCommandButtonProps) {
 
 function CommandOptions({ command }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const { addToFavoritesMutation, removeFromFavoritesMutation } = useCommands();
+
   return (
     <EntityOptions
       isOpen={isOpen}
       onClose={onClose}
       onOpen={onOpen}
       entityType="command"
+      entityId={command.id}
       isStarred={command?.starred}
+      addToFavoritesMutation={addToFavoritesMutation}
+      removeFromFavoritesMutation={removeFromFavoritesMutation}
       deleteButton={
         <DeleteCommandButton commandId={command.id} onClose={onClose} />
       }

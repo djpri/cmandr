@@ -28,6 +28,8 @@ function useCommands(categoryId?: number) {
     addMutation,
     editMutation,
     deleteMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation
   } = useReactQueryEntity<CommandReadDto>({
     queryKey,
     categoryQueryKey,
@@ -60,6 +62,8 @@ function useCommands(categoryId?: number) {
     deleteCommandMutation: deleteMutation,
     editMultipleCommandsMutation,
     deleteMultipleCommandsMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation
   };
 }
 

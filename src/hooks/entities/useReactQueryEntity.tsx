@@ -236,6 +236,7 @@ function useReactQueryEntity<T extends EntityReadDto>({
         (item) => item.id === id
       );
 
+      // update query data for items in category
       queryClient.setQueryData(
         [queryKey[0], currentEntity.category.id],
         (entities: EntityReadDto[]) => {
@@ -250,12 +251,28 @@ function useReactQueryEntity<T extends EntityReadDto>({
         }
       );
 
+      // update query data for all items
+      queryClient.setQueryData(
+        [queryKey[0]],
+        (entities: EntityReadDto[]) => {
+          return entities?.map((entity) => {
+            if (entity.id === id) {
+              entity.starred = true;
+              return entity;
+            } else {
+              return entity;
+            }
+          });
+        }
+      );
+
       return snapshot;
     },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries(queryKey);
+    onError: async () => {
       await queryClient.invalidateQueries(categoryQueryKey);
-    },
+      await queryClient.invalidateQueries(queryKey);
+      showErrorToast();
+    }
   });
 
   const removeFromFavoritesMutation = useMutation(
@@ -285,10 +302,11 @@ function useReactQueryEntity<T extends EntityReadDto>({
   
         return snapshot;
       },
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(queryKey);
+      onError: async () => {
         await queryClient.invalidateQueries(categoryQueryKey);
-      },
+        await queryClient.invalidateQueries(queryKey);
+        showErrorToast();
+      }
     }
   );
 

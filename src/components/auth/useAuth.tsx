@@ -52,7 +52,13 @@ const useAuth = () => {
         config.headers.Authorization = `bearer ${token}`;
         return config;
       },
-      function (error) {
+      async function (error) {
+        const silentRequest: SilentRequest = {
+          scopes: apiConfig.b2cScopes,
+          account: accounts[0],
+          cacheLookupPolicy: CacheLookupPolicy.RefreshToken,
+        };
+        await instance.acquireTokenSilent(silentRequest);
         return Promise.reject(error);
       }
     );
