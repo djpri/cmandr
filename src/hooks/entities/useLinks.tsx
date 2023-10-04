@@ -15,7 +15,8 @@ function useLinks(categoryId?: number) {
     bulkRemove,
     getAllByCategoryId,
     addToFavorites,
-    removeFromFavorites
+    removeFromFavorites,
+    importBookmarks
   } = Links;
 
   const queryKey = categoryId ? ["links", categoryId] : ["links"];
@@ -26,6 +27,7 @@ function useLinks(categoryId?: number) {
 
   const {
     query,
+    queryClient,
     defaultMutationSettings,
     addMutation,
     editMutation,
@@ -59,6 +61,16 @@ function useLinks(categoryId?: number) {
     defaultMutationSettings
   );
 
+  const importBookmarksMutation = useMutation(
+    importBookmarks,
+    {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries([queryKey]);
+        await queryClient.invalidateQueries([categoryQueryKey]);
+      }
+    }
+  );
+
   return {
     query,
     addLinkMutation: addMutation,
@@ -68,8 +80,8 @@ function useLinks(categoryId?: number) {
     editMultipleLinksMutation,
     deleteMultipleLinksMutation,
     addToFavoritesMutation,
-    removeFromFavoritesMutation
-
+    removeFromFavoritesMutation,
+    importBookmarksMutation
   };
 }
 

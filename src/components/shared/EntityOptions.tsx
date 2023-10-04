@@ -8,6 +8,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { UseMutationResult } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -37,15 +38,15 @@ function EntityOptions({
   onClose,
   onOpen,
   addToFavoritesMutation,
-  removeFromFavoritesMutation
+  removeFromFavoritesMutation,
 }: EntityOptionsProps) {
   const [isStarredState, setIsStarredState] = useState(isStarred);
 
+  const starColor = useColorModeValue("yellow.700", "yellow.500");
 
   useEffect(() => {
     setIsStarredState(isStarred);
-  }, [isStarred])
-  
+  }, [isStarred]);
 
   const handleClick = async () => {
     if (isStarred) {
@@ -55,15 +56,19 @@ function EntityOptions({
       await addToFavoritesMutation.mutateAsync(entityId);
       setIsStarredState(true);
     }
-  }
+  };
 
   return (
     <HStack m="0">
       <HStack>
-        <Tooltip label={isStarredState ? "Remove from favorites" : "Add to favorites"} openDelay={500}>
+        <Tooltip
+          label={isStarredState ? "Remove from favorites" : "Add to favorites"}
+          openDelay={500}
+        >
           <IconButton
             size="xs"
-            icon={<FaStar color={isStarredState ? "yellow" : "gray"} />}
+            color={isStarredState ? starColor : "gray.300"}
+            icon={<FaStar />}
             onClick={handleClick}
             aria-label={`Star ${entityType}`}
           />
@@ -74,7 +79,9 @@ function EntityOptions({
           icon={<AiFillEdit />}
           aria-label={`Edit ${entityType}`}
         />
-        <Tooltip label={"Delete item"} openDelay={500}>{deleteButton}</Tooltip>
+        <Tooltip label={"Delete item"} openDelay={500}>
+          {deleteButton}
+        </Tooltip>
       </HStack>
       <Modal
         isOpen={isOpen}

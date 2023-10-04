@@ -1,12 +1,13 @@
 import {
   Box,
+  Button,
   Checkbox,
   HStack,
   useColorModeValue,
   Wrap,
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
-import { ForwardedRef, useRef, useState } from "react";
+import { ChangeEvent, ForwardedRef, useRef, useState } from "react";
 import {
   selectShowImagePreviews,
   toggleShowImagePreviews,
@@ -16,6 +17,7 @@ import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton";
 import LinksGrid from "./LinksGrid/LinksGrid";
 import AddQuickLink from "./QuickAddLinkButton";
+import ImportBookmarksButton from "./ImportBookmarksButton";
 
 interface IProps {
   categoryId?: number;
@@ -24,14 +26,21 @@ interface IProps {
 
 function LinksManager({ categoryId, links }: IProps) {
   const addLinkref = useRef<HTMLDivElement | null>(null);
+  const quickAddLinkref = useRef<HTMLDivElement | null>(null);
+
   const showImagePreviews = useAppSelector(selectShowImagePreviews);
   const dispatch = useAppDispatch();
-  const quickAddLinkref = useRef<HTMLDivElement | null>(null);
+  
+
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
   const [currentButtonOpen, setCurrentButtonOpen] = useState<
     "addLink" | "quickAddLink" | "none"
-  >("none");
+    >("none");
+  
+
+  
+  
   return (
     <ErrorBoundaryWrapper>
       <Box
@@ -60,13 +69,16 @@ function LinksManager({ categoryId, links }: IProps) {
                 setCurrentButtonOpen={setCurrentButtonOpen}
               />
             </HStack>
-            <Checkbox
-              isChecked={showImagePreviews}
-              colorScheme={"purple"}
-              onChange={() => dispatch(toggleShowImagePreviews())}
-            >
-              Show image previews
-            </Checkbox>
+            <HStack wrap={"wrap"}>
+              <ImportBookmarksButton/>
+              <Checkbox
+                isChecked={showImagePreviews}
+                colorScheme={"purple"}
+                onChange={() => dispatch(toggleShowImagePreviews())}
+              >
+                Show image previews
+              </Checkbox>
+            </HStack>
           </Wrap>
           <Box ref={addLinkref} />
           <Box ref={quickAddLinkref} />

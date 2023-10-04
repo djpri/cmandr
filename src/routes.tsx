@@ -4,7 +4,10 @@ import { lazy, ReactNode, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "views/Home";
 import Login from "views/Login";
+import CommandFavorites from "views/commands/CommandFavorites";
+import LinkFavorites from "views/links/LinkFavorites";
 import LoginRedirect from "views/login-redirect";
+import SnippetFavorites from "views/snippets/SnippetFavorites";
 
 const Dashboard = lazy(() => import("./views/Dashboard"));
 const AllCommands = lazy(() => import("./views/commands/AllCommands"));
@@ -55,6 +58,10 @@ export const router = createBrowserRouter([
     element: <WithUserLayout component={<AllCommands />} />,
   },
   {
+    path: "/commands/favorites",
+    element: <WithUserLayout component={<CommandFavorites />} />,
+  },
+  {
     path: "/commands/:id",
     element: <WithUserLayout component={<CommandCategory />} />,
   },
@@ -63,12 +70,20 @@ export const router = createBrowserRouter([
     element: <WithUserLayout component={<AllLinks />} />,
   },
   {
+    path: "/links/favorites",
+    element: <WithUserLayout component={<LinkFavorites />} />,
+  },
+  {
     path: "/links/:id",
     element: <WithUserLayout component={<LinkCategory />} />,
   },
   {
     path: "/snippets",
     element: <WithUserLayout component={<AllSnippetsPage />} />,
+  },
+  {
+    path: "/snippets/favorites",
+    element: <WithUserLayout component={<SnippetFavorites />} />,
   },
   {
     path: "/snippets/:id",

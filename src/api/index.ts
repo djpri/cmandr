@@ -10,7 +10,12 @@ import {
   CommandReadDto,
   CommandUpdateDto,
 } from "models/command";
-import { EntityBasePath, EntityCreateDto, EntityReadDto, EntityUpdateDto } from "models/entity";
+import {
+  EntityBasePath,
+  EntityCreateDto,
+  EntityReadDto,
+  EntityUpdateDto,
+} from "models/entity";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
 import {
   SnippetCreateDto,
@@ -34,8 +39,8 @@ const { get, post, put, delete: remove } = CmandrApi;
 /**
  * Create the set of base endpoint methods shared by all entities
  * Most endpoints for each entity are covered by these.
- * @param basePath 
- * @returns 
+ * @param basePath
+ * @returns
  */
 function baseEntityEndpoints<
   TReadDto extends EntityReadDto,
@@ -44,7 +49,6 @@ function baseEntityEndpoints<
 >(basePath: EntityBasePath) {
   return {
     getAll: () => get<TReadDto[]>(basePath),
-    getById: (id: number) => get<TReadDto>(`${basePath}/${id}`),
     getAllByCategoryId: (id: number) =>
       get<TReadDto[]>(`${basePath}/list/${id}`),
     create: (body: TCreateDto) => post<void>(basePath, body),
@@ -55,8 +59,7 @@ function baseEntityEndpoints<
       put(`${basePath}/multiple`, request.body),
     bulkRemove: (ids: number[]) =>
       remove(`${basePath}/multiple`, { data: ids }),
-    addToFavorites: (id: number) =>
-      post(`${basePath}/addToFavorites/${id}`),
+    addToFavorites: (id: number) => post(`${basePath}/addToFavorites/${id}`),
     removeFromFavorites: (id: number) =>
       post(`${basePath}/removeFromFavorites/${id}`),
   };
@@ -66,7 +69,7 @@ function baseEntityEndpoints<
  * Creates the endpoint methods shared by all category types.
  * All category types use the same schema for their endpoints.
  * @param basePath
- * @returns 
+ * @returns
  */
 const categoryEndpoints = (basePath: string) => ({
   getAll: () => get(`${basePath}/categories`),
@@ -89,6 +92,7 @@ export const Links = {
   ...baseEntityEndpoints<LinkReadDto, LinkCreateDto, LinkUpdateDto>("links"),
   quickAdd: (body: { url: string; categoryId: number }) =>
     post(`links/quickAdd`, body),
+  importBookmarks: (body) => post(`links/importBookmarks`, body),
 };
 
 export const Snippets = {
