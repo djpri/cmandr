@@ -132,10 +132,10 @@ function Dashboard() {
     <Box fontSize="xl" pb={16} data-cy="dashboard" w={"100%"}>
       <Tabs variant="line" colorScheme="purple" p={0} size="lg">
         <TabList>
-          <Tab>All</Tab>
-          <Tab>Commands</Tab>
-          <Tab>Links</Tab>
-          <Tab>Snippets</Tab>
+          <Tab fontWeight={700} letterSpacing={"wider"}>All</Tab>
+          <Tab fontWeight={700} letterSpacing={"wider"}>Commands</Tab>
+          <Tab fontWeight={700} letterSpacing={"wider"}>Links</Tab>
+          <Tab fontWeight={700} letterSpacing={"wider"}>Snippets</Tab>
         </TabList>
         <TabPanels my={4}>
           <TabPanel px={0}>
@@ -155,7 +155,7 @@ function Dashboard() {
             <Heading as="h1" fontSize="2xl" userSelect="none">
               Links
             </Heading>
-            <Flex justifyContent="space-between" wrap="wrap">
+            <Flex justifyContent="space-between" alignItems="center" wrap="wrap">
               {categorySortOptions["link"] && (
                 <SortButtons
                   type="link"

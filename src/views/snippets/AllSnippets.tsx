@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
 import CodeEditor from "components/snippets/CodeEditor";
 import AddSnippetButton from "components/snippets/SnippetsManager/AddSnippetButton";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
@@ -23,8 +23,12 @@ function AllSnippets() {
     dispatch(setCode(""));
   }, []);
 
+  const HeaderOptions = () => (
+    <Heading as="h2" fontWeight="900" fontSize="2xl">All Snippets</Heading>
+  );
+
   return (
-    <EntityPage numItems={query?.data && query?.data.length} title="Snippets">
+    <EntityPage numItems={query?.data && query?.data.length} headerOptions={<HeaderOptions />}>
       <AddSnippetButton
         ref={addSnippetRef as ForwardedRef<HTMLDivElement>}
         currentButtonOpen={currentButtonOpen}

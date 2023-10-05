@@ -27,16 +27,17 @@ export default function EditableCategory({ category, entity }: IProps) {
   const [lastValue, setLastValue] = useState(category.name);
 
   const handleSubmit = (inputValue: string) => {
+    if (inputValue == category.name) {
+      return;
+    }
     const categoryUpdateDto = {
-      name: category.name,
+      name: inputValue,
       parentId: category.parentId,
       isGroup: category.isGroup,
       displayIndex: category.displayIndex,
     };
 
-    alert(JSON.stringify(categoryUpdateDto, null, 2));
-
-    // editCategoryMutation.mutate({ id: category.id, body: categoryUpdateDto });
+    editCategoryMutation.mutate({ id: category.id, body: categoryUpdateDto });
   };
 
   /* Here's a custom control */
@@ -72,14 +73,16 @@ export default function EditableCategory({ category, entity }: IProps) {
             size="sm"
             icon={<EditIcon />}
             {...getEditButtonProps()}
-            aria-label="edit"
+              aria-label="edit"
+              isDisabled={editCategoryMutation.isLoading}
+              isLoading={editCategoryMutation.isLoading}
           />
         </Tooltip>
-          <DeleteCategoryButton
-            categoryName={category.name}
-            categoryId={category.id}
-            entityType="command"
-          />
+        <DeleteCategoryButton
+          categoryName={category.name}
+          categoryId={category.id}
+          entityType="command"
+        />
       </ButtonGroup>
     );
   }
@@ -100,8 +103,8 @@ export default function EditableCategory({ category, entity }: IProps) {
     >
       {/* Here is the custom input */}
       <HStack>
-        <EditablePreview fontSize={"2xl"} />
-        <Input as={EditableInput} fontSize={"xl"} />
+        <EditablePreview fontSize={"2xl"} fontWeight="900" />
+        <Input as={EditableInput} fontSize={"xl"}  />
         <EditableControls />
       </HStack>
     </Editable>

@@ -45,7 +45,6 @@ function CommandCategoryPage() {
   return (
     <EntityPage
       numItems={category?.items}
-      title={category?.name}
       headerOptions={<HeaderOptions />}
     >
       {query.isLoading && <Spinner mb={5} />}

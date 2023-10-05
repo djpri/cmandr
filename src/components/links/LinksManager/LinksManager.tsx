@@ -1,13 +1,12 @@
 import {
   Box,
-  Button,
   Checkbox,
   HStack,
   useColorModeValue,
   Wrap,
 } from "@chakra-ui/react";
 import ErrorBoundaryWrapper from "components/other/ErrorBoundary";
-import { ChangeEvent, ForwardedRef, useRef, useState } from "react";
+import { ForwardedRef, useRef, useState } from "react";
 import {
   selectShowImagePreviews,
   toggleShowImagePreviews,
@@ -17,7 +16,6 @@ import { LinkReadDto } from "../../../models/link";
 import AddLinkButton from "./AddLinkButton";
 import LinksGrid from "./LinksGrid/LinksGrid";
 import AddQuickLink from "./QuickAddLinkButton";
-import ImportBookmarksButton from "./ImportBookmarksButton";
 
 interface IProps {
   categoryId?: number;
@@ -31,15 +29,11 @@ function LinksManager({ categoryId, links }: IProps) {
   const showImagePreviews = useAppSelector(selectShowImagePreviews);
   const dispatch = useAppDispatch();
   
-
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
   const [currentButtonOpen, setCurrentButtonOpen] = useState<
     "addLink" | "quickAddLink" | "none"
     >("none");
-  
-
-  
   
   return (
     <ErrorBoundaryWrapper>
@@ -70,7 +64,6 @@ function LinksManager({ categoryId, links }: IProps) {
               />
             </HStack>
             <HStack wrap={"wrap"}>
-              <ImportBookmarksButton/>
               <Checkbox
                 isChecked={showImagePreviews}
                 colorScheme={"purple"}

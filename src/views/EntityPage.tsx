@@ -4,9 +4,8 @@ import { PropsWithChildren } from "react";
 
 interface EntityPageProps {
   numItems: number;
-  title?: string;
   singleCategory?: boolean;
-  headerOptions?: JSX.Element;
+  headerOptions: JSX.Element;
 }
 
 // TODO: Add link to parent group if a parent group exists
@@ -16,7 +15,6 @@ interface EntityPageProps {
 function EntityPage({
   children,
   numItems,
-  title,
   headerOptions,
 }: PropsWithChildren<EntityPageProps>) {
   return (
