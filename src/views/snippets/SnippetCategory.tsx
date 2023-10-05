@@ -162,7 +162,7 @@ function SnippetCategory() {
         </>
       )}
 
-      {!category?.isGroup && !category?.items && (
+      {!category?.isGroup && !category?.items && !query.isLoading && (
         <>
           <AddSnippetButton
             ref={addSnippetRef as ForwardedRef<HTMLDivElement>}

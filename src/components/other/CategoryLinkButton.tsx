@@ -12,8 +12,6 @@ interface CategoryLinkButtonProps {
   hue: number;
 }
 
-// TODO: Add more interesting styling
-
 function CategoryLinkButton({
   item,
   routeType: type,

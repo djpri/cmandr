@@ -31,27 +31,29 @@ function AllSnippets() {
         setCurrentButtonOpen={setCurrentButtonOpen}
       />
       <Box ref={addSnippetRef} mb={5} />
-      {(query?.data && query?.data.length > 0) ? (
-          <Grid
-            templateColumns={["1fr", null, null, null, "1fr 1fr"]}
-            gap={4}
-            top="100px"
-          >
-            <GridItem>
-              <SnippetsManager snippets={query.data} />
-            </GridItem>
-            <GridItem overflowX={"auto"}>
-              <CodeEditor
-                value={code}
-                defaultLanguage={language ?? "javascript"}
-                setDefaultLanguage={() => new Error("Not implemented")}
-                handleCodeSnippetChange={() => new Error("Not implemented")}
-                height="80vh"
-                readonly
-              />
-            </GridItem>
-          </Grid>
-      ) : (
+      {query?.data && query?.data.length > 0 && (
+        <Grid
+          templateColumns={["1fr", null, null, null, "1fr 1fr"]}
+          gap={4}
+          top="100px"
+        >
+          <GridItem>
+            <SnippetsManager snippets={query.data} />
+          </GridItem>
+          <GridItem overflowX={"auto"}>
+            <CodeEditor
+              value={code}
+              defaultLanguage={language ?? "javascript"}
+              setDefaultLanguage={() => new Error("Not implemented")}
+              handleCodeSnippetChange={() => new Error("Not implemented")}
+              height="80vh"
+              readonly
+            />
+          </GridItem>
+        </Grid>
+      )}
+
+      {query?.data === 0 && !query.isLoading && (
         <Box>
           No snippets have been added yet. Add a new snippet using the button
           above.

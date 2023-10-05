@@ -172,13 +172,13 @@ function SideBarLinks() {
         entityType="link"
         entityRoute="links"
         icon={<FaExternalLinkSquareAlt />}
-        sidebarIndex={3}
+        sidebarIndex={4}
       />
       <CategorySection
         entityType="snippet"
         entityRoute="snippets"
         icon={<AiFillCode />}
-        sidebarIndex={5}
+        sidebarIndex={6}
       />
     </Accordion>
   );

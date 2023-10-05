@@ -1,10 +1,10 @@
-import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Stack, Text } from "@chakra-ui/react";
 import { pluralizeNumItems } from "helpers/pluralize";
 import { PropsWithChildren } from "react";
 
 interface EntityPageProps {
   numItems: number;
-  title: string;
+  title?: string;
   singleCategory?: boolean;
   headerOptions?: JSX.Element;
 }
@@ -22,9 +22,9 @@ function EntityPage({
   return (
     <>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
-        <Heading as="h2" fontWeight="900" fontSize="2xl">
+        {/* <Heading as="h2" fontWeight="900" fontSize="2xl">
           {title}
-        </Heading>
+        </Heading> */}
         {headerOptions}
       </Stack>
 

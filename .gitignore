@@ -11,6 +11,9 @@
 !.yarn/sdks
 !.yarn/versions
 
+# development
+/scripts
+
 # testing
 /coverage
 cypress.env.json

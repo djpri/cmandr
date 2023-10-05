@@ -1,35 +1,15 @@
-import {
-  Box,
-  Button,
-  Grid,
-  HStack,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  Spinner,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Grid, Spinner, VStack } from "@chakra-ui/react";
 import AddCategory from "components/categories/AddCategory";
-import DeleteCategoryModal from "components/categories/DeleteCategoryModal";
-import EditCategory from "components/categories/EditCategory";
 import CommandsManager from "components/commands/CommandsManager/CommandsManager";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
+import EditableCategory from "components/shared/EditableCategory";
 import useCategories from "hooks/categories/useCategories";
 import useCommands from "hooks/entities/useCommands";
 import { useMemo } from "react";
-import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import EntityPage from "views/EntityPage";
 
 function CommandCategoryPage() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    isOpen: isEditModalOpen,
-    onOpen: editModalOpen,
-    onClose: editModalClose,
-  } = useDisclosure();
   const { id: categoryId } = useParams();
   const { query } = useCommands(parseInt(categoryId));
   const { query: categoriesQuery } = useCategories("command");
@@ -55,37 +35,9 @@ function CommandCategoryPage() {
 
   const HeaderOptions = () => (
     <Box m="0" p="0">
-      <Popover placement="right" isLazy>
-        <PopoverTrigger>
-          <Button boxShadow="outline">
-            <FaEdit />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverBody>
-            <HStack>
-              <Button size="xs" onClick={editModalOpen}>
-                rename
-              </Button>
-              <Button size="xs" onClick={onOpen} variant="delete">
-                delete
-              </Button>
-            </HStack>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-      <DeleteCategoryModal
-        isOpen={isOpen}
-        onClose={onClose}
-        categoryName={category ? category.name : null}
-        categoryId={parseInt(categoryId)}
-        entityType="command"
-      />
-      <EditCategory
-        isOpen={isEditModalOpen}
-        onClose={editModalClose}
+      <EditableCategory
         category={category}
-        entityType="command"
+        entity="command"
       />
     </Box>
   );

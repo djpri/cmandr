@@ -126,17 +126,19 @@ function Dashboard() {
     );
   };
 
+  // TODO: Persist selected tab in redux
+
   return (
     <Box fontSize="xl" pb={16} data-cy="dashboard" w={"100%"}>
-      <Tabs variant="line" colorScheme="purple" p={0}>
+      <Tabs variant="line" colorScheme="purple" p={0} size="lg">
         <TabList>
           <Tab>All</Tab>
           <Tab>Commands</Tab>
           <Tab>Links</Tab>
           <Tab>Snippets</Tab>
         </TabList>
-        <TabPanels px={0} my={8}>
-          <TabPanel>
+        <TabPanels my={4}>
+          <TabPanel px={0}>
             <Heading as="h1" fontSize="2xl" userSelect="none">
               Commands
             </Heading>
@@ -177,7 +179,7 @@ function Dashboard() {
             )}
             <CategoriesGrid entityType="snippet" entityRoute="snippets" />
           </TabPanel>
-          <TabPanel>
+          <TabPanel px={0}>
             <Heading as="h1" fontSize="2xl" userSelect="none">
               Commands
             </Heading>
@@ -189,7 +191,7 @@ function Dashboard() {
             )}
             <CategoriesGrid entityType="command" entityRoute="commands" />
           </TabPanel>
-          <TabPanel>
+          <TabPanel px={0}>
             <Heading as="h1" fontSize="2xl" userSelect="none">
               Links
             </Heading>
@@ -204,7 +206,7 @@ function Dashboard() {
             </Flex>
             <CategoriesGrid entityType="link" entityRoute="links" />
           </TabPanel>
-          <TabPanel>
+          <TabPanel px={0}>
             <Heading as="h1" fontSize="2xl" userSelect="none">
               Snippets
             </Heading>
