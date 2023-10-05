@@ -1,6 +1,6 @@
 # Cmandr
 
-A web application dedicated to managing and organising command snippets.
+A web application dedicated to managing and organising command snippets and code snippets.
 Also includes a bookmark manager for storing links related to development work.
 
 ## Technologies Used
@@ -15,6 +15,7 @@ Also includes a bookmark manager for storing links related to development work.
 - Search, sort and pagination of items
 - Bulk move items to new category
 - Bulk delete items
+- Import bookmarks from chrome or firefox
 
 ### Ideas for Future Features
 

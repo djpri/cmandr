@@ -128,7 +128,7 @@ function SnippetCategory() {
       }
     >
       {query.isLoading && <Spinner mb={5} />}
-      {!category?.isGroup && (
+      {!category?.isGroup && category?.items > 0 && (
         <>
           <AddSnippetButton
             ref={addSnippetRef as ForwardedRef<HTMLDivElement>}
@@ -161,6 +161,23 @@ function SnippetCategory() {
           </Grid>
         </>
       )}
+
+      {!category?.isGroup && !category?.items && (
+        <>
+          <AddSnippetButton
+            ref={addSnippetRef as ForwardedRef<HTMLDivElement>}
+            currentButtonOpen={currentButtonOpen}
+            setCurrentButtonOpen={setCurrentButtonOpen}
+            categoryId={category ? category.id : null}
+          />
+          <Box ref={addSnippetRef} mb={5} />
+          <div>
+            No snippets have been added yet. Add a new snippet using the button
+            above.
+          </div>
+        </>
+      )}
+
       {subCategories && (
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
           {subCategories.map((item) => (
