@@ -79,9 +79,7 @@ function EntityOptions({
           icon={<AiFillEdit />}
           aria-label={`Edit ${entityType}`}
         />
-        <Tooltip label={"Delete item"} openDelay={500}>
           {deleteButton}
-        </Tooltip>
       </HStack>
       <Modal
         isOpen={isOpen}

@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { CategoryReadDto } from "models/category";
 import { EntityReadDto, EntityUpdateDto } from "models/entity";
 import useChakraToast from "../other/useChakraToast";
@@ -52,6 +56,8 @@ const mapToReadDto = (
     ...updatedEntity,
   };
 };
+
+// TODO: Update cache correctly when item is added to favorites
 
 function useReactQueryEntity<T extends EntityReadDto>({
   queryKey,
@@ -252,19 +258,16 @@ function useReactQueryEntity<T extends EntityReadDto>({
       );
 
       // update query data for all items
-      queryClient.setQueryData(
-        [queryKey[0]],
-        (entities: EntityReadDto[]) => {
-          return entities?.map((entity) => {
-            if (entity.id === id) {
-              entity.starred = true;
-              return entity;
-            } else {
-              return entity;
-            }
-          });
-        }
-      );
+      queryClient.setQueryData([queryKey[0]], (entities: EntityReadDto[]) => {
+        return entities?.map((entity) => {
+          if (entity.id === id) {
+            entity.starred = true;
+            return entity;
+          } else {
+            return entity;
+          }
+        });
+      });
 
       return snapshot;
     },
@@ -272,7 +275,7 @@ function useReactQueryEntity<T extends EntityReadDto>({
       await queryClient.invalidateQueries(categoryQueryKey);
       await queryClient.invalidateQueries(queryKey);
       showErrorToast();
-    }
+    },
   });
 
   const removeFromFavoritesMutation = useMutation(
@@ -281,11 +284,11 @@ function useReactQueryEntity<T extends EntityReadDto>({
       onMutate: async (id: number) => {
         await queryClient.cancelQueries(categoryQueryKey);
         const snapshot = snapshotPreviousData();
-  
+
         const currentEntity = (queryClient.getQueryData(queryKey) as T[]).find(
           (item) => item.id === id
         );
-  
+
         queryClient.setQueryData(
           [queryKey[0], currentEntity.category.id],
           (entities: EntityReadDto[]) => {
@@ -299,14 +302,14 @@ function useReactQueryEntity<T extends EntityReadDto>({
             });
           }
         );
-  
+
         return snapshot;
       },
       onError: async () => {
         await queryClient.invalidateQueries(categoryQueryKey);
         await queryClient.invalidateQueries(queryKey);
         showErrorToast();
-      }
+      },
     }
   );
 

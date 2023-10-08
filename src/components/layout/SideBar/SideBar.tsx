@@ -1,17 +1,17 @@
 import {
   Box,
-  Spinner,
   Stack,
   StackItem,
+  chakra,
   useColorModeValue,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSidebarOpen,
-  setSidebarClosed,
-  setSidebarOpen,
+  selectSidebarSize,
+  setSidebarSize,
 } from "redux/slices/layoutSlice";
 
 const SideBarLinks = lazy(() => import("./SideBarLinks/SideBarLinks"));
@@ -48,14 +48,6 @@ function SideBar() {
   const bgColor = useColorModeValue("#f2f0f9", "gray.900");
   const borderColor = useColorModeValue("gray.300", "gray.700");
 
-  // sidebar is initially closed on smaller devices
-  useEffect(() => {
-    if (isSmallerThan1280) {
-      dispatch(setSidebarClosed());
-    } else {
-      dispatch(setSidebarOpen());
-    }
-  }, [isSmallerThan1280, dispatch]);
 
   // const [show, setShow] = useState(false);
   // const [categoryId] = useState(null);
@@ -91,35 +83,124 @@ function SideBar() {
   //   </Popover>
   // );
 
+  const sidebarRef = React.useRef(null);
+  const resizerRef = React.useRef(null);
+  const [isResizing, setIsResizing] = useState(false);
+  const [dragWidth, setDragWidth] = useState(268);
+
+  const sidebarWidth = useSelector(selectSidebarSize);
+
+  const startResizing = React.useCallback(() => {
+    setIsResizing(true);
+  }, []);
+
+  const stopResizing = React.useCallback(() => {
+    dispatch(setSidebarSize(dragWidth));
+    setIsResizing(false);
+  }, [dragWidth]);
+
+  const resize = React.useCallback(
+    (mouseMoveEvent: MouseEvent) => {
+      if (isResizing) {
+        mouseMoveEvent.preventDefault();
+        mouseMoveEvent.stopPropagation();
+        const newDragWidth =
+          mouseMoveEvent.clientX -
+          sidebarRef.current.getBoundingClientRect().left;
+        // Clamp the width within the specified range (200px to 400px)
+        const clampedWidth = Math.max(200, Math.min(newDragWidth, 400));
+
+        if (resizerRef.current) {
+          resizerRef.current.style.right = `${sidebarWidth - clampedWidth}px`;
+        }
+        setDragWidth(clampedWidth);
+      }
+    },
+    [isResizing]
+  );
+
+  React.useEffect(() => {
+    if (!isResizing) {
+      resizerRef.current.style.right = "-5px";
+    }
+
+    window.addEventListener("mousemove", resize);
+    window.addEventListener("mouseup", stopResizing);
+    return () => {
+      window.removeEventListener("mousemove", resize);
+      window.removeEventListener("mouseup", stopResizing);
+    };
+  }, [resize, stopResizing]);
+
+  // Contents of sidebar must be memoized to prevent re-rendering when adjusting sidebar width.
+  // This improves the performance significantly.
+  const sideBarContents = useMemo(() => (
+    <StackItem>
+    <Suspense>
+      <SideBarLinks />
+    </Suspense>
+    {/* <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} /> */}
+  </StackItem>
+  ), [isSmallerThan1280])
+
   return (
     <Box
-      data-cy="sidebar"
-      id="sidebar"
-      bgColor={bgColor}
-      position={isSmallerThan1280 ? "fixed" : "fixed"}
-      w="15rem"
-      mt="45px"
-      left="0"
+      position={"fixed"}
+      w={sidebarWidth}
+      transition="width 0.2s ease-in-out"
+      className="LEFT"
       h="100vh"
-      borderColor={borderColor}
-      borderRightWidth="1px"
-      overflowY="scroll"
-      sx={scrollbarStyles}
-      _hover={hoverStyle}
+      ref={sidebarRef}
       zIndex="500"
-      boxSizing="content-box"
-      userSelect="none"
-      resize="horizontal"
     >
-      {/* SIDE LINKS */}
-      <Stack mt="1" mb={24}>
-        <StackItem>
-          <Suspense>
-            <SideBarLinks />
-          </Suspense>
-          {/* <ContextMenu anchorPoint={anchorPoint} categoryId={categoryId} /> */}
-        </StackItem>
-      </Stack>
+      <Box
+        data-cy="sidebar"
+        id="sidebar"
+        bgColor={bgColor}
+        position={isSmallerThan1280 ? "fixed" : "fixed"}
+        w="inherit"
+        maxW={"100%"}
+        mt="45px"
+        left="0"
+        h="100vh"
+        borderColor={borderColor}
+        borderRightWidth="1px"
+        boxSizing="content-box"
+        userSelect="none"
+        zIndex="500"
+      >
+        {/* SIDE LINKS */}
+        {/* <HStack mt={1} h="100%"> */}
+        <Stack
+          mt="1"
+          pb={24}
+          overflowY="scroll"
+          sx={scrollbarStyles}
+          _hover={hoverStyle}
+          h={"100%"}
+          w="100%"
+        >
+         {sideBarContents}
+        </Stack>
+        <chakra.span
+          position="absolute"
+          cursor={"col-resize"}
+          zIndex={600}
+          top={0}
+          role="presentation"
+          ref={resizerRef}
+          w="2px"
+          h="100%"
+          m="0 0px"
+          p={0}
+          borderLeft="2px solid transparent"
+          borderRight="2px solid transparent"
+          background="rgba(221, 221, 221, 0.479)"
+          onMouseDown={startResizing}
+          transition={"all 0.1s"}
+        ></chakra.span>
+        {/* </HStack> */}
+      </Box>
     </Box>
   );
 }

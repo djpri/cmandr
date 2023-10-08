@@ -1,10 +1,4 @@
-import {
-  Box,
-  Grid,
-  GridItem,
-  Spinner,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, Spinner, VStack } from "@chakra-ui/react";
 import AddCategory from "components/categories/AddCategory";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import EditableCategory from "components/shared/EditableCategory";
@@ -27,7 +21,7 @@ function SnippetCategory() {
   const language = useAppSelector(selectLanguage);
 
   const [currentButtonOpen, setCurrentButtonOpen] = useState<
-    "addSnippet" | "quickAddLink" | "none"
+    "addSnippet" | "none"
   >("none");
   const addSnippetRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,14 +55,10 @@ function SnippetCategory() {
       numItems={category?.items}
       headerOptions={
         <Box m="0" p="0">
-          <EditableCategory
-            category={category}
-            entity="snippet"
-          />
+          <EditableCategory category={category} entity="snippet" />
         </Box>
       }
     >
-    
       {query.isLoading && <Spinner mb={5} />}
       {!category?.isGroup && category?.items > 0 && (
         <>

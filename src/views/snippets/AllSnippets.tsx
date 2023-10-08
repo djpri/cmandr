@@ -14,7 +14,7 @@ function AllSnippets() {
   const language = useAppSelector(selectLanguage);
 
   const [currentButtonOpen, setCurrentButtonOpen] = useState<
-    "addSnippet" | "quickAddLink" | "none"
+    "addSnippet" | "none"
   >("none");
   const addSnippetRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useAppDispatch();

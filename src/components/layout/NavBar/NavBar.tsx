@@ -38,7 +38,7 @@ function NavBar() {
       bgImage={bgImage}
       h="45"
       // shadow="base"
-      zIndex={200}
+      zIndex={700}
     >
       {/* TOP BUTTONS */}
       <HStack

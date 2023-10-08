@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 
 const initialState = {
+  sideBarSize: 200,
   isSidebarOpen: true,
   sideBarAccordionIndex: [1, 4, 6],
   categoriesOpen: {},
@@ -11,6 +12,9 @@ export const layoutSlice = createSlice({
   name: "layout",
   initialState,
   reducers: {
+    setSidebarSize: (state, action) => {
+      state.sideBarSize = action.payload;
+    },
     setSidebarToggle: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
@@ -49,6 +53,7 @@ export const layoutSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
+  setSidebarSize,
   setSidebarToggle,
   setSidebarClosed,
   setSidebarOpen,
@@ -58,6 +63,9 @@ export const {
 } = layoutSlice.actions;
 
 // SELECTORS
+export const selectSidebarSize = (state: RootState) =>
+  state.layout.sideBarSize;
+  
 export const selectIsSidebarOpen = (state: RootState) =>
   state.layout.isSidebarOpen;
 

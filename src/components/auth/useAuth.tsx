@@ -1,7 +1,6 @@
 import {
   AuthenticationResult,
   CacheLookupPolicy,
-  InteractionRequiredAuthError,
   SilentRequest,
 } from "@azure/msal-browser";
 import { useMsal } from "@azure/msal-react";
@@ -37,14 +36,9 @@ const useAuth = () => {
         setAuthSuccess(true);
         return response?.accessToken || null;
       } catch (error) {
-        if (error instanceof InteractionRequiredAuthError) {
-          // fallback to interaction when silent call fails
-          await instance.acquireTokenRedirect(silentRequest);
-        }
+        await instance.acquireTokenRedirect(silentRequest);
       }
     };
-
-    getToken({ fromCache: true });
 
     const interceptor = CmandrApi.interceptors.request.use(
       async function (config) {
