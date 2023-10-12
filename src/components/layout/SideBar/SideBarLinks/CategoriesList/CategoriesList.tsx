@@ -42,7 +42,7 @@ function CategoriesList({ query, type, editCategoryMutation }: IProps) {
         (cat) => cat.id === categoryIdToAdd
       );
       categoryToUpdate.parentId = targetGroupId;
-      await editCategoryMutation.mutateAsync({
+      editCategoryMutation.mutate({
         id: categoryToUpdate.id,
         body: mapToCategoryUpdateDto(categoryToUpdate),
       });

@@ -48,12 +48,12 @@ function EntityOptions({
     setIsStarredState(isStarred);
   }, [isStarred]);
 
-  const handleClick = async () => {
+  const handleClick = () => {
     if (isStarred) {
-      await removeFromFavoritesMutation.mutateAsync(entityId);
+      removeFromFavoritesMutation.mutate(entityId);
       setIsStarredState(false);
     } else {
-      await addToFavoritesMutation.mutateAsync(entityId);
+      addToFavoritesMutation.mutate(entityId);
       setIsStarredState(true);
     }
   };

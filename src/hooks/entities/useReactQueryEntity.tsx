@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CategoryReadDto } from "models/category";
 import { EntityReadDto, EntityUpdateDto } from "models/entity";
 import useChakraToast from "../other/useChakraToast";
@@ -289,6 +285,7 @@ function useReactQueryEntity<T extends EntityReadDto>({
           (item) => item.id === id
         );
 
+        // update query data for items in category
         queryClient.setQueryData(
           [queryKey[0], currentEntity.category.id],
           (entities: EntityReadDto[]) => {
@@ -302,6 +299,18 @@ function useReactQueryEntity<T extends EntityReadDto>({
             });
           }
         );
+
+        // update query data for all items
+        queryClient.setQueryData([queryKey[0]], (entities: EntityReadDto[]) => {
+          return entities?.map((entity) => {
+            if (entity.id === id) {
+              entity.starred = false;
+              return entity;
+            } else {
+              return entity;
+            }
+          });
+        });
 
         return snapshot;
       },

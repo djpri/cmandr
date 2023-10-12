@@ -1,4 +1,5 @@
 import { Heading } from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
 import CommandsManager from "components/commands/CommandsManager/CommandsManager";
 import useCommands from "hooks/entities/useCommands";
 import { useMemo } from "react";
@@ -15,9 +16,10 @@ function Favorites() {
 
   const starredItems = useMemo(() => {
     if (query.data) {
-      return query.data.filter((item) => item.starred);
+      // console.log(query.data.filter(item => item.starred === true).length);
+      return query.data.filter(item => item.starred === true);
     }
-  }, [query]);
+  }, [query.data]);
 
   return (
     <EntityPage

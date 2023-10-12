@@ -17,14 +17,14 @@ function ImportBookmarksButton() {
   const { importBookmarksMutation } = useLinks();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
 
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
 
-      await importBookmarksMutation.mutateAsync(formData);
+      importBookmarksMutation.mutate(formData);
     }
   };
 
