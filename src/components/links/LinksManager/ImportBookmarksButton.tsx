@@ -25,6 +25,7 @@ function ImportBookmarksButton() {
       formData.append("file", file);
 
       importBookmarksMutation.mutate(formData);
+      fileInputRef.current.value = "";
     }
   };
 

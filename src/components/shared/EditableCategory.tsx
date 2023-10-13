@@ -81,7 +81,7 @@ export default function EditableCategory({ category, entity }: IProps) {
         <DeleteCategoryButton
           categoryName={category.name}
           categoryId={category.id}
-          entityType="command"
+          entityType={entity}
         />
       </ButtonGroup>
     );
