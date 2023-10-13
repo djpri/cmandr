@@ -31,7 +31,7 @@ function useRemoveFromGroupDropItem(
   categories: CategoryReadDto[]
 ) {
   const handleAddCategoryToGroup = useCallback(
-    async (categoryIdToAdd: number) => {
+    (categoryIdToAdd: number) => {
       const categoryToUpdate = categories?.find(
         (cat) => cat.id === categoryIdToAdd
       );
@@ -40,7 +40,7 @@ function useRemoveFromGroupDropItem(
         return;
       }
 
-      await editCategoryMutation.mutateAsync({
+      editCategoryMutation.mutate({
         id: categoryIdToAdd,
         body: mapToCategoryUpdateDto(categoryToUpdate),
       });

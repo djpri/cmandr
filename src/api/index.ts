@@ -10,7 +10,18 @@ import {
   CommandReadDto,
   CommandUpdateDto,
 } from "models/command";
+import {
+  EntityBasePath,
+  EntityCreateDto,
+  EntityReadDto,
+  EntityUpdateDto,
+} from "models/entity";
 import { LinkCreateDto, LinkUpdateDto } from "models/link";
+import {
+  SnippetCreateDto,
+  SnippetReadDto,
+  SnippetUpdateDto,
+} from "models/snippets";
 import { UserSettings } from "models/user";
 import { LinkReadDto } from "../models/link";
 
@@ -25,82 +36,76 @@ export const CmandrApi: AxiosInstance = axios.create({
 
 const { get, post, put, delete: remove } = CmandrApi;
 
-export const Commands = {
-  getAll: () => get<CommandReadDto[]>("commands"),
-  getById: (id: number) => get<CommandReadDto>(`commands/${id}`),
-  getAllByCategoryId: (id: number) =>
-    get<CommandReadDto[]>(`commands/list/${id}`),
-  create: (body: CommandCreateDto) => post<void>("commands", body),
-  update: (request: { id: number; body: CommandUpdateDto }) =>
-    put(`commands/${request.id}`, request.body),
-  remove: (id: number) => remove<void>(`commands/${id}`),
-  bulkUpdate: (request: { body: number[][] }) =>
-    put<void>(`commands/multiple`, request.body),
-  bulkRemove: (ids: number[]) =>
-    remove<void>(`commands/multiple`, { data: ids }),
-};
+/**
+ * Create the set of base endpoint methods shared by all entities
+ * Most endpoints for each entity are covered by these.
+ * @param basePath
+ * @returns
+ */
+function baseEntityEndpoints<
+  TReadDto extends EntityReadDto,
+  TCreateDto extends EntityCreateDto,
+  TUpdateDto extends EntityUpdateDto,
+>(basePath: EntityBasePath) {
+  return {
+    getAll: () => get<TReadDto[]>(basePath),
+    getAllByCategoryId: (id: number) =>
+      get<TReadDto[]>(`${basePath}/list/${id}`),
+    create: (body: TCreateDto) => post<void>(basePath, body),
+    update: (request: { id: number; body: TUpdateDto }) =>
+      put(`${basePath}/${request.id}`, request.body),
+    remove: (id: number) => remove<void>(`${basePath}/${id}`),
+    bulkUpdate: (request: { body: number[][] }) =>
+      put(`${basePath}/multiple`, request.body),
+    bulkRemove: (ids: number[]) =>
+      remove(`${basePath}/multiple`, { data: ids }),
+    addToFavorites: (id: number) => post(`${basePath}/addToFavorites/${id}`),
+    removeFromFavorites: (id: number) =>
+      post(`${basePath}/removeFromFavorites/${id}`),
+  };
+}
 
-export const CommandCategories = {
-  getAll: () => get<CommandReadDto[]>("commands/categories"),
-  getById: (id: number) => get(`commands/categories/${id}`),
-  create: (body: CategoryCreateDto) => post("commands/categories", body),
+/**
+ * Creates the endpoint methods shared by all category types.
+ * All category types use the same schema for their endpoints.
+ * @param basePath
+ * @returns
+ */
+const categoryEndpoints = (basePath: string) => ({
+  getAll: () => get(`${basePath}/categories`),
+  getById: (id: number) => get(`${basePath}/categories/${id}`),
+  create: (body: CategoryCreateDto) => post(`${basePath}/categories`, body),
   update: (request: { id: number; body: CategoryUpdateDto }) =>
-    put(`commands/categories/${request.id}`, request.body),
-  remove: (id: number) => remove(`commands/categories/${id}`),
+    put(`${basePath}/categories/${request.id}`, request.body),
+  remove: (id: number) => remove(`${basePath}/categories/${id}`),
   manualSort: (body: CategoryDisplayIndexDto[]) =>
-    put("commands/categories/manualsort", body),
+    put(`${basePath}/categories/manualsort`, body),
+});
+
+export const Commands = {
+  ...baseEntityEndpoints<CommandReadDto, CommandCreateDto, CommandUpdateDto>(
+    "commands"
+  ),
 };
 
 export const Links = {
-  getAll: () => get<LinkReadDto[]>("links"),
-  getById: (id: number) => get<LinkReadDto>(`links/${id}`),
-  getAllByCategoryId: (id: number) => get<LinkReadDto[]>(`links/list/${id}`),
-  create: (body: LinkCreateDto) => post("links", body),
+  ...baseEntityEndpoints<LinkReadDto, LinkCreateDto, LinkUpdateDto>("links"),
   quickAdd: (body: { url: string; categoryId: number }) =>
     post(`links/quickAdd`, body),
-  update: (request: { id: number; body: LinkUpdateDto }) =>
-    put(`links/${request.id}`, request.body),
-  remove: (id: number) => remove(`links/${id}`),
-  bulkUpdate: (request: { body: number[][] }) =>
-    put(`links/multiple`, request.body),
-  bulkRemove: (ids: number[]) => remove(`links/multiple`, { data: ids }),
-};
-
-export const LinkCategories = {
-  getAll: () => get("links/categories"),
-  getById: (id: number) => get(`links/categories/${id}`),
-  create: (body: CategoryCreateDto) => post("links/categories", body),
-  update: (request: { id: number; body: CategoryUpdateDto }) =>
-    put(`links/categories/${request.id}`, request.body),
-  remove: (id: number) => remove(`links/categories/${id}`),
-  manualSort: (body: CategoryDisplayIndexDto[]) =>
-    put("links/categories/manualsort", body),
+  importBookmarks: (body) => post(`links/importBookmarks`, body),
 };
 
 export const Snippets = {
-  getAll: () => get("snippets"),
-  getById: (id: number) => get(`snippets/${id}`),
-  getAllByCategoryId: (id: number) => get(`snippets/list/${id}`),
-  create: (body: { title: string; content: string; categoryId: number }) =>
-    post("snippets", body),
-  update: (request: { id: number; body: { title: string; content: string } }) =>
-    put(`snippets/${request.id}`, request.body),
-  remove: (id: number) => remove(`snippets/${id}`),
-  bulkUpdate: (request: { body: number[][] }) =>
-    put(`snippets/multiple`, request.body),
-  bulkRemove: (ids: number[]) => remove(`snippets/multiple`, { data: ids }),
+  ...baseEntityEndpoints<SnippetReadDto, SnippetCreateDto, SnippetUpdateDto>(
+    "snippets"
+  ),
 };
 
-export const SnippetCategories = {
-  getAll: () => get("snippets/categories"),
-  getById: (id: number) => get(`snippets/categories/${id}`),
-  create: (body: CategoryCreateDto) => post("snippets/categories", body),
-  update: (request: { id: number; body: CategoryUpdateDto }) =>
-    put(`snippets/categories/${request.id}`, request.body),
-  remove: (id: number) => remove(`snippets/categories/${id}`),
-  manualSort: (body: CategoryDisplayIndexDto[]) =>
-    put("snippets/categories/manualsort", body),
-};
+export const CommandCategories = categoryEndpoints("commands");
+
+export const LinkCategories = categoryEndpoints("links");
+
+export const SnippetCategories = categoryEndpoints("snippets");
 
 export const Settings = {
   get: () => get("user/settings"),

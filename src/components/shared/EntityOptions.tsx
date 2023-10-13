@@ -7,16 +7,25 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import { UseMutationResult } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
+import { FaStar } from "react-icons/fa";
 
 interface EntityOptionsProps {
   entityType: "command" | "link" | "snippet";
+  entityId: number;
   deleteButton: JSX.Element;
   editForm: JSX.Element;
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
+  isStarred: boolean;
+  addToFavoritesMutation: UseMutationResult<unknown, unknown, number>;
+  removeFromFavoritesMutation: UseMutationResult<unknown, unknown, number>;
 }
 
 function EntityOptions({
@@ -24,19 +33,53 @@ function EntityOptions({
   deleteButton,
   editForm,
   isOpen,
+  entityId,
+  isStarred,
   onClose,
   onOpen,
+  addToFavoritesMutation,
+  removeFromFavoritesMutation,
 }: EntityOptionsProps) {
+  const [isStarredState, setIsStarredState] = useState(isStarred);
+
+  const starColor = useColorModeValue("yellow.700", "yellow.500");
+
+  useEffect(() => {
+    setIsStarredState(isStarred);
+  }, [isStarred]);
+
+  const handleClick = () => {
+    if (isStarred) {
+      removeFromFavoritesMutation.mutate(entityId);
+      setIsStarredState(false);
+    } else {
+      addToFavoritesMutation.mutate(entityId);
+      setIsStarredState(true);
+    }
+  };
+
   return (
     <HStack m="0">
       <HStack>
+        <Tooltip
+          label={isStarredState ? "Remove from favorites" : "Add to favorites"}
+          openDelay={500}
+        >
+          <IconButton
+            size="xs"
+            color={isStarredState ? starColor : "gray.300"}
+            icon={<FaStar />}
+            onClick={handleClick}
+            aria-label={`Star ${entityType}`}
+          />
+        </Tooltip>
         <IconButton
           size="xs"
           onClick={onOpen}
           icon={<AiFillEdit />}
           aria-label={`Edit ${entityType}`}
         />
-        {deleteButton}
+          {deleteButton}
       </HStack>
       <Modal
         isOpen={isOpen}

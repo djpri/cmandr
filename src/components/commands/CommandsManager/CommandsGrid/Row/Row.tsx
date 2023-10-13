@@ -133,13 +133,7 @@ function CommandRow({ row, table, showCategories, commandItem }: Props) {
           </Link>
         )}
         <CommandOptions
-          command={{
-            id,
-            description,
-            line,
-            reference,
-            category,
-          }}
+          command={commandItem}
         />
       </GridItem>
     </Grid>

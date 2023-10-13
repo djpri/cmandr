@@ -1,86 +1,17 @@
-import {
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-} from "@chakra-ui/popover";
-import {
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  HStack,
-  Spinner,
-  VStack,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, Spinner, VStack } from "@chakra-ui/react";
 import AddCategory from "components/categories/AddCategory";
-import DeleteCategoryModal from "components/categories/DeleteCategoryModal";
-import EditCategory from "components/categories/EditCategory";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
+import EditableCategory from "components/shared/EditableCategory";
 import CodeEditor from "components/snippets/CodeEditor";
 import AddSnippetButton from "components/snippets/SnippetsManager/AddSnippetButton";
 import SnippetsManager from "components/snippets/SnippetsManager/SnippetsManager";
 import useSnippets from "hooks/entities/useSnippets";
-import { CategoryReadDto } from "models/category";
 import { ForwardedRef, useEffect, useMemo, useRef, useState } from "react";
-import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { selectCode, selectLanguage, setCode } from "redux/slices/editorSlice";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import EntityPage from "views/EntityPage";
 import useCategories from "../../hooks/categories/useCategories";
-
-const HeaderOptions = ({
-  category,
-  categoryId,
-}: {
-  category: CategoryReadDto;
-  categoryId: string;
-}) => {
-  const {
-    isOpen: isEditModalOpen,
-    onOpen: editModalOpen,
-    onClose: editModalClose,
-  } = useDisclosure();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  return (
-    <Box m="0" p="0">
-      <Popover placement="right" isLazy>
-        <PopoverTrigger>
-          <Button boxShadow="outline">
-            <FaEdit />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverBody>
-            <HStack>
-              <Button size="xs" onClick={editModalOpen}>
-                rename
-              </Button>
-              <Button size="xs" onClick={onOpen} variant="delete">
-                delete
-              </Button>
-            </HStack>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-      <DeleteCategoryModal
-        isOpen={isOpen}
-        onClose={onClose}
-        categoryName={category ? category.name : null}
-        categoryId={parseInt(categoryId)}
-        entityType="snippet"
-      />
-      <EditCategory
-        isOpen={isEditModalOpen}
-        onClose={editModalClose}
-        category={category}
-        entityType="snippet"
-      />
-    </Box>
-  );
-};
 
 function SnippetCategory() {
   const { id: categoryId } = useParams();
@@ -90,7 +21,7 @@ function SnippetCategory() {
   const language = useAppSelector(selectLanguage);
 
   const [currentButtonOpen, setCurrentButtonOpen] = useState<
-    "addSnippet" | "quickAddLink" | "none"
+    "addSnippet" | "none"
   >("none");
   const addSnippetRef = useRef<HTMLDivElement | null>(null);
 
@@ -121,14 +52,15 @@ function SnippetCategory() {
 
   return (
     <EntityPage
-      title={category?.name}
       numItems={category?.items}
       headerOptions={
-        <HeaderOptions category={category} categoryId={categoryId} />
+        <Box m="0" p="0">
+          <EditableCategory category={category} entity="snippet" />
+        </Box>
       }
     >
       {query.isLoading && <Spinner mb={5} />}
-      {!category?.isGroup && (
+      {!category?.isGroup && category?.items > 0 && (
         <>
           <AddSnippetButton
             ref={addSnippetRef as ForwardedRef<HTMLDivElement>}
@@ -161,6 +93,23 @@ function SnippetCategory() {
           </Grid>
         </>
       )}
+
+      {!category?.isGroup && !category?.items && !query.isLoading && (
+        <>
+          <AddSnippetButton
+            ref={addSnippetRef as ForwardedRef<HTMLDivElement>}
+            currentButtonOpen={currentButtonOpen}
+            setCurrentButtonOpen={setCurrentButtonOpen}
+            categoryId={category ? category.id : null}
+          />
+          <Box ref={addSnippetRef} mb={5} />
+          <div>
+            No snippets have been added yet. Add a new snippet using the button
+            above.
+          </div>
+        </>
+      )}
+
       {subCategories && (
         <Grid my="30px" gap={3} templateColumns="repeat(auto-fill, 250px)">
           {subCategories.map((item) => (

@@ -13,6 +13,8 @@ type MutationEndpoints = {
   create: (newEntity: any) => Promise<any>;
   update: (updatedEntity: any) => Promise<any>;
   remove: (id: number) => Promise<any>;
+  addToFavorites: (id: number) => Promise<any>;
+  removeFromFavorites: (id: number) => Promise<any>;
 };
 
 type Props = {
@@ -50,6 +52,8 @@ const mapToReadDto = (
     ...updatedEntity,
   };
 };
+
+// TODO: Update cache correctly when item is added to favorites
 
 function useReactQueryEntity<T extends EntityReadDto>({
   queryKey,
@@ -225,6 +229,99 @@ function useReactQueryEntity<T extends EntityReadDto>({
     },
   });
 
+  const addToFavoritesMutation = useMutation(endpoints.addToFavorites, {
+    onMutate: async (id: number) => {
+      await queryClient.cancelQueries(categoryQueryKey);
+      const snapshot = snapshotPreviousData();
+
+      const currentEntity = (queryClient.getQueryData(queryKey) as T[]).find(
+        (item) => item.id === id
+      );
+
+      // update query data for items in category
+      queryClient.setQueryData(
+        [queryKey[0], currentEntity.category.id],
+        (entities: EntityReadDto[]) => {
+          return entities?.map((entity) => {
+            if (entity.id === id) {
+              entity.starred = true;
+              return entity;
+            } else {
+              return entity;
+            }
+          });
+        }
+      );
+
+      // update query data for all items
+      queryClient.setQueryData([queryKey[0]], (entities: EntityReadDto[]) => {
+        return entities?.map((entity) => {
+          if (entity.id === id) {
+            entity.starred = true;
+            return entity;
+          } else {
+            return entity;
+          }
+        });
+      });
+
+      return snapshot;
+    },
+    onError: async () => {
+      await queryClient.invalidateQueries(categoryQueryKey);
+      await queryClient.invalidateQueries(queryKey);
+      showErrorToast();
+    },
+  });
+
+  const removeFromFavoritesMutation = useMutation(
+    endpoints.removeFromFavorites,
+    {
+      onMutate: async (id: number) => {
+        await queryClient.cancelQueries(categoryQueryKey);
+        const snapshot = snapshotPreviousData();
+
+        const currentEntity = (queryClient.getQueryData(queryKey) as T[]).find(
+          (item) => item.id === id
+        );
+
+        // update query data for items in category
+        queryClient.setQueryData(
+          [queryKey[0], currentEntity.category.id],
+          (entities: EntityReadDto[]) => {
+            return entities?.map((entity) => {
+              if (entity.id === id) {
+                entity.starred = false;
+                return entity;
+              } else {
+                return entity;
+              }
+            });
+          }
+        );
+
+        // update query data for all items
+        queryClient.setQueryData([queryKey[0]], (entities: EntityReadDto[]) => {
+          return entities?.map((entity) => {
+            if (entity.id === id) {
+              entity.starred = false;
+              return entity;
+            } else {
+              return entity;
+            }
+          });
+        });
+
+        return snapshot;
+      },
+      onError: async () => {
+        await queryClient.invalidateQueries(categoryQueryKey);
+        await queryClient.invalidateQueries(queryKey);
+        showErrorToast();
+      },
+    }
+  );
+
   return {
     query,
     queryClient,
@@ -234,6 +331,8 @@ function useReactQueryEntity<T extends EntityReadDto>({
     addMutation,
     editMutation,
     deleteMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation,
   };
 }
 

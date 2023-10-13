@@ -24,14 +24,17 @@ interface IProps {
 
 function LinksManager({ categoryId, links }: IProps) {
   const addLinkref = useRef<HTMLDivElement | null>(null);
+  const quickAddLinkref = useRef<HTMLDivElement | null>(null);
+
   const showImagePreviews = useAppSelector(selectShowImagePreviews);
   const dispatch = useAppDispatch();
-  const quickAddLinkref = useRef<HTMLDivElement | null>(null);
+  
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const border = useColorModeValue("0", "1px");
   const [currentButtonOpen, setCurrentButtonOpen] = useState<
     "addLink" | "quickAddLink" | "none"
-  >("none");
+    >("none");
+  
   return (
     <ErrorBoundaryWrapper>
       <Box
@@ -60,13 +63,15 @@ function LinksManager({ categoryId, links }: IProps) {
                 setCurrentButtonOpen={setCurrentButtonOpen}
               />
             </HStack>
-            <Checkbox
-              isChecked={showImagePreviews}
-              colorScheme={"purple"}
-              onChange={() => dispatch(toggleShowImagePreviews())}
-            >
-              Show image previews
-            </Checkbox>
+            <HStack wrap={"wrap"}>
+              <Checkbox
+                isChecked={showImagePreviews}
+                colorScheme={"purple"}
+                onChange={() => dispatch(toggleShowImagePreviews())}
+              >
+                Show image previews
+              </Checkbox>
+            </HStack>
           </Wrap>
           <Box ref={addLinkref} />
           <Box ref={quickAddLinkref} />

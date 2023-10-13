@@ -1,12 +1,11 @@
-import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Stack, Text } from "@chakra-ui/react";
 import { pluralizeNumItems } from "helpers/pluralize";
 import { PropsWithChildren } from "react";
 
 interface EntityPageProps {
   numItems: number;
-  title: string;
   singleCategory?: boolean;
-  headerOptions?: JSX.Element;
+  headerOptions: JSX.Element;
 }
 
 // TODO: Add link to parent group if a parent group exists
@@ -16,15 +15,14 @@ interface EntityPageProps {
 function EntityPage({
   children,
   numItems,
-  title,
   headerOptions,
 }: PropsWithChildren<EntityPageProps>) {
   return (
     <>
       <Stack mb="5px" display="flex" alignItems="center" direction="row">
-        <Heading as="h2" fontWeight="900" fontSize="2xl">
+        {/* <Heading as="h2" fontWeight="900" fontSize="2xl">
           {title}
-        </Heading>
+        </Heading> */}
         {headerOptions}
       </Stack>
 

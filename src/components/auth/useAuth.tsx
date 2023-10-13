@@ -19,40 +19,33 @@ const useAuth = () => {
   const { instance, accounts } = useMsal();
 
   useEffect(() => {
-    const getToken = async ({ fromCache = true }: { fromCache: boolean }) => {
-      if (!accounts[0]) return null;
-
+    const getToken = async () => {
       const silentRequest: SilentRequest = {
         scopes: apiConfig.b2cScopes,
         account: accounts[0],
-        cacheLookupPolicy: fromCache
-          ? CacheLookupPolicy.Default
-          : CacheLookupPolicy.RefreshToken,
+        cacheLookupPolicy: CacheLookupPolicy.AccessTokenAndRefreshToken,
+        forceRefresh: false,
       };
 
       try {
         const response: AuthenticationResult =
           await instance.acquireTokenSilent(silentRequest);
-
         setAuthSuccess(true);
         return response?.accessToken || null;
       } catch (error) {
-        if (error instanceof InteractionRequiredAuthError) {
-          // fallback to interaction when silent call fails
+        if (error instanceof InteractionRequiredAuthError) { 
           await instance.acquireTokenRedirect(silentRequest);
         }
       }
     };
 
-    getToken({ fromCache: true });
-
     const interceptor = CmandrApi.interceptors.request.use(
       async function (config) {
-        const token = await getToken({ fromCache: true });
+        const token = await getToken();
         config.headers.Authorization = `bearer ${token}`;
         return config;
       },
-      function (error) {
+      async function (error) {
         return Promise.reject(error);
       }
     );

@@ -14,7 +14,7 @@ type IProps = {
 
 function SnippetOptions({ snippet, setReadOnlyCode }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { deleteSnippetMutation } = useSnippets();
+  const { deleteSnippetMutation, addToFavoritesMutation, removeFromFavoritesMutation } = useSnippets();
 
   const dispatch = useAppDispatch();
 
@@ -31,6 +31,10 @@ function SnippetOptions({ snippet, setReadOnlyCode }: IProps) {
         onClose={onClose}
         onOpen={onOpen}
         entityType="snippet"
+        entityId={snippet.id}
+        isStarred={snippet?.starred}
+        addToFavoritesMutation={addToFavoritesMutation}
+        removeFromFavoritesMutation={removeFromFavoritesMutation}
         deleteButton={
           <IconButton
             size="xs"

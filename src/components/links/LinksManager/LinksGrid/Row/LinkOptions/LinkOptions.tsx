@@ -35,6 +35,7 @@ function DeleteLinkButton({ linkId, onClose }: DeleteLinkButtonProps) {
 
 function LinkOptions({ link }: IProps) {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const { addToFavoritesMutation, removeFromFavoritesMutation } = useLinks();
 
   return (
     <EntityOptions
@@ -42,8 +43,12 @@ function LinkOptions({ link }: IProps) {
       onClose={onClose}
       onOpen={onOpen}
       entityType="link"
+      entityId={link.id}
+      addToFavoritesMutation={addToFavoritesMutation}
+      removeFromFavoritesMutation={removeFromFavoritesMutation}
       deleteButton={<DeleteLinkButton linkId={link.id} onClose={onClose} />}
       editForm={<EditLinkForm linkItem={link} onClose={onClose} />}
+      isStarred={link.starred}
     />
   );
 }

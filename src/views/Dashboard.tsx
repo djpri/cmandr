@@ -1,13 +1,21 @@
 import {
   Box,
   Button,
+  Flex,
   Grid,
   Heading,
   Spinner,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   VStack,
   Wrap,
+  chakra,
 } from "@chakra-ui/react";
 import { AddCategory } from "components/categories";
+import ImportBookmarksButton from "components/links/LinksManager/ImportBookmarksButton";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
 import useCategories from "hooks/categories/useCategories";
 import useSortCategories from "hooks/categories/useSortCategories";
@@ -118,37 +126,100 @@ function Dashboard() {
     );
   };
 
+  // TODO: Persist selected tab in redux
+
   return (
-    <Box fontSize="xl" pb={16} data-cy="dashboard">
-      <Heading as="h1" fontSize="2xl" userSelect="none">
-        Commands
-      </Heading>
-      {categorySortOptions["command"] && (
-        <SortButtons
-          type="command"
-          sortOption={categorySortOptions["command"]}
-        />
-      )}
-      <CategoriesGrid entityType="command" entityRoute="commands" />
+    <Box fontSize="xl" pb={16} data-cy="dashboard" w={"100%"}>
+      <Tabs variant="line" colorScheme="purple" p={0} size="lg">
+        <TabList>
+          <Tab fontWeight={700} letterSpacing={"wider"}>All</Tab>
+          <Tab fontWeight={700} letterSpacing={"wider"}>Commands</Tab>
+          <Tab fontWeight={700} letterSpacing={"wider"}>Links</Tab>
+          <Tab fontWeight={700} letterSpacing={"wider"}>Snippets</Tab>
+        </TabList>
+        <TabPanels my={4}>
+          <TabPanel px={0}>
+            <Heading as="h1" fontSize="2xl" userSelect="none">
+              Commands
+            </Heading>
+            {categorySortOptions["command"] && (
+              <SortButtons
+                type="command"
+                sortOption={categorySortOptions["command"]}
+              />
+            )}
+            <CategoriesGrid entityType="command" entityRoute="commands" />
 
-      <Heading as="h1" fontSize="2xl" userSelect="none">
-        Links
-      </Heading>
-      {categorySortOptions["link"] && (
-        <SortButtons type="link" sortOption={categorySortOptions["link"]} />
-      )}
-      <CategoriesGrid entityType="link" entityRoute="links" />
+            <chakra.hr my={4} />
 
-      <Heading as="h1" fontSize="2xl" userSelect="none">
-        Snippets
-      </Heading>
-      {categorySortOptions["snippet"] && (
-        <SortButtons
-          type="snippet"
-          sortOption={categorySortOptions["snippet"]}
-        />
-      )}
-      <CategoriesGrid entityType="snippet" entityRoute="snippets" />
+            <Heading as="h1" fontSize="2xl" userSelect="none">
+              Links
+            </Heading>
+            <Flex justifyContent="space-between" alignItems="center" wrap="wrap">
+              {categorySortOptions["link"] && (
+                <SortButtons
+                  type="link"
+                  sortOption={categorySortOptions["link"]}
+                />
+              )}
+              <ImportBookmarksButton />
+            </Flex>
+            <CategoriesGrid entityType="link" entityRoute="links" />
+
+            <chakra.hr my={4} />
+
+            <Heading as="h1" fontSize="2xl" userSelect="none">
+              Snippets
+            </Heading>
+            {categorySortOptions["snippet"] && (
+              <SortButtons
+                type="snippet"
+                sortOption={categorySortOptions["snippet"]}
+              />
+            )}
+            <CategoriesGrid entityType="snippet" entityRoute="snippets" />
+          </TabPanel>
+          <TabPanel px={0}>
+            <Heading as="h1" fontSize="2xl" userSelect="none">
+              Commands
+            </Heading>
+            {categorySortOptions["command"] && (
+              <SortButtons
+                type="command"
+                sortOption={categorySortOptions["command"]}
+              />
+            )}
+            <CategoriesGrid entityType="command" entityRoute="commands" />
+          </TabPanel>
+          <TabPanel px={0}>
+            <Heading as="h1" fontSize="2xl" userSelect="none">
+              Links
+            </Heading>
+            <Flex justifyContent="space-between" wrap="wrap">
+              {categorySortOptions["link"] && (
+                <SortButtons
+                  type="link"
+                  sortOption={categorySortOptions["link"]}
+                />
+              )}
+              <ImportBookmarksButton />
+            </Flex>
+            <CategoriesGrid entityType="link" entityRoute="links" />
+          </TabPanel>
+          <TabPanel px={0}>
+            <Heading as="h1" fontSize="2xl" userSelect="none">
+              Snippets
+            </Heading>
+            {categorySortOptions["snippet"] && (
+              <SortButtons
+                type="snippet"
+                sortOption={categorySortOptions["snippet"]}
+              />
+            )}
+            <CategoriesGrid entityType="snippet" entityRoute="snippets" />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </Box>
   );
 }

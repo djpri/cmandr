@@ -5,9 +5,9 @@ import AddSnippetForm from "../AddSnippetForm/AddSnippetForm";
 
 interface IProps {
   categoryId?: number;
-  currentButtonOpen?: "addSnippet" | "quickAddLink" | "none";
+  currentButtonOpen?: "addSnippet" | "none";
   setCurrentButtonOpen?: (
-    value: "addSnippet" | "quickAddLink" | "none"
+    value: "addSnippet" | "none"
   ) => void;
 }
 

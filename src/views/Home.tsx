@@ -9,13 +9,14 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import LoginButton from "components/auth/LoginButton";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { RiCommandLine } from "react-icons/ri";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 function Home() {
   const { accounts } = useMsal();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <Flex
@@ -76,7 +77,7 @@ function Home() {
                 Open App
               </Button>
             </Link>
-            <Button
+            {/* <Button
               className="login-button"
               size="md"
               bgColor="purple.400"
@@ -93,7 +94,8 @@ function Home() {
               isDisabled={accounts[0] !== undefined}
             >
               Log In / Sign Up
-            </Button>
+            </Button> */}
+            <LoginButton />
           </HStack>
         </Box>
       </VStack>

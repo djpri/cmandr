@@ -4,7 +4,6 @@ import {
   GridItem,
   Image,
   chakra,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { Row, Table } from "@tanstack/react-table";
 import { isInDevelopment } from "helpers/environment";

@@ -14,6 +14,9 @@ function useLinks(categoryId?: number) {
     bulkUpdate,
     bulkRemove,
     getAllByCategoryId,
+    addToFavorites,
+    removeFromFavorites,
+    importBookmarks
   } = Links;
 
   const queryKey = categoryId ? ["links", categoryId] : ["links"];
@@ -24,10 +27,13 @@ function useLinks(categoryId?: number) {
 
   const {
     query,
+    queryClient,
     defaultMutationSettings,
     addMutation,
     editMutation,
     deleteMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation
   } = useReactQueryEntity<LinkReadDto>({
     queryKey,
     categoryQueryKey,
@@ -36,6 +42,8 @@ function useLinks(categoryId?: number) {
       create,
       update,
       remove,
+      addToFavorites,
+      removeFromFavorites,
     },
   });
 
@@ -53,6 +61,16 @@ function useLinks(categoryId?: number) {
     defaultMutationSettings
   );
 
+  const importBookmarksMutation = useMutation(
+    importBookmarks,
+    {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries([queryKey]);
+        await queryClient.invalidateQueries([categoryQueryKey]);
+      }
+    }
+  );
+
   return {
     query,
     addLinkMutation: addMutation,
@@ -61,6 +79,9 @@ function useLinks(categoryId?: number) {
     deleteLinkMutation: deleteMutation,
     editMultipleLinksMutation,
     deleteMultipleLinksMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation,
+    importBookmarksMutation
   };
 }
 

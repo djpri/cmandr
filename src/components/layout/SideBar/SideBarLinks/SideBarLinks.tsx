@@ -15,7 +15,7 @@ import { FC } from "react";
 import { ConnectDropTarget } from "react-dnd/dist/types";
 import { AiFillCode, AiFillWallet } from "react-icons/ai";
 import { BiCommand } from "react-icons/bi";
-import { FaExternalLinkSquareAlt } from "react-icons/fa";
+import { FaExternalLinkSquareAlt, FaStar } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { Link as RouterLink } from "react-router-dom";
 import {
@@ -93,6 +93,18 @@ const CategoryAccordion = ({
             </HStack>
           </AccordionButton>
         </AccordionItem>
+        <AccordionItem
+          as={RouterLink}
+          to={`${route}/favorites`}
+          aria-label={`Favorites`}
+        >
+          <AccordionButton>
+            <HStack>
+              <FaStar />
+              <Text textTransform="capitalize">Favorites</Text>
+            </HStack>
+          </AccordionButton>
+        </AccordionItem>
         <CategoriesList
           type={type}
           query={query}
@@ -102,8 +114,6 @@ const CategoryAccordion = ({
     </AccordionItem>
   );
 };
-
-// TODO: Reduce duplication in these components
 
 interface CategorySectionProps {
   entityType: Entity;
@@ -162,13 +172,13 @@ function SideBarLinks() {
         entityType="link"
         entityRoute="links"
         icon={<FaExternalLinkSquareAlt />}
-        sidebarIndex={3}
+        sidebarIndex={4}
       />
       <CategorySection
         entityType="snippet"
         entityRoute="snippets"
         icon={<AiFillCode />}
-        sidebarIndex={5}
+        sidebarIndex={6}
       />
     </Accordion>
   );

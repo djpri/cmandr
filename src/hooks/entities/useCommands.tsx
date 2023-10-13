@@ -13,6 +13,8 @@ function useCommands(categoryId?: number) {
     bulkUpdate,
     remove,
     getAllByCategoryId,
+    addToFavorites,
+    removeFromFavorites
   } = Commands;
   const queryKey = categoryId ? ["commands", categoryId] : ["commands"];
   const categoryQueryKey = ["commandCategories"];
@@ -26,6 +28,8 @@ function useCommands(categoryId?: number) {
     addMutation,
     editMutation,
     deleteMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation
   } = useReactQueryEntity<CommandReadDto>({
     queryKey,
     categoryQueryKey,
@@ -34,6 +38,8 @@ function useCommands(categoryId?: number) {
       create,
       update,
       remove,
+      addToFavorites,
+      removeFromFavorites,
     },
   });
 
@@ -56,6 +62,8 @@ function useCommands(categoryId?: number) {
     deleteCommandMutation: deleteMutation,
     editMultipleCommandsMutation,
     deleteMultipleCommandsMutation,
+    addToFavoritesMutation,
+    removeFromFavoritesMutation
   };
 }
 
