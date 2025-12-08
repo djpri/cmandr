@@ -44,7 +44,7 @@ function CategoryLinkButton({
       rounded="md"
       textAlign="left"
       bgImage={buttonBgGradient}
-      transition="all 0.16s cubic-bezier( 0.02, 0.43, 0.88, 0.76 )"
+      transition="all 0.05s cubic-bezier( 0.02, 0.43, 0.88, 0.76 )"
       bgPosition="75%"
       bgSize="300%"
       _hover={{
