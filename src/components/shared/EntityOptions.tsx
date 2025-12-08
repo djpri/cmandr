@@ -11,12 +11,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { UseMutationResult } from "@tanstack/react-query";
+import { Entity } from "models/entity";
 import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { FaStar } from "react-icons/fa";
 
 interface EntityOptionsProps {
-  entityType: "command" | "link" | "snippet";
+  entityType: Entity;
   entityId: number;
   deleteButton: JSX.Element;
   editForm: JSX.Element;
@@ -84,7 +85,7 @@ function EntityOptions({
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={entityType === "snippet" ? "full" : "xl"}
+        size="xl"
       >
         <ModalOverlay
           bg="blackAlpha.300"

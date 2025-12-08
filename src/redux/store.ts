@@ -19,7 +19,6 @@ import storage from "redux-persist/lib/storage";
 import appReducer from "./slices/appSlice";
 import layoutReducer from "./slices/layoutSlice";
 import linksReducer from "./slices/linksSlice";
-import editorReducer from "./slices/editorSlice";
 import settingsReducer from "./slices/settingsSlice";
 
 export const rootReducer = combineReducers({
@@ -27,7 +26,6 @@ export const rootReducer = combineReducers({
   settings: settingsReducer,
   layout: layoutReducer,
   links: linksReducer,
-  editor: editorReducer,
 });
 
 const persistConfig = {

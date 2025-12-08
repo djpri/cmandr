@@ -17,7 +17,6 @@ import { Table } from "@tanstack/react-table";
 import { isInDevelopment } from "helpers/environment";
 import useCommands from "hooks/entities/useCommands";
 import useLinks from "hooks/entities/useLinks";
-import useSnippets from "hooks/entities/useSnippets";
 import { FC, useCallback, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { BiMove } from "react-icons/bi";
@@ -25,12 +24,11 @@ import UseCategories from "../../hooks/categories/useCategories";
 import { Entity, EntityReadDto } from "models/entity";
 import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
-import { SnippetReadDto } from "models/snippets";
 
 interface IProps {
   handleBulkDelete?: () => void;
   type: Entity;
-  table: Table<CommandReadDto> | Table<LinkReadDto> | Table<SnippetReadDto>;
+  table: Table<CommandReadDto> | Table<LinkReadDto>;
 }
 
 interface MoveItemsModalProps {
@@ -52,7 +50,6 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
   const mutationHook = {
     command: useCommands().editMultipleCommandsMutation,
     link: useLinks().editMultipleLinksMutation,
-    snippet: useSnippets().editMultipleSnippetsMutation,
   };
   const mutation = mutationHook[type];
   const categories = useCategories.query.data;

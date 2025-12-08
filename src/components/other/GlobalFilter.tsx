@@ -2,13 +2,12 @@ import { Input } from "@chakra-ui/react";
 import { Table } from "@tanstack/table-core";
 import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
-import { SnippetReadDto } from "models/snippets";
 import { InputHTMLAttributes, useEffect, useState } from "react";
 
 type PropTypes = {
   value: string | number;
   onChange: (value: string | number) => void;
-  table: Table<CommandReadDto> | Table<LinkReadDto> | Table<SnippetReadDto>;
+  table: Table<CommandReadDto> | Table<LinkReadDto>;
   debounce?: number;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">;
 

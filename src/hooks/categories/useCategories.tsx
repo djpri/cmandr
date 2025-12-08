@@ -4,38 +4,28 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { CommandCategories, LinkCategories, SnippetCategories } from "api";
+import { CommandCategories, LinkCategories } from "api";
 import { asReactQueryFunction } from "helpers/asReactQueryFunction";
 import { CategoryReadDto } from "models/category";
 import { Entity } from "models/entity";
 import { useState } from "react";
 import useChakraToast from "../other/useChakraToast";
 
-const getCategoryInfo = (entity: Entity) => {
-  if (entity === "command") {
-    return {
-      queryKey: "commandCategories",
-      endpoints: CommandCategories,
-    };
-  }
-  if (entity === "link") {
-    return {
-      queryKey: "linkCategories",
-      endpoints: LinkCategories,
-    };
-  }
-  if (entity === "snippet") {
-    return {
-      queryKey: "snippetCategories",
-      endpoints: SnippetCategories,
-    };
-  }
-};
+const categoryInfo = {
+  command: {
+    queryKey: "commandCategories",
+    endpoints: CommandCategories,
+  },
+  link: {
+    queryKey: "linkCategories",
+    endpoints: LinkCategories,
+  },
+} as const;
 
 function useCategories(entity: Entity) {
   const queryClient = useQueryClient();
   const { showErrorToast } = useChakraToast();
-  const [{ endpoints, queryKey }] = useState(getCategoryInfo(entity));
+  const [{ endpoints, queryKey }] = useState(categoryInfo[entity]);
 
   // Queries
   const query: UseQueryResult<CategoryReadDto[]> = useQuery(

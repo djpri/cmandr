@@ -10,7 +10,6 @@ type SortType = "manual" | "ascending" | "descending" | "size";
 const queryKeyDictionary: Record<Entity, string> = {
   command: "commandCategories",
   link: "linkCategories",
-  snippet: "snippetCategories",
 };
 
 function useSortCategories(type: Entity) {

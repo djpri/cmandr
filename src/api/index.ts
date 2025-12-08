@@ -16,14 +16,8 @@ import {
   EntityReadDto,
   EntityUpdateDto,
 } from "models/entity";
-import { LinkCreateDto, LinkUpdateDto } from "models/link";
-import {
-  SnippetCreateDto,
-  SnippetReadDto,
-  SnippetUpdateDto,
-} from "models/snippets";
+import { LinkCreateDto, LinkReadDto, LinkUpdateDto } from "models/link";
 import { UserSettings } from "models/user";
-import { LinkReadDto } from "../models/link";
 
 /**
  * Custom axios instance for accessing api
@@ -95,17 +89,9 @@ export const Links = {
   importBookmarks: (body) => post(`links/importBookmarks`, body),
 };
 
-export const Snippets = {
-  ...baseEntityEndpoints<SnippetReadDto, SnippetCreateDto, SnippetUpdateDto>(
-    "snippets"
-  ),
-};
-
 export const CommandCategories = categoryEndpoints("commands");
 
 export const LinkCategories = categoryEndpoints("links");
-
-export const SnippetCategories = categoryEndpoints("snippets");
 
 export const Settings = {
   get: () => get("user/settings"),

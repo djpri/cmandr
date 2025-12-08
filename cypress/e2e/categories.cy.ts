@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { Entity } from "../../src/models/entity";
 
-const entityTypes: Entity[] = ["command", "link", "snippet"];
+const entityTypes: Entity[] = ["command", "link"];
 
 const createDataCySelector = (str: string) =>
   `[data-cy="dashboard"] [data-cy="${str}"]`;

@@ -4,14 +4,13 @@ import { Entity } from "models/entity";
 type SortOption = "ascending" | "descending" | "size" | "manual";
 
 type UserSettings = {
-  categoriesSort: Record<string, SortOption>;
+  categoriesSort: Record<Entity, SortOption>;
 };
 
 const initialState: UserSettings = {
   categoriesSort: {
     command: "ascending",
     link: "ascending",
-    snippet: "ascending",
   },
 };
 

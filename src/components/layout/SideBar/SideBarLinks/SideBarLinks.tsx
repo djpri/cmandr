@@ -13,7 +13,7 @@ import { CategoryReadDto, CategoryUpdateDto } from "models/category";
 import { Entity } from "models/entity";
 import { FC } from "react";
 import { ConnectDropTarget } from "react-dnd/dist/types";
-import { AiFillCode, AiFillWallet } from "react-icons/ai";
+import { AiFillWallet } from "react-icons/ai";
 import { BiCommand } from "react-icons/bi";
 import { FaExternalLinkSquareAlt, FaStar } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
@@ -172,13 +172,7 @@ function SideBarLinks() {
         entityType="link"
         entityRoute="links"
         icon={<FaExternalLinkSquareAlt />}
-        sidebarIndex={4}
-      />
-      <CategorySection
-        entityType="snippet"
-        entityRoute="snippets"
-        icon={<AiFillCode />}
-        sidebarIndex={6}
+        sidebarIndex={2}
       />
     </Accordion>
   );

@@ -135,7 +135,6 @@ function Dashboard() {
           <Tab fontWeight={700} letterSpacing={"wider"}>All</Tab>
           <Tab fontWeight={700} letterSpacing={"wider"}>Commands</Tab>
           <Tab fontWeight={700} letterSpacing={"wider"}>Links</Tab>
-          <Tab fontWeight={700} letterSpacing={"wider"}>Snippets</Tab>
         </TabList>
         <TabPanels my={4}>
           <TabPanel px={0}>
@@ -165,19 +164,6 @@ function Dashboard() {
               <ImportBookmarksButton />
             </Flex>
             <CategoriesGrid entityType="link" entityRoute="links" />
-
-            <chakra.hr my={4} />
-
-            <Heading as="h1" fontSize="2xl" userSelect="none">
-              Snippets
-            </Heading>
-            {categorySortOptions["snippet"] && (
-              <SortButtons
-                type="snippet"
-                sortOption={categorySortOptions["snippet"]}
-              />
-            )}
-            <CategoriesGrid entityType="snippet" entityRoute="snippets" />
           </TabPanel>
           <TabPanel px={0}>
             <Heading as="h1" fontSize="2xl" userSelect="none">
@@ -205,18 +191,6 @@ function Dashboard() {
               <ImportBookmarksButton />
             </Flex>
             <CategoriesGrid entityType="link" entityRoute="links" />
-          </TabPanel>
-          <TabPanel px={0}>
-            <Heading as="h1" fontSize="2xl" userSelect="none">
-              Snippets
-            </Heading>
-            {categorySortOptions["snippet"] && (
-              <SortButtons
-                type="snippet"
-                sortOption={categorySortOptions["snippet"]}
-              />
-            )}
-            <CategoriesGrid entityType="snippet" entityRoute="snippets" />
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -9,10 +9,9 @@ import {
   CgChevronRight,
 } from "react-icons/cg";
 import GlobalFilter from "./GlobalFilter";
-import { SnippetReadDto } from "models/snippets";
 
 interface IProps {
-  table: Table<CommandReadDto> | Table<LinkReadDto> | Table<SnippetReadDto>;
+  table: Table<CommandReadDto> | Table<LinkReadDto>;
   value: string | number;
   onChange: (value: string | number) => void;
 }

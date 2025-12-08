@@ -4,7 +4,7 @@ import { RootState } from "redux/store";
 const initialState = {
   sideBarSize: 200,
   isSidebarOpen: true,
-  sideBarAccordionIndex: [1, 4, 6],
+  sideBarAccordionIndex: [1, 2],
   categoriesOpen: {},
 };
 

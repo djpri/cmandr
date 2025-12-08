@@ -1,34 +1,19 @@
 import useCommands from "hooks/entities/useCommands";
 import useLinks from "hooks/entities/useLinks";
-import useSnippets from "hooks/entities/useSnippets";
-import {
-  SnippetCreateDto,
-  SnippetReadDto,
-  SnippetUpdateDto,
-} from "models/snippets";
 import UseCategories from "../hooks/categories/useCategories";
 import { CommandCreateDto, CommandReadDto, CommandUpdateDto } from "./command";
 import { LinkCreateDto, LinkReadDto, LinkUpdateDto } from "./link";
 
-export type Entity = "command" | "link" | "snippet";
+export type Entity = "command" | "link";
 
-export type EntityBasePath = "commands" | "links" | "snippets";
+export type EntityBasePath = "commands" | "links";
 
-export type EntityReadDto = CommandReadDto | LinkReadDto | SnippetReadDto;
+export type EntityReadDto = CommandReadDto | LinkReadDto;
 
-export type EntityCreateDto =
-  | CommandCreateDto
-  | LinkCreateDto
-  | SnippetCreateDto;
+export type EntityCreateDto = CommandCreateDto | LinkCreateDto;
 
-export type EntityUpdateDto =
-  | CommandUpdateDto
-  | LinkUpdateDto
-  | SnippetUpdateDto;
+export type EntityUpdateDto = CommandUpdateDto | LinkUpdateDto;
 
-export type UseEntityQueryHook =
-  | typeof useCommands
-  | typeof useLinks
-  | typeof useSnippets;
+export type UseEntityQueryHook = typeof useCommands | typeof useLinks;
 
 export type UseCategoryQueryHook = typeof UseCategories;

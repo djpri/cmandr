@@ -104,7 +104,7 @@ function Home() {
                 textShadow="outline"
                 color="white"
               >
-                Store and manage your command snippets, and more
+                Store and manage your commands and bookmarks
               </Heading>
             </HStack>
             <Canvas />
@@ -186,7 +186,9 @@ function Home() {
           <FeatureBox>
             <HStack my={5}>
               <FaDesktop size="1.5rem" color="white" />
-              <Text color="white">Store code snippets, and edit using the online code editor</Text>
+              <Text color="white">
+                Keep your favorite commands and links organized and easy to find
+              </Text>
             </HStack>
             {/* <chakra.img
             src="/links.png"

@@ -1,6 +1,6 @@
 # Cmandr [![CI](https://github.com/djpri/cmandr/actions/workflows/tests-and-linting.yml/badge.svg)](https://github.com/djpri/cmandr/actions/workflows/tests-and-linting.yml)
 
-A web application dedicated to managing and organising command snippets and code snippets.
+A web application dedicated to managing and organising commands.
 Also includes a bookmark manager for storing links related to development work.
 
 ## Technologies Used
@@ -19,9 +19,8 @@ Also includes a bookmark manager for storing links related to development work.
 
 ### Ideas for Future Features
 
-- Save and manage full code snippets
 - Save and preview CSS styles (e.g. [Css Box Shadow Examples](https://getcssscan.com/css-box-shadow-examples))
-- Chrome extension for easily saving snippets or bookmarks
+- Chrome extension for easily saving bookmarks
 
 ## Frontend Directory
 
