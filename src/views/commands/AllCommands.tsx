@@ -1,9 +1,8 @@
+import QueryState from "components/other/QueryState";
 import useCommands from "hooks/entities/useCommands";
 import EntityPage from "views/EntityPage";
 import CommandsManager from "../../components/commands/CommandsManager/CommandsManager";
 import { Heading } from "@chakra-ui/react";
-
-// TODO: Add loading spinner when query is loading
 
 function AllCommandsPage() {
   const { query } = useCommands();
@@ -13,8 +12,17 @@ function AllCommandsPage() {
   );
 
   return (
-    <EntityPage numItems={query?.data && query.data.length} headerOptions={<HeaderOptions />}>
-      <CommandsManager commands={query?.data} />
+    <EntityPage
+      numItems={query.data?.length ?? 0}
+      headerOptions={<HeaderOptions />}
+    >
+      <QueryState
+        query={query}
+        loadingText="Loading commands"
+        emptyMessage="No commands found yet."
+      >
+        {(commands) => <CommandsManager commands={commands} />}
+      </QueryState>
     </EntityPage>
   );
 }

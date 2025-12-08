@@ -4,7 +4,6 @@ import {
   Flex,
   Grid,
   Heading,
-  Spinner,
   Tab,
   TabList,
   TabPanel,
@@ -17,10 +16,11 @@ import {
 import { AddCategory } from "components/categories";
 import ImportBookmarksButton from "components/links/LinksManager/ImportBookmarksButton";
 import CategoryLinkButton from "components/other/CategoryLinkButton";
+import QueryState from "components/other/QueryState";
 import useCategories from "hooks/categories/useCategories";
 import useSortCategories from "hooks/categories/useSortCategories";
 import { CategoryReadDto } from "models/category";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { selectCategoriesSort } from "redux/slices/settingsSlice";
 import { useAppSelector } from "redux/store";
 import { entityRoute } from "routes";
@@ -41,30 +41,35 @@ type CategoriesGridProps = {
 function CategoriesGrid({ entityType, entityRoute }: CategoriesGridProps) {
   const baseHue = 184;
   const { query } = useCategories(entityType);
-  const categories = useMemo(() => {
-    if (query.data?.length <= 0) return [];
-    return query.data?.filter((c) => c.parentId <= 0);
-  }, [query]);
 
   return (
     <>
-      <Grid
-        my="30px"
-        gap={3}
-        templateColumns="repeat(auto-fill, 250px)"
-        data-cy={`categories-grid ${entityType}`}
+      <QueryState
+        query={query}
+        loadingText={`Loading ${entityType} categories`}
+        emptyMessage="No categories found yet."
       >
-        {categories?.map((item: CategoryReadDto, index: number) => (
-          <CategoryLinkButton
-            entityType={entityType}
-            routeType={entityRoute}
-            key={item.id}
-            item={item}
-            hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
-          />
-        ))}
-        {query.isLoading && <Spinner />}
-      </Grid>
+        {(categories) => (
+          <Grid
+            my="30px"
+            gap={3}
+            templateColumns="repeat(auto-fill, 250px)"
+            data-cy={`categories-grid ${entityType}`}
+          >
+            {categories
+              ?.filter((c) => c.parentId <= 0)
+              .map((item: CategoryReadDto, index: number) => (
+                <CategoryLinkButton
+                  entityType={entityType}
+                  routeType={entityRoute}
+                  key={item.id}
+                  item={item}
+                  hue={item?.isGroup ? baseHue + index + 80 : baseHue + index}
+                />
+              ))}
+          </Grid>
+        )}
+      </QueryState>
       <VStack spacing={2} my={5} align="flex-start">
         <AddCategory isGroup entityType={entityType} />
         <AddCategory entityType={entityType} />

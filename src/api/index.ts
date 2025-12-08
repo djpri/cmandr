@@ -25,7 +25,8 @@ import { UserSettings } from "models/user";
  */
 export const CmandrApi: AxiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 15000,
+  // Fail requests faster so the UI can surface errors quickly
+  timeout: 8000,
 });
 
 const { get, post, put, delete: remove } = CmandrApi;

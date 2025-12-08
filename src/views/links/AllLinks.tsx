@@ -1,9 +1,8 @@
+import QueryState from "components/other/QueryState";
 import useLinks from "hooks/entities/useLinks";
 import EntityPage from "views/EntityPage";
 import LinksManager from "../../components/links/LinksManager/LinksManager";
 import { Heading } from "@chakra-ui/react";
-
-// TODO: Add loading spinner when query is loading
 
 function Links() {
   const { query } = useLinks();
@@ -13,8 +12,17 @@ function Links() {
   );
 
   return (
-    <EntityPage numItems={query?.data && query?.data.length} headerOptions={<HeaderOptions />}>
-      <LinksManager links={query?.data} />
+    <EntityPage
+      numItems={query.data?.length ?? 0}
+      headerOptions={<HeaderOptions />}
+    >
+      <QueryState
+        query={query}
+        loadingText="Loading links"
+        emptyMessage="No links found yet."
+      >
+        {(links) => <LinksManager links={links} />}
+      </QueryState>
     </EntityPage>
   );
 }
