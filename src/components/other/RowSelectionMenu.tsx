@@ -14,6 +14,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Table } from "@tanstack/react-table";
+import ConfirmActionDialog from "components/shared/ConfirmActionDialog";
 import { isInDevelopment } from "helpers/environment";
 import useCommands from "hooks/entities/useCommands";
 import useLinks from "hooks/entities/useLinks";
@@ -26,7 +27,8 @@ import { CommandReadDto } from "models/command";
 import { LinkReadDto } from "models/link";
 
 interface IProps {
-  handleBulkDelete?: () => void;
+  handleBulkDelete?: (onComplete: () => void) => void;
+  isDeleting?: boolean;
   type: Entity;
   table: Table<CommandReadDto> | Table<LinkReadDto>;
 }
@@ -104,10 +106,25 @@ const MoveItemsModal: FC<MoveItemsModalProps> = ({
   );
 };
 
-const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
+const RowSelectionMenu: FC<IProps> = ({
+  handleBulkDelete,
+  isDeleting = false,
+  table,
+  type,
+}) => {
   const selectedRowsInfoColor = useColorModeValue("gray.300", "#413b77");
   const selectedRowsTextColor = useColorModeValue("black", "white");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const selectedCount = table.getSelectedRowModel().flatRows.length;
+
+  const handleConfirmBulkDelete = (close: () => void) => {
+    if (!handleBulkDelete) {
+      return;
+    }
+    handleBulkDelete(() => {
+      close();
+    });
+  };
 
   return (
     <Flex
@@ -121,7 +138,7 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
       wrap="wrap"
       gap={2}
     >
-      <Text>{table.getSelectedRowModel().flatRows.length} items selected</Text>
+      <Text>{selectedCount} items selected</Text>
       <HStack>
         <Button
           onClick={() => table.toggleAllRowsSelected(false)}
@@ -137,17 +154,23 @@ const RowSelectionMenu: FC<IProps> = ({ handleBulkDelete, table, type }) => {
         >
           Move
         </Button>
-        <Button
-          onClick={() => {
-            if (handleBulkDelete) {
-              handleBulkDelete();
-            }
-          }}
-          rightIcon={<AiFillDelete />}
-          size={["xs", null, null, "sm"]}
-        >
-          Delete
-        </Button>
+        <ConfirmActionDialog
+          title={`Delete ${selectedCount} ${type}${selectedCount === 1 ? "" : "s"}?`}
+          body="This will permanently delete the selected items."
+          confirmLabel="Delete"
+          isLoading={isDeleting}
+          onConfirm={handleConfirmBulkDelete}
+          trigger={(onOpenDelete) => (
+            <Button
+              onClick={onOpenDelete}
+              rightIcon={<AiFillDelete />}
+              size={["xs", null, null, "sm"]}
+              isDisabled={!handleBulkDelete}
+            >
+              Delete
+            </Button>
+          )}
+        />
       </HStack>
       <MoveItemsModal
         isOpen={isOpen}

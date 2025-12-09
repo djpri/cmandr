@@ -1,5 +1,6 @@
-import { IconButton, useDisclosure } from "@chakra-ui/react";
+import { IconButton, Tooltip, useDisclosure } from "@chakra-ui/react";
 import EditLinkForm from "components/links/EditLinkForm/EditLinkForm";
+import ConfirmActionDialog from "components/shared/ConfirmActionDialog";
 import EntityOptions from "components/shared/EntityOptions";
 import useLinks from "hooks/entities/useLinks";
 import { LinkReadDto } from "models/link";
@@ -11,25 +12,33 @@ type IProps = {
 
 interface DeleteLinkButtonProps {
   linkId: number;
-  onClose: () => void;
 }
 
-function DeleteLinkButton({ linkId, onClose }: DeleteLinkButtonProps) {
+function DeleteLinkButton({ linkId }: DeleteLinkButtonProps) {
   const { deleteLinkMutation } = useLinks();
 
   return (
-    <IconButton
-      size="xs"
-      aria-label="Delete link"
-      variant="delete"
-      icon={<AiFillDelete />}
-      onClick={() => {
-        deleteLinkMutation.mutate(linkId);
-        onClose();
-      }}
-    >
-      Delete
-    </IconButton>
+    <ConfirmActionDialog
+      title="Delete link"
+      body="The selected link will be permanently removed. This action cannot be undone."
+      confirmLabel="Delete"
+      isLoading={deleteLinkMutation.isLoading}
+      onConfirm={(close) =>
+        deleteLinkMutation.mutate(linkId, { onSettled: close })
+      }
+      trigger={(onOpen) => (
+        <Tooltip label="Delete link" openDelay={500}>
+          <IconButton
+            size="xs"
+            aria-label="Delete link"
+            variant="delete"
+            icon={<AiFillDelete />}
+            onClick={onOpen}
+            isDisabled={deleteLinkMutation.isLoading}
+          />
+        </Tooltip>
+      )}
+    />
   );
 }
 
@@ -46,7 +55,7 @@ function LinkOptions({ link }: IProps) {
       entityId={link.id}
       addToFavoritesMutation={addToFavoritesMutation}
       removeFromFavoritesMutation={removeFromFavoritesMutation}
-      deleteButton={<DeleteLinkButton linkId={link.id} onClose={onClose} />}
+      deleteButton={<DeleteLinkButton linkId={link.id} />}
       editForm={<EditLinkForm linkItem={link} onClose={onClose} />}
       isStarred={link.starred}
     />

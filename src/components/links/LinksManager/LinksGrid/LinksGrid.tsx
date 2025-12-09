@@ -73,11 +73,16 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
 
   const { deleteMultipleLinksMutation } = useLinks();
 
-  const handleBulkDelete = () => {
+  const handleBulkDelete = (onComplete: () => void) => {
     const linkIds = table
       .getSelectedRowModel()
       .flatRows.map((rowData) => rowData.original.id);
-    deleteMultipleLinksMutation.mutate(linkIds);
+    deleteMultipleLinksMutation.mutate(linkIds, {
+      onSettled: () => {
+        table.toggleAllRowsSelected(false);
+        onComplete();
+      },
+    });
   };
 
   const Headers = () => {
@@ -144,6 +149,7 @@ function LinksGrid({ links, showCategories, isLoading }: IProps) {
       {table.getSelectedRowModel().flatRows.length > 1 && (
         <RowSelectionMenu
           handleBulkDelete={handleBulkDelete}
+          isDeleting={deleteMultipleLinksMutation.isLoading}
           table={table}
           type="link"
         />

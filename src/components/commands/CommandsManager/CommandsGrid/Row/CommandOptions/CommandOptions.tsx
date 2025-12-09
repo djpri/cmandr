@@ -1,5 +1,6 @@
-import { IconButton, useDisclosure } from "@chakra-ui/react";
+import { IconButton, Tooltip, useDisclosure } from "@chakra-ui/react";
 import EditCommandForm from "components/commands/EditCommandForm/EditCommandForm";
+import ConfirmActionDialog from "components/shared/ConfirmActionDialog";
 import EntityOptions from "components/shared/EntityOptions";
 import useCommands from "hooks/entities/useCommands";
 import { CommandReadDto } from "models/command";
@@ -11,27 +12,33 @@ type IProps = {
 
 interface DeleteCommandButtonProps {
   commandId: number;
-  onClose: () => void;
 }
 
-function DeleteCommandButton({ commandId, onClose }: DeleteCommandButtonProps) {
-  const {
-    deleteCommandMutation,
-  } = useCommands();
+function DeleteCommandButton({ commandId }: DeleteCommandButtonProps) {
+  const { deleteCommandMutation } = useCommands();
 
   return (
-    <IconButton
-      size="xs"
-      aria-label="Delete command"
-      variant="delete"
-      icon={<AiFillDelete />}
-      onClick={() => {
-        deleteCommandMutation.mutate(commandId);
-        onClose();
-      }}
-    >
-      Delete
-    </IconButton>
+    <ConfirmActionDialog
+      title="Delete command"
+      body="This command will be permanently removed. This action cannot be undone."
+      confirmLabel="Delete"
+      isLoading={deleteCommandMutation.isLoading}
+      onConfirm={(close) =>
+        deleteCommandMutation.mutate(commandId, { onSettled: close })
+      }
+      trigger={(onOpen) => (
+        <Tooltip label="Delete command" openDelay={500}>
+          <IconButton
+            size="xs"
+            aria-label="Delete command"
+            variant="delete"
+            icon={<AiFillDelete />}
+            onClick={onOpen}
+            isDisabled={deleteCommandMutation.isLoading}
+          />
+        </Tooltip>
+      )}
+    />
   );
 }
 
@@ -49,9 +56,7 @@ function CommandOptions({ command }: IProps) {
       isStarred={command?.starred}
       addToFavoritesMutation={addToFavoritesMutation}
       removeFromFavoritesMutation={removeFromFavoritesMutation}
-      deleteButton={
-        <DeleteCommandButton commandId={command.id} onClose={onClose} />
-      }
+      deleteButton={<DeleteCommandButton commandId={command.id} />}
       editForm={<EditCommandForm commandItem={command} onClose={onClose} />}
     ></EntityOptions>
   );

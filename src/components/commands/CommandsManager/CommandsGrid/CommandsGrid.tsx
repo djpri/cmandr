@@ -73,11 +73,16 @@ function CommandsGrid({ commands, showCategories }: IProps) {
     table.setPageSize(25);
   }, []);
 
-  const handleBulkDelete = () => {
+  const handleBulkDelete = (onComplete: () => void) => {
     const commandIds = table
       .getSelectedRowModel()
       .flatRows.map((rowData) => rowData.original.id);
-    deleteMultipleCommandsMutation.mutate(commandIds);
+    deleteMultipleCommandsMutation.mutate(commandIds, {
+      onSettled: () => {
+        table.toggleAllRowsSelected(false);
+        onComplete();
+      },
+    });
   };
 
   return (
@@ -85,6 +90,7 @@ function CommandsGrid({ commands, showCategories }: IProps) {
       {table.getSelectedRowModel().flatRows.length > 1 && (
         <RowSelectionMenu
           handleBulkDelete={handleBulkDelete}
+          isDeleting={deleteMultipleCommandsMutation.isLoading}
           table={table}
           type="command"
         />
